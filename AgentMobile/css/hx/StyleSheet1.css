@@ -1,0 +1,356 @@
+﻿/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small {
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol {
+    list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+sup {
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub {
+    vertical-align: text-bottom;
+}
+
+/** 重置表单元素 **/
+legend {
+    color: #000;
+}
+/* for ie6 */
+fieldset, img {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea {
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+    /* 去掉高光样式 */
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+input:focus, img:focus {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    display: block;
+}
+
+body {
+    background: #f5f5f5;
+}
+
+#page1 {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.banner {
+    background: url(../images/bj.png);
+    background-size: 100% 100%;
+    background-position: center bottom;
+}
+
+.hx-p1 {
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+}
+
+.hx-padding-top15 {
+    padding-top: 15px;
+}
+
+.hx-padding-top30 {
+    padding-top: 30px;
+}
+
+.hx-padding-top55 {
+    padding-top: 55px;
+}
+
+.hx-margin-top20 {
+    margin-top: 20px;
+}
+
+.hx-margin-bottom20 {
+    margin-bottom: 20px;
+}
+
+.hx-padding-bottom40 {
+    padding-bottom: 40px;
+}
+
+.hx-p2 {
+    font-size: 14px;
+    color: #000;
+    line-height: 25px;
+    width: 70%;
+    margin: 0 auto 4px;
+}
+
+    .hx-p2 .hx-txt {
+        width: 100%;
+        height: 33px;
+        border-radius: 5px;
+        text-indent: 10px;
+        border: 1px solid #b7b7b7;
+        -webkit-appearance: none;
+        box-sizing: border-box;
+    }
+
+    .hx-p2 .hx-btn {
+        width: 100%;
+        height: 46px;
+        font-size: 18px;
+        border-radius: 5px;
+        color: #fff;
+        border: 1px solid #009b4c;
+        background: #009b4c;
+        -webkit-appearance: none;
+    }
+
+    .hx-p2 .hx-sel {
+        width: 100%;
+        height: 33px;
+        border-radius: 5px;
+        text-indent: 5px;
+        border: 1px solid #b7b7b7;
+        box-sizing: border-box;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: #fff url(../images/icon5.png) no-repeat scroll right center;
+        padding-right: 14px;
+    }
+
+.hx-p3 {
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+.hx-p4 {
+    font-size: 16px;
+    color: #000;
+    line-height: 25px;
+    width: 80%;
+    margin: 20px auto 0;
+}
+
+.hx-p5 {
+    font-size: 16px;
+    color: #000;
+    line-height: 25px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.hx-p6 {
+    font-size: 16px;
+    color: #000;
+    line-height: 25px;
+    width: 90%;
+    margin: 24px auto 5px;
+    border-bottom: 1px solid #8b8b8b;
+    padding-left: 5px;
+}
+
+.hx-p7 {
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    width: 90%;
+    margin: 0 auto;
+    padding-left: 5px;
+    letter-spacing: 0.5px;
+}
+
+.hx-p8 {
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    width: 90%;
+    margin: 0 auto;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #8b8b8b;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.hx-p9 {
+    width: 100%;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+    .hx-p9 > div {
+        float: right;
+        background: #009b4c;
+    }
+
+
+    .hx-p9 .hx-sel1 {
+        width: 72px;
+        height: 26px;
+        font-size: 12px;
+        border-radius: 0;
+        text-indent: 5px;
+        border: 1px solid #b7b7b7;
+        box-sizing: border-box;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: #fff url(../images/icon5.png) no-repeat scroll right center;
+    }
+
+    .hx-p9 .hx-btn1 {
+        height: 24px;
+        color: #fff;
+        font-size: 10px;
+        border: 1px solid #009b4c;
+        background: #009b4c;
+        border: 0;
+        box-sizing: border-box;
+        padding-right: 5px;
+    }
+
+.hx-p10 {
+    margin: 10px 0;
+}
+
+    .hx-p10 a {
+        font-size: 14px;
+        color: #fff;
+        text-align: center;
+        display: block;
+        float: right;
+        width: 80px;
+        height: 24px;
+        line-height: 24px;
+        background: #cc0000;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+    }
+
+.hx-home {
+    height: 39vh;
+    width: 100%;
+}
+
+.hx-bg {
+    width: 74%;
+    height: 100%;
+    margin: 60px auto 0;
+    background: url(../images/brh.png) no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.hx-div {
+    height: 50%;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+    .hx-div a {
+        color: #fff;
+    }
+
+    .hx-div > div {
+        float: left;
+        width: 50%;
+    }
+
+        .hx-div > div img {
+            width: 30%;
+            margin: 35px auto 5px;
+        }
+
+        .hx-div > div.left {
+            position: relative;
+            left: -5px;
+        }
+
+        .hx-div > div.right {
+            position: relative;
+            right: -5px;
+        }
+
+.zl-p1s {
+    padding: 60px 0 22px 0;
+}
+
+
+    .zl-p1s img {
+        width: 50%;
+        margin: 0 auto;
+    }

@@ -1,0 +1,700 @@
+﻿
+.hongbao-bg {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #ff0000 url(../img/yaoqing1.png) no-repeat;
+    background-position: top center;
+    background-size: contain;
+}
+
+
+.hongbao-bg1 {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #fff0b5 url(../img/fenxiang.png) no-repeat;
+    background-position: top center;
+    background-size: contain;
+}
+
+.hongbao-bg2 {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #ff0000;
+    /*background-position: top center;
+    background-size: contain;*/
+}
+
+.hongbao-all {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.hongbao-fch-div {
+    min-height: 90vh;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.login {
+    width: 90%;
+    min-height: 400px;
+    max-width: 640px;
+    position: absolute;
+    top: 26%;
+    left: 5%;
+    right: 5%;
+    z-index: 20;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-top: -80px;
+    display: none;
+}
+
+.fy_index_cd {
+    width: 80%;
+    height: 90%;
+    position: relative;
+    left: 10%;
+    margin-top: 23px;
+}
+
+.fy_index_cding {
+    width: 80%;
+    margin: 80px auto 30px;
+}
+
+.zkm-zhuce-d1 {
+    text-align: center;
+    color: #ffd29d;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding-bottom: 10px;
+}
+
+.zkm-zhuce-d2 > div {
+    margin-top: 13px;
+}
+
+.zkm-zhuce-input {
+    width: 100%;
+    height: 35px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    text-indent: 35px;
+    font-size: 14px;
+    color: #000;
+    padding-bottom: 3px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+    .zkm-zhuce-input:focus {
+        border-bottom: 1px solid rgba(225,29,43,1);
+        outline: 0;
+    }
+
+.zkm-zhuce-sj {
+    background: #fff url(../img/jifen-img2.png) no-repeat;
+    background-position: left;
+    background-size: 26px;
+}
+
+.zkm-zhuce-txyzm {
+    background: #fff url(../img/jifen-img3.png) no-repeat;
+    background-position: left;
+    background-size: 26px;
+}
+
+.zkm-zhuce-yzm {
+    background: #fff url(../img/jifen-img4.png) no-repeat;
+    background-position: left;
+    background-size: 24px;
+}
+
+.zkm-zhuce-szd {
+    background: #fff url(../img/jifen-img6.png) no-repeat;
+    background-position: left;
+    background-size: 26px;
+}
+
+.zkm-zhuce-pos {
+    position: relative;
+}
+
+.txyzm {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 80px;
+    height: 25px;
+}
+
+.zkm-zhuce-yzmbtn {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 80px;
+    height: 25px;
+    border: 1px solid #5293ff;
+    background: #fff;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    color: #5293ff;
+    letter-spacing: 0.5px;
+}
+
+.zkm-zhuce-d4 {
+    margin: 50px auto 0;
+    text-align: center;
+}
+
+.zkm-zhuce-btn {
+    width: 75%;
+    height: 35px;
+    border: 1px solid #e11d2b;
+    background: #e11d2b;
+    border-radius: 30px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.jifen-img1 {
+    position: absolute;
+    right: -7%;
+    top: -10px;
+    height: 20px;
+}
+
+.hongbao-div {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.hongbao-paddingtop {
+    padding-top: 280px;
+}
+
+.hongbao-pos {
+    position: relative;
+}
+
+.hongbao-input {
+    width: 100%;
+    height: 42px;
+    border: 0;
+    border: 1px solid #ffd29d;
+    border-radius: 25px;
+    text-indent: 15px;
+    font-size: 0.85rem;
+    color: #c20001;
+    background: #ffd29d;
+    letter-spacing: 1px;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    -moz-box-shadow: 0px 0px 2px #666;
+    -webkit-box-shadow: 0px 0px 2px #666;
+    box-shadow: 0px 0px 2px #666;
+}
+
+
+.hongbao-smbtn1 {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    width: 55px;
+    height: 42px;
+    border: 1px solid #ffd29d;
+    background: #ffd29d url(../img/saoma.png) no-repeat;
+    background-position: top 7px right 10px;
+    background-size: 26px;
+    border-radius: 0;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.yihan-btn {
+    width: 40%;
+    height: 44px;
+    border: 1px solid #ffd29d;
+    background: #ffd29d;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #c20001;
+    margin: 30px auto;
+    display: block;
+    -moz-box-shadow: 0px 1px 2px #666;
+    -webkit-box-shadow: 0px 1px 2px #666;
+    box-shadow: 0px 1px 2px #666;
+}
+
+.yihan-fxall {
+    min-height: 100vh;
+    position: relative;
+}
+
+.yihan-btnfx {
+    width: 40%;
+    height: 44px;
+    border: 1px solid #ffd29d;
+    background: #ffd29d;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #c20001;
+    margin: 0 auto;
+    display: block;
+    -moz-box-shadow: 0px 1px 2px #666;
+    -webkit-box-shadow: 0px 1px 2px #666;
+    box-shadow: 0px 1px 2px #666;
+    position: absolute;
+    left: 30%;
+    bottom: 10%;
+}
+
+.hongbao-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #c20001;
+}
+
+.hongbao-input:-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #c20001;
+}
+
+.hongbao-input:-ms-input-placeholder {
+    color: #c20001;
+}
+
+.hongbao-input::-webkit-input-placeholder {
+    color: #c20001;
+}
+
+.hongbao-jl {
+    width: 100%;
+    text-align: center;
+    color: #ffd29d;
+    font-size: 0.8rem;
+    height: 20px;
+    line-height: 20px;
+}
+
+    .hongbao-jl a {
+        color: #ffd29d;
+    }
+
+
+.zkm-guize-d1 {
+    color: #ffd29d;
+    font-size: 0.85rem;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    padding-top: 12px;
+}
+
+.guize {
+    width: 90%;
+    min-height: 400px;
+    max-width: 640px;
+    position: absolute;
+    top: 26%;
+    left: 5%;
+    right: 5%;
+    z-index: 20;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-top: -80px;
+    display: none;
+}
+
+.guize_index_cd {
+    width: 80%;
+    height: 90%;
+    position: relative;
+    left: 10%;
+    margin-top: 23px;
+}
+
+
+.hongbao-tishiyu {
+    text-align: center;
+    color: #999;
+    font-size: 1.4rem;
+}
+
+.hongbao-tishiyu1 {
+    text-align: center;
+    color: #999;
+    font-size: 0.95rem;
+}
+
+
+
+
+.hongbao-liaojie {
+    overflow: hidden;
+    padding: 15px;
+}
+
+    .hongbao-liaojie a {
+        float: right;
+        color: #fff;
+        width: 60px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 0.8rem;
+        border-radius: 5px;
+        text-align: center;
+        background: #000;
+        display: block;
+    }
+
+.login-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: #000;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    z-index: 3;
+    display: none;
+}
+
+
+.white_content {
+    display: none;
+    position: absolute;
+    top: 26%;
+    left: 15%;
+    width: 70%;
+    height: 300px;
+    z-index: 1002;
+    overflow: auto;
+}
+
+.white_a {
+    width: 66%;
+    margin: 30px auto 0;
+    height: 260px;
+    background: url(../img/hongbao-hongbao.png) center 0 no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+
+.white_guanbi {
+    position: absolute;
+    right: -40px;
+    top: -30px;
+}
+
+    .white_guanbi img {
+        height: 32px;
+    }
+
+.hb-d4 {
+    text-align: center;
+    padding: 64% 0 20px;
+    color: #fff;
+    font-size: 12px;
+}
+
+    .hb-d4 span {
+        font-size: 2.4rem;
+        font-weight: bold;
+    }
+
+.hb-d5 {
+    text-align: center;
+    padding: 2px 0;
+    color: #fff;
+    font-size: 10px;
+}
+
+.black_overlay {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1001;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=55);
+}
+
+/* 红包*/
+
+
+
+.hongbao-liaojie {
+    overflow: hidden;
+    padding: 15px;
+}
+
+    .hongbao-liaojie a {
+        float: right;
+        color: #fff;
+        width: 60px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 0.8rem;
+        border-radius: 5px;
+        text-align: center;
+        background: #000;
+        filter: alpha(opacity=50);
+        -moz-opacity: 0.5;
+        -khtml-opacity: 0.5;
+        opacity: 0.5;
+        display: block;
+    }
+
+.login-bg {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: #000;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
+    -khtml-opacity: 0.6;
+    opacity: 0.6;
+    z-index: 3;
+    display: none;
+}
+
+
+.hongbao-mingxi {
+    border-bottom: 1px solid #ededed;
+    padding: 10px 0;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+    .hongbao-mingxi a > div {
+        display: inline-block;
+    }
+
+    .hongbao-mingxi a {
+        display: block;
+        overflow: hidden;
+    }
+
+.hongbao-jl1 {
+    color: #000;
+    font-size: 1rem;
+}
+
+.hongbao-jl2 {
+    color: #999;
+    font-size: 0.75rem;
+    line-height: 17px;
+}
+
+.hongbao-jl3 {
+    float: right;
+    color: #ff0600;
+    font-size: 1rem;
+    margin-top: 11px;
+}
+
+.hongbao-fx {
+    border-bottom: 1px solid #ededed;
+    padding: 10px 0;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+    .hongbao-fx a > div {
+        float: left;
+    }
+
+    .hongbao-fx a {
+        display: block;
+        overflow: hidden;
+    }
+
+.hongbao-jl4 {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+    .hongbao-jl4 img {
+        width: 100%;
+    }
+
+.hongbao-fx .hongbao-jl5 {
+    color: #000;
+    font-size: 0.9rem;
+    line-height: 50px;
+    margin-left: 10px;
+}
+
+
+.hongbao-fx .hongbao-jl6 {
+    float: right;
+    color: #000;
+    font-size: 0.9rem;
+    line-height: 50px;
+}
+
+.hongbao-fx .hongbao-colorff0 {
+    color: #ff0600;
+}
+
+
+
+.hongbao-cg {
+    background: #f1f2f1;
+}
+
+.hongbao-cg-img {
+    height: 140px;
+    overflow: hidden;
+}
+
+.hongbao-cg-touxiang {
+    text-align: center;
+    height: 90px;
+    background: #db5842;
+    border-bottom-left-radius: 100%;
+    border-bottom-right-radius: 100%;
+}
+
+    .hongbao-cg-touxiang img {
+        width: 60px;
+        height: 60px;
+        position: relative;
+        top: 60px;
+    }
+
+.hongbao-cg1 {
+    text-align: center;
+    color: #000;
+    font-size: 1rem;
+}
+
+.hongbao-cg2 {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+}
+
+.hongbao-cg3 {
+    text-align: center;
+    color: #000;
+    font-size: 2.8rem;
+    line-height: 40px;
+    margin: 30px 0 5px;
+    position: relative;
+    font-weight: bold;
+}
+
+    .hongbao-cg3 span {
+        font-size: 1rem;
+        position: absolute;
+        top: 1px;
+        padding: 0 5px;
+        font-weight: normal;
+    }
+
+.hongbao-cg4 {
+    text-align: center;
+    color: #4a4b7e;
+    font-size: 0.85rem;
+    padding-bottom: 60px;
+}
+
+.hongbao-cg5 {
+    text-align: center;
+    margin: 50px auto 20px;
+}
+
+    .hongbao-cg5 a {
+        display: block;
+        width: 50px;
+        height: 50px;
+        color: #fff;
+        font-weight: bold;
+        margin: 0 auto 10px;
+        background: #e72418;
+        border-radius: 100%;
+        padding: 10px;
+        font-size: 1.2rem;
+    }
+
+.khongbao {
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 88;
+    padding-top: 20%;
+    top: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+}
+
+.hongbao-fx {
+    border-bottom: 1px solid #ededed;
+    padding: 10px 0;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+    .hongbao-fx a > div {
+        float: left;
+    }
+
+    .hongbao-fx a {
+        display: block;
+        overflow: hidden;
+    }
+
+.hongbao-jl4 {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+    .hongbao-jl4 img {
+        width: 100%;
+    }
+
+.hongbao-fx .hongbao-jl5 {
+    color: #000;
+    font-size: 0.9rem;
+    line-height: 50px;
+    margin-left: 10px;
+}
+
+
+.hongbao-fx .hongbao-jl6 {
+    float: right;
+    color: #000;
+    font-size: 0.9rem;
+    line-height: 50px;
+}
+
+.hongbao-fx .hongbao-colorff0 {
+    color: #ff0600;
+}

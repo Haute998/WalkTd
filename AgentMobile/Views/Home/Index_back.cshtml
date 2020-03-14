@@ -1,0 +1,138 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    string a = ViewData["NavAdvs"] as string;
+    string a1 = ViewData["NavAdvs"] as string;
+    a = "http://tongcheng2.fw-12365.com/" + a;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>防窜货系统演示版</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/slc/screen.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            background: #356ec6;
+        }
+
+        .wrap {
+            position: relative;
+        }
+
+            .wrap .bg {
+                width: 100%;
+            }
+
+        .box {
+            width: 100%;
+            position: absolute;
+            top: 60px;
+            text-align: center;
+        }
+
+        .logo img {
+            width: 17%;
+            margin-bottom: 10px;
+        }
+
+        .hen {
+            width: 68%;
+            background: green;
+            margin: 26px auto;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 0 5px 10px rgba(0,0,0,.2);
+            overflow: hidden;
+        }
+
+            .hen a {
+                display: flex;
+            }
+
+        .left {
+            display: flex;
+            width: 30%;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0;
+            background: linear-gradient(to right,#4bacf7,#4f9aff);
+        }
+
+            .left img {
+                width: 48%;
+            }
+
+        .right {
+            display: flex;
+            width: 70%;
+            padding-left: 30px;
+            align-items: center;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(to right,#4bacf7,#4f9aff);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrap">
+        <img src="@a" alt="" class="bg" />
+        <div class="box">
+            <div class="logo">
+                <img src="/images/logosy.png" alt="" />
+            </div>
+            <div class="hen">
+                <a href="/anti_fake/query">
+                    <div class="left">
+                        <img src="/images/icon1.png" alt="" />
+                    </div>
+                    <div class="right">
+                        <p>防伪查询</p>
+                    </div>
+                </a>
+            </div>
+            <div class="hen">
+                <a href="/cuanhuo/pre">
+                    <div class="left">
+                        <img src="/images/icon2.png" alt="" />
+                    </div>
+                    <div class="right">
+                        <p>防窜货查询</p>
+                    </div>
+                </a>
+            </div>
+            <div class="hen">
+                <a href="/Home/Login">
+                    <div class="left">
+                        <img src="/images/icon3.png" alt="" />
+                    </div>
+                    <div class="right">
+                        <p>经销商登录</p>
+                    </div>
+                </a>
+            </div>
+            <div class="hen">
+                <a href="/Home/Login">
+                    <div class="left">
+                        <img src="/images/icon4.png" alt="" />
+                    </div>
+                    <div class="right">
+                        <p>投诉建议</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

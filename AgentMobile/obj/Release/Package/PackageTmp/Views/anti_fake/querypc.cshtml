@@ -1,0 +1,922 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    string ip = ViewData["ip"] as string;
+    string code = ViewData["fwcode"] as string;
+    InviteCode code2 = ViewData["fwcode"] as InviteCode;
+    string istime = (code2 == null || code2.IsTime == false) ? "0" : "1";
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head id="Head1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>防伪查询</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="~/css/qian.css" rel="stylesheet" />
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        a {
+            cursor: hand;
+            cursor: pointer;
+            text-decoration: none;
+            -moz-transition: all 0.5s ease;
+            -webkit-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+        }
+
+        body {
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        input[type="button"], input[type="submit"], input[type="reset"] {
+            -webkit-appearance: none;
+            width: 50%;
+            height: 40px;
+            background: #FF4844;
+            border-radius: 5px;
+            border: 1px solid #FF4844;
+            margin-top: 60px;
+            color: #fff;
+        }
+
+        textarea {
+            -webkit-appearance: none;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .TC-fwcx {
+            width: 90%;
+            margin: 0 auto;
+            position: relative;
+            min-height: 93%;
+            padding-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+            .TC-fwcx .div1, .TC-fwcx .div2, .TC-fwcx .div3 {
+                width: 60%;
+                min-height: 93vh;
+                margin: 0 auto;
+                padding-bottom: 30px;
+            }
+
+                .TC-fwcx .div1 div.TX {
+                    text-align: center;
+                    width: 100%;
+                }
+
+                    .TC-fwcx .div1 div.TX img {
+                        width: 160px;
+                        margin-top: 68px;
+                    }
+
+                .TC-fwcx .div1 div.TX1 {
+                    width: 100%;
+                    overflow: hidden;
+                    position: absolute;
+                    right: 0;
+                }
+
+                .TC-fwcx .div1 div.title {
+                    padding-top: 8vh;
+                }
+
+                    .TC-fwcx .div1 div.title p {
+                        text-align: center;
+                        color: #333;
+                        font-size: 16px;
+                        line-height: 18px;
+                        font-family: Microsoft YaHei;
+                        letter-spacing: -0.5px;
+                    }
+
+                    .TC-fwcx .div1 div.title .lt {
+                        letter-spacing: -1.45px;
+                        font-size: 16px;
+                        margin-bottom: 5px;
+                    }
+
+                    .TC-fwcx .div1 div.title p.p1 {
+                        font-size: 24px;
+                        line-height: 22px;
+                        font-weight: 900;
+                        letter-spacing: -1.5px;
+                    }
+
+                .TC-fwcx .div1 div.tab {
+                    height: 28px;
+                    margin-top: 2vh;
+                    width: 100%;
+                }
+
+                .TC-fwcx .div1 div.tit {
+                    margin: 3vh auto 0 auto;
+                    text-align: center;
+                }
+
+                    .TC-fwcx .div1 div.tit p.p1 {
+                        color: #333;
+                        font-size: 1em;
+                        font-family: Microsoft YaHei;
+                        line-height: 35px;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .TC-fwcx .div1 div.tit p.TextBox1 input {
+                        height: 40px;
+                        width: 85%;
+                        background: #fff;
+                        outline: 0;
+                        border: 1px solid #cbcbcb;
+                        color: #000;
+                        font-family: Microsoft YaHei;
+                        display: inline-block;
+                        font-size: 16px;
+                        text-align: center;
+                        line-height: normal;
+                        -webkit-appearance: none;
+                    }
+
+                    .TC-fwcx .div1 div.tit p.ImageButton1 input {
+                        height: 40px;
+                        width: 85%;
+                        outline: 0;
+                        border: 0;
+                        color: #fff;
+                        font-family: Microsoft YaHei;
+                        display: inline-block;
+                        font-size: 16px;
+                        text-align: center;
+                        line-height: normal;
+                        margin: 65px 0 0 0;
+                        background: url(/images/HHcx.png) center 0 no-repeat;
+                        background-size: 100% 100%;
+                    }
+
+            .TC-fwcx .div2 {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+                .TC-fwcx .div2 div.cx1 {
+                    border-bottom: 1px solid #d3d3d4;
+                    margin: 0 auto 3.5vh auto;
+                    padding: 3vh 0;
+                }
+
+                    .TC-fwcx .div2 div.cx1 p {
+                        color: #e50012;
+                        font-size: 1.2em;
+                        text-align: center;
+                        font-family: Microsoft YaHei;
+                        line-height: 23px;
+                        letter-spacing: 1px;
+                    }
+
+                .TC-fwcx .div2 div.cx2 p {
+                    color: #333;
+                    font-size: 1em;
+                    text-align: center;
+                    font-family: Microsoft YaHei;
+                    line-height: 20px;
+                    letter-spacing: 0.5px;
+                    font-weight: normal;
+                }
+
+
+                    .TC-fwcx .div2 div.cx2 p.p4 {
+                        overflow: hidden;
+                        text-align: left;
+                        margin-top: 4vh;
+                        font-size: 0.9em;
+                    }
+
+                        .TC-fwcx .div2 div.cx2 p.p4 span {
+                            display: block;
+                            float: left;
+                            vertical-align: top;
+                        }
+
+                            .TC-fwcx .div2 div.cx2 p.p4 span img {
+                                padding: 0;
+                                margin-left: 10px;
+                            }
+
+                    .TC-fwcx .div2 div.cx2 p.p1 {
+                        font-size: 0.9em;
+                        line-height: 17px;
+                    }
+
+            .TC-fwcx .p100 {
+                line-height: 17px;
+                font-size: 14px;
+                line-height: 17px;
+                width: 100%;
+                color: #999;
+                height: 30px; /* footer的高度一定要是固定值*/
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+            }
+
+            .TC-fwcx .div2 div.cx2 p.p2 {
+                font-size: 0.9em;
+                text-align: left;
+                color: #e50012;
+                margin: 4vh 0 1vh 0;
+            }
+
+            .TC-fwcx .div2 div.cx2 p.p3 {
+                font-size: 0.9em;
+                text-align: left;
+                line-height: 17px;
+            }
+
+            .TC-fwcx .div2 div.cx2 p img {
+                height: 70px;
+                padding: 5vh 0 5vh 0;
+            }
+
+            .TC-fwcx .div2 div.jiaxi {
+                border-bottom: 1px solid #d3d3d4;
+                border-top: 1px solid #d3d3d4;
+                margin: 2vh 0;
+            }
+
+                .TC-fwcx .div2 div.jiaxi p input {
+                    height: 40px;
+                    width: 100%;
+                    background: #E5F3FC;
+                    text-align: left;
+                    outline: 0;
+                    border: 0;
+                    color: #333;
+                    font-family: Microsoft YaHei;
+                    display: inline-block;
+                    font-size: 1em;
+                    line-height: normal;
+                    -webkit-appearance: none;
+                }
+
+                .TC-fwcx .div2 div.jiaxi p a {
+                    color: #333;
+                    line-height: 45px;
+                    font-size: 1em;
+                    font-family: Microsoft YaHei;
+                }
+
+            .TC-fwcx .div2 div.zaici {
+                text-align: center;
+            }
+
+                .TC-fwcx .div2 div.zaici input {
+                    height: 45px;
+                    width: 65%;
+                    background: #006db8;
+                    border-radius: 7px;
+                    outline: 0;
+                    border: 0;
+                    color: #fff;
+                    font-family: Microsoft YaHei;
+                    display: inline-block;
+                    font-size: 1em;
+                    line-height: normal;
+                    margin: 5vh auto 3vh auto;
+                }
+
+            .TC-fwcx .div3 div.cx1 {
+                border-bottom: 1px solid #d3d3d4;
+                width: 90%;
+                margin: 0 auto 3.5vh auto;
+                padding: 3vh 0;
+            }
+
+                .TC-fwcx .div3 div.cx1 p {
+                    color: #e50012;
+                    font-size: 1.3em;
+                    text-align: center;
+                    font-family: Microsoft YaHei;
+                    line-height: 20px;
+                    letter-spacing: 1px;
+                }
+
+            .TC-fwcx .div3 div.biaoqian {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+                .TC-fwcx .div3 div.biaoqian img {
+                    width: 100%;
+                }
+
+        #div5 {
+            padding-top: 45px;
+        }
+
+        .layui-m-layercont {
+            padding: 25px 0;
+            line-height: 22px;
+            text-align: center;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #Phone {
+            border: 1px solid #e0e0e0;
+            height: 30px;
+            width: 99%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-indent: 10px;
+            text-align: left;
+        }
+
+        #Yzm {
+            border: 1px solid #e0e0e0;
+            height: 30px;
+            width: 65%;
+            border-radius: 5px;
+            float: left;
+            text-align: left;
+            text-indent: 10px;
+        }
+
+        #hqyzm {
+            border: 1px solid #e0e0e0;
+            height: 30px;
+            width: 30%;
+            border-radius: 5px;
+            float: right;
+            color: #333;
+            font-size: 12px;
+        }
+
+        .text-align {
+            text-align: center;
+        }
+
+        .zl-p3 {
+            color: #000;
+            font-size: 16px;
+        }
+
+        .TextBox1 {
+            width: 100%;
+            position: relative;
+        }
+
+            .TextBox1 .saoma {
+                width: 24px;
+                height: 24px;
+                position: absolute;
+                top: 7px;
+                right: 9.6%;
+            }
+
+        .qian-logo img {
+            width: 160px;
+        }
+
+        .qian-logo {
+            padding: 10vh 0 4vh;
+        }
+
+        .qian-t7 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .qian-t8 {
+            font-size: 16px;
+            line-height: 26px;
+        }
+    </style>
+
+</head>
+<body onload="getvcode()">
+    <form id="form1">
+        <div class="TC-fwcx">
+            <div class="div1" id="div1">
+                <div class="TX1">
+                    <select id="Select1" class="qian-sel" onchange="a()">
+                        <option>中文</option>
+                        <option>English</option>
+                        
+                      
+                    </select>
+                </div>
+                <div class="TX">
+                    <a href="/anti_fake/querypc"><img src="/images/logo2.svg" /></a> 
+                </div>
+
+                <div class="title">
+                    <p class="p1">
+                        THANK YOU FOR BUYING OUR PRODUCT.
+                    </p>
+                    <p class="lt">
+                        Enter your product code which is located on the box of FUUMY package
+                    </p>
+                    <p>
+                        感谢您购买芙麦的产品，请在下面的框里输入产品的16位防伪码
+                    </p>
+                </div>
+                <div class="tit">
+
+                    <p class="TextBox1">
+                        <input id="Sel" type="text" maxlength="16" value="@(code)" />
+                    </p>
+
+                    <p class="p1">
+                        <span class="spa spa2"></span>
+                    </p>
+                    <p>
+                        <input id="login" type="button" value="CHECK CODE 查 询" />
+                    </p>
+
+                    <p class="p100">All rights reserved by FUUMY.</p>
+                    <br />
+                </div>
+
+            </div>
+
+            <!--防伪码无效-->
+            <div class="div2" id="div2" style="display:none;">
+                <div class="qian-div2">
+                    @* <select id="Select1" class="qian-sel">
+                            @*<option>中文</option>
+                            <option>Englist</option>
+                        </select>*@
+                    <div class="qian-logo">
+                        <a href="/anti_fake/querypc"><img src="/images/logo2.svg" /></a> 
+                    </div>
+                    <div class="qian-t6">
+                        <label class="code"></label>
+                    </div>
+                    <div class="qian-t6">
+                        <span></span>
+                    </div>
+                    <div class="qian-t7 w85" style="color:red">
+                        警告：没有查到此防伪码
+                    </div>
+                    <div class="qian-t8">
+                        请验证您输入的是否正确，
+                    </div>
+                    <div class="qian-t8">
+                        如果防伪码输入正确，这个产品可能是模仿。
+                    </div>
+                    <div class="qian-t6">
+                        <span></span>
+                    </div>
+                    @*<div class="qian-t8">
+                            本防伪码对应的是芙麦【EZ一次性电子烟】产品
+                        </div>
+                        <div class="qian-t8">
+                            如和下图商品不对应，您可能购买的不是正品
+                        </div>*@
+                    <div class="qian-t9">
+                        <img src="/images/label.png" width="300px" />
+                    </div>
+                    <div class="qian-t8">
+                        1.刮开防伪码
+                    </div>
+                    <div class="qian-t8">
+                        2.扫描二维码或者手动输入16位防伪码
+                    </div>
+                    <div class="p100">
+                        All rights reserved by FUUMY.
+                    </div>
+                </div>
+                @*<div class="cx1" id="CODE">
+                        <p>
+                            防伪码无效
+                        </p>
+                    </div>
+                    <div class="cx2">
+                        <p>
+                            您的16位防伪码:
+                        </p>
+                        <p>
+                            <label class="code"></label>
+                        </p>
+                        <p>
+                            <img id="img" src="/images/awtywtcw.png" alt="" />
+                        </p>
+                        <p class="p1">
+
+                            <label id="jie" class="jie"></label>
+
+                        </p>
+                        <p class="p2">
+                            请谨防假冒伪劣产品。
+                        </p>
+                        <p class="p3">
+                            请从正规渠道购买。
+                        </p>
+                        <p class="p3">
+                            如果此包装已被篡改或破损，请使用前向厂家反馈此情况，获取更多协助。
+                        </p>
+                        <p class="p3">
+                            服务热线 : 400-7777-316
+                        </p>
+                        <p>
+                            <img id="img" src="/images/HHweixin.png" alt="" style="height:150px;" />
+                        </p>
+                    </div>
+                    <div class="jiaxi">
+                        <p>
+                            <input id="Button1" type="button" value="了解标签特性" onclick="show()" />
+                        </p>
+                    </div>
+                    <div class="zaici">
+                        <input id="Button1" type="button" value="再试一次" onclick="window.location.href = '/anti_fake/query'" />
+                    </div>*@
+            </div>
+            <!--防伪码已被查询-->
+            <div class="div2" id="div3" style="display:none;">
+                <div class="qian-div2">
+
+                    @*<option>中文</option>
+                        <option>Englist</option>*@
+
+                    <div class="qian-logo">
+                        <a href="/anti_fake/querypc"><img src="/images/logo2.svg" /></a> 
+                    </div>
+                    <div class="qian-t6">
+                        <label class="code"></label>
+                    </div>
+                    <div class="qian-t6">
+                        <span></span>
+                    </div>
+                    <div class="qian-t7 w85" style="color:orange">
+                        注意！此防伪码已被查询<span id="cishu"></span>次
+                    </div>
+                    <div class="qian-t8">
+                        首次查询时间为<span id="shijian"></span>
+                    </div>
+                    <div class="qian-t8">
+                        这个产品可能被使用过,或是模仿。
+                    </div>
+                    <div class="qian-t6">
+                        <span></span>
+                    </div>
+                    <div class="qian-t8">
+                        本防伪码对应的是芙麦【EZ一次性电子烟】产品
+                    </div>
+                    <div class="qian-t8">
+                        如和下图商品不对应，您可能购买的不是正品
+                    </div>
+                    <div class="qian-t9">
+                        <img id="imgg" width="300px" />
+                    </div>
+
+                    <div class="p100">
+                        All rights reserved by FUUMY.
+                    </div>
+                </div>
+                @*<div class="cx1" id="CODE1">
+                        <p>
+                            防伪码已被查询
+                        </p>
+                    </div>
+                    <div class="cx2">
+                        <p>
+                            您的16位防伪码:
+                        </p>
+                        <p>
+                            <label class="code"></label>
+                        </p>
+                        <p>
+                            <img id="img" src="/images/awtywtwh.png" alt="" />
+                        </p>
+                        <p class="p1">
+
+                            <label class="jie"></label>
+                        </p>
+
+                        @*<p class="p4">
+                            <span>验证图片:</span>
+                            <span>
+                        <img  id="a1"  alt="" />
+                        src="/images/code.png"
+                        </span>
+                            </p>
+                        <p class="p2">
+                            请谨防假冒伪劣产品。
+                        </p>
+                        <p class="p3">
+                            请从正规渠道购买。
+                        </p>
+                        <p class="p3">
+                            如果此包装已被篡改或破损，请使用前向厂家反馈此情况，获取更多协助。
+                        </p>
+                        <p class="p3">
+                            服务热线 : 400-7777-316
+                        </p>
+                        <p>
+                            <img id="img" src="/images/HHweixin.png" alt="" style="height:150px;" />
+                        </p>
+                    </div>
+                    <div class="jiaxi">
+                        <p>
+                            <input id="Button1" type="button" value="了解标签特性" onclick="show()" />
+                        </p>
+                    </div>
+                    <div class="zaici">
+                        <input id="Button1" type="button" value="验证其他产品" onclick="window.location.href = '/anti_fake/query'" />
+                    </div>*@
+            </div>
+            <!--防伪码有效-->
+            <div class="div2" id="div4" style="display:none;">
+                <div class="qian-div2">
+
+                    @*<option>中文</option>
+                        <option>Englist</option>*@
+
+                    <div class="qian-logo">
+                        <a href="/anti_fake/querypc"><img src="/images/logo2.svg" /></a> 
+                    </div>
+                    <div class="qian-t6">
+                        <label class="code"></label>
+                    </div>
+                    <div class="qian-t6">
+                        <span></span>
+                    </div>
+                    <div class="qian-t7 w85">
+                        恭喜您！购买到的是正品
+                    </div>
+                    <div class="qian-t8">
+                        感谢您购买芙麦的产品
+                    </div>
+                    <div class="qian-t8">
+                        希望您喜欢我们的产品
+                    </div>
+                    <div class="qian-t6">
+                        <span></span>
+                    </div>
+                    <div class="qian-t8">
+                        本防伪码对应的是芙麦【EZ一次性电子烟】产品
+                    </div>
+                    <div class="qian-t8">
+                        如和下图商品不对应，您可能购买的不是正品
+                    </div>
+                    <div class="qian-t9">
+                        <img id="imgg" width="300px" />
+                    </div>
+
+                    <div class="p100">
+                        All rights reserved by FUUMY.
+                    </div>
+                </div>
+
+                @*<div class="cx1" id="CODE2">
+                        <p>
+                            防伪码有效
+                        </p>
+                    </div>
+                    <div class="cx2">
+                        <p>
+                            您的16位防伪码:
+                        </p>
+                        <p>
+                            <label class="code"></label>
+                        </p>
+                        <p>
+                            <img id="img" src="/images/awtywtzq.png" alt="" />
+                        </p>
+                        <p class="p1">
+
+                            <label class="jie"></label>
+                        </p>
+                        <p class="p2">
+                            请谨防假冒伪劣产品。
+                        </p>
+                        <p class="p3">
+                            请从正规渠道购买。
+                        </p>
+                        <p class="p3">
+                            如果此包装已被篡改或破损，请使用前向厂家反馈此情况，获取更多协助。
+                        </p>
+                        <p class="p3">
+                            316
+                        </p>
+                        <p>
+                            <img id="img" src="/images/HHweixin.png" alt="" style="height:150px;" />
+                        </p>
+                    </div>
+                    <div class="jiaxi">
+                        <p>
+                            <input id="Button1" type="button" value="了解标签特性" onclick="show()" />
+                        </p>
+                    </div>
+                    <div class="zaici">
+                        <input id="Button1" type="button" value="验证其他产品" onclick="window.location.href = '/anti_fake/query'" />
+                    </div>*@
+            </div>
+            <!--标签的功能-->
+            @*<div class="div3" id="div5" style="display:none">
+                    <div class="cx1">
+                        <p>
+                            标签的功能
+                        </p>
+                    </div>
+                    <div class="biaoqian">
+                        <br />
+                        <img src="/images/hhbq.png" />
+                    </div>
+                </div>*@
+        </div>
+        <input type="hidden" value="@(ip)" id="ip" />
+    </form>
+
+</body>
+</html>
+@if (IsWx == "1")
+{
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script>
+    var time;
+    var istime = "@(istime)";
+    var province;
+    var city;
+    var ip = $("#ip").val();
+    var loading;
+    $("#Scan").click(function () {
+        wx.scanQRCode({
+            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                var scale = res.resultStr.split('query/')[2]; // 当needResult 为 1 时，扫码返回的结果
+                if (scale == null) {
+                    scale = res.resultStr.split('query/')[1];
+                }
+                $("#Sel").val(scale);
+                //            $.post("/anti_fake/AntiFakeSel", { "id": scale }, function (data) {
+
+                //                layer.closeAll()
+                //                layer.open({
+                //                    content: data
+                //, btn: '我知道了'
+                //                });
+                //            });
+
+            },
+            fail: function (res) {
+                layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+            }
+        });
+
+    })
+    $(function () {
+
+        $("#login").click(function () {
+            var TextVal = $("#Sel").val();
+            if (TextVal == "") {
+                layer.open({
+                    content: '防伪码不能为空！！'
+   , btn: '我知道了'
+                });
+                return;
+            }
+            if (TextVal.length < 16) {
+                layer.open({
+                    content: '防伪码不能小于16位！！'
+   , btn: '我知道了'
+                });
+                return;
+            }
+            loading = layer.open({ type: 2, content: '加载中' });
+            $.post("/anti_fake/AntiFakeSel", { "id": TextVal }, function (data) {
+                layer.close(loading);
+                var arr = data.split('|');
+
+                if (arr[0] == "1") {
+
+                    document.getElementById('div1').style.display = "none";
+                    document.getElementById('div2').style.display = "none";
+                    document.getElementById('div3').style.display = "none";
+                    document.getElementById('div4').style.display = "block";
+                    //document.getElementById('div5').style.display = "none";
+                    //document.getElementById('a2').src = arr[2];
+                    $(".code").html(TextVal);
+                    $(".jie").html(arr[1])
+                    // $("#img").html(arr[4]);
+                    $("#imgg").attr("src", arr[4]);
+                } else if (arr[0] == "0") {
+
+                    document.getElementById('div1').style.display = "none";
+                    document.getElementById('div2').style.display = "block";
+                    document.getElementById('div3').style.display = "none";
+                    document.getElementById('div4').style.display = "none";
+                    document.getElementById('div5').style.display = "none";
+                    $(".code").html(TextVal);
+                    $(".jie").html(arr[1])
+                    $("#imgg").attr("src", arr[4]);
+
+                } else if (Number(arr[0]) > 1) {
+
+                    document.getElementById('div1').style.display = "none";
+                    document.getElementById('div2').style.display = "none";
+                    document.getElementById('div3').style.display = "block";
+                    document.getElementById('div4').style.display = "none";
+                    //document.getElementById('div5').style.display = "none";
+                    //document.getElementById('a1').src = arr[2];
+                    //$(".code").html(TextVal);
+                    //$(".jie").html(arr[1])
+                    $("#cishu").html(arr[2]);
+                    $("#shijian").html(arr[3]);
+                    $("#imgg").attr("src", arr[4]);
+                }
+                else {
+                    document.getElementById('div2').style.display = "none";
+                    document.getElementById('div3').style.display = "none";
+                    document.getElementById('div4').style.display = "none";
+                    document.getElementById('div5').style.display = "none";
+                }
+            });
+
+        });
+    });
+    function a() {
+        var Select1 = $('#Select1 option:selected').val();
+        if (Select1 == "English") {
+            window.location.href = "/anti_fake/queryenpc";
+        }
+      
+    }
+    function show() {
+
+        document.getElementById('div1').style.display = "none";
+        document.getElementById('div2').style.display = "none";
+        document.getElementById('div3').style.display = "none";
+        document.getElementById('div4').style.display = "none";
+        document.getElementById('div5').style.display = "block";
+    }
+    var timer;
+
+</script>

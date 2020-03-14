@@ -1,0 +1,182 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>退货管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain2.css?20161222" rel="stylesheet" type="text/css" />
+    <link href="/css/common2.css" rel="stylesheet" />
+    <link href="/css/main2.css?20170822" rel="stylesheet" />
+    <!--弹出窗js-->
+    <script src="/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="/js/login.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="/css/index1.css" rel="stylesheet" />
+    <style type="text/css">
+        .accordion .link {
+            padding: 15px 15px 15px 6em;
+            color: #fac800;
+        }
+
+        .layui-m-layercont select {
+            -webkit-appearance: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            height: 28px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .code {
+            position: fixed;
+            right: 5%;
+            bottom: 10%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .TX {
+            padding: 0vh 0;
+        }
+
+        #img {
+            width: 36%;
+            margin: 0 auto 10px;
+            display: block;
+        }
+
+        .dlhtt dl dd span.white {
+            color: #000;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            var t;
+            $(".news").hover(function () {
+                clearInterval(t);
+            }, function () {
+                t = setInterval(function () {
+                    var ul = $(".list");
+                    var liHeight = ul.find("li:last").height();
+                    ul.animate({ marginTop: liHeight + "px" }, 1000, function () {
+                        ul.find("li:last").prependTo(ul);
+                        ul.find("li:first").hide();
+                        ul.css({ marginTop: 0 });
+                        ul.find("li:first").fadeIn(800);
+                    });
+                }, 3000);
+            }).trigger("mouseleave");
+        });
+    </script>
+</head>
+<body>
+    <div id="page1" data-role="page">
+        <div class="TX">
+            <div class="dlhtt" id="dlhtt" style="background: url(/images/bgimage.png); background-size: 100% 100%;">
+                <dl>
+                    <dt onclick="showimg()">
+                        <span id="setimg">
+                            <img src="~/images/27.png" alt="" id="show" />
+                        </span>
+                        <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+                    </dt>
+                    <dd style="padding: 9px 0 0 0;">
+                        <span class="white">@(user.Name)</span>
+                        <span class="span1">级别：@(user.userTypeName)</span>
+                    </dd>
+                    <dd>
+                        @*<span class="span2">上级经销商：@(user.ChiefName)</span><br />*@
+                        <span class="span2 white">授权时间：@(user.DatCreate)</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <div class="QLR-home18">
+            <table>
+                <tr class="trrr">
+                    <td class="border-right">
+                        <dl>
+                            <a href="/RtnScale/Index">
+                                <dt><img src="/images/thsm.png" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                退货扫描
+                            </a>
+
+                        </dl>
+                    </td>
+                    <td class="border-right">
+                        <dl>
+                            <a href="/RtnScale/RtnScaleDetail">
+                                <dt><img src="/images/thjl.png" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                退货记录
+                            </a>
+
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <a href="/RtnScale/GetOuttjIndex">
+                                <dt><img src="/images/thtj.png" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                退货统计
+                            </a>
+
+                        </dl>
+                    </td>
+                </tr>
+          
+            </table>
+            @*<div class="QLRcode"><a href="/Home/Login"><img src="/layout/jfshop/images/TCfan.png" /></a></div>*@
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script type="text/x-jquery-tmpl" id="notifytmp">
+    <li>${Title}</li>
+</script>
+<script>
+    $(function () {
+        getsysnotify();
+
+        getNoAuditCnt();
+    })
+    function getsysnotify() {
+        $.post("/SYSMNotify/GetTop5", {}, function (data) {
+            if (data != "") {
+                $("#notifytmp").tmpl(data).appendTo("#sysnotifys");
+            }
+        })
+    }
+
+    function getNoAuditCnt() {
+        $.post("/MyAgentsInfo/getNoAuditCnt", {}, function (rtn) {
+            if (rtn > 0) {
+                $("#noaudit").show();
+            }
+        })
+    }
+
+    function bulding() {
+        layer.open({ content: "敬请期待", btn: '我知道了' });
+    }
+</script>

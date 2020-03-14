@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Anti-skid cargo query</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="/css/index1.css" rel="stylesheet" />
+    <style>
+        #page1 {
+           
+            height: 100vh;
+        }
+
+        .QLRcode {
+            position: fixed;
+            right: 5%;
+            bottom: 6%;
+            width: 35px;
+            height: 35px;
+        }
+
+            .QLRcode img {
+                width: 100%;
+            }
+
+        .top {
+            margin: 0;
+            text-align: center;
+        }
+
+            .top img {
+                margin-top: 40px;
+            }
+
+        .top2 {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="page1" data-role="page">
+        <div class="">
+            <img src="/images/banner.png" width="100%" />
+        </div>
+        <div class="QLR-home4" style="padding-top:40px">
+            <dl>
+                <dd><label>The production company：</label><label>Shenzhen hanxing xiang technology co. LTD</label> </dd>
+                <dd><label>Invoice no：</label> <label>@(ViewData["O_ID"])</label></dd>
+                <dd><label>Product number：</label><label>@ViewData["ProductNumber"]</label> </dd>
+                <dd><label>The product name：</label><label>@ViewData["ProductName"]</label> </dd>
+                <dd><label>dealers：</label><label>@ViewData["Name"]</label> </dd>
+                <dd><label>Sales area：</label><label>@ViewData["Province"]</label> </dd>
+                <dd><label>The delivery time：</label><label>@ViewData["DatCreate"]</label> </dd>
+            </dl>
+        </div>
+    </div>
+    @*<div class="code"> <a href="/cuanhuo/pre"><img src="/layout/jfshop/images/TCfan.png" /></a></div>*@
+</body>
+</html>

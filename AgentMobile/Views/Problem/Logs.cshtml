@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>退换货记录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/hx/StyleSheet1.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <script type="text/javascript">
+        window.onload = function () {
+            var oImg = document.getElementById('page');
+            oImg.style.width = '100%';
+            oImg.style.height = document.documentElement.clientHeight / 1 + 'px';
+            //高度为可视区的1/3
+        }
+    </script>
+
+</head>
+<body>
+
+    <div id="page" class="banner">
+        @*<p class="zl-p2">
+            <img src="/images/logo.png" />
+        </p>*@
+        <div class="zkm">
+            <div class="weixiu">
+                <button id="addresshtml" onclick="LoadMyAddress(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+
+<script type="text/x-jquery-tmpl" id="addresstmp">
+    <p class="hx-p5 hx-padding-top30">手机号：@ViewData["dh"]</p>
+    <p class="hx-p6">退换货记录：</p>
+    {{each(i,ck) RtnList}}
+    <p class="hx-p7">时间：${ChangeDateFormat(ck.DatCreate).Format("yyyy-MM-dd hh:mm")}</p>
+    <p class="hx-p7">故障问题： ${ck.Contents}</p>
+    <p class="hx-p7">备注： ${ck.Name}</p>
+    <p class="hx-p8">退/换货： ${ck.State}</p>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        LoadMyAddress($("#addresshtml"));
+    })
+    function LoadMyAddress(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        $.post("/Problem/xiuList?dh='" +@ViewData["dh"] +"'", { "pageIndex": gopage, "pageSize": 10 }, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#addresstmp").tmpl(data).insertBefore('#addresshtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+
+</script>

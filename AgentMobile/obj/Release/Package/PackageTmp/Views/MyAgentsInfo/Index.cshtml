@@ -1,0 +1,256 @@
+﻿@using WeModels;
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="robots" content="all" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="pragma" content="no-cach" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="copyright" content="" />
+    <meta name="description" content="" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>经销商列表</title>
+    <link href="/css/jlpmain2.css?@(WeConfig.css_version)" rel="stylesheet" type="text/css" />
+    <link href="/css/common2.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="/css/main2.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="/css/index1.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/css/saoma.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/css/dropload.css" rel="stylesheet" media="all" />
+    <style>
+        html, body {
+            background-color: #fff;
+        }
+
+        .tabHead {
+            min-height: 125px;
+            padding-top: 25px;
+        }
+
+        .headImg {
+            width: 30%;
+            float: left;
+            text-align: right;
+        }
+
+        .headTitle {
+            width: 70%;
+            float: right;
+            color: #666;
+            font-family: Microsoft YaHei;
+        }
+
+            .headTitle a {
+                display: block;
+                width: 100%;
+                margin-left: 20px;
+                line-height: 24px;
+                color: #999;
+            }
+
+        #setimg img {
+            width: 70px;
+        }
+
+        #title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #000;
+        }
+
+        .ken {
+            width: 10px;
+            position: absolute;
+            top: 70px;
+            right: 20px;
+        }
+
+        .khfxRow .mid span {
+        }
+
+            .khfxRow .mid span:nth-child(3) {
+                margin: 0;
+            }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .QLR-home18 {
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+            .QLR-home18 table tr td {
+                width:auto;
+            }
+
+        .tab-box2 {
+            top: 180px;
+            left: 0;
+            right: 0;
+        }
+
+            .tab-box2 thead tr {
+                height: 36px;
+                background-color: #eee;
+                border-top: 1px solid #ddd;
+                border-bottom: 1px solid #ddd;
+            }
+
+                .tab-box2 thead tr th {
+                    text-align:left;
+                    padding: 5px 10px;
+                }
+
+        .QueryDiv {
+            background-color: #fff;
+        }
+
+        #QueryAgent {
+            width: 94%;
+            height: 26px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            background-color: #fff;
+            padding: 0 3%;
+            font-size: 14px;
+        }
+        :-moz-placeholder{
+            color:#000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="AgentHead">
+        <dl>
+            <dd><a href="/agentback/Index"><img id="BtnClose" src="/images/11111.png" /></a></dd>
+            <dd>经销商列表</dd>
+            <dd></dd>
+        </dl>
+    </div>
+
+    <div id="page1" data-role="page">
+        <div class="QLR-home18">
+            <div class="QueryDiv">
+                <input type="text" id="QueryAgent" placeholder="编号/名称/地区"/>
+                <img class="queryImg" src="~/images/001_38.png?@(WeConfig.img_version)" />
+            </div>
+            <table class="tab-box2">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>经销商</th>
+                        <th>地区</th>
+                    </tr>
+                </thead>
+            </table>
+            <article class="khfxWarp">
+                <table class="tab-div">
+                    <tbody class="khfxPane">
+
+                    </tbody>
+                </table>
+            </article>
+        </div>
+    </div>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/dropload.js"></script>
+
+    <script>
+        $(function () {
+            LoadAgentList();
+            $(".queryImg").click(function () {
+                $(".khfxPane tr").remove();
+                $(".dropload-down").remove();
+                LoadAgentList();
+            });
+
+            $('.tabHead span').on('click', function () {
+                tabScroolTopArray[itemIndex] = $(window).scrollTop();
+                var $this = $(this); itemIndex = $this.index(); $(window).scrollTop(tabScroolTopArray[itemIndex]);
+                $(this).addClass('active').siblings('.tabHead span').removeClass('active');
+                $('.tabHead .border').css('left', $(this).offset().left + 'px');
+                $('.khfxPane').eq(itemIndex).show().siblings('.khfxPane').hide();
+                if (!tabLoadEndArray[itemIndex]) { dropload.unlock(); dropload.noData(false); } else { dropload.lock('down'); dropload.noData(); }
+                dropload.resetload();
+            });
+        });
+
+        function LoadAgentList()
+        {
+            var itemIndex = 0;
+            var tabLoadEndArray = [false, false, false];
+            var tabLenghtArray = [10, 10, 10];
+            var tabPageIndexArray = [1, 1, 1];
+            var tabPageSizeArray = [10, 10, 10];
+            var tabScroolTopArray = [0, 0, 0];
+
+            var dropload = $('.khfxWarp').dropload({
+                scrollArea: window,
+                threshold: 123,
+                domDown: {
+                    domClass: 'dropload-down',
+                    domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData: '<div class="dropload-noData">已无数据</div>'
+                },
+                loadDownFn: function (me) {
+
+                    setTimeout(function () {
+
+                        if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                        $.ajax({
+                            type: 'POST',
+                            url: '/OutScale/LoadOutScaleC_User',
+                            data: { "pageIndex": tabPageIndexArray[itemIndex], "pageSize": tabPageSizeArray[itemIndex], "keyword": $("#QueryAgent").val().trim() },
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var result = "";
+                                tabPageIndexArray[itemIndex]++;
+                                if (data.RtnList.length > 0) {
+                                    for (var index = 0; index < data.RtnList.length; index++) {
+                                        if (itemIndex == 0) {
+                                            result += ""
+                                            + "<tr onclick=\"window.location.href = '/Warrant/AgentIndex/" + data.RtnList[index].UserName + "'\" >"
+                                            + "<td>" + data.RtnList[index].UserName + "</td>"
+                                            + "<td>" + data.RtnList[index].Name + "</td>"
+                                            + "<td>" + data.RtnList[index].Province + data.RtnList[index].City + "</td>"
+                                            + "</tr>";
+                                        }
+                                    }
+                                }
+                                else {
+                                    tabLoadEndArray[itemIndex] = true;
+                                }
+
+                                if (data.RtnList.length < tabPageSizeArray[itemIndex]) tabLoadEndArray[itemIndex] = true;
+
+                                $('.khfxPane').eq(itemIndex).append(result);
+                                me.resetload();
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

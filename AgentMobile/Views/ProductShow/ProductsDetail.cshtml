@@ -1,0 +1,69 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model Product
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>产品信息 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        @*<div class="fy_hddtxq_bt">
+                                产品参数
+                            </div>
+                            <div class="fy_hddtxq_nr">
+                                产品名称 : fsdfdff
+                            </div>
+                            <div class="fy_hddtxq_nr">
+                                颜色分类 : 黑色 红色
+                            </div>
+                            <div class="fy_hddtxq_nr">
+                                尺码 : 70C 75B
+                            </div>
+                            <div class="fy_hddtxq_nr">
+                                罩杯款式 : 3/4罩杯
+                            </div>*@
+
+                        @Html.Raw(HttpUtility.UrlDecode(Model.ImgTxtContent))
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

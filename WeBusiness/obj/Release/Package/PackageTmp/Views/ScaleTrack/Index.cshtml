@@ -1,0 +1,164 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>条码追踪</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/common/Datehelper.js?20190628"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 条码数据管理 <span class="c-gray en">&gt;</span> 条码追踪 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" method="post" id="condition">
+            <div class="text-c">
+                <button type="button" class="btn btn-secondary f-l">导入条码</button>
+                关键字：
+                <input type="text" name="SmallCode" id="" placeholder=" 请输入产品条码（SN码）" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="Search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 查询
+                </button>
+                <button name="" id="Export" onclick="Exports()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>状态</th>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        { 
+            <th>大标</th>
+            <th>中标</th>
+        }
+        else
+        { 
+            <th>大标</th>
+        }
+
+            <th>小标</th>
+            <th>导入时间</th>
+            <th>小标装箱时间</th>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        {
+            <th>中标装箱时间</th>
+        }
+
+            <th>入库时间</th>
+            <th>入库人员</th>
+            @if (PDAUserMsg.Param.IsIntoSupplier || PDAUserMsg.Param.IsLinkSupplier)
+            {
+                <th>供应商</th>
+            }
+            <th>出货时间</th>
+            <th>出货人员</th>
+            <th>出货单号</th>
+            <th>经销商</th>
+            <th>明细</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>{{html Status(ck.StateID)}}</td>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        {
+            <td>${ck.BigCode==""?"-":ck.BigCode}</td>
+        }
+            
+            <td>${ck.MiddleCode==""?"-":ck.MiddleCode}</td>
+            <td>${ck.SmallCode==""?"-":ck.SmallCode}</td>
+            <td>${formatDateTime(ck.CreateTime)}</td>
+            <td>${ck.LinkMidTime==0 || !ck.IsLinkMid?"-":formatDateTime(ck.LinkMidTime)}</td>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        {
+            <td>${ck.LinkBigTime==0 || !ck.IsLinkBig?"-":formatDateTime(ck.LinkBigTime)}</td>
+        }
+            
+            <td>${ck.IntoTime==0 || !ck.IsInto?"-":formatDateTime(ck.IntoTime)}</td>
+            <td>${ck.IntoPDAUser==""?"-":ck.IntoPDAUser}</td>
+            @if (PDAUserMsg.Param.IsIntoSupplier || PDAUserMsg.Param.IsLinkSupplier)
+            { 
+            <td>${ck.SupplierName}</td>
+            }
+            <td>${ck.OutTime==0 || !ck.IsOut?"-":formatDateTime_Two(ck.OutTime,3)}</td>
+            <td>${ck.OutPDAUser}</td>
+            <td>${ck.OutOrderNo}</td>
+            <td>${ck.Name}</td>
+            <td><a href="javascript:;" title="查看详细追踪" onclick="layer_show('条码追踪明细-${ck.SmallCode}', '/ScaleTrack/TrackDetail?SmallCode=${ck.SmallCode}', '550', '500')"><i class="Hui-iconfont">&#xe667;</i></a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/ScaleTrack/GetCodePage";
+    $("#Search").click(function () {
+        if ($("#Code").val() == "") {
+            layer.alert("条码不能为空！！");
+            return;
+        }
+        $.post("/ScaleTrack/GetCodePage", $("#condition").serialize(), function (data) {
+            $("#datahtml").empty();
+            $("#datajs").tmpl(data).appendTo("#datahtml");
+        });
+    });
+    function Exports() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/ScaleTrack/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+
+    function Status(id)
+    {
+        var stus = "启用";
+        switch (id)
+        {
+            case 0: stus = "<span style='color:#04b428;'>启用</span>"; break;
+            case 2: stus = "<span style='color:#0094ff;'>小标装箱</span>"; break;
+            case 3: stus = "<span style='color:#0075ca;'>中标装箱</span>"; break;
+            case 4: stus = "<span style='color:red;'>禁用</span>"; break;
+            case 6: stus = "<span style='color:#b9ce01;'>入库</span>"; break;
+            case 7: stus = "<span style='color:#ff6a00'>出货</span>"; break;
+            case 9: stus = "<span style='color:#999'>退货</span>"; break;
+        }
+
+        return stus;
+    }
+</script>

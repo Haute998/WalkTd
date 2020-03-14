@@ -1,0 +1,79 @@
+﻿/* 记录抽奖记录样式 */
+.jilu
+{
+    width: 100%;
+    background-color:#fff;
+}
+.jilu .wudu
+{
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    height: 100%;
+}
+.jilu .wudu .jltop
+{
+    padding: 10px 30px 10px 15px;
+    background: url(/images/system/my/cjbg.png)left 0 no-repeat;
+    background-size: 100% 100%;
+}
+.jilu .wudu .jltop dl
+{
+    width:100%;
+    overflow:hidden;
+}
+
+.jilu .wudu .jltop dl dt
+{
+    width:30%;
+    float:left;
+    text-align:center;
+}
+.jilu .wudu .jltop dl dt img
+{
+    height:80px;
+}
+.jilu .wudu .jltop dl dd
+{
+    color:#333;
+    line-height:25px;
+    font-size:0.9rem;
+    font-family:Microsoft YaHei;
+}
+.jilu .wudu .jltop dl dd.dd1
+{
+    padding-top:15px;
+}
+.jilu .wudu .jlbottom p
+{
+    font-family:Microsoft YaHei;
+    font-size:0.8rem;
+    color:#333;
+    line-height:40px;
+    text-indent:15px;
+    width:100%;
+}
+.jilu .wudu .jlbottom dl
+{
+    width:100%;
+    border-bottom:1px solid #ccc;
+    border-top:1px solid #ccc;
+    margin-bottom:2px;
+    font-family:Microsoft YaHei;
+}
+.jilu .wudu .jlbottom dl dd
+{
+    text-indent:15px;
+}
+.jilu .wudu .jlbottom dl dd.dd1
+{
+    font-size:0.6rem;
+    color:#666;
+    line-height:15px;
+}
+.jilu .wudu .jlbottom dl dd.dd2
+{
+    font-size:0.8rem;
+    color:#333;
+    line-height:25px;
+}

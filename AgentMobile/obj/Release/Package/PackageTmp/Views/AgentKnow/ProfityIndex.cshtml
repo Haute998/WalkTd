@@ -1,0 +1,69 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+    List<SYSPolicy> show = ViewData["SYSPolicy"] as List<SYSPolicy>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>素材中心 - 微商系统演示版</title>
+    <meta charset="utf-8">
+    <meta name="apple-touch-fullscreen" content="YES">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="pragram" content="no-cache">
+    <link rel="stylesheet" type="text/css" href="/css/PageMobile/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/PageMobile/endpic.css">
+    <script type="text/javascript" src="/js/PageMobile/offline.js"></script>
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+
+</head>
+<body class="s-bg-ddd pc no-3d" style="-webkit-user-select: none;">
+    <section class="u-alert">
+        <img style="display:none;" src="images/loading_large.gif">
+        <div class="alert-loading z-move">
+            <div class="cycleWrap">
+                <span class="cycle cycle-1"></span>
+                <span class="cycle cycle-2"></span><span class="cycle cycle-3"></span><span class="cycle cycle-4"></span>
+            </div>
+            <div class="lineWrap">
+                <span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span>
+            </div>
+        </div>
+    </section>
+    <section class="u-arrow">
+        <p class="css_sprite01"></p>
+    </section>
+    <section class="p-ct transformNode-2d" style="height: 907px;">
+        <div class="translate-back" style="height: 907px;">
+            @{for (int i = 0; i < show.Count; i++)
+            {
+                if (i == 0)
+                {
+                    <div class="m-page m-fengye" data-page-type="info_pic3" data-statics="info_pic3" style="height:70%;">
+                        <div class="page-con lazy-finish" data-position="50% 50%" data-size="cover" style=" background-size: cover; height: 909px; background-position: 50% 50%;">@Html.Raw(HttpUtility.UrlDecode(show[i].Contents))</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="m-page m-bigTxt f-hide" data-page-type="bigTxt" data-statics="info_list" style="height:70%;">
+                        <div class="page-con lazy-finish" data-position="50% 50%" data-size="cover" style=" background-size: cover; height: 909px; background-position: 50% 50%;"> @Html.Raw(HttpUtility.UrlDecode(show[i].Contents))</div>
+                    </div>
+                }
+            }
+            }
+        </div>
+    </section>
+    <script src="/js/PageMobile/init.mix.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/PageMobile/coffee.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/PageMobile/99_main.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>

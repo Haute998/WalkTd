@@ -1,0 +1,570 @@
+﻿/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */
+{
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei;
+}
+/** 设置默认字体 **/
+body, button, input, select, textarea /* for ie */
+{
+    font: 14px/1.5, "Microsoft YaHei" , sans-serif;
+}
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address, cite, dfn, em, var
+{
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp
+{
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small
+{
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol
+{
+    list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a
+{
+    text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+sup
+{
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub
+{
+    vertical-align: text-bottom;
+}
+
+/** 重置表单元素 **/
+legend
+{
+    color: #000;
+}
+/* for ie6 */
+fieldset, img
+{
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea
+{
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video
+{
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"]
+{
+    -webkit-appearance: none;
+}
+
+textarea
+{
+    -webkit-appearance: none;
+}
+/* 去掉高光样式 */
+input:focus, textarea:focus
+{
+    outline: none;
+}
+
+input:focus, img:focus
+{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+#page1
+{
+    height: 100%;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.tcrj_index
+{
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+/*-----------------------------代理信息--------------------------*/
+.tcrj_dlxx
+{
+    height: 29%;
+    background-image:url('/images/tcrjbg.png');
+}
+
+.tcrj_dlxx div
+{
+    height: 68%;
+}
+
+.tcrj_dlxx div.left
+{
+    width: 32%;
+    padding-top: 10%;
+    float: left;
+    text-align: center;
+}
+
+.tcrj_dlxx div.left img
+{
+    height: 50%;
+    padding-top:15%;
+}
+
+.tcrj_dlxx div.right
+{
+    width: 68%;
+    height: 98%;
+    float: right;
+    position: relative;
+}
+
+.fwcs_up
+{
+    position: absolute;
+    max-width: 640px;
+    margin: 0 auto;
+    width: 95%;
+    top: 15%;
+    border-left: 3px solid white;
+}
+
+.fwcs_up table
+{
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.fwcs_up table tr td
+{
+    line-height: 170%;
+}
+
+.fwcs_up table tr td.td1
+{
+    color: #fff;
+    font-size: 0.6rem;
+    font-family: Microsoft YaHei;
+    text-align: left;
+    border-bottom: 1px solid white;
+}
+
+.fwcs_up table tr td.td2
+{
+    width: 70%;
+    color: #fff;
+    font-size: 0.6rem;
+    font-family: Microsoft YaHei;
+    text-align: right;
+    border-bottom: 1px solid white;
+}
+/*-----------------------------服务热线--------------------------*/
+.tcrj_fwdh .fwdh_hight
+{
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+}
+
+.tcrj_fwdh .fwdh_hight div
+{
+    overflow: hidden;
+    height: 100%;
+}
+
+.tcrj_fwdh .fwdh_hight .rxdh
+{
+    width: 84%;
+    float: left;
+}
+
+.tcrj_fwdh .fwdh_hight .rxdh img
+{
+    width: 74%;
+    position: absolute;
+    top: 40%;
+    left: 15px;
+}
+
+.tcrj_fwdh .fwdh_hight .login-header
+{
+    width: 16%;
+    float: right;
+    text-align: center;
+    background-color: rgba(255,255,255,0.5);
+}
+
+.tcrj_fwdh .fwdh_hight .login-header a
+{
+    display: block;
+}
+
+.tcrj_fwdh .fwdh_hight .login-header img
+{
+    width: 60%;
+    padding-top: 10%;
+}
+
+.tcrj_fwdh .fwdh_hight .login-header div
+{
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 1rem;
+    position: relative;
+    top: -2px;
+}
+@media \0screen\,screen\9 
+{ /* 只支持IE6、7、8 */
+    .tcrj_fwdh .fwdh_hight .login-header {
+        background-color: #fff;
+        filter: Alpha(opacity=50);
+        position: static; /* IE6、7、8只能设置position:static(默认属性) ，否则会导致子元素继承Alpha值 */
+        *zoom: 1; /* 激活IE6、7的haslayout属性，让它读懂Alpha */
+    }
+}
+.login-bg a
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.login-bg a input.none
+{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    border: 0;
+    background: #000;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+}
+/*-----------------------------轮换图片-------------------
+.tcrj_index .ems_global
+{
+    height:67%;
+    overflow:hidden;
+}-------*/
+.scroll
+{
+    margin: 0px auto;
+    max-width: 640px;
+    position: relative;
+}
+
+.scroll_box
+{
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+}
+
+.scroll_wrap
+{
+    overflow: hidden;
+    position: relative;
+}
+
+.scroll_wrap li
+{
+    position: relative;
+    display: block;
+    width: 100%;
+    float: left;
+}
+
+.scroll_wrap li a
+{
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.scroll_position
+{
+    position: absolute;
+    left: 46%;
+    z-index: 400;
+    bottom: 5px;
+    margin-left: 10px;
+}
+
+.scroll_position li
+{
+    display: inline-block;
+    z-index: -9999;
+}
+
+.scroll_position li a
+{
+    width: 9px;
+    height: 9px;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none;
+    float: left;
+    background: url(../images/fwdiandian.png);
+    background-size: 100% 100%;
+    z-index: -9999;
+    font-size: 0px;
+    border-radius: 50%;
+    opacity: 0.85;
+}
+
+.scroll_position li a.on
+{
+    background: url(../images/fwdiandianthis.png);
+    background-size: 100% 100%;
+    border-radius: 50%;
+}
+
+.scroll_position_bg
+{
+    position: absolute;
+    bottom: 5px;
+    left: 45%;
+    padding: 0 15px;
+    z-index: 380;
+    height: 20px;
+    border-radius: 26px;
+}
+
+/*-----------------------------首页样式--------------------------*/
+.fy_index_cd
+{
+    background: url(../images/lm.png)center 10px no-repeat;
+    background-size: 100% 94%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.fy_index_cd .fwcs_cnetent
+{
+    height: 100%;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj
+{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td
+{
+    width: 33.3%;
+    height: 100%;
+    text-align: center;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl
+{
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl a:hover
+{
+    text-decoration: none;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.ff
+{
+    top: 35px;
+    left: 28px;
+    position: relative;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.kk
+{
+    top: 35px;
+    right: 28px;
+    position: relative;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.aa
+{
+    position: relative;
+    top: -36px;
+    left: 30px;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.bb
+{
+    position: relative;
+    top: -36px;
+    right: 30px;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.cc
+{
+    right: 7px;
+    position: relative;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.dd
+{
+    left: 7px;
+    position: relative;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.gg dt
+{
+    width: 40%;
+    float: left;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.gg dd
+{
+    width: 60%;
+    float: right;
+    text-align: left;
+    line-height: 25px;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.dl2
+{
+    left: 0%;
+    position: relative;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl a
+{
+    width: 100%;
+    display: block;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl dt
+{
+    text-align: center;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl dt img
+{
+    width: 30px;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.dl2 dt
+{
+    text-align: center;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.dl2 dt img
+{
+    float: right;
+    padding-right: 30px;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl.dl2 dd
+{
+    float: left;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.fy_index_cd .fwcs_cnetent .dfkj tr td dl dd
+{
+    width: 100%;
+    color: #fff;
+    font-family: Microsoft YaHei;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.fy_index_cd .fwcs_cnetent .gd1
+{
+    height: 38%;
+}
+
+.fy_index_cd .fwcs_cnetent .gd2
+{
+    height: 31%;
+}
+
+.fy_index_cd .fwcs_cnetent .gd2 tr td
+{
+    width: 33.3%;
+}
+
+.login
+{
+    width: 90%;
+    max-width: 640px;
+    margin: 0 auto;
+    position: fixed;
+    height: 370px;
+    top: 39%;
+    left: 5%;
+    display: none;
+    z-index: 9999;
+    margin-top: -140px;
+}
+
+.login-bg
+{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background: #000;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    -khtml-opacity: 0.7;
+    opacity: 0.7;
+    display: none;
+}

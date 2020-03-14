@@ -1,0 +1,204 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<Product> ProductList = Product.GetEntitysAll();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>出货记录</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+        td a i {
+            font-size:16px;
+            color:#005ec3;
+        }
+        .select-box {
+            width: 200px;
+        }
+    </style>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/layout/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 仓库管理 <span class="c-gray en">&gt;</span> 出货记录 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" method="post" id="condition">
+            <input name="orderby" type="hidden" value="" />
+            <div class="text-c">
+                <button type="button" class="btn btn-danger f-l" onclick="BatchDeleteOut()">删除选中出货项</button>
+                <span class="js-nospan">
+                    出货时间：
+                    <input type="text" name="DatCreateB" id="" placeholder=" 请输入时间" style="width: 100px" class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" autocomplete="off" readonly="readonly" />
+                    至
+                    <input type="text" name="DatCreateE" id="" placeholder=" 请输入时间" style="width: 100px" class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" autocomplete="off" readonly="readonly" />
+                </span>
+                出货单号：
+                <input type="text" name="OutOrderNo" placeholder=" 请输入单号" style="width:135px;" class="input-text" />
+                产品：
+                <span class="select-box">
+                    <select class="select" size="1" name="ProductNumber">
+                        <option value="" selected>——全部——</option>
+                        @foreach (Product p in ProductList)
+                        {
+                            <option value="@p.ProductNumber">@p.ProductName</option>
+                        }
+                    </select>
+                </span>
+                条码：
+                <input type="text" name="KeyWord" id="" placeholder=" 请输入条码编号" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th><input type="checkbox" name="allChk" onclick="checkall(this)" /></th>
+            <th class="js-sortfleld sorting" data-fleld="O_ID" onclick="tosort(this)">
+                出货单号
+            </th>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        { 
+            <th>大标</th>
+            <th>中标</th>  
+        }
+        else
+        { 
+            <th>大标</th>
+        }
+            
+            <th>小标</th>
+            <th>产品图片</th>
+            <th>产品编号</th>
+            <th class="js-sortfleld sorting" data-fleld="ProductName" onclick="tosort(this)">产品名称</th>
+            <th class="js-sortfleld sorting" data-fleld="C_Name" onclick="tosort(this)">经销商</th>
+            <th>出货时间</th>
+            <th>出货员</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td><input type="checkbox" class="chk" name="chk" onclick="cklst(this);" value="${ck.SmallCode}" /></td>
+            <td>${ck.OutOrderNo}</td>
+            @if (PDAUserMsg.Param.MiddlePacking)
+            { 
+            <td>${ck.BigCode}</td>
+            }
+            <td>${ck.MiddleCode}</td>
+            <td>${ck.SmallCode}</td>
+            <td><img src="${ck.ProductImg}" width="40" height="40" /></td>
+            <td>${ck.ProductNumber}</td>
+            <td>${ck.ProductName}</td>
+            <td>${ck.C_Name}</td>
+            <td>${formatDateTime(ck.OutTime)}</td>
+            <td>${ck.OutPDAUser}</td>
+            <td>
+                @*<a title="查看产品条码" href="javascript:;"
+                   onclick="layer_show('查看出货产品条码明细(出货单号:${ck.O_ID})', '/OutStock/OutSmallStockDetailIndex?O_ID=${ck.O_ID}&&P_Number=${ck.ProductNumber}', '900', '500')" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe6f9;</i>
+                </a>*@
+
+                <a title="删除此出货" href="javascript:;" onclick="DeleteOutStock('${ck.SmallCode}', this)"><i class="Hui-iconfont">&#xe609;</i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script type="text/javascript">
+    var dataUrl = "/OutStock/GetBigCodePage";
+
+    //全选或全不选
+    function checkall(obj) {
+        if ($(obj).is(":checked")) {
+            $("input[name='chk']").prop("checked", 'true');
+        }
+        else {
+            $("input[name='chk']").removeAttr("checked");
+        }
+    }
+
+    function cklst(obj) {
+
+        if ($(obj).is(":checked") == false) {
+            $("input[name='allChk']").removeAttr("checked");
+        }
+    }
+
+    function BatchDeleteOut()
+    {
+        var StrId = "";
+        $(".chk").each(function () {
+            if ($(this).is(":checked")) {
+                if (StrId != "") StrId += ",";
+                StrId += "'" + $(this).val() + "'";
+            }
+        });
+
+        if (StrId == "") {
+            layer.msg("没有选中项可以删除！");
+            return;
+        }
+        
+        layer.confirm('确认要删除此出货项吗？', function (index) {
+            $.post("/OutStock/DelOutStockCode", { CodeSet: StrId }, function (data) {
+                layer.closeAll();
+                if (data == "ok") {
+                    location.replace(location.href);
+                }
+                else {
+                    layer.open({ content: data, btn: "知道了" });
+                }
+            });
+        });
+    }
+
+    function DeleteOutStock(StrId, obj) {
+        StrId = "'" + StrId + "'";
+        layer.confirm('确认要删除此出货项吗？', function (index) {
+
+            $.post("/OutStock/DelOutStockCode", { CodeSet: StrId }, function (data) {
+                layer.closeAll();
+                if (data == "ok") {
+                    $(obj).parent().parent().remove();
+                }
+                else {
+                    layer.open({ content: data, btn: "知道了" });
+                }
+            });
+        });
+    }
+</script>

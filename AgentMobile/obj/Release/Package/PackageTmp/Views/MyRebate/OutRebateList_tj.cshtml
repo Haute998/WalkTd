@@ -1,0 +1,275 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    string dattype = ViewData["dattype"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>应付返利列表 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .jlxq {
+            border-bottom: none;
+        }
+
+            .jlxq .div2 table {
+                border-bottom: 1px solid #777776;
+                width: 100%;
+            }
+
+                .jlxq .div2 table.gfh tr td {
+                    font-weight: bold;
+                    height: 20px;
+                    line-height: 20px;
+                    color: #332c2b;
+                }
+
+            .jlxq .div2 .fy_cpchmx_table1 tr td {
+                background-color: #fefefe;
+                padding: 5px;
+                color: #737373;
+                width: 25%;
+                text-align: center;
+                font-size: 12px;
+                word-break: break-all;
+                border-left: 1px solid #777776;
+            }
+        .jlmx table {
+            margin-top: 10px;
+        }
+
+        .jlmx table {
+            border-right: none;
+            border-left: none;
+            border-bottom: none;
+            border-top: 1px solid #cfcfd0;
+        }
+
+            .jlmx table tr th {
+                border-bottom: 1px solid #cfcfd0;
+            }
+
+            .jlmx table tr td {
+                border-right: none;
+            }
+
+        #mainMenuBar table {
+            width: 100%;
+            border-bottom: 1px solid #cfcfd0;
+            border-top: 1px solid #cfcfd0;
+        }
+
+            #mainMenuBar table tr td {
+                width: 14.5%;
+                color: #333;
+                font-size: 12px;
+                text-align: center;
+                border-right: 1px solid #cfcfd0;
+            }
+
+                #mainMenuBar table tr td a {
+                    color: #333;
+                }
+
+                #mainMenuBar table tr td.shzt {
+                    color: #ef8888;
+                }
+
+
+        .tdfocus {
+            background-color: #cfcfd0;
+        }
+
+    </style>
+</head>
+<body style="background: rgb(235, 235, 235);">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        <table class="tt2">
+                            <tr>
+                                <td class="td1">
+                                    月份：
+                                </td>
+                                <td class="td4">
+                                    <input type="hidden" name="Cat" value="推荐返利" />
+                                    @if (dattype == "lastmon")
+                                    {
+                                        DateTime lastMonDat = DateTime.Now.AddMonths(-1);
+
+                                        <label>@(lastMonDat.ToString("yyyy年MM月"))</label>
+                                        <input type="hidden" name="DatCreateMon" value="@(lastMonDat.ToString("yyyy/MM"))" />
+                                    }
+                                    else
+                                    {
+                                        <input type="month" name="DatCreateMon" />
+                                    }
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    关键词：
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="tt3">
+                            <tr>
+                                <td class="td2">
+                                    <input id="keyword" name="keyword" type="text" placeholder="输入返利人" style="background: url(/images/66.png)center 0px no-repeat;
+                                    background-size: 100% 100%;" />
+                                </td>
+                                <td class="td3" id="search">
+                                    <img src="/images/99.png" alt="" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                 
+                    <div style="width: 100%;">
+                        <div class="jlmx">
+                            <button id="xqhtml" onclick="Loadxqs(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="xqtmp">
+    {{each(i,ck) RtnList}}
+    <table class="js-orderstab" data-tabid="${ck.OrderNo}">
+        <tr>
+            <th colspan="2">
+                ${ck.年}年${ck.月}月
+            </th>
+            <th style="text-align: center; padding-left: 0; color: #3b4481;" rowspan="1">
+                ${ck.State}
+            </th>
+        </tr>
+        <tr class="tr1" style="border-bottom: 1px solid #c6c4cb;">
+            <td class="td1" colspan="3">
+                <ul>
+                    <li>姓名:${ck.Name}</li>
+                    <li>手机号:${ck.Phone}</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th colspan="2" style="color: #434141; height: 30px; line-height: 30px;">
+                返利合计 : ${ck.返利合计}元
+            </th>
+            <th style="height: 30px; line-height: 30px; text-align: right; padding-right: 15px;" colspan="2">
+                {{if ck.State=="未发放"}}
+                <button type="button" style="border: 1px solid #049d8f; padding: 3px 8px; color: #049d8f;" data-id="${ck.R_People}" data-mon="${ck.年}/${ck.月}" onclick="tosend(this)">发放</button>
+
+                {{/if}}
+                <button type="button" onclick="location.href = '/MyRebate/OutRebateDetail_tj?ID=${ck.R_People}&mon=${ck.年}-${ck.月}'" style="border: 1px solid #323232; padding: 3px 8px; color: #323232; ">查看明细</button>
+            </th>
+
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 5px; background: none; border-bottom: none;"></td>
+        </tr>
+    </table>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        Loadxqs($("#xqhtml"));
+        $("#search").click(function () {
+            $("#xqhtml").attr("data-pageindex", 1);
+            $(".js-xqs").remove();
+            Loadxqs($("#xqhtml"));
+        });
+    })
+
+    function Loadxqs(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        var json = $("#form1").serializeArray();
+        json.push({ "pageIndex": gopage, "pageSize": 10 });
+        $.post("/MyRebate/LoadOutRebateList", json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#xqtmp").tmpl(data).insertBefore('#xqhtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+    //发放
+    function tosend(obj)
+    {
+            var id = $(obj).attr("data-id");
+            var mon = $(obj).attr("data-mon");
+            layer.open({
+                content: '确认要发放吗？'
+       , btn: ['确定', '不要']
+       , yes: function (index) {
+           loading = layer.open({ type: 2, content: '发放中' });
+           $.post("/MyRebate/GetUpdateNoRebate", { "ID": id, "mon": mon, "cat": "tj" }, function (rtn) {
+               layer.close(loading);
+               if (rtn == "ok") {
+                   location.reload();
+                   layer.close(index);
+               }
+               else {
+                   layer.open({
+                       content: rtn
+     , btn: '我知道了'
+                   });
+
+               }
+           })
+       }
+            });
+
+    }
+</script>

@@ -1,0 +1,372 @@
+﻿@charset 'utf-8';
+
+body {
+    background: #ebebeb;
+}
+
+.code {
+    position: fixed;
+    right: 5%;
+    bottom: 10%;
+    width: 40px;
+    height: 40px;
+}
+
+    .code img {
+        width: 100%;
+    }
+
+.QLR-home1,
+.QLR-home2 {
+    width: 100%;
+    text-align: center;
+}
+
+    .QLR-home1 img {
+        width: 33%;
+        padding: 8vh 0;
+    }
+
+    .QLR-home2 table {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+        .QLR-home2 table tr td {
+            width: 100%;
+            padding-bottom: 2vh;
+        }
+
+            .QLR-home2 table tr td dl {
+                width: 85%;
+                margin: 0 auto;
+            }
+
+                .QLR-home2 table tr td dl a {
+                    display: block;
+                    overflow: hidden;
+                }
+
+                .QLR-home2 table tr td dl dt {
+                    text-align: center;
+                }
+
+                    .QLR-home2 table tr td dl dt img {
+                        width: 100%;
+                    }
+
+.QLR-home4 {
+    width: 100%;
+    text-align: left;
+    color: #333;
+    font-size: 16px;
+}
+
+    .QLR-home4 dl {
+        width: 85%;
+        margin: 0 auto;
+    }
+
+        .QLR-home4 dl dd {
+            line-height: 35px;
+        }
+
+.QLR-home5 {
+    width: 85%;
+    margin: 2vh auto 0 auto;
+    text-align: left;
+    color: #333;
+    font-size: 14px;
+}
+
+
+    .QLR-home5 dl {
+        margin-bottom: 1vh;
+        border: 1px solid #afb0b2;
+        background: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+        .QLR-home5 dl dd input {
+            float: left;
+        }
+
+            .QLR-home5 dl dd input.su {
+                width: 85%;
+                height: 40px;
+                border: 0;
+                background: #fff;
+                text-indent: 10px;
+                font-size: 14px;
+            }
+
+            .QLR-home5 dl dd input.PERFECTsm1 {
+                width: 15%;
+                height: 40px;
+                border: 0;
+                background: #fff;
+                background: url(/images/PERFECTsm.png) top 3px right 5px no-repeat;
+                background-size: 70% 80%;
+            }
+
+        .QLR-home5 dl dd img {
+            height: 26px;
+            float: left;
+            position: relative;
+            top: 6px;
+            left: 10px;
+        }
+
+
+.QLR-home6 {
+    text-align: center;
+    margin-top: 10vh;
+}
+
+    .QLR-home6 input {
+        width: 80%;
+        height: 40px;
+        color: #fff;
+        border: 0;
+        font-size: 16px;
+        background: url(../images/TCbg2.png);
+        background-size: 100% 100%;
+    }
+
+.QLR-home7 {
+    text-align: center;
+    color: #333;
+    font-size: 18px;
+    letter-spacing: 1px;
+    padding-bottom: 3vh;
+}
+
+    .QLR-home7 img {
+        width: 25%;
+    }
+
+
+
+.QLR-home8 {
+    width: 100%;
+    text-align: left;
+    color: #333;
+    font-size: 14px;
+    padding-top: 3vh;
+    border-top: 5px solid #ebebeb;
+}
+
+    .QLR-home8 dl {
+        width: 85%;
+        margin: 0 auto;
+    }
+
+        .QLR-home8 dl dd {
+            line-height: 35px;
+        }
+
+            .QLR-home8 dl dd input {
+                background: #fff;
+                width: 100%;
+                height: 35px;
+                text-indent: 5px;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+
+
+.ems_top1 p {
+    color: #333;
+    padding: 0 5%;
+    font-size: 14px;
+    font-family: Microsoft YaHei;
+}
+
+.zhuce {
+    width: 85%;
+    margin: 0 auto;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #666;
+}
+
+.HH_div1 {
+    overflow: hidden;
+    background: url(../images/TCbg1.png);
+    background-size: 100% 100%;
+}
+
+    .HH_div1 div {
+        float: left;
+        padding: 12px 0;
+    }
+
+        .HH_div1 div.left {
+            width: 60%;
+        }
+
+            .HH_div1 div.left dl dt {
+                width: 80px;
+                height: 60px;
+                float: left;
+                text-align: center;
+            }
+
+                .HH_div1 div.left dl dt img {
+                    height: 60px;
+                    width: 60px;
+                    border-radius: 100%;
+                }
+
+            .HH_div1 div.left dl dd {
+                line-height: 20px;
+                font-size: 14px;
+                color: #fff;
+            }
+
+                .HH_div1 div.left dl dd.t {
+                    padding-top: 10px;
+                }
+
+        .HH_div1 div.right {
+            width: 40%;
+            text-align: center;
+        }
+
+            .HH_div1 div.right input {
+                border: 1px solid #fff;
+                color: #fff;
+                font-size: 14px;
+                border-radius: 5px;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                width: 60%;
+                height: 30px;
+                background-color: transparent;
+                position: relative;
+                top: 18px;
+            }
+
+.HH_div2 table {
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+}
+
+    .HH_div2 table tr td {
+        width: 50%;
+        padding: 10px 0;
+        border-bottom: 1px solid #d2d2d2;
+        font-size: 14px;
+        line-height: 20px;
+        color: #737373;
+    }
+
+        .HH_div2 table tr td div a {
+            display: block;
+        }
+
+        .HH_div2 table tr td div span {
+            padding-right: 5px;
+        }
+
+        .HH_div2 table tr td div em {
+            color: #ff7a3f;
+            font-size: 16px;
+        }
+
+        .HH_div2 table tr td.left {
+            border-right: 1px solid #d2d2d2;
+        }
+
+        .HH_div2 table tr td div img {
+            width: 20px;
+            padding-left: 27%;
+            position: relative;
+            top: 3px;
+        }
+
+.HH_div3 {
+    width: 100%;
+    margin-top: 5px;
+}
+
+    .HH_div3 p.p1 {
+        color: #353535;
+        font-size: 15px;
+        margin: 0;
+        line-height: 35px;
+        background: #fff;
+        padding: 0 3%;
+    }
+
+.HH_div4 {
+    overflow: hidden;
+    margin-bottom: 5px;
+    background: #fff;
+}
+
+    .HH_div4 dl {
+        overflow: hidden;
+        padding: 10px 3%;
+        text-align: center;
+    }
+
+        .HH_div4 dl dt,
+        .HH_div4 dl dt img {
+            width: 100%;
+        }
+
+        .HH_div4 dl dd div {
+            float: left;
+            padding-top: 10px;
+        }
+
+            .HH_div4 dl dd div.left {
+                width: 70%;
+            }
+
+                .HH_div4 dl dd div.left p {
+                    margin: 0;
+                    font-size: 14px;
+                    text-align: left;
+                }
+
+                    .HH_div4 dl dd div.left p span {
+                        padding-right: 5px;
+                        color: #737373;
+                    }
+
+                        .HH_div4 dl dd div.left p span img {
+                            width: 20px;
+                            position: relative;
+                            top: 4px;
+                        }
+
+                    .HH_div4 dl dd div.left p em {
+                        color: #ff7a3f;
+                        font-size: 13px;
+                        padding-right: 5px;
+                    }
+
+            .HH_div4 dl dd div.right {
+                width: 30%;
+            }
+
+                .HH_div4 dl dd div.right input {
+                    border: 0;
+                    border: 1px solid #2a7cec;
+                    color: #fff;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    appearance: none;
+                    -moz-appearance: none;
+                    -webkit-appearance: none;
+                    width: 85%;
+                    height: 30px;
+                    background: #2a7cec;
+                    position: relative;
+                    top: 3px;
+                }

@@ -1,0 +1,103 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model List<SYSMNotify>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>代理手机端公告</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field site-demo-button">
+        <div>
+            <button class="layui-btn layui-btn-radius" onclick="add(this)">添加</button>
+        </div>
+    </fieldset>
+    <blockquote class="layui-elem-quote">代理手机端代理后台会显示排序最高的前<span style="color:red">5</span>个公告</blockquote>
+    <table class="layui-table" style="margin: 20px; text-align: center">
+        <thead>
+            <tr>
+                <td>标题</td>
+                <td>链接</td>
+                <td>创建时间</td>
+                <td>创建人</td>
+                <td>修改时间</td>
+                <td>修改人</td>
+                <td>排序</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (SYSMNotify notify in Model)
+            {
+                <tr>
+                    <td>@(notify.Title)</td>
+                    <td width="40%">@(notify.Url)</td>
+                    <td>@(notify.DatCreate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    <td>@(notify.OperCreate)</td>
+                    <td>@(notify.DatEdit.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    <td>@(notify.OperEdit)</td>
+                    <td>@(notify.Sort)</td>
+                    <td>
+                        <a href="javascript:void(0)" title="修改" onclick="edit(this)" data-id="@(notify.ID)"> <i class="layui-icon" title="修改">&#xe642;</i></a>
+                        <a href="javascript:void(0)" title="删除" data-id="@(notify.ID)" onclick="del(this)"> <i class="layui-icon" title="删除">&#xe640;</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+<script>
+
+    function edit(obj) {
+        var id = $(obj).attr("data-id");
+        var index = layer.open({
+            type: 2,
+            title: "代理手机端公告修改",
+            area: ['900px', '500px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/SYSMNotify/Edit/' + id
+        });
+        layer.full(index);
+    }
+
+    function add(obj) {
+        var index = layer.open({
+            type: 2,
+            title: "代理手机端公告添加",
+            area: ['900px', '500px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/SYSMNotify/Add/'
+        });
+        layer.full(index);
+    }
+    function del(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要删除吗？', function (index) {
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url: "/SYSMNotify/ToDel",
+                data: { id: id },
+                type: "post",
+                success: function (data) {
+                }
+            });
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!', { icon: 1, time: 1000 });
+        });
+    }
+</script>

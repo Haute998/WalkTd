@@ -1,0 +1,211 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    string mon = ViewData["mon"].ToString();
+    C_UserVM user = ViewData["user"] as C_UserVM;
+    DateTime DatMon = new DateTime();
+    DateTime.TryParse(mon, out DatMon);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>应付返利明细 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .jlxq {
+            border-bottom: none;
+        }
+
+            .jlxq .div2 table {
+                border-bottom: 1px solid #777776;
+                width: 100%;
+            }
+
+                .jlxq .div2 table.gfh tr td {
+                    font-weight: bold;
+                    height: 20px;
+                    line-height: 20px;
+                    color: #332c2b;
+                }
+
+            .jlxq .div2 .fy_cpchmx_table1 tr td {
+                background-color: #fefefe;
+                padding: 5px;
+                color: #737373;
+                width: 25%;
+                text-align: center;
+                font-size: 12px;
+                word-break: break-all;
+                border-left: 1px solid #777776;
+            }
+    </style>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        <table class="tt2">
+                            <tr>
+                                <td class="td1">
+                                    姓名：
+                                </td>
+                                <td class="td2">
+                                    @(user.Name)
+                                    <input type="hidden" name="UserName" value="@(user.UserName)" />
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td class="td3">
+                                    月份：
+                                </td>
+                                <td class="td4">
+                                    <input type="hidden" name="Cat" value="推荐返利" />
+
+
+                                    <label>@(DatMon.ToString("yyyy年MM月"))</label>
+                                    <input type="hidden" name="DatCreateMon" value="@(DatMon.ToString("yyyy/MM"))" />
+
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    关键词：
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="tt3">
+                            <tr>
+                                <td class="td2">
+                                    <input id="keyword" name="keyword" type="text" placeholder="输入订单号" style="background: url(/images/66.png)center 0px no-repeat;
+                                    background-size: 100% 100%;" />
+                                </td>
+                                <td class="td3" id="search">
+                                    <img src="/images/99.png" alt="" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="width: 90%; padding: 0 0 20px 0; margin: 0 auto; /*这里放查询结果*/">
+                        <div class="jlxq">
+                            <div class="div1">
+                                返利详情
+                            </div>
+                            <div class="div2" id="xqlist">
+                                <table class="fy_cpchmx_table1 gfh">
+                                    <tr>
+                                        <td style="border-left: none;">
+                                            订单号
+                                        </td>
+                                        <td>下单人</td>
+                                        <td>推荐类型</td>
+                                        <td>
+                                            返利金额
+                                        </td>
+                                        <td>
+                                            状态
+                                        </td>
+                                    </tr>
+                                </table>
+
+
+                                <button id="xqhtml" onclick="Loadxqs(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="index.aspx">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="xqtmp">
+    {{each(i,ck) RtnList}}
+    <table class="fy_cpchmx_table1 js-xqs">
+        <tr>
+            <td style="border-left: none;">
+                ${ck.OrderNo}
+            </td>
+            <td>
+                ${ck.order_CName}
+            </td>
+            <td>${ck.tjType}级</td>
+            <td>
+                ${ck.Money}
+            </td>
+            <td>
+                ${ck.State}
+            </td>
+        </tr>
+    </table>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        Loadxqs($("#xqhtml"));
+        $("#search").click(function () {
+            $("#xqhtml").attr("data-pageindex", 1);
+            $(".js-xqs").remove();
+            Loadxqs($("#xqhtml"));
+        });
+    })
+
+    function Loadxqs(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        var json = $("#form1").serializeArray();
+        json.push({ "pageIndex": gopage, "pageSize": 10 });
+        $.post("/MyRebate/LoadOutRebateDetail", json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#xqtmp").tmpl(data).insertBefore('#xqhtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+</script>

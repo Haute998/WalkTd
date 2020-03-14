@@ -1,0 +1,635 @@
+﻿@using WeModels
+@{
+    Layout = null;
+
+    PDAParam param = ViewBag.Param as PDAParam;
+}
+@model List<PDA>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.0" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+
+    <title>PDA管理</title>
+
+    <style type="text/css">
+        #AddDiv {
+            display: none;
+        }
+
+        .lookPDA {
+            color: #808080;
+        }
+
+            .lookPDA:hover {
+                color: #026a9f;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+        .editUser:hover {
+            color: #026a9f;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .layui-text {
+            line-height: 22px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top:3px;
+            margin-left: 10px;
+        }
+
+        /*#OrderRtn .layui-form-checked[lay-skin=primary] i {
+            border-color: #5FB878;
+            background-color: #5FB878;
+            color: #fff;
+        }*/
+
+        .layui-form-item .layui-rowbg > div.layui-form-checked[lay-skin=primary]:nth-child(2) i {
+            border-color: #0094ff;
+            background-color: #0094ff;
+        }
+
+        .product + .layui-form-checked[lay-skin=primary] i {
+            border-color: #0094ff;
+            background-color: #0094ff;
+        }
+
+        .product + .layui-form-checkbox i:hover {
+            border-color: #0094ff;
+        }
+
+        .supplier + .layui-form-checked[lay-skin=primary] i {
+            border-color: #0094ff;
+            background-color: #0094ff;
+        }
+        .supplier + .layui-form-checkbox i:hover {
+            border-color: #0094ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layui-row grid-demo grid-demo-bg1">
+        <div class="layui-col-md12" style="border-bottom:1px solid #e5e5e5; padding:8px 15px;">
+            <span class="layui-breadcrumb" lay-separator=">">
+                <a href=""><i class="layui-icon">&#xe68e;</i>&nbsp;首页</a>
+                <a href="">系统管理</a>
+                <a href="">PDA管理</a>
+            </span>
+            <a style="float:right;" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon">&#xe669;</i></a>
+        </div>
+        <div class="layui-col-md12" style="padding-left:25px; padding-right:10px;">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">设备管理</li>
+                    <li>参数设置</li>
+                    <li>PDA用户</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <button class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon">&#xe654;</i>添加设备</button>
+                        <div class="page-container">
+                            <table class="layui-table">
+                                <thead>
+                                    <tr class="text-c">
+                                        <th>
+                                            序列号
+                                        </th>
+                                        <th>
+                                            设备SN号
+                                        </th>
+                                        <th>
+                                            所属供应商
+                                        </th>
+                                        <th>
+                                            所属地区
+                                        </th>
+                                        <th>
+                                            状态
+                                        </th>
+                                        <th>
+                                            操作
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var model in Model)
+                                    {
+                                        <tr class="text-c">
+                                            <td>
+                                                @(model.Keys)
+                                            </td>
+                                            <td>
+                                                @(model.SN)
+                                            </td>
+                                            <td>@(model.Supplier)</td>
+                                            <td>
+                                                @(model.Address)
+                                            </td>
+                                            <td>
+                                                @(model.State)
+                                            </td>
+                                            <td>
+                                                @if (model.State == "启用")
+                                                {
+                                                    <a style="text-decoration: none" onclick="toPublish(this, '禁用', '@(model.ID)')" href="javascript:;" title="禁用"><i class="layui-icon">&#xe673;</i></a>
+                                                }
+                                                else
+                                                {
+                                                    <a style="text-decoration: none" onclick="toPublish(this, '启用', '@(model.ID)')" href="javascript:;" title="启用"><i class="layui-icon">&#xe672;</i></a>
+                                                }
+                                                <a title="编辑" href="javascript:;" onclick="admin_edit('PDA修改', '/PDA/Edit/@(model.ID)', '@(model.ID)', '380px', '200px')" class="ml-5 edit" style="text-decoration: none">
+                                                    <i class="layui-icon">&#xe642;</i>
+                                                </a>
+                                                @if (ViewData["ss"] == "显示")
+                                                {
+                                                    <a title="删除" href="javascript:;" onclick="admin_del(this,'@(model.ID)')"
+                                                       class="ml-5 delete" style="text-decoration: none"><i class="layui-icon">&#x1007;</i></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+
+                        <form class="layui-form layui-form-pane" action="">
+                            <div class="layui-form-item" pane>
+                                <label class="layui-form-label">扫码流程：</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="" title="套标入库" lay-skin="primary" @Html.Raw(param.IsSetLbl ? "checked" : "")>
+                                    <input type="radio" name="into" lay-filter="into" value="0" title="单标入库" @Html.Raw(param.ScanProcess==1 ? "checked" : "")>
+                                    <input type="radio" name="into" lay-filter="into" value="1" title="先关联后入库" @Html.Raw(param.ScanProcess == 2 ? "checked" : "")>
+                                    <input type="radio" name="into" lay-filter="into" value="2" title="先入库后关联" @Html.Raw(param.ScanProcess == 3 ? "checked" : "")>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item" pane>
+                                <label class="layui-form-label">扫码环节：</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="packing" title="关联装箱" lay-filter="AssocPacking" lay-skin="primary" @Html.Raw(param.IsLink ? "checked" : "")>
+                                    <input type="checkbox" name="instock" title="产品入库" lay-filter="ProductInStock" lay-skin="primary" @Html.Raw(param.IsInto ? "checked" : "")>
+                                    <input type="checkbox" name="outstock" title="产品出货" lay-filter="ProductOutStock" lay-skin="primary" @Html.Raw(param.IsOut ? "checked" : "")>
+                                    <input type="checkbox" name="return" title="产品退货" lay-filter="ProductReturn" lay-skin="primary" @Html.Raw(param.IsRtn ? "checked" : "")>
+                                </div>
+                            </div>
+                            <div id="AssocPacking" class="layui-form-item" pane>
+                                <label class="layui-form-label">关联装箱：</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-row">
+                                        <input type="checkbox" name="" title="小标装箱" lay-skin="primary" @Html.Raw(param.SmallPacking ? "checked" : "")>
+                                        <input type="checkbox" name="" title="中标装箱" lay-skin="primary" @Html.Raw(param.MiddlePacking ? "checked" : "")>
+                                    </div>
+                                    <div class="layui-row" style="padding-bottom:10px;">
+                                        <a class="layui-text">关联方式：</a>
+                                        <input type="radio" name="linkway" lay-filter="linkway" value="0" title="默认" @Html.Raw(param.LinkWay==1 ? "checked" : "")>
+                                        <input type="radio" name="linkway" lay-filter="linkway" value="1" title="按系统订单" @Html.Raw(param.LinkWay == 2 ? "checked" : "")>
+                                        <input type="checkbox" name="productLinkway" class="product" lay-filter="LinkProduct" value="2" title="按产品" lay-skin="primary" @Html.Raw(param.IsLinkProduct? "checked" : "")>
+                                        <input type="checkbox" name="supplierLinkway" class="supplier" lay-filter="LinkSupplier" value="3" title="按供应商" lay-skin="primary" @Html.Raw(param.IsLinkSupplier ? "checked" : "")>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ProductInStock" class="layui-form-item" pane>
+                                <label class="layui-form-label">产品入库：</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-row">
+                                        <input type="checkbox" name="" title="小标入库" lay-skin="primary" @Html.Raw(param.SmallInto ? "checked" : "")>
+                                        <input type="checkbox" name="" title="中标入库" lay-skin="primary" @Html.Raw(param.MiddleInto ? "checked" : "")>
+                                        <input type="checkbox" name="" title="大标入库" lay-skin="primary" @Html.Raw(param.BigInto ? "checked" : "")>
+                                    </div>
+                                    <div class="layui-row" style="padding-bottom:10px;">
+                                        <a class="layui-text">入库方式：</a>
+                                        <input type="radio" name="intoway" lay-filter="intoway" value="0" title="默认" @Html.Raw(param.IntoWay==1 ? "checked" : "")>
+                                        <input type="radio" name="intoway" lay-filter="intoway" value="1" title="按系统订单" @Html.Raw(param.IntoWay == 2 ? "checked" : "")>
+                                        <input type="checkbox" name="productIntoWay" class="product" lay-filter="IntoProduct" value="2" title="按产品" lay-skin="primary" @Html.Raw(param.IsIntoProduct ? "checked" : "")>
+                                        <input type="checkbox" name="supplierIntoway" class="supplier" lay-filter="IntoSupplier" value="3" title="按供应商" lay-skin="primary" @Html.Raw(param.IsIntoSupplier ? "checked" : "")>
+                                    </div>
+                                    <div class="layui-row">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ProductOutStock" class="layui-form-item" pane>
+                                <label class="layui-form-label">产品出货：</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-row">
+                                        <input type="checkbox" name="" title="小标出货" lay-skin="primary" @Html.Raw(param.SmallOut ? "checked" : "")>
+                                        <input type="checkbox" name="" title="中标出货" lay-skin="primary" @Html.Raw(param.MiddleOut ? "checked" : "")>
+                                        <input type="checkbox" name="" title="大标出货" lay-skin="primary" @Html.Raw(param.BigOut ? "checked" : "")>
+                                    </div>
+                                    <div class="layui-row layui-rowbg" style="padding-bottom:10px;">
+                                        <a class="layui-text">出货方式：</a>
+                                        <input type="radio" name="outway" value="0" title="默认" @Html.Raw(param.OutWay==1 ? "checked" : "")>
+                                        <input type="radio" name="outway" value="1" title="按客户订单" @Html.Raw(param.OutWay == 2 ? "checked" : "")>
+                                        <input type="radio" name="outway" value="2" title="按代理客户" @Html.Raw(param.OutWay == 3 ? "checked" : "")>
+                                    </div>
+                                    <div class="layui-row">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="ProductReturn" class="layui-form-item" pane>
+                                <label class="layui-form-label">产品退货：</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-row layui-rowbg">
+                                        <input id="OrderRtn" type="checkbox" name="" title="订单退货" lay-skin="primary" @Html.Raw(param.OrderRtn ? "checked" : "")>
+                                        <input type="checkbox" name="" title="小标退货" lay-skin="primary" @Html.Raw(param.SmallRtn ? "checked" : "")>
+                                        <input type="checkbox" name="" title="中标退货" lay-skin="primary" @Html.Raw(param.MiddleRtn ? "checked" : "")>
+                                        <input type="checkbox" name="" title="大标退货" lay-skin="primary" @Html.Raw(param.BigRtn ? "checked" : "")>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="layui-tab-item">
+                        <button class="layui-btn layui-btn-sm" onclick="AddShowPDAUser(0)"><i class="layui-icon">&#xe654;</i>添加PDA用户</button>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="150">
+                                <col width="150">
+                                <col width="150">
+                                <col width="300">
+                                <col width="200">
+                                <col width="200">
+                                <col width="200">
+                                <col width="60" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>用户名</th>
+                                    <th>真实姓名</th>
+                                    <th>备注</th>
+                                    <th>PDA权限</th>
+                                    <th>上次登录设备</th>
+                                    <th>上次登录时间</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="PDAUser"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="AddDiv" class="layui-card">
+        <div class="layui-card-body">
+            <form id="AddUserFrm" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="UserId" />
+                        <input type="text" name="PUserName" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">登录密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="Password" required lay-verify="required" placeholder="请输入登录密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">英文字母和数字</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">真实姓名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="PRealName" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea name="Remark" placeholder="请输入备注内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" onclick="ToAddPDAUser()"><i class="layui-icon">&#xe654;</i>保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+
+    <script type="text/x-jquery-tmpl" id="UserDataTmpl">
+        <tr class="user${ID}">
+            <td data-pwd="${Password}">${PUserName}</td>
+            <td>${PRealName}</td>
+            <td>${Remark}</td>
+            <td>
+                <i class="layui-icon lookPDA" onclick="OpenAuth('${ID}')">&#xe678;</i>
+                <span class="auth${ID}">${FuncNameSet}</span>
+            </td>
+            <td>${LastLoginDCode}</td>
+            <td>${ChangeDateFormat(LastLoginTime).Format("yyyy-MM-dd hh:mm:ss")}</td>
+            <td>${ChangeDateFormat(CreatDate).Format("yyyy-MM-dd hh:mm:ss")} </td>
+            <td><i class="layui-icon editUser" onclick="AddShowPDAUser('${ID}')">&#xe642;</i><i class="layui-icon" onclick="DelPDAUser('${ID}')">&#x1006;</i></td>
+        </tr>
+    </script>
+    <script type="text/javascript">
+
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+
+            form.on('radio(into)', function (data) {
+                if (data.value == 0) {
+                    $("input[name='packing']").removeAttr("checked").attr("disabled", "disabled");
+                    $("#AssocPacking").hide();
+                }
+                else {
+                    $("input[name='packing']").removeAttr("disabled").prop("checked",true);
+                    $("#AssocPacking").show();
+                }
+
+                layui.form.render();
+            });
+
+            form.on('checkbox(AssocPacking)', function (data) {
+                if (this.checked) {
+                    $("#AssocPacking").show();
+                }
+                else {
+                    $("#AssocPacking").hide();
+                }
+            });
+
+            form.on('checkbox(ProductInStock)', function (data) {
+                if (this.checked) {
+                    $("#ProductInStock").show();
+                }
+                else {
+                    $("#ProductInStock").hide();
+                }
+            });
+
+            form.on('checkbox(ProductOutStock)', function (data) {
+
+                if (this.checked) {
+                    $("#ProductOutStock").show();
+                }
+                else {
+                    $("#ProductOutStock").hide();
+                }
+            });
+
+            form.on('checkbox(ProductReturn)', function (data) {
+
+                if (this.checked) {
+                    $("#ProductReturn").show();
+                }
+                else {
+                    $("#ProductReturn").hide();
+                }
+            });
+
+            form.on('checkbox(LinkProduct)', function (data) {
+
+                if (this.checked) {
+                    $("input[name='productIntoWay']").removeAttr("checked");
+                }
+
+                layui.form.render();
+            });
+
+            form.on('checkbox(IntoProduct)', function (data) {
+
+                if (this.checked) {
+                    $("input[name='productLinkway']").removeAttr("checked");
+                }
+
+                layui.form.render();
+            });
+
+            form.on('checkbox(LinkSupplier)', function (data) {
+
+                if (this.checked) {
+                    $("input[name='supplierIntoway']").removeAttr("checked");
+                }
+
+                layui.form.render();
+            });
+
+            form.on('checkbox(IntoSupplier)', function (data) {
+
+                if (this.checked) {
+                    $("input[name='supplierLinkway']").removeAttr("checked");
+                }
+
+                layui.form.render();
+            });
+        });
+
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            layer.load(1, { shade: [0.5, '#fff'] });
+            LoadUserData();
+            BindEvent();
+            
+        });
+
+        function LoadUserData() {
+            $.get("/PDA/GetAllPDAUser", function (data) {
+                $("#PDAUser").empty();
+                $("#UserDataTmpl").tmpl(data).appendTo('#PDAUser');
+                layer.closeAll('loading');
+            });
+        }
+
+        function OpenAuth(PdaUserId) {
+            layer.open({
+                type: 2,
+                shade: false,
+                area: ['500px', '400px'],
+                title: 'PDA权限设置',
+                content: '/PDA/AuthorityMsg?PDAUserId=' + PdaUserId,
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                }
+            });
+        }
+
+        function admin_add(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+        /*管理员-删除*/
+        function admin_del(obj, id) {
+            layer.confirm('确认要删除吗？', function (index) {
+                $.ajax({
+                    url: "/PDA/Del",
+                    data: { ID: id },
+                    type: "post",
+                    success: function (data) {
+                        if (data == "ok") {
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!', { icon: 1, time: 1000 });
+                        }
+                        else {
+                            alert(data);
+                        }
+                    }
+                });
+            });
+        }
+
+        function admin_edit(title, url, id, w, h) {
+
+            layer.open({
+                type: 2,
+                shade: false,
+                area: [w, h],
+                content: url,
+                title: title,
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                }
+            });
+        }
+
+        function toPublish(obj, isPublish, id) {
+            var thislay = layer.confirm('确定要' + (isPublish == "启用" ? '启用' : '禁用') + 'PDA设备吗？', function (index) {
+                $.post("/PDA/toPublish", { "isPublish": isPublish, "id": id }, function (rtn) {
+                    if (rtn == "ok") {
+                        window.location.href = location.href;
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                })
+            })
+        }
+
+        function AddShowPDAUser(userId) {
+            var titlename = "";
+            if (userId > 0) {
+                titlename = "修改PDA用户";
+                var PUserName = $(".user" + userId).find("td").eq(0).html();
+                var Password = $(".user" + userId).find("td").eq(0).attr("data-pwd");
+                var PRealName = $(".user" + userId).find("td").eq(1).html();
+                var Remark = $(".user" + userId).find("td").eq(2).html();
+
+                $('input[name="UserId"]').val(userId);
+                $('input[name="PUserName"]').val(PUserName);
+                $('input[name="Password"]').val(Password);
+                $('input[name="PRealName"]').val(PRealName);
+                $('textarea[name="Remark"]').val(Remark);
+
+                $('input[name="PUserName"]').attr("disabled", true);
+            }
+            else {
+                titlename = "添加PDA用户";
+
+                $('input[name="UserId"]').val(0);
+                $('input[name="PUserName"]').val("");
+                $('input[name="Password"]').val("");
+                $('input[name="PRealName"]').val("");
+                $('textarea[name="Remark"]').val("");
+                $('input[name="PUserName"]').removeAttr("disabled");
+            }
+
+            layer.open({
+                type: 1,
+                title: titlename,
+                area: ['500px', '400px'],
+                content: $('#AddDiv')
+            });
+        }
+
+        function ToAddPDAUser() {
+            var requestUrl = "";
+
+            layer.load(1, { shade: [0.5, '#fff'] });
+
+            if ($("input[name='UserId']").val() != "0") {
+                requestUrl = "/PDA/ToEditPDAUser";
+            }
+            else {
+                requestUrl = "/PDA/ToAddPDAUser";
+            }
+
+            $("#AddUserFrm").ajaxSubmit({
+                type: "POST",
+                url: requestUrl,
+                data: {},
+                success: function (rtn) {
+                    if (rtn == "ok") {
+                        layer.closeAll();
+                        LoadUserData();
+                    }
+                    else {
+                        layer.open({ content: rtn, btn: '我知道了' });
+                    }
+                },
+                error: function (XmlHttpRequest, textStatus, errorThrown) {
+                    layer.alert(textStatus);
+                }
+            });
+        }
+
+        function CallbackSubAuth(id, authStr) {
+            $(".auth" + id).html(authStr);
+        }
+
+        function DelPDAUser(userId) {
+            layer.confirm('确定要删除此PDA用户吗?', function (index) {
+
+                layer.load(1, { shade: [0.5, '#fff'] });
+                $.post("/PDA/DeletePDAUser", { UserId: userId }, function (data) {
+                    if (data == "ok") {
+                        layer.closeAll();
+                        LoadUserData();
+                    }
+                    else {
+                        layer.open({ content: rtn, btn: '我知道了' });
+                    }
+                });
+            })
+        }
+    </script>
+
+    <script type="text/javascript">
+        function BindEvent() {
+            
+        }
+    </script>
+</body>
+</html>

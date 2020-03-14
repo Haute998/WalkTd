@@ -1,0 +1,248 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>经销商后台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain2.css?@(WeConfig.css_version)" rel="stylesheet" type="text/css" />
+    <link href="/css/common2.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="/css/main2.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <!--弹出窗js-->
+    <script src="/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="/js/login.js?@(WeConfig.js_version)" type="text/javascript"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="/css/index1.css?@(WeConfig.css_version)" rel="stylesheet" />
+
+    <script type="text/javascript">
+        $(function () {
+            var t;
+            $(".news").hover(function () {
+                clearInterval(t);
+            }, function () {
+                t = setInterval(function () {
+                    var ul = $(".list");
+                    var liHeight = ul.find("li:last").height();
+                    ul.animate({ marginTop: liHeight + "px" }, 1000, function () {
+                        ul.find("li:last").prependTo(ul);
+                        ul.find("li:first").hide();
+                        ul.css({ marginTop: 0 });
+                        ul.find("li:first").fadeIn(800);
+                    });
+                }, 3000);
+            }).trigger("mouseleave");
+        });
+    </script>
+</head>
+<body>
+    <div id="page1" data-role="page">
+        <div class="TX">
+            <div class="dlhtt" id="dlhtt">
+                <dl>
+                    <dt onclick="showimg()">
+                        <span id="setimg">
+                            <img src="~/images/27.png?@(WeConfig.img_version)" alt="" id="show" />
+                        </span>
+                        <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+                    </dt>
+                    <dd>
+                        <span class="title">@(user.Name)</span>
+                    </dd>
+                    <dd>
+                        <span class="span2 white">授权级别：@(user.userTypeName)</span>
+                    </dd>
+                    <dd>
+                        @*<span class="span2">上级经销商：@(user.ChiefName)</span><br />*@
+                        <span class="span2 white">授权时间：@(user.DatCreate.ToString("yyyy-MM-dd"))</span>
+                    </dd>
+                </dl>
+                <div class="ken" onclick="window.location.href = '/MyInfo/Index'"><img src="~/images/zge-icon3.png" class="zge-icon3" /></div>
+            </div>
+        </div>
+
+        <div class="QLR-home18">
+            <table>
+                <tr class="trrr">
+                    <td class="border-right" onclick="window.location.href = '/agentApply/Index'">
+                        <dl>
+                            <a>
+                                <dt> <img src="/images/tm_addJs.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                添加经销商
+                            </a>
+                        </dl>
+                    </td>
+                    <td class="border-right" onclick="window.location.href = '/MyAgentsInfo/Index'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_jxs.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                经销商信息
+                            </a>
+                        </dl>
+                    </td>
+                    <td onclick="window.location.href = '/Stock/AgentStockIndex'">
+                        <dl>
+                            <a>
+                                <dt> <img src="/images/tm_MLSfchcx.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                经销商库存
+                            </a>
+                        </dl>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border-right" onclick="window.location.href = '/OutScale/ScanOutStock'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_saomiao.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                扫码发货
+                            </a>
+                        </dl>
+                    </td>
+                    <td class="border-right" onclick="window.location.href = '/OutScale/GetOutScaleDetailIndex'">
+                        <dl>
+                            <a>
+                                <dt> <img src="/images/tm_fhjl.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                发货记录
+                            </a>
+                        </dl>
+                    </td>
+                    <td onclick="window.location.href = '/OutScale/GetOuttjIndex'">
+                        <dl>
+                            <a>
+                                <dt> <img src="/images/tm_tongji.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                发货统计
+                            </a>
+                        </dl>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border-right" onclick="window.location.href = '/RtnScale/ScanRtnStock'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_tuihuo.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                退货扫描
+                            </a>
+
+                        </dl>
+                    </td>
+                    <td class="border-right" onclick="window.location.href = '/RtnScale/RtnScaleDetail'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_jilu.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                退货记录
+                            </a>
+
+                        </dl>
+                    </td>
+                    <td onclick="window.location.href = '/RtnScale/GetOuttjIndex'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_thtongji.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                退货统计
+                            </a>
+
+                        </dl>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="border-right" onclick="window.location.href = '/OutScale/RetailOutStock'">
+                        <dl>
+                            <a>
+                                <dt> <img src="/images/tm_ls.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                零售发货
+                            </a>
+                        </dl>
+
+                    </td>
+                    <td class="border-right" onclick="window.location.href = '/Stock/Index'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_wdcc.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                我的库存
+                            </a>
+
+                        </dl>
+                    </td>
+                    <td onclick="window.location.href = '/MyInfo/Index'">
+                        <dl>
+                            <a>
+                                <dt><img src="/images/tm_MLSdlsdl.png?@(WeConfig.img_version)" id="img" /></dt>
+                            </a>
+                            <a style="color:#1a3169">
+                                我的信息
+                            </a>
+                        </dl>
+                    </td>
+                </tr>
+            </table>
+            @*<div class="QLRcode"><a href="/Home/Login"><img src="/layout/jfshop/images/TCfan.png" /></a></div>*@
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script type="text/x-jquery-tmpl" id="notifytmp">
+    <li>${Title}</li>
+</script>
+<script>
+    $(function () {
+        getsysnotify();
+
+        getNoAuditCnt();
+    })
+    function getsysnotify() {
+        $.post("/SYSMNotify/GetTop5", {}, function (data) {
+            if (data != "") {
+                $("#notifytmp").tmpl(data).appendTo("#sysnotifys");
+            }
+        })
+    }
+
+    function getNoAuditCnt() {
+        $.post("/MyAgentsInfo/getNoAuditCnt", {}, function (rtn) {
+            if (rtn > 0) {
+                $("#noaudit").show();
+            }
+        })
+    }
+
+    function bulding() {
+        layer.open({ content: "敬请期待", btn: '我知道了' });
+    }
+</script>

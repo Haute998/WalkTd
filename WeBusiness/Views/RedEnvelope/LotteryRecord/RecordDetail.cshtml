@@ -1,0 +1,114 @@
+﻿@using WeModels
+@using WeModels.ModelService.Lottery;
+@{
+
+    Layout = null;
+}
+@model LotteryRecordVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>中奖纪录详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.jqprint-0.3.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script>
+        function printme() {
+            var loading = layer.load(1, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            $("#prints").jqprint({
+                debug: true,
+                importCSS: true,
+                printContainer: true,
+                operaSupport: true
+            });
+            layer.close(loading);
+        }
+
+    </script>
+</head>
+<body>
+    <div class="layui-elem-quote">
+        <p>
+            记录详情（@(Model.rec.SerialNumber)）<span style="float:right;">
+                <button name="" onclick="printme()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe652;</i> 打印
+                </button>
+            </span>
+        </p>
+    </div>
+    <div id="prints">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>记录基本信息</legend>
+        </fieldset>
+        <table class="layui-table" style="margin:20px;text-align:center">
+            <thead>
+                <tr style="color:#b3b3b3;border:1px solid black">
+                    <td>流水号</td>
+                    <td>奖品等级</td>
+                    <td>中奖时间</td>
+                    <td>当时中奖率</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@(Model.rec.SerialNumber)</td>
+                    <td style="color: red">@(Model.rec.PrizeLevel)</td>
+                    <td>@(Model.rec.Dat.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    <td>@((Model.rec.WinningRate * 100).ToString().TrimEnd('0'))%</td>
+                </tr>
+            </tbody>
+        </table>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>中奖人信息</legend>
+        </fieldset>
+        <table class="layui-table" style="margin: 20px; text-align: center">
+            <thead>
+                <tr style="color:#b3b3b3;">
+                    <td>姓名</td>
+                    <td>联系电话</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@(Model.rec.Name)</td>
+                    <td>@(Model.rec.Phone)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>奖品信息</legend>
+        </fieldset>
+        <table class="layui-table" style="margin: 20px; text-align: center">
+            <thead>
+                <tr style="color:#b3b3b3;">
+                    <td>奖品等级</td>
+                    <td>奖品名称</td>
+                    <td>奖品图片</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@(Model.rec.PrizeLevel)</td>
+                    <td>@(Model.rec.PrizeName)</td>
+                    <td><img width="100" src="@(Model.rec.PrizeImgUrl)" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</body>
+</html>

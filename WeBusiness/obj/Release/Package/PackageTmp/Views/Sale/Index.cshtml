@@ -1,0 +1,121 @@
+﻿@using WeModels;
+@{
+    Layout = null;
+}
+@model C_User
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>销售统计</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 统计分析 <span class="c-gray en">&gt;</span> 销售统计<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                销售人：
+                <input type="text" name="keyword" id="" placeholder=" 请输入销售人" style="width: 250px"
+                       class="input-text" />
+                销售级别：<span class="select-box" style="width: 150px">
+                    @Html.DropDownListFor(m => m.C_UserTypeID, WeModels.SelectListHelper.GetC_UserTypeAll(""), new { @class = "select sel" })
+                </span>
+                <button onclick="morecondition(this)" class="btn btn-default size-MINI radius" type="button">
+                    更多
+                </button>
+                <br /><br />
+                <span style="display:none" class="js-nospan">
+                    创建时间：
+                    <input type="text" name="DatCreateB" id="" placeholder=" 请输入时间" style="width: 150px"
+                           class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                    至
+                    <input type="text" name="DatCreateE" id="" placeholder=" 请输入时间" style="width: 150px"
+                           class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+
+                </span>
+
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+
+
+
+
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                授权编号
+            </th>
+            <th>
+                姓名
+            </th>
+            <th>
+                销售额
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${ck.Identifier}
+            </td>
+            <td>
+                ${ck.Name}
+            </td>
+            <td>
+                ${ck.SumPrice}
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/Sale/GetSaleAgent";
+    function morecondition(obj) {
+        if ($(".js-nospan").is(':visible')) {
+            $(".js-nospan").hide();
+            $(obj).text("更多");
+        }
+        else {
+            $(".js-nospan").show();
+            $(obj).text("隐藏");
+        }
+    }
+</script>

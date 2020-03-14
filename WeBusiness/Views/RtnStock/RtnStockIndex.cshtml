@@ -1,0 +1,133 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model ScaleRtnStoke
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>退货记录</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/layout/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 仓库管理 <span class="c-gray en">&gt;</span> 退货记录 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" method="post" id="condition">
+            <input name="orderby" type="hidden" value="" />
+            <div class="text-c">
+                <span class="js-nospan">
+                    退货时间：
+                    <input type="text" name="DatCreateB" id="" placeholder=" 请输入时间" style="width:100px" class="input-text " autocomplete="off" onfocus="WdatePicker({lang:'zh-cn'})" />
+                    至
+                    <input type="text" name="DatCreateE" id="" placeholder=" 请输入时间" style="width:100px" class="input-text " autocomplete="off" onfocus="WdatePicker({lang:'zh-cn'})" />
+                </span>
+                退货单号：
+                <input type="text" name="OrderNo" placeholder=" 请输入单号" style="width:135px;" class="input-text" />
+                关键字：
+                <input type="text" name="KeyWord" id="" placeholder=" 请输入搜索关键字" style="width:200px" class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+
+    <thead>
+        <tr class="text-c">
+            <th>退货时间</th>
+            <th class="js-sortfleld sorting" data-fleld="O_ID" onclick="tosort(this)">
+                退货单号
+            </th>
+            <th>退货方式</th>
+            <th>退货条码</th>
+            <th>产品图片</th>
+            <th>产品编号</th>
+            <th>产品名称</th>
+            <th class="js-sortfleld sorting" data-fleld="SmallCount" onclick="tosort(this)">
+                产品码数量
+            </th>
+            <th>退货员</th>
+            <th>OEM厂商</th>
+            <th>明细</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>${formatDateTime(ck.ReturnTime)}</td>
+            <td>
+                ${ck.OrderNo}
+            </td>
+            <td>${WayToStr(ck.RtnWay)}</td>
+            <td>${ck.BarCode}</td>
+            <td>
+                <img src="${ck.ProductImg}" width="50" height="50" />
+            </td>
+            <td>${ck.ProducctNo}</td>
+            <td>
+                ${ck.ProductName}
+            </td>
+            <td>
+                ${ck.BarCount}
+            </td>
+            <td>${ck.PUserName}-${ck.PRealName}</td>
+            <td>${ck.Name}</td>
+            <td>
+                <a title="查看产品条码" href="javascript:;" onclick="layer_show('查看退货记录明细', '/RtnStock/RtnRecordDetail?OrderNo=${ck.OrderNo}&RtnWay=${ck.RtnWay}&BarCode=${ck.BarCode}', '900', '500')" class="ml-5 edit" style="text-decoration: none">
+                    查看
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/RtnStock/GetBigCodePage";
+
+    function WayToStr(way)
+    {
+        var str = "";
+        switch (way)
+        {
+            case 1: str="小标"; break;
+            case 2: str="中标"; break;
+            case 3: str="大标"; break;
+        }
+
+        return str;
+    }
+</script>
+

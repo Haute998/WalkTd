@@ -1,0 +1,271 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<B_Menu> menus = ViewData["menus"] as List<B_Menu>;
+    List<B_MenuRights> UserRole = ViewData["UserRole"] as List<B_MenuRights>;
+    B_Role role = ViewData["role"] as B_Role;
+
+    string systemname = BaseParameters.GetVal("systemname");
+    string systemlogo = BaseParameters.GetVal("systemlogo");
+}
+@model B_User
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>@(string.IsNullOrWhiteSpace(systemname) ? "防窜货管理系统" : systemname)</title>
+
+    <style>
+        article, aside, dialog, footer, header, section, footer, nav, figure, menu {
+            display: block;
+        }
+        .Name_aaaa .badge,.Name_bbbb .badge {
+            margin-left:8px;
+        }
+        .label, .badge {
+            padding:1px 4px;
+        }
+        .Hui-aside .menu_dropdown dt {
+            padding-left:10px;
+        }
+        .show_iframe:first-child {
+            background-color:#eee;
+        }
+    </style>
+    <script>
+        (function () {
+
+            var e = "abbr, article, aside, audio, canvas, datalist, details, dialog, eventsource, figure, footer, header, hgroup, mark, menu, meter, nav, output, progress, section, time, video".split(', ');
+            var i = e.length;
+            while (i--) {
+                document.createElement(e[i]);
+            }
+        })()
+    </script>
+</head>
+<body>
+    <header class="navbar-wrapper">
+        <div class="navbar navbar-fixed-top">
+            <div class="container-fluid cl">
+                <a class="logo navbar-logo f-l mr-10 hidden-xs" href="" style="height:75px"><img src="@(string.IsNullOrWhiteSpace(systemlogo) ? "/images/TClogo.png" : systemlogo)" alt="" style=" height:70px;" /></a>
+                <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="" style="height:75px;line-height:75px"></a>
+                <span class="logo navbar-slogan f-l mr-10 hidden-xs" style="position:relative; top:15px; font-size:24px;height:60px;line-height:60px">@(string.IsNullOrWhiteSpace(systemname) ? "微商企业客户管理控价系统" : systemname)</span> <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+
+                <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                    <ul class="cl">
+                        <li style="line-height:75px">@(role == null ? "" : role.RoleName)</li>
+                        <li class="dropDown dropDown_hover" style="line-height:75px">
+                            <a href="javascript:void(0);" data-href="/Main/MyInfo" data-title="我的信息" onclick="Hui_admin_tab(this)" class="dropDown_A">@(Model.UserName) <i class="Hui-iconfont">&#xe6d5;</i></a>
+                            <ul class="dropDown-menu menu radius box-shadow">
+                                <li>
+                                    <a data-href="/Main/MyInfo" data-title="我的信息" href="javascript:void(0);" onclick="Hui_admin_tab(this)">我的信息</a>
+                                </li>
+                                <li><a href="/Home/LogOff">退出</a></li>
+                            </ul>
+                        </li>
+                        <li id="Hui-msg" style="line-height:75px" onclick="layer_show('系统消息', '/B_UserMsg/NewSYSMsg', '900', '500')">
+                            <a href="javascript:void(0)" title="消息">
+                                <span class="badge badge-danger js-newmsg" style="top: 20px"></span>
+                                <i class="Hui-iconfont" style="font-size:18px"></i>
+                            </a>
+                        </li>
+                        <li id="Hui-skin" style="line-height:75px" class="dropDown right dropDown_hover">
+                            <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
+                            <ul class="dropDown-menu menu radius box-shadow">
+                                <li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
+                                <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
+                                <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
+                                <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
+                                <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
+                                <li><a href="javascript:;" data-val="orange" title="绿色">橙色</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <aside class="Hui-aside" style="top:75px">
+        <input id="divScrollValue" type="hidden" value="" />
+        <div class="menu_dropdown bk_2">
+
+            @foreach (var menu in menus.FindAll(m => m.ParentID == 0).OrderBy(m => m.Sort))
+            {
+                if (UserRole.Where(a => a.ParentID == menu.ID).ToList().Count > 0 || Model.UserName == WeConfig.robot)
+                {
+                    <dl id="menu-article">
+                        <dt>
+                            <i class="Hui-iconfont @Html.Raw(menu.Icon)" style=" line-height: 35px;padding:5px"></i>
+                            <span class="Name_aaaa">@(menu.MenuName)</span><i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                        </dt>
+                        <dd>
+                            <ul>
+                                @foreach (var menuson in menus.FindAll(m => m.ParentID == menu.ID).OrderBy(m => m.Sort))
+                                {
+                                    if (UserRole.Where(a => a.MenuID == menuson.ID).ToList().Count > 0 || Model.UserName == WeConfig.robot)
+                                    {
+                                        <li><a data-href="@(menuson.MenuUrl)" data-title="@(menuson.MenuName)" href="javascript:void(0)" class="Name_bbbb">@(menuson.MenuName)</a></li>
+                                    }
+                                }
+                            </ul>
+                        </dd>
+                    </dl>
+                }
+            }
+        </div>
+    </aside>
+    <div class="dislpayArrow hidden-xs">
+        <a class="pngfix" href="javascript:void(0);" onclick="displaynavbar(this)"></a>
+    </div>
+    <section class="Hui-article-box" style="top:75px">
+        <div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+            <div class="Hui-tabNav-wp">
+                <ul id="min_title_list" class="acrossTab cl">
+                    <li class="active"><span title="我的桌面" data-href="welcome.html">我的桌面</span><em></em></li>
+                </ul>
+            </div>
+            <div class="Hui-tabNav-more btn-group"><a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a></div>
+        </div>
+        <div id="iframe_box" class="Hui-article">
+            <div class="show_iframe">
+                <div style="display:none" class="loading"></div>
+                <iframe scrolling="yes" frameborder="0" src="/Main/Index"></iframe>
+            </div>
+        </div>
+    </section>
+    <div class="contextMenu" id="Huiadminmenu">
+        <ul>
+            <li id="closethis">关闭当前 </li>
+            <li id="closeall">关闭全部 </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="/layout/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script src="~/layout/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+    var url = "@(ViewData["url"])";
+    //window.setInterval(getnewmsg, 1000);
+    $(function () {
+        @*if (url != "" && url != "/Home/Index" && (url != "@WeConfig.b_domain" || url != "@WeConfig.b_domain" + "/"))
+        {
+            tab_newhref(url, "上次记录");
+        }*@
+        getnewmsg();
+    })
+    function tab_newhref(href, title) {
+        var bStop = false;
+        var bStopIndex = 0;
+        var _href = href;
+        var _titleName = title;
+        var topWindow = $(window.parent.document);
+        var show_navLi = topWindow.find("#min_title_list li");
+        show_navLi.each(function () {
+            if ($(this).find('span').attr("data-href") == _href) {
+                bStop = true;
+                bStopIndex = show_navLi.index($(this));
+                return false;
+            }
+        });
+        if (!bStop) {
+            creatIframe(_href, _titleName);
+            min_titleList();
+        }
+        else {
+            show_navLi.removeClass("active").eq(bStopIndex).addClass("active");
+            var iframe_box = topWindow.find("#iframe_box");
+            iframe_box.find(".show_iframe").hide().eq(bStopIndex).show().find("iframe").attr("src", _href);
+        }
+    }
+
+    function getRootPath_web() {
+        var curWwwPath = window.document.location.href;
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        var localhostPaht = curWwwPath.substring(0, pos);
+        return localhostPaht;
+    }
+    //获取消息
+    
+    function getnewmsg() {
+        $.post("/B_UserMsg/GetNewSYSMsgCnt", {}, function (rtn) {
+            var arr = rtn.split(',');
+            var list = document.getElementsByClassName("Name_aaaa");
+            for (var i = 0; i < list.length; i++) {
+                var s = list[i].innerHTML.split('<');
+
+                if (s[0] == "客户管理" && arr[1]!=0) {
+                    list[i].innerHTML = "客户管理" + "<span class='badge badge-danger radius'>" + arr[1] + "</span>";
+                }
+                if (s[0] == "订单管理" && arr[2]!=0) {
+                    list[i].innerHTML = "订单管理" + "<span class='badge badge-danger radius'>" + arr[2] + "</span>";
+                }
+                //if (s[0] == "仓库管理" && arr[3]!=0) {
+                //    list[i].innerHTML = "仓库管理" + "<span class='badge badge-danger radius'>" + arr[3] + "</span>";
+                //}
+                if (s[0] == "投诉建议" && arr[7]!=0) {
+                    list[i].innerHTML = "投诉建议" + "<span class='badge badge-danger radius'>" + arr[7] + "</span>";
+                }
+            }
+
+            var lista = document.getElementsByClassName("Name_bbbb");
+            for (var i = 0; i < lista.length; i++) {
+                var na = lista[i].innerHTML.split('<');
+                if (na[0] == "直属代理授权审核" && arr[4]!=0) {
+                    lista[i].innerHTML = "直属代理授权审核" + "<span class='badge badge-danger radius'>" + arr[4] + "</span>";
+                }
+                if (na[0] == "非直属授权审核" && arr[5]!=0) {
+                    lista[i].innerHTML = "非直属授权审核" + "<span class='badge badge-danger radius'>" + arr[5] + "</span>";
+                }
+                if (na[0] == "待审核订单" && arr[2]!=0) {
+                    lista[i].innerHTML = "待审核订单" + "<span class='badge badge-danger radius'>" + arr[2] + "</span>";
+                }
+                //if (na[0] == "待发货订单" && arr[3]!=0) {
+                //    lista[i].innerHTML = "待发货订单" + "<span class='badge badge-danger radius'>" + arr[3] + "</span>";
+                //}
+                if (na[0] == "直属代理升级审核" && arr[6]!=0) {
+                    lista[i].innerHTML = "直属代理升级审核" + "<span class='badge badge-danger radius'>" + arr[6] + "</span>";
+                }
+                if (na[0] == "未审核" && arr[7]!=0) {
+                    lista[i].innerHTML = "未审核" + "<span class='badge badge-danger radius'>" + arr[7] + "</span>";
+                }
+            }
+            var reg = /^\d+$/g;
+            if (!reg.test(arr[0]) && arr[0] != "") {
+                // layer.tips(rtn, '#Hui-msg');
+                layer.tips(arr[0], '#Hui-msg', {
+                    tips: [2, '#c00'],
+                    time: 4000
+                });
+                sleep(3000);
+            }
+            else {
+                if (arr[0] != 0) {
+                    $(".js-newmsg").text(arr[0]);
+                }
+            }
+        })
+    }
+
+    function sleep(n) {
+        var start = new Date().getTime();
+        while (true) if (new Date().getTime() - start > n) break;
+    }
+</script>
+
+
+

@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "AuthenticityShow";
+    string type = ViewData["type"] as string;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>领红包</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/common.css" rel="stylesheet" />
+    <link href="/css/zwhongbao.css" rel="stylesheet" />
+</head>
+<body style="background:#fff;">
+    <div class="hongbao-cg">
+        <div class="hongbao-cg-img">
+            <div class="hongbao-cg-touxiang">
+                <img src="/images/qiye-5.png" />
+            </div>
+        </div>
+        <div class="hongbao-cg1">兆客码</div>
+        <div class="hongbao-cg2">恭喜发财，大吉大利</div>
+        <div class="hongbao-cg3"> @(ViewData["money"])<span>元</span></div>
+        <div class="hongbao-cg4">红包已在公众号发出，请记得领取</div>
+    </div>
+    @if (type == "0")
+    {
+        <div class="hongbao-cg5">
+            <a href="/RedPack/AuthenticityShare?Code=@(ViewData["Code"])">
+                分享红包
+            </a>
+            <div class="hongbao-tishiyu">您可以分享@(ViewData["sl"])位好友</div>
+            <div class="hongbao-tishiyu1">领取现金红包&nbsp;&nbsp;赶快行动把！</div>
+        </div>
+    }
+</body>
+</html>

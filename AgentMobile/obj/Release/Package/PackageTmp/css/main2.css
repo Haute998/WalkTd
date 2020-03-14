@@ -1,0 +1,266 @@
+﻿@charset 'utf-8';
+
+
+
+.QLR-home1,
+.QLR-home2 {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 1.2em;
+    font-family: Microsoft YaHei;
+}
+
+    .QLR-home1 img {
+        width: 50%;
+        padding: 8vh 0 6vh 0;
+    }
+
+    .QLR-home2 dl {
+        width: 70%;
+        overflow: hidden;
+        margin: 0 auto 3vh auto;
+    }
+
+        .QLR-home2 dl a {
+            color: #fff;
+            display: block;
+        }
+
+        .QLR-home2 dl dt {
+            width: 100%;
+            text-align: center;
+        }
+
+            .QLR-home2 dl dt img {
+                width: 100%;
+            }
+
+.QLR-home3,
+.QLR-home4,
+.QLR-home5 {
+    width: 100%;
+    text-align: center;
+    font-family: Microsoft YaHei;
+}
+
+    .QLR-home3 img {
+        width: 55%;
+        padding: 10vh 0;
+    }
+
+    .QLR-home4 input {
+        width: 80%;
+        margin: 3vh auto 10vh auto;
+        border: 0;
+        text-indent: 10px;
+        height: 37px;
+        color: #333;
+        font-size: 13px;
+        background: url(../images/XLTbg6.png)center 0 no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .QLR-home5 input {
+        width: 70%;
+        margin: 0 auto;
+        border: 0;
+        height: 40px;
+        color: #fff;
+        font-size: 15px;
+        letter-spacing: 7px;
+        background: url(../images/XLTbg2.png)center 0 no-repeat;
+        background-size: 100% 100%;
+    }
+
+.QLR-home6 {
+    width: 100%;
+    text-align: left;
+    color: #fff;
+    font-size: 15px;
+}
+
+    .QLR-home6 dl {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+        .QLR-home6 dl dd {
+            line-height: 35px;
+            letter-spacing: 1px;
+        }
+
+.QLR-home7 {
+    width: 100%;
+    margin-bottom: 10vh;
+}
+
+    .QLR-home7 dl {
+        width: 85%;
+        height: 30px;
+        padding: 1vh 0;
+        overflow: hidden;
+        margin: 0 auto 2vh auto;
+        background: url(../images/XLTbg6.png)center 0 no-repeat;
+        background-size: 100% 100%;
+    }
+
+        .QLR-home7 dl a {
+            color: #fff;
+            display: block;
+        }
+
+        .QLR-home7 dl dt {
+            width: 20%;
+            text-align: center;
+            float: left;
+        }
+
+            .QLR-home7 dl dt img {
+                height: 20px;
+                position: relative;
+                top: 5px;
+            }
+
+        .QLR-home7 dl dd {
+            width: 80%;
+            float: right;
+        }
+
+            .QLR-home7 dl dd input {
+                height: 30px;
+                border: 0;
+                background: none;
+                width: 95%;
+                font-size: 13px;
+            }
+
+.QLR-home8 table {
+    width: 93%;
+    text-align: center;
+    color: #00a2e9;
+    font-size: 13px;
+    font-family: Microsoft YaHei;
+    margin: 10vh auto 0 auto;
+}
+
+    .QLR-home8 table tr td {
+        width: 50%;
+        padding-bottom: 4vh;
+    }
+
+        .QLR-home8 table tr td dl {
+            width: 85%;
+            margin: 0 auto;
+            padding: 5vh 0;
+            background: url(../images/31.png)center 0 no-repeat;
+            background-size: 100% 100%;
+        }
+
+            .QLR-home8 table tr td dl a {
+                color: #00a2e9;
+            }
+
+            .QLR-home8 table tr td dl dt {
+                text-align: center;
+            }
+
+                .QLR-home8 table tr td dl dt img {
+                    width: 36%;
+                }
+
+            .QLR-home8 table tr td dl dd {
+                padding-top: 1vh;
+            }
+
+.QLR-home9 {
+    width: 100%;
+    margin-bottom: 10vh;
+}
+
+    .QLR-home9 dl {
+        overflow: hidden;
+        padding: 4vh 0;
+        background: url(../images/XLTbg5.png)center 0 no-repeat;
+        background-size: 100% 100%;
+    }
+
+        .QLR-home9 dl dt {
+            width: 30%;
+            float: left;
+            text-align: center;
+        }
+
+            .QLR-home9 dl dt img {
+                height: 70px;
+                width: 70px;
+                border-radius: 50%;
+            }
+
+        .QLR-home9 dl dd {
+            width: 70%;
+            float: right;
+            color: #fff;
+            font-size: 15px;
+            line-height: 25px;
+        }
+
+            .QLR-home9 dl dd.top {
+                padding-top: 10px;
+            }
+
+.QLRcode {
+    position: fixed;
+    right: 5%;
+    bottom: 6%;
+    width: 35px;
+    height: 35px;
+}
+
+    .QLRcode img {
+        width: 100%;
+    }
+
+.QLRcode2 {
+    position: fixed;
+    right: 5%;
+    top: 6%;
+    width: 35px;
+    height: 35px;
+}
+
+    .QLRcode2 img {
+        width: 100%;
+    }
+.TX img.zge-icon3
+{
+    width: 70%;
+    position: relative;
+    top: 2px;}
+
+.QLR-home18 table {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.QLR-home18 table tr td {
+    width: 33.3%;
+    /* border-bottom: 1px solid #eee; */
+}
+
+        .QLR-home18 table tr td dl {
+            width: 85%;
+            margin: 0 auto;
+            border-radius: 5px;
+            display: block;
+            padding: 15px 0;
+        }
+
+            .QLR-home18 table tr td dl dt {
+                text-align: center;
+            }
+
+                .QLR-home18 table tr td dl dt img {
+                    width: 100%;
+                }

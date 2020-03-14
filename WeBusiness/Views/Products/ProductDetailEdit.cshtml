@@ -1,0 +1,123 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model Product
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改产品信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <form class="layui-form" method="post" action="/Products/ToProductDetailEdit" enctype="multipart/form-data">
+        @Html.HiddenFor(p => p.ProductID)
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品编号</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(p => p.ProductNumber, new { @class = "layui-input", @lay_verify = "required", @required = "", @maxlength = "50", @placeholder = "请输入产品编号(必填)" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品名称</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(p => p.ProductName, new { @class = "layui-input", @lay_verify = "required", @required = "", @maxlength = "50", @placeholder = "请输入产品名称(必填)" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品图片</label>
+            <div class="layui-input-block">
+                <span>
+                    <img height="78" width="80" id="addimg" src="~/images/system/addImg.png" />
+                    <input id="ProductImg" hidden="hidden" name="ProductImg" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                </span>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:200px">250px*250px</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">规格型号</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(p => p.bianma, new { @type = "text", @lay_verify = "required", @class = "layui-input", @maxlength = "10", @placeholder = "请输入规格型号(必填)" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">价格</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(p => p.kw, new { @type = "text", @class = "layui-input", @maxlength = "10", @placeholder = "价格" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">产品状态</label>
+            <div class="layui-input-block">
+                <select class="select" name="States" id="States" size="1">
+                    <option value="已上架" @(Model.States == "已上架" ? "selected='selected'" : "")>上架</option>
+                    <option value="未上架" @(Model.States == "未上架" ? "selected='selected'" : "")>下架</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="go">修改</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form();
+            //自定义验证规则
+            form.verify({
+                price: [/^(:?(:?\d+.\d+)|(:?\d+))$/, '零售价格式不对！']
+            });
+            //监听提交
+            form.on('submit(go)', function (data) {
+                //if ($("input[name='ProductImg']").val() == "") {
+                //    layer.alert("请添加产品图片！");
+                //    return false;
+                //}
+            });
+        });
+    </script>
+</body>
+</html>
+<script>
+    $(function () {
+        if ("@TempData["ToProductDetailEdit_err"]" != "") {
+            if ("@TempData["ToProductDetailEdit_err"]" == "ok") {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.getjsondata(parent.thispage);
+                parent.layer.close(index);
+            } else {
+                layer.alert("@TempData["ToProductDetailEdit_err"]");
+            }
+        }
+        var ProductImg = "@Model.ProductImg";
+
+        if (ProductImg != "") {
+            $("#addimg").attr("src", ProductImg);
+        }
+
+        $("#addimg").click(function () {
+            $("#ProductImg").click();
+        });
+        $("#ProductImg").change(function (e) {
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    $("#addimg").attr("src", this.result);
+                }
+            }
+        });
+    })
+</script>

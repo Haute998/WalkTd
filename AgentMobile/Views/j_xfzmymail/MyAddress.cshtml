@@ -1,0 +1,162 @@
+﻿@{
+    Layout = null;
+    string type = ViewData["type"] as string;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>常用地址本</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+</head>
+<body style="background-color: #ecedf1;">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content" id="content">
+                <div class="qzs_all">
+                    <div style="width: 100%; padding: 0 0 20px 0; margin: 0 auto;">
+                        <button id="addresshtml" onclick="LoadMyAddress(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+
+                        <div class="dsh_an" style="margin: 0 auto; width: 90%;">
+                            <div class="div1">
+                                <span>
+                                    <button type="button" onclick="location.href = '/j_xfzmymail/AddAddress'" style="background-color: #40B7AB; color: white; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">添加新地址</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/xfz/Index6">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="addresstmp">
+    {{each(i,ck) RtnList}}
+    <div class="cydzb">
+        <div class="cydzb_div1">
+            <table>
+                <tr>
+                    <td class="td1">
+                        ${ck.UserName}
+                    </td>
+                    <td class="td2">
+                        ${ck.ContactMobile}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        ${ck.Province} ${ck.City} ${ck.Area} ${ck.Address}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        @if (type == "set")
+        {
+            <div class="cydzb_div2">
+                <span class="spqn">
+                    <a href="javascript:void(0)" data-id="${ck.ID}" onclick="setaddress(this)">
+                        <span>√</span><span>选择</span>
+                    </a>
+                </span>
+            </div>
+        }
+        else
+        {
+            <div class="cydzb_div2">
+                <span class="spqn">
+                    <a href="/j_xfzmymail/EditAddress/${ck.ID}">
+                        <img src="/images/54.png" /><span>编辑</span>
+                    </a>
+                </span><span>
+                    <a href="javascript:void(0)" onclick="del(this)" data-id="${ck.ID}">
+                        <img src="/images/55.png" /><span>删除</span>
+                    </a>
+                </span>
+            </div>
+        }
+    </div>
+    {{/each}}
+</script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script>
+    var loading;
+    $(function () {
+        LoadMyAddress($("#addresshtml"));
+    })
+    function LoadMyAddress(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        $.post("/j_xfzmymail/GetMyAddresss", { "pageIndex": gopage, "pageSize": 10 }, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#addresstmp").tmpl(data).insertBefore('#addresshtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+
+    function del(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        $.post("/j_xfzmymail/Del", { "id": $(obj).attr("data-id") }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                window.location.href = window.location.href;
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+    }
+
+    function setaddress(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var id = $(obj).attr("data-id");
+        $.post("/j_xfzmymail/MailEdit", { "id": id }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                var reddurl = "/C_UserCart/Index";
+                window.location.href = reddurl;
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+    }
+</script>

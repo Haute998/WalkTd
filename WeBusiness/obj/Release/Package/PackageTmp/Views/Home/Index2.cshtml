@@ -1,0 +1,266 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<B_Menu> menus = ViewData["menus"] as List<B_Menu>;
+    List<B_MenuRights> UserRole = ViewData["UserRole"] as List<B_MenuRights>;
+    B_Role role = ViewData["role"] as B_Role;
+
+    string systemname = BaseParameters.GetVal("systemname");
+    string systemlogo = BaseParameters.GetVal("systemlogo");
+    int index = 0;
+}
+@model B_User
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@(string.IsNullOrWhiteSpace(systemname) ? "通程防窜货管理系统" : systemname)</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=10001" rel="stylesheet" media="all" />
+
+    <style type="text/css">
+        .menu-nav i {
+            margin-right:6px;
+        }
+        .layui-nav-img {
+            border:1px solid #026258;
+            padding:3px;
+        }
+        .home {
+            background-color:#203852;
+        }
+        .layui-tab {
+            margin:0;
+        }
+        .layui-tab-content {
+            padding:0;
+            padding-top:1px;
+        }
+        .layui-tab-title {
+            background-color:#eee;
+        }
+            .layui-tab-title .layui-this {
+                background-color:#fff;
+            }
+        .layui-tab-item:first-child {
+            background-color:#efefef;
+            background-image:url(../../images/yus.gif);
+            background-repeat:repeat-x;
+        }
+        .first-tab i.layui-tab-close{
+        display:none!important;
+        }
+        #main {
+            padding:0 10px;
+        }
+        .layui-tab-title {
+            color:#808080;
+        }
+    </style>
+
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">
+                <img src="@(string.IsNullOrWhiteSpace(systemlogo) ? "/images/TClogo.png" : systemlogo)" alt="" style="height:26px; margin-right:5px;" />
+                @(string.IsNullOrWhiteSpace(systemname) ? "通程防窜货管理系统" : systemname)
+            </div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="@(string.IsNullOrWhiteSpace(systemlogo) ? "/images/TClogo.png" : systemlogo)" class="layui-nav-img">
+                        @(Model.UserName)
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" onclick="MyInfo()">基本资料</a></dd>
+                        <dd><a href="javascript:;" onclick="ModifyPawd()">修改密码</a></dd>
+                        <dd><a href="javascript:;" onclick="ShowInfo()">消息</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/Home/LogOff">退出</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-this home"><a href="javascript:;" data-href="/Main/Index" class="MenuUrl menu-nav" data-id="0"><i class="layui-icon layui-icon-home"></i>首页</a></li>
+                    @foreach (var menu in menus.FindAll(m => m.ParentID == 0).OrderBy(m => m.Sort))
+                    {
+                        if (UserRole.Where(a => a.ParentID == menu.ID).ToList().Count > 0 || Model.UserName == WeConfig.robot)
+                        {
+                            <li class="layui-nav-item" >
+                                <a class="menu-nav" href="javascript:;"><i class="layui-icon @(menu.Icon)"></i>@(menu.MenuName)</a>
+                                <dl class="layui-nav-child">
+                                    @foreach (var menuson in menus.FindAll(m => m.ParentID == menu.ID).OrderBy(m => m.Sort))
+                                    {
+                                        if (UserRole.Where(a => a.MenuID == menuson.ID).ToList().Count > 0 || Model.UserName == WeConfig.robot)
+                                        {
+                                            <dd><a data-href="@(menuson.MenuUrl)" href="javascript:;" class="MenuUrl" data-id="@(menuson.ID)">@(menuson.MenuName)</a></dd>
+                                        }
+                                    }
+                                </dl>
+                            </li>
+                            index++;
+                        }
+                    }
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+
+            <div class="layui-tab" lay-filter="SubPage" lay-allowclose="true">
+                <ul id="NavLi" class="layui-tab-title">
+                    <li id="main" lay-id="0" class="layui-this first-tab menu-nav"><i class="layui-icon layui-icon-home"></i>首页</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe id="IFramePage" src="/Main/Index" width="100%" frameborder="0" scrolling="yes" style=" overflow-x:scroll; overflow-y:hidden;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            © layui.com - 通程软件技术支持
+        </div>
+    </div>
+    <script src="~/js/layui-v2.4.5/layui/layui.js?v=10001" charset="utf-8"></script>
+    <script type="text/javascript">
+        //JavaScript代码区域
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
+
+        layui.use('element', function(){
+          var element = layui.element;
+        });
+    </script>
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+
+        (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
+              var s = document.getElementsByTagName("script")[0];
+              s.parentNode.insertBefore(hm, s);
+        })();
+
+        function ShowInfo() {
+            layer.open({
+                type: 2,
+                shade: 0.3,
+                area: ['500px', '400px'],
+                title: '用户消息',
+                content: '/B_UserMsg/NewSYSMsg',
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                }
+            });
+        }
+
+        function MyInfo()
+        {
+            layer.open({
+                type: 2,
+                shade: 0.3,
+                area: ['400px', '300px'],
+                title: '我的信息',
+                content: '/Main/MyInfo',
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                }
+            });
+        }
+
+        function ModifyPawd()
+        {
+            layer.open({
+                type: 2,
+                shade: 0.3,
+                area: ['500px', '360px'],
+                title: '修改密码',
+                content: '/Main/EditPwd',
+                zIndex: layer.zIndex,
+                success: function (layero) {
+                    layer.setTop(layero);
+                }
+            });
+        }
+
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+        BindEvent();
+        $(".layui-tab-content").fadeIn(100);
+        reinitIframe();
+        window.setInterval("reinitIframe()", 100);
+    });
+
+    function BindEvent() {
+        $(".MenuUrl").bind("click", function () {
+            var urlSend = $(this).attr("data-href");
+            var muneid = $(this).attr("data-id");
+            var munename = $(this).html().trim();
+
+            if (urlSend.trim() == "" || urlSend.trim() == "#")
+            {
+                layer.open({ content: '找不到页面', btn: '知道了' });
+                return;
+            }
+
+            var exist = $("#NavLi").find("li[lay-id='" + muneid + "']").length; //判断是否存在tab
+            if (exist == 0) {
+                layui.element.tabAdd('SubPage', {
+                    title: munename,
+                    content: '<iframe src="' + urlSend + '" width="100%" frameborder="0" onload="reinitIframe()" scrolling="yes" style=" overflow-x:scroll; overflow-y:hidden;"></iframe>',
+                    id: muneid
+                })
+            }
+
+            layui.element.tabChange('SubPage', muneid);
+
+            reinitIframe();
+        });
+    }
+
+    function reinitIframe() {
+        
+        var iframes = document.getElementsByTagName('iframe');
+        var height = $(".layui-body").height()-45;
+        for (var i = 0, j = iframes.length; i < j; ++i) {
+            // 放在闭包中，防止iframe触发load事件的时候下标不匹配
+            (function (_i) {
+                var bHeight = iframes[_i].contentWindow.document.body.scrollHeight;
+                var dHeight = iframes[_i].contentWindow.document.documentElement.scrollHeight;
+                //var height = Math.max(bHeight, dHeight);
+                iframes[_i].height = height;
+                iframes[_i].contentWindow.document.body.style.cssText = "background-color:transparent;";
+            })(i);
+        }
+    }
+
+    </script>
+</body>
+</html>
+

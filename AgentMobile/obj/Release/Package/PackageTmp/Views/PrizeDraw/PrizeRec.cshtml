@@ -1,0 +1,495 @@
+﻿@using WeModels
+@{
+    ViewBag.Title = "PrizeRec";
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>我的奖品</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0;"
+          name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="~/common.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+
+    <link href="~/js/setcity2/css/LArea.css?201707141613" rel="stylesheet" />
+    <script src="~/js/setcity2/js/LAreaData1.js?201707141613"></script>
+    <script src="~/js/setcity2/js/LArea.js?20181228"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            //$("#Winning").hide();
+            var oImg = document.getElementById('bgImg');
+            oImg.style.width = '100%';
+            oImg.style.height = document.documentElement.clientHeight / 1 + 'px';
+            Loadxqs();
+
+            var area1 = new LArea();
+            area1.init({
+                'trigger': '#PCAs',     // 触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+                'valueTo': '#PCAids',   // 选择完毕后id属性输出到该位置
+                'keys': {
+                    id: 'name',
+                    name: 'name'
+                }, // 绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+                'type': 1,          // 数据源类型
+                'data': LAreaData   // 数据源
+            });
+        }
+    </script>
+    <style type="text/css">
+        ul, li {
+            padding: 0;
+            margin: 0;
+        }
+
+        dl dd {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #ff877c;
+            padding: 20px;
+        }
+
+        .ylfwsybq11 {
+            background-color: #fff;
+        }
+
+        .zlt_div1 div {
+            float: left;
+        }
+
+            .zlt_div1 div.div1 {
+                width: 75%;
+            }
+
+            .zlt_div1 div.div2 {
+                width: 25%;
+            }
+
+                .zlt_div1 div.div2 img {
+                    height: 30px;
+                    float: right;
+                }
+
+        .zlt_div2 {
+            padding: 10px;
+        }
+
+            .zlt_div2 table {
+                width: 100%;
+                margin-bottom: 5px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 5px;
+            }
+
+                .zlt_div2 table tr th {
+                    height: 30px;
+                    color: #944700;
+                    font-size: 13px;
+                    text-align: left;
+                    text-indent: 10px;
+                    font-family: Microsoft YaHei;
+                    background: url(/images/zltbg2.png);
+                    background-size: 100% 100%;
+                }
+
+                .zlt_div2 table tr td {
+                    color: #333;
+                    font-size: 13px;
+                    opacity: 1;
+                    font-family: Microsoft YaHei;
+                    border-bottom: 1px solid #fff;
+                }
+
+                    .zlt_div2 table tr td.cc {
+                        width: 35%;
+                    }
+
+                    .zlt_div2 table tr td.dd {
+                        width: 65%;
+                    }
+
+                    .zlt_div2 table tr td.sd {
+                        color: #944700;
+                    }
+
+        .tbImg img {
+            background-color: #eee;
+        }
+
+        .ptitle {
+            text-align: center;
+            color: #8a0202;
+        }
+
+        .lefu-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            background: #000;
+            filter: alpha(opacity=60);
+            -moz-opacity: 0.6;
+            -khtml-opacity: 0.6;
+            opacity: 0.6;
+            z-index: 3;
+            display: none;
+        }
+
+        .guize {
+            width: 80%;
+            position: absolute;
+            top: 30%;
+            left: 10%;
+            z-index: 20;
+            background: #fff;
+            display: none;
+            border-radius: 5px;
+        }
+
+        #UserInfo {
+            padding: 0 20px;
+            font-size: 14px;
+            height: 260px;
+        }
+
+            #UserInfo li {
+                float: left;
+                list-style: none;
+                width: 100%;
+            }
+
+            #UserInfo dl {
+                width: 100%;
+            }
+
+                #UserInfo dl dd {
+                    width: 25%;
+                    float: left;
+                }
+
+                    #UserInfo dl dd:nth-child(2) {
+                        width: 70%;
+                    }
+
+        dl dd:nth-child(1) {
+            width: 60px;
+        }
+
+        .js-prizeshow {
+            width: 100%;
+            text-align: center;
+        }
+
+        #UserInfo input {
+            border: none;
+            border: 1px solid #ccc;
+            outline: none;
+            min-height: 26px;
+            line-height: 26px;
+            border-radius: 5px;
+        }
+
+        #UserInfo textarea {
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .zgbg {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: #fff url(../images/zge-icon3.png) right 13px top 7px no-repeat;
+            background-size: 6px;
+        }
+
+        .headScan {
+            width: 90%;
+            color: #fff;
+            background-color: #da3038;
+            margin-bottom: 10px;
+            padding: 5px 5%;
+        }
+
+            .headScan table td {
+                font-size: 14px;
+            }
+
+                .headScan table td:nth-child(1) {
+                    text-align: right;
+                    color: #fff;
+                }
+
+        .td-pos {
+            position: relative;
+        }
+
+            .td-pos input {
+                border: 1px solid #fff;
+                height: 30px;
+                width: 100%;
+                text-indent: 10px;
+                color: #000;
+                font-size: 12px;
+                border-radius: 5px;ime-mode:disabled
+            }
+
+        .td-sm {
+            position: absolute;
+            right: 10px;
+            top: 4px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div data-role="page" id="bgImg" class="ylfw">
+            <div class="headScan">
+                <table width="100%">
+                    <tr>
+                        <td>找回奖品：</td>
+                        <td class="td-pos">
+                            <input id="fwm" name="fwm" type="text" class="list-input" maxlength="16" placeholder="扫描产品上的防伪码" readonly="readonly" autocomplete="off" />
+                            <img id="Scan" src="~/images/lottery/scanning.png" class="td-sm" />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="ylfwsybq11">
+                <div class="zlt_div2">
+                    <div class="ptitle"><a>你没有抽中奖品</a></div>
+                    <button id="xqhtml" onclick="Loadxqs(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="lefu-bg" id="lefu-bg" onclick="noshow()"></div>
+    <div class="guize" id="guize">
+        <div class="login-input-content">
+            <div class="guize_index_cd">
+                <p class="js-prizeshow">
+                    <em id="TTLe" data-id="0">修改中奖信息</em>
+                </p>
+
+                <ul id="UserInfo">
+                    <li><dl><dd>手机号码：</dd><dd><input id="phone" name="phone" type="text" class="list-input" maxlength="11" placeholder="请输入手机" /></dd></dl></li>
+                    <li><dl><dd>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</dd><dd><input id="name" name="name" type="text" class="list-input" maxlength="11" placeholder="请输入姓名" /></dd></dl></li>
+                    <li>
+                        <dl>
+                            <dd>收货地址：</dd>
+                            <dd>
+                                <input class="zgbg list-input" readonly="readonly" id="PCAs" name="PCAs" type="text" placeholder='请选择收货地址' />
+                                <input id="PCAids" name="PCAids" type="hidden" value="" />
+                            </dd>
+                        </dl>
+                    </li>
+                    <li style="height:60px;"><dl><dd>详细地址：</dd><dd><textarea id="address" class="list-tarea-input" name="address" rows="3" placeholder="请输入详细收货地址" cols="26"></textarea></dd></dl></li>
+                    <li style="text-align:center; margin-top:15px;"><input type="button" id="SubInfo" onclick="SubmitPrizeInfo(this)" value="提交" data-id="0" style=" background-color:#da3038;color:#fff; border:none; height:30px; width:80px;" /></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+
+<script type="text/x-jquery-tmpl" id="xqtmp">
+    {{each(i,ck) RtnList}}
+    <table class="js-xqs" cellspacing="0">
+        <tr>
+            <td rowspan="3" width="80px;" class="tbImg"><img width="60" height="60" src="@(WeModels.WeConfig.b_domain)${ck.PrizeImgUrl}" /></td>
+            <td><a>${ck.PrizeLevel}</a><a>${ck.PrizeName}</a></td>
+            <td width="50px;" class="tbImg">${ck.States}</td>
+
+        </tr>
+        <tr>
+            <td><a style="color:#ccc;">抽奖码：${ck.IntegralCode}</a></td>
+            <td width="50px;">
+                {{if ck.States=="未发放"}}
+                <input value="修改" type="button" onclick="LoadModify('${ck.ID}', this, '${ck.Phone}', '${ck.Name}', '${ck.RecAddress}')" style="width:60px; height:26px; background-color:#8a0202;color:#fff; border:none;" />
+                {{/if}}
+            </td>
+        </tr>
+        <tr><td><a style="color:#808080;">地址：${ck.RecAddress}</a></td></tr>
+    </table>
+    {{/each}}
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+@if (IsWx == "1")
+{
+    <script>
+        wx.config({
+            debug: false,                           // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])',          // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])",  // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])',    // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',  // 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'hideMenuItems',
+                        'showMenuItems',
+                        'hideAllNonBaseMenuItem',
+                        'showAllNonBaseMenuItem',
+                        'translateVoice',
+                        'startRecord',
+                        'stopRecord',
+                        'onRecordEnd',
+                        'playVoice',
+                        'pauseVoice',
+                        'stopVoice',
+                        'uploadVoice',
+                        'downloadVoice',
+                        'chooseImage',
+                        'previewImage',
+                        'uploadImage',
+                        'downloadImage',
+                        'getNetworkType',
+                        'openLocation',
+                        'getLocation',
+                        'hideOptionMenu',
+                        'showOptionMenu',
+                        'closeWindow',
+                        'scanQRCode',
+                        'chooseWXPay',
+                        'openProductSpecificView',
+                        'addCard',
+                        'chooseCard',
+                        'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script>
+    $(document).ready(function () {
+        $("#Scan").click(function () {
+            var iswx = "@(IsWx)";
+            if (iswx != "1") {
+                layer.open({ content: "不是微信浏览器，无法扫描", btn: '我知道了' });
+                return
+            }
+
+            wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (data) {
+                    if (data.resultStr != null && data.resultStr != "") {
+                        var arrayStr = data.resultStr.split('=');
+                        if (arrayStr.length > 1) {
+                            var code = arrayStr[arrayStr.length - 1];
+                            $("#fwm").val(code);
+                            RetrievePrizes(code);
+                        }
+                        else {
+                            layer.open({ content: "此条码无法抽奖!", btn: '我知道了' });
+                        }
+                    }
+                },
+                fail: function (res) {
+                    layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+                }
+            });
+        })
+    });
+
+    // 找回奖品
+    function RetrievePrizes(barcode)
+    {
+        $.post("/PrizeDraw/RetrievePrizes", { SecurityCode: barcode }, function (data) {
+            if (data == "ok") {
+                Loadxqs();
+                layer.open({ content: "成功找回奖品,请在记录下方查看.", btn: '我知道了' });
+            }
+            else {
+                layer.open({ content: data, btn: '我知道了' });
+            }
+        })
+    }
+
+
+    function noshow() {
+        $('.guize').hide();
+        $('.lefu-bg').hide();
+    }
+
+    var loading;
+
+    function Loadxqs() {
+        var wxno = "";
+        $(".zlt_div2").find("table").remove();
+        loading = layer.open({ type: 2, content: '加载中' });
+        $.post("/PrizeDraw/LoadOutPrizeList", { WxNo: wxno }, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+                $(".ptitle").hide();
+                if (data.rowEnd < data.totalCnt) {
+                }
+                $("#xqtmp").tmpl(data).insertBefore('#xqhtml');
+            }
+            else {
+                $(".ptitle").show();
+            }
+        })
+    }
+
+    function LoadModify(id, obj, phone, name, recaddress) {
+        $('.guize').show();
+        $('.lefu-bg').show();
+
+        $("#phone").val("");
+        $("#name").val("");
+        $("#address").val("");
+        $("#PCAs").val("");
+
+        $("#TTLe").attr("data-id", id);
+        $("#phone").val(phone);
+        $("#name").val(name);
+    }
+
+    function abc(obj) {
+        Loadxqs(obj);
+
+    }
+
+    function SubmitPrizeInfo(obj) {
+        var id = $("#TTLe").attr("data-id");
+        var phone = $("#phone").val();
+        var name = $("#name").val();
+        var address = $("#PCAs").val() + $("#address").val();
+        address = address.replace(/,/g, "");
+
+        $.post("/PrizeDraw/UploadPrizeInfo", { ID: id, Phone: phone, Name: name, Address: address }, function (data) {
+            layer.close(loading);
+            if (data == "ok") {
+                noshow();
+                Loadxqs();
+                layer.open({ content: '修改成功.', btn: '我知道了' });
+            }
+            else {
+                layer.open({ content: '保存失败，请检查后再试！', btn: '我知道了' });
+            }
+        })
+    }
+</script>

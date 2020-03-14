@@ -1,0 +1,301 @@
+﻿@using WeModels;
+@{
+    Layout = null;
+    List<Supplier> SupplierList = ViewBag.SupplierList as List<Supplier>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.0" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <title>PDA用户管理</title>
+    <style type="text/css">
+        #AddDiv {
+            display: none;
+        }
+
+        .lookPDA {
+            color: #808080;
+        }
+
+        .layui-container {
+            width:100%;
+        }
+
+        .lookPDA:hover {
+            color: #026a9f;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .editUser:hover {
+            color: #026a9f;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">PDA用户管理</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+
+                        <div style="width:100%; padding:20px 5px 10px 5px;">
+                            <button class="layui-btn layui-btn-sm" onclick="AddShowPDAUser(0)"><i class="layui-icon">&#xe654;</i>添加PDA用户</button>
+                        </div>
+                        <div class="layui-form">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="340">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="100">
+                                    <col width="60" />
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>用户名</th>
+                                        <th>真实姓名</th>
+                                        <th>备注</th>
+                                        <th>PDA权限</th>
+                                        <th>OEM厂商</th>
+                                        <th>上次登录设备</th>
+                                        <th>上次登录时间</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="PDAUser"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id="AddDiv" class="layui-card">
+            <div class="layui-card-body">
+                <form id="AddUserFrm" class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">OEM厂商</label>
+                        <div class="layui-input-block">
+                            <select id="Supplier" name="SupplierID" lay-verify="required">
+                                <option value="0">总部</option>
+                                @foreach (Supplier sup in SupplierList)
+                                {
+                                    <option value="@sup.ID">@sup.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="UserId" />
+                            <input type="text" name="PUserName" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">登录密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="Password" required lay-verify="required" placeholder="请输入登录密码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">英文字母和数字</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">真实姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="PRealName" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">备注</label>
+                        <div class="layui-input-block">
+                            <textarea name="Remark" placeholder="请输入备注内容" class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" type="button" onclick="ToAddPDAUser()"><i class="layui-icon">&#xe654;</i>保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+        
+        <script type="text/x-jquery-tmpl" id="UserDataTmpl">
+            <tr class="user${ID}" data-supplierid="${SupplierID}" data-supplier="${Supplier}">
+                <td data-pwd="${Password}">${PUserName}</td>
+                <td>${PRealName}</td>
+                <td>${Remark}</td>
+                <td>
+                    <i class="layui-icon lookPDA" onclick="OpenAuth('${ID}')">&#xe678;</i>
+                    <span class="auth${ID}">${FuncNameSet}</span>
+                </td>
+                <td>${Supplier}</td>
+                <td>${LastLoginDCode.trim()}</td>
+                <td>${ChangeDateFormat(LastLoginTime).Format("yyyy-MM-dd hh:mm:ss")}</td>
+                <td>${ChangeDateFormat(CreatDate).Format("yyyy-MM-dd hh:mm:ss")} </td>
+                <td><i class="layui-icon editUser" onclick="AddShowPDAUser('${ID}')">&#xe642;</i><i class="layui-icon" onclick="DelPDAUser('${ID}')">&#x1006;</i></td>
+            </tr>
+        </script>
+
+        <script type="text/javascript">
+
+            layui.use('form', function () {
+                var form = layui.form;
+                //监听提交
+                form.on('submit(formDemo)', function (data) {
+                    layer.msg(JSON.stringify(data.field));
+                    return false;
+                });
+            });
+
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                layer.load(1, { shade: [0.5, '#fff'] });
+                LoadUserData();
+            });
+
+            function LoadUserData() {
+                $.get("/PDA/GetAllPDAUser", function (data) {
+                    $("#PDAUser").empty();
+                    $("#UserDataTmpl").tmpl(data).appendTo('#PDAUser');
+                    layer.closeAll('loading');
+                });
+            }
+
+            function ToAddPDAUser() {
+                var requestUrl = "";
+
+                layer.load(1, { shade: [0.5, '#fff'] });
+
+                if ($("input[name='UserId']").val() != "0") {
+                    requestUrl = "/PDA/ToEditPDAUser";
+                }
+                else {
+                    requestUrl = "/PDA/ToAddPDAUser";
+                }
+
+                $("#AddUserFrm").ajaxSubmit({
+                    type: "POST",
+                    url: requestUrl,
+                    data: {},
+                    success: function (rtn) {
+                        if (rtn == "ok") {
+                            layer.closeAll();
+                            LoadUserData();
+                        }
+                        else {
+                            layer.open({ content: rtn, btn: '我知道了' });
+                        }
+                    },
+                    error: function (XmlHttpRequest, textStatus, errorThrown) {
+                        layer.alert(textStatus);
+                    }
+                });
+            }
+
+            function AddShowPDAUser(userId) {
+                var titlename = "";
+                if (userId > 0) {
+                    titlename = "修改PDA用户";
+                    var PUserName = $(".user" + userId).find("td").eq(0).html();
+                    var Password = $(".user" + userId).find("td").eq(0).attr("data-pwd");
+                    var PRealName = $(".user" + userId).find("td").eq(1).html();
+                    var Remark = $(".user" + userId).find("td").eq(2).html();
+                    var SupplierID = $(".user" + userId).attr("data-supplierid");
+                    var Supplier = $(".user" + userId).attr("data-supplier");
+
+                    $('input[name="UserId"]').val(userId);
+                    $('input[name="PUserName"]').val(PUserName);
+                    $('input[name="Password"]').val(Password);
+                    $('input[name="PRealName"]').val(PRealName);
+                    $('textarea[name="Remark"]').val(Remark);
+
+                    $('#Supplier').val(SupplierID);
+
+                    $('input[name="PUserName"]').attr("disabled", true);
+                }
+                else {
+                    titlename = "添加PDA用户";
+
+                    $('input[name="UserId"]').val(0);
+                    $('input[name="PUserName"]').val("");
+                    $('input[name="Password"]').val("");
+                    $('input[name="PRealName"]').val("");
+                    $('textarea[name="Remark"]').val("");
+                    $('input[name="PUserName"]').removeAttr("disabled");
+                    $('#Supplier').val(0);
+                }
+
+                layui.form.render();
+
+                layer.open({
+                    type: 1,
+                    title: titlename,
+                    area: ['500px', '460px'],
+                    content: $('#AddDiv')
+                });
+            }
+
+            function OpenAuth(id) {
+                layer.open({
+                    type: 2,
+                    title: "PDA用户功能权限设置",
+                    area: ['1024px', '500px'],
+                    content: "/PDA/AuthorityMsg?PDAUserId=" + id
+                });
+            }
+
+            function CallbackSubAuth(userid, funName) {
+                $(".auth" + userid).html(funName);
+                layer.closeAll();
+            }
+
+            function DelPDAUser(userId) {
+                layer.confirm('确定要删除此PDA用户吗?', function (index) {
+
+                    layer.load(1, { shade: [0.5, '#fff'] });
+                    $.post("/PDA/DeletePDAUser", { UserId: userId }, function (data) {
+                        if (data == "ok") {
+                            layer.closeAll();
+                            LoadUserData();
+                        }
+                        else {
+                            layer.open({ content: rtn, btn: '我知道了' });
+                        }
+                    });
+                })
+            }
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,247 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_User puserdata = ViewData["puserdata"] as C_User;
+    //InviteCode code = ViewData["code"] as InviteCode;
+    //string type = ViewData["type"] as string;
+    //string id = ViewData["id"] as string;
+
+    string usertype = ViewData["usertype"] as string;
+    string OfficialAgent = BaseParameters.getOfficialAgent();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>上传退换货单</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+        .centent_total .sqdls_up table.t1 {
+            margin-bottom: 20px;
+        }
+
+        .centent_total .sqdls_up table.t22 tr td.td1 {
+            width: 30%;
+            height: 45px;
+            line-height: 40px;
+            float: left;
+            color: #323232;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .centent_total .sqdls_up table.t22 tr td.td2 {
+            width: 70%;
+            float: right;
+        }
+
+            .centent_total .sqdls_up table.t22 tr td.td2 input, .centent_total .sqdls_up table.t22 tr td select {
+                width: 100%;
+                text-indent: 5px;
+                float: left;
+                height: 35px;
+                color: #333;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                font-weight: normal;
+                background-color: #cdcdcd;
+                border-radius: 0;
+                -moz-border-radius: 0;
+                -webkit-border-radius: 0;
+                border: 1px solid #9d9d9d;
+            }
+
+        .centent_total .sqdls_up table.t22 tr td select {
+            width: 100%;
+            -webkit-appearance: none;
+            background-image: url(/images/88.png);
+            background-repeat: no-repeat;
+            background-size: 14% 104%;
+            background-position: right;
+            background-origin: content-box;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+       
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        <table class="t22">
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    产品名称：
+                                </td>
+                                <td class="td2">
+
+                                    @Html.DropDownList("ProductName", SelectListHelper.GetProductsname(), new { })
+                                    @*GetC_UserTypeIDByPUser(null, puserdata.ID, 0, true)*@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    退/换货：
+                                </td>
+                                <td class="td2">
+                                    <input id="Text4" name="OrderState" type="text" placeholder="请输入退/换货（填退货或者换货）" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    数量：
+                                </td>
+                                <td class="td2">
+                                    <input name="ProductCnt" id="Text3" type="text" placeholder="请输入数量（必填）" />
+                                </td>
+                            </tr>
+                            <tr class="r1">
+                                <td style="text-align: center;">
+                                    <button onclick="TemporaryMedia()" type="button" style="background-color: #000000; color: white; padding: 10px; width: 80%; border-radius: 5px; border: 0; border: none; ">提交</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <p id="msg" style="text-align:center"></p>
+                    </div>
+                </div>
+            </div>
+            @*<div class="All_foot">
+                    <div class="foot">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="/">
+                                        <div class="div1">
+                                            <img src="/images/25.png" alt="" />
+                                        </div>
+                                        <div class="div2">
+                                            返回首页
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>*@
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/Common/jquery.form.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/Common/desHelper.js"></script>
+
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+
+
+<link href="~/js/setcity2/css/LArea.css?201707141613" rel="stylesheet" />
+<script src="~/js/setcity2/js/LAreaData1.js?201707141613"></script>
+<script src="~/js/setcity2/js/LArea.js?201707141613"></script>
+<script>
+    var area1 = new LArea();
+    area1.value = ["", "", ""];//控制初始位置，注意：该方法并不会影响到input的value
+
+    area1.init({
+        'trigger': '#PCAs', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+        'valueTo': '#PCAids', //选择完毕后id属性输出到该位置
+        'keys': {
+            id: 'name',
+            name: 'name'
+        }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+        'type': 1, //数据源类型
+        'data': LAreaData //数据源
+    });
+</script>
+<script>
+    var loading;
+    //var time;
+    @*var type = "@(type)";*@
+    $(function () {
+        //if (type == "code")
+        //{
+        //    time = setInterval("setTimeing()", 1000);
+        //}
+
+        $("#setimg").on("tap", function () {
+            $("#file_temporaryImage").click();
+        });
+        $(".ui-btn-inner").hide();
+        $("#file_temporaryImage").change(function (e) {
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    $("#idcardshow").attr("src", this.result);
+                }
+            }
+        });
+    })
+    function TemporaryMedia() {
+        //判断上传控件中是否选择了图片
+        //       var image = $("#file_temporaryImage").val();
+        //       if ($.trim(image) == "") {
+        //           layer.open({ content: "请上传身份证！", btn: '我知道了' });
+        //           return;
+        //       }
+        //       loading = layer.open({
+        //           type: 2
+        //, content: '提交中'
+        //       });
+        //提交请求处理的url
+        var actionUrl = "/agentApply/toApplysc";
+        //开始ajax操作
+        $("#form1").ajaxSubmit({
+
+            type: "POST",//提交类型
+            url: actionUrl,//请求地址
+            data: {},//请求数据
+            success: function (rtn) {//请求成功后的函数
+                layer.close(loading);
+                if (rtn == "ok") {
+                    layer.open({
+                        content: "上传成功！",
+                        btn: '我知道了',
+                        yes: function (index) {
+                            layer.close(index);
+                            window.location.href = "/agentback/Index";
+                        }
+                    });
+                }
+                else {
+                    layer.open({ content: rtn, btn: '我知道了' });
+                }
+            },
+            error: function (rtn) {
+                layer.close(loading);
+                layer.open({ content: rtn, btn: '我知道了' });
+            },//请求失败的函数
+            async: true
+
+        });
+
+
+    }
+
+
+</script>

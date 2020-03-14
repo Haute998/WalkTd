@@ -1,0 +1,188 @@
+﻿@using WeModels;
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="robots" content="all" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="pragma" content="no-cach" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="copyright" content="" />
+    <meta name="description" content="" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>我的库存</title>
+    <link href="~/css/ProductStyle.css" rel="stylesheet" />
+    <link href="~/css/dropload.css" rel="stylesheet" media="all" />
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <style>
+        .tabHead {
+            min-height: 40px;
+        }
+        .headImg {
+            width:30%;
+            float:left;
+            text-align:right;
+        }
+        .headTitle {
+            width:70%;
+            float:right;
+            color:#666;
+            font-family: Microsoft YaHei;
+        }
+            .headTitle a {
+                display:block;
+                width:100%;
+                margin-left:20px;
+                line-height:24px;
+                color:#999;
+            }
+        #setimg img {
+            width:70px;
+        }
+        .khfxWarp {
+            padding-top: 45px;
+        }
+        .tabHead:after {
+            background-image:none;
+        }
+        #title {
+            font-weight:bold;
+            font-size:16px;
+            color:#000;
+        }
+
+        .ken {
+            width:10px;
+            position:absolute;
+            top:70px;
+            right:20px;
+        }
+        .khfxRow .mid span {
+            
+        }
+        .khfxRow .mid span:nth-child(3) {
+            margin:0;
+        }
+    </style>
+</head>
+
+<body ontouchstart="" id="container" style="">
+    <header class="tabHead" id="page1">
+        <div id="AgentHead">
+            <dl>
+                <dd><a href="/agentback/Index"><img id="BtnClose" src="/images/11111.png" /></a></dd>
+                <dd>我的库存</dd>
+                <dd></dd>
+            </dl>
+        </div>
+
+        @*<div class="headImg">
+                <a id="setimg">
+                    <img src="~/images/27.png?@(WeConfig.img_version)" alt="" id="show" />
+                </a>
+                <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+            </div>
+            <div class="headTitle">
+                <a id="title">@(user.Name)</a>
+                <a style="font-size:14px;">授权级别：@(user.userTypeName)</a>
+                <a style="font-size:14px;">授权时间：@(user.DatCreate.ToString("yyyy-MM-dd"))</a>
+            </div>
+
+        <div class="ken" onclick="window.location.href = '/MyInfo/Index'"><img src="~/images/zge-icon3.png" /></div>*@
+        @*<span class="active">全部产品<small>（3）</small></span>*@
+        @*<span>分类产品<small>（116）</small></span>*@
+        @*<b class="border"></b>*@
+    </header>
+
+    <article class="khfxWarp">
+        <section class="khfxPane" style="display:block">
+
+            <section class="khfxPane"></section>
+        </section>
+    </article>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/dropload.js"></script>
+
+    <script>
+        $(function () {
+            var itemIndex = 0;
+            var tabLoadEndArray = [false, false, false];
+            var tabLenghtArray = [10, 10, 10];
+            var tabPageIndexArray = [1, 1, 1];
+            var tabPageSizeArray = [10, 10, 10];
+            var tabScroolTopArray = [0, 0, 0];
+            var dropload = $('.khfxWarp').dropload({
+                scrollArea: window,
+                domDown: {
+                    domClass: 'dropload-down',
+                    domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData: '<div class="dropload-noData">已无数据</div>'
+                },
+                loadDownFn: function (me) {
+
+                    setTimeout(function () {
+                        if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Stock/MyStockPage',
+                            data: { "pageIndex": tabPageIndexArray[itemIndex], "pageSize": tabPageSizeArray[itemIndex] },
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var result = '';
+                                tabPageIndexArray[itemIndex]++;
+                                if (data.RtnList.length > 0) {
+                                    for (var index = 0; index < data.RtnList.length; index++) {
+                                        if (itemIndex == 0) {
+                                            result += ''
+                                            + '    <hgroup class="khfxRow">'
+                                            + '      <div class="mid">'
+                                            + '        <img class="photo" src="@(WeModels.WeConfig.b_domain)' + data.RtnList[index].ProductImgUrl + '" >'
+                                            + '        <span><label>产品编号：</label>' + data.RtnList[index].ProductNumber + '</span> '
+                                            + '        <span><label>产品名称：</label>' + data.RtnList[index].ProductName + '</span> '
+                                            + '        <span><label>库存数量：</label><em>' + data.RtnList[index].count + '</em></span> '
+                                            + '      </div>'
+                                            + '    </hgroup>';
+                                        }
+                                    }
+                                }
+                                else {
+                                    tabLoadEndArray[itemIndex] = true;
+                                }
+
+                                if (data.RtnList.length < tabPageSizeArray[itemIndex]) tabLoadEndArray[itemIndex] = true;
+
+                                $('.khfxPane').eq(itemIndex).append(result);
+                                me.resetload();
+                            }
+                        });
+                    }, 500);
+                }
+            });
+
+            $('.tabHead span').on('click', function () {
+                tabScroolTopArray[itemIndex] = $(window).scrollTop();
+                var $this = $(this); itemIndex = $this.index(); $(window).scrollTop(tabScroolTopArray[itemIndex]);
+                $(this).addClass('active').siblings('.tabHead span').removeClass('active');
+                $('.tabHead .border').css('left', $(this).offset().left + 'px');
+                $('.khfxPane').eq(itemIndex).show().siblings('.khfxPane').hide();
+                if (!tabLoadEndArray[itemIndex]) { dropload.unlock(); dropload.noData(false); } else { dropload.lock('down'); dropload.noData(); }
+                dropload.resetload();
+            });
+        });
+    </script>
+
+</body>
+</html>

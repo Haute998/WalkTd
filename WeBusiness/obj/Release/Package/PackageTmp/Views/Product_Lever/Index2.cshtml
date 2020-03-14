@@ -1,0 +1,92 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model Product
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>各级价格</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+    <span class="label label-default radius" style="margin-left:3%">@(Model.ProductName)</span>
+    <article class="page-container">
+        <form class="form form-horizontal" id="condition">
+            <input type="hidden" id="ProductID" name="ProductID" value="@(Model.ProductID)" />
+            <div id="datahtml">
+
+            </div>
+            @Html.Partial("_Paging")
+        </form>
+    </article>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+
+    {{each(i,ck) RtnList}}
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>${ck.Name}：</label>
+        <div class="formControls col-xs-7 col-sm-9">
+            <input type="text" data-prol_id="${ck.ProL_ID}" data-id="${ck.ID}" data-oldval="${ck.price}" onchange="edit(this)" class="input-text" value="${ck.price}" placeholder="输入价格" id="" name="price">
+            <i class="Hui-iconfont" data-name="msgshow" data-msg="${ck.ID}" style="color:green;display:none">&#xe6a7;</i>
+
+            <a class="btn btn-primary radius examine" data-prol_id="${ck.ProL_ID}" data-id="${ck.ID}" data-oldval="${ck.price}" data-title="保存" onclick="edit(this)" href="javascript:;">保存</a>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script>
+    var dataUrl = "/Product_Lever/GetLevelPrices";
+
+
+    function edit(obj) {
+        $("[data-name='msgshow']").hide();
+        var ProL_ID = $(obj).attr("data-prol_id");
+        var productID = $("[name='ProductID']").val();
+        var UserTypeID = $(obj).attr("data-id");
+        var Price = $(obj).val();
+        var checkNum = /^(:?(:?\d+.\d+)|(:?\d+))$/;
+
+        if (checkNum.test(Price) == false) {
+            layer.alert("请输入有效的价格");
+            return false;
+        }
+        $.post("/Product_Lever/EditLevelPrice", { "productID": productID, "UserTypeID": UserTypeID, "Price": Price }, function (rtn) {
+            if (rtn == "ok") {
+                $("[data-msg='" + UserTypeID + "']").show();
+                $(obj).attr("data-oldval", Price);
+            }
+            else {
+                layer.alert(rtn);
+                $(obj).val($(obj).attr("data-oldval"));
+            }
+        })
+    }
+</script>

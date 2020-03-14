@@ -1,0 +1,150 @@
+﻿@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+}
+@model C_UserUpGradeVM
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>升级审核详情 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .centent_total .sqdls_up table.t1 tr {
+            border: none;
+        }
+
+            .centent_total .sqdls_up table.t1 tr td.d1 {
+                height: 50px;
+                width: 34%;
+                float: left;
+            }
+
+            .centent_total .sqdls_up table.t1 tr td.d2 {
+                float: right;
+            }
+
+            .centent_total .sqdls_up table.t1 tr td.d1 span {
+                background-color: #323232;
+                border: 1px solid #323232;
+                color: #fff;
+            }
+
+            .centent_total .sqdls_up table.t1 tr td.d2 span {
+                color: #737373;
+                text-indent: 15px;
+                font-weight: normal;
+                background-color: #d7d7d7;
+                border: 1px solid #c7c7c7;
+            }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="shlb">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <a href="/MyAgentsInfo/AgentsNoAudit">授权审核</a>
+                        </td>
+                        <td class="td1 fff">
+                            <a href="/MyAgentsInfo/UpgradeNoAudit">升级审核</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up" style="width: 95%">
+                        <table class="t1">
+                            <tr>
+                                <td colspan="2" style="text-align: center;">
+                                    <img src="/WarrantImg/MyWarrantImg.ashx?id=@(Model.UserName)" style="width: 50%; padding-bottom: 20px;" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d1">
+                                    <span>原代理等级：</span>
+                                </td>
+                                <td class="d2">
+                                    <span>@(Model.OldUserTypeName)</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="d1">
+                                    <span>现申请等级：</span>
+                                </td>
+                                <td class="d2">
+                                    <span>@(Model.NewUserTypeName)</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="db">
+                      @if (Model.AuditStat == "未审核") 
+                      {
+                        <button onclick="audit(this)" type="button" data-id="@(Model.ID)" style="background-color: #40B7AB; color: white; padding: 10px; width: 80%; border-radius: 5px; border: 0; border: none; ">确定审核</button>
+                      }
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+
+<script>
+    var loading;
+    function audit(obj) {
+        layer.open({
+            content: '确定后，所选代理将升级，您确定要审核该代理吗？'
+  , btn: ['确定', '不要']
+  , yes: function (index) {
+      loading = layer.open({ type: 2, content: '加载中' });
+      $.post("/MyAgentsInfo/toAuditUpgrade_a", { "id": $(obj).attr("data-id") }, function (rtn) {
+          if (rtn == "ok") {
+              layer.close(loading);
+              layer.open({
+                  content: "审核成功", btn: '我知道了', yes: function ()
+                  {
+                      window.location.href = window.location.href;
+                  }
+              });
+          }
+          else {
+              layer.open({ content: rtn, btn: '我知道了' });
+          }
+      });
+      layer.close(index);
+  }
+        });
+    }
+</script>

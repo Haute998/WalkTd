@@ -1,0 +1,95 @@
+﻿@using WeModels;
+
+@{
+
+    string jf = ViewData["jf"] as string;
+    ViewBag.Title = "IntegralList";
+}
+
+@model  C_WxUser
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>领取记录</title>
+    <meta name="Description" content="领取记录" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/reset1016.css" rel="stylesheet" />
+    <link href="/css/zkm1016.css" rel="stylesheet" />
+    <script src="~/js/Common/Datehelper.js"></script>
+    <script src="~/layout/pack/js/jquery-1.8.2.min.js"></script>
+    <script src="~/js/common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <link href="/css/zwhongbao.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="zkm-personal">
+        <p class="pinp" id="pinp_0">
+            <table>
+                <button id="historyhtml" class="bnts" onclick="LoadSources(this)" data-tid="0" data-pageindex="1" type="button" style="display:none">查看更多</button>
+            </table>
+        </p>
+    </div>
+</body>
+</html>
+@Html.Partial("ShardPage")
+
+<script>
+    var loading;
+    var isfirst = true;
+    $(function () {
+        LoadSources($("#historyhtml"));
+    });
+    function LoadSources(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        $.post("/RedPaper/LoadAuthenticityList", { "pageIndex": gopage, "pageSize": 10 }, function (data) {
+            layer.close(loading);
+
+            debugger
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                if (gopage == 1) {
+                    $(".zkm-mingxi").remove();
+                }
+                var datehtml = "";
+                for (var i = 0; i < data.RtnList.length; i++) {
+
+                    datehtml += "  <div class=\"hongbao-fx\">";
+                    datehtml += " <a href=\"\">";
+                    datehtml += " <div class=\"hongbao-jl4\">";
+                    datehtml += "    <img src=\'" + data.RtnList[i]["PortraitUrl"] + "'\ />";
+                    datehtml += "   </div>";
+                    datehtml += " <div class=\"hongbao-jl5\">" + data.RtnList[i]["NickName"] + "</div>";
+                    datehtml += "  <div class=\"hongbao-jl6 hongbao-colorff0\">+" + data.RtnList[i]["redMoney"] + "</div>";
+                    datehtml += "  </a>";
+                    datehtml += "   </div>";
+
+                    //datehtml += " <tr><td style=\"width:33%;padding：10px\"><img src='" + data.RtnList[i]["PortraitUrl"] + "' style=\"width:33%;padding：10px\"/></td><td style=\"width:33%;padding：10px\">" + data.RtnList[i]["NickName"] + "</td><td style=\"width:33%;padding：10px\"> " + data.RtnList[i]["redMoney"] + " </td> </tr>";
+                }
+                $(datehtml).insertBefore($(".pinp"));
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+                if (data.RtnList.length < 10) {
+                    $(obj).hide();
+                }
+            }
+            else {
+                $(obj).hide();
+            }
+            data = null;
+        })
+    }
+
+
+</script>
+
+

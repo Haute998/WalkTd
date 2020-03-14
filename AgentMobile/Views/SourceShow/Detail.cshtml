@@ -1,0 +1,69 @@
+﻿@using WeModels
+@using DAL
+@{
+    Layout = null;
+    string strTemp=HttpUtility.UrlDecode(Model.Content);
+    strTemp = Common.ReplaceHtmlTag(strTemp, 100);
+    string fromuser = ViewData["fromuser"].ToString();
+}
+@model SYSMArticle
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <style type="text/css">
+        .section {
+            word-break: break-word;
+        }
+    </style>
+    <title>@(Model.Title)</title>
+    <meta name="Description" content="@(strTemp)" />
+    <link href="~/css/article/000.css" rel="stylesheet" />
+    <link href="~/css/article/iconfont.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="" />
+</head>
+<body>
+    <div style='margin:0 auto;display:none;'>
+        <img id="wx_pic" src='@(WeConfig.b_domain + Model.Img)' />
+    </div>
+    <div class="meipian">
+        <div class="meipian-bg"></div>
+        <div class="meipian-main">
+            <h1 class="meipian-title">@(Model.Title)</h1>
+
+            <div class="meipian_meta clearfix">
+  
+                    <a href="/">通程微商系统</a>
+              
+                <span>@(Model.DatEdit.ToString("yyyy-MM-dd HH:mm:ss"))</span>
+            </div>
+            <div class="meipian-content" style="padding-left:10px;padding-right:10px">
+
+                <!--文章内容-->
+                @Html.Raw(HttpUtility.UrlDecode(Model.Content))
+
+                @if (string.IsNullOrWhiteSpace(fromuser) == false)
+                {
+                    C_User user = C_User.GetC_UserByUserName(fromuser);
+                    if (user != null && string.IsNullOrWhiteSpace(user.WxQRCode) == false) 
+                    {
+                    <div style="text-align:center;margin:10px">
+
+                        <img src="@(user.WxQRCode)" alt="" style="width:100%" id="show" />
+                    </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+@Html.Partial("ShardPage")

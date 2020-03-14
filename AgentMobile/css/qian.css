@@ -1,0 +1,240 @@
+﻿/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small {
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol {
+    list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+sup {
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub {
+    vertical-align: text-bottom;
+}
+
+/** 重置表单元素 **/
+legend {
+    color: #000;
+}
+/* for ie6 */
+fieldset, img {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea {
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+    /* 去掉高光样式 */
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+input:focus, img:focus {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    height: 100%;
+    background: #fff;
+}
+
+.qian {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.qian-div1 {
+    height: 100vh;
+}
+
+.w85 {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.qian-logo {
+    text-align: center;
+    padding: 10vh 0 7vh;
+}
+
+.qian-t1 {
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.qian-t2 {
+    color: #000;
+    font-size: 2.6vw;
+    text-align: center;
+}
+
+.qian-t3 {
+    color: #000;
+    font-size: 3vw;
+    text-align: center;
+}
+
+.qian-t4 {
+    color: #8b8b8b;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    margin: 22vh auto 0 auto;
+}
+
+.qian-t6 {
+    color: #000;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+    .qian-t6 span {
+        display: block;
+        width: 60px;
+        height: 8px;
+        margin: 20px auto;
+        background: #000;
+    }
+
+.qian-t7 {
+    color: #599c26;
+    font-size: .85rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.qian-t8 {
+    color: #000;
+    font-size: .85rem;
+    text-align: center;
+}
+
+.qian-t9 {
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.qian-t10 {
+    color: #8b8b8b;
+    font-size: 12px;
+    text-align: center;
+    padding: 40px 0 20px;
+}
+
+.qian-div1 .qian-sm {
+    border: 1px solid #a0a0a0;
+    position: relative;
+    margin: 5vh auto 10vh;
+}
+
+.qian-sm input {
+    width: 100%;
+    height: 43px;
+    border: 0;
+    background: #fff;
+    font-size: 16px;
+    color: #000;
+    text-indent: 10px;
+    border-radius: 0;
+}
+
+.saoma {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    height: 32px;
+}
+
+.qian-btn {
+    text-align: center;
+}
+
+    .qian-btn input {
+        width: 160px;
+        height: 43px;
+        border: 1px solid #ff4945;
+        background: #ff4945;
+        font-size: 16px;
+        color: #fff;
+        border-radius: 3px;
+    }
+
+.qian-sel {
+    width: 60px;
+    color: #000;
+    font-size: 14px;
+    height: 30px;
+    border: 0;
+    float: right;
+    margin: 5px 15px 0 0;
+    text-align: center;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /*在选择框的最右侧中间显示小箭头图片*/
+    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+}

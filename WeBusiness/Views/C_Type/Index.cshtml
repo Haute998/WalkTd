@@ -1,0 +1,117 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model List<C_UserType>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>经销商类型管理</title>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页<span class="c-gray en">&gt;</span> 客户管理 <span class="c-gray en">&gt;</span> 经销商类型管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:;" onclick="admin_add('添加类型', '/C_Type/TypeAddIndex', '420', '350')"
+                   class="btn btn-primary radius add"><i class="Hui-iconfont">&#xe600;</i>添加类型</a>
+            </span>
+            <span class="r">共有数据：<strong>@(Model.Count)</strong> 条</span>
+        </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+                <tr class="text-c">
+                    <th>类型代号</th>
+                    <th>
+                        类型级别
+                    </th>
+                    <th>
+                        类型名称
+                    </th>
+                    @*<th>
+                            类型状态
+                        </th>*@
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var model in Model.OrderBy(m => m.Lever))
+                {
+                    <tr class="text-c">
+                        <td>@(model.TypeCode)</td>
+                        <td>
+                            @(model.Lever)
+                        </td>
+                        <td>
+                            @(model.Name)
+                        </td>
+                        @*<td>
+                                @(model.State)
+                            </td>*@
+                        <td>
+                            <a title="编辑" href="javascript:;"
+                               onclick="admin_edit('类型修改', '/C_Type/TypeEditIndex/@(model.ID)', '@(model.ID)', '420', '260')" class="ml-5 edit" style="text-decoration: none">
+                                <i class="Hui-iconfont">&#xe6df;</i>
+                            </a> <a title="删除" href="javascript:;" onclick="admin_del(this,'@(model.ID)')"
+                                    class="ml-5 delete" style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" src="/layout/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="/layout/lib/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript">
+
+        function admin_add(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }
+
+        function admin_del(obj, id) {
+            layer.confirm('确认要删除吗？', function (index) {
+                $.ajax({
+                    url: "/C_Type/GetTypeDel",
+                    data: { ID: id },
+                    type: "post",
+                    success: function (data) {
+                        if (data == "ok") {
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!', { icon: 1, time: 1000 });
+                        }
+                        else {
+                            alert(data);
+                        }
+                    }
+                });
+            });
+        }
+        
+        function admin_edit(title, url, id, w, h) {
+            layer_show(title, url, w, h);
+        }
+    </script>
+</body>
+</html>
+

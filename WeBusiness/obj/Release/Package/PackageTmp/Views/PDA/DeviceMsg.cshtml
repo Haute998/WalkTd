@@ -1,0 +1,194 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.1" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <title>设备管理</title>
+    <style type="text/css">
+        .layui-container {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">设备管理</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-sm2">
+                                <button class="layui-btn layui-btn-normal" onclick="AddDevice()"><i class="layui-icon">&#xe654;</i>添加设备</button>
+                            </div>
+                            <div class="layui-col-sm5">
+                                <div class="layui-row layui-col-space10">
+                                    <div class="layui-col-sm9"><input type="text" id="KeyWord" class="layui-input" placeholder="请输入序列号" /></div>
+                                    <div class="layui-col-sm3"><input type="button" class="layui-btn" onclick="LoadPda()" value="查询" /></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form">
+                            <table class="layui-table">
+                                <thead>
+                                    <tr class="text-c">
+                                        <th>添加时间</th>
+                                        <th>设备序列号</th>
+                                        <th>备注</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="PDAData"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/x-jquery-tmpl" id="PDADataTmpl">
+        <tr>
+            <td>${formatDateTime_Two(CreateTime,3)}</td>
+            <td>
+                ${Keys}
+            </td>
+            <td>
+                ${Remark}
+            </td>
+            <td>
+                ${State}
+            </td>
+            <td>
+                {{if State == "启用"}}
+                    <a style="text-decoration: none" onclick="toPublish(this, '禁用', '${ID}')" href="javascript:;" title="禁用"><i class="layui-icon">&#xe673;</i></a>
+                {{else}}
+                <a style="text-decoration: none" onclick="toPublish(this, '启用', '${ID}')" href="javascript:;" title="启用"><i class="layui-icon">&#xe672;</i></a>
+                {{/if}}
+                <a title="删除" href="javascript:;" onclick="DeleteDevice(this,'${ID}')" class="ml-5 delete" style="text-decoration: none"><i class="layui-icon">&#x1007;</i></a>
+            </td>
+        </tr>
+    </script>
+
+        <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+        <script type="text/javascript">
+
+            layui.use('form', function () {
+                var form = layui.form;
+
+                form.on('checkbox(defult)', function (data) {
+                    if (this.checked) {
+                        var appId = $(this).attr("data-id");
+                        $("input[name='ChkIsOK']").prop("checked", false);
+                        var obj = this;
+
+                        $.post("/PDA/SetDefult", { ID: appId }, function (rtn) {
+                            if (rtn == "ok") {
+                                $(obj).prop("checked", true);
+                                layui.form.render();
+                            }
+                            else {
+                                layer.alert(rtn);
+                            }
+                        });
+                    }
+                    else {
+                        $(this).prop("checked", false);
+                    }
+
+                    layui.form.render();
+                });
+            });
+
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+        </script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                LoadPda();
+            });
+
+            function LoadPda()
+            {
+                var keyword = $("#KeyWord").val();
+                $.get("/PDA/LoadPDAList",{KeyWord:keyword}, function (data) {
+                    $("#PDAData").empty();
+                    $("#PDADataTmpl").tmpl(data).appendTo('#PDAData');
+                    layui.form.render();
+                });
+            }
+
+            function admin_edit(title, url, id, w, h) {
+                layer.open({
+                    type: 2,
+                    shade: false,
+                    area: [w, h],
+                    content: url,
+                    title: title,
+                    zIndex: layer.zIndex,
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    }
+                });
+            }
+
+            function toPublish(obj, isPublish, id) {
+                var thislay = layer.confirm('确定要' + (isPublish == "启用" ? '启用' : '禁用') + 'PDA设备吗？', function (index) {
+                    $.post("/PDA/toPublish", { "isPublish": isPublish, "id": id }, function (rtn) {
+                        if (rtn == "ok") {
+                            window.location.href = location.href;
+                        }
+                        else {
+                            layer.alert(rtn);
+                        }
+                    })
+                })
+            }
+
+            function AddDevice() {
+                layer.open({
+                    type: 2,
+                    area: ['500px', '360px'],
+                    title: 'PDA权限设置',
+                    content: '/PDA/Add',
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    }
+                });
+            }
+
+            function DeleteDevice(obj, id) {
+                var thislay = layer.confirm("确定要删除此设备？", function (index) {
+                    $.post("/PDA/Del", { ID: id }, function (rtn) {
+                        layer.closeAll();
+                        if (rtn == "ok") {
+                            $(obj).parent().parent().remove();
+                        }
+                        else {
+                            layer.alert(rtn);
+                        }
+                    })
+                });
+            }
+        </script>
+</body>
+</html>

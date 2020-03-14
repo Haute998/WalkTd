@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>inportgo</title>
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script>
+        function Waowao() {
+            var url = "../BaseFile/DirectlyIndex_inport.txt";
+            //创建a标签
+            var a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', url.split('/').pop()); //分割路径，取出最后一个元素
+            a.setAttribute('target', '_blank');
+            a.setAttribute('id', 'DownloadFile');
+            // 防止反复添加
+            if (document.getElementById('DownloadFile')) {
+                document.body.removeChild(document.getElementById('DownloadFile'));
+            }
+            document.body.appendChild(a);
+            a.click();
+        }
+
+    </script>
+</head>
+<body>
+    <fieldset class="layui-elem-field">
+        <legend>导入</legend>
+        <div class="layui-field-box">
+            <blockquote class="layui-elem-quote">
+
+                <b>重要注释：</b>
+
+                <p>*系统暂支持txt文件的导入</p>
+                <p>*每一行为一条数据，每个字段以一个空格隔开</p>
+                <p>*字段循序：经销商编号,经销商名称,手机号,联系人,省份,城市,县/区,详细地址</p>
+                <a href="javascript:void(0)" class="btn btn-success" onclick='Waowao()'>查看模板</a>
+            </blockquote>
+            <form method="post" action="/C_User/DirectlyIndex_inport" enctype="multipart/form-data" style="float:left">
+                <input type="file" name="infile" id="infile" accept=".txt" onchange="inchange()" />
+                <input id="SubmitCode" hidden="hidden" value="上传" type="submit" />
+
+            </form>
+            <button href="javascript:void(0)" onclick="goback()" class="btn" style="width:80px">返回</button>
+        </div>
+    </fieldset>
+</body>
+</html>
+<script>
+    $(function () {
+        if ("@TempData["ToProductAdd_err"]" != "") {
+            layer.alert("@TempData["ToProductAdd_err"]");
+        }
+    })
+    function inchange() {
+        $("#SubmitCode").click();
+    }
+    function goback() {
+        window.history.go(-1);
+    }
+</script>

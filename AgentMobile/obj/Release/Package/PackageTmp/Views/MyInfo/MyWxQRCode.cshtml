@@ -1,0 +1,116 @@
+﻿@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的微信二维码 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="dlhtt" id="dlhtt" style="background: url(/images/tcrjbg.png); background-size: 100% 100%;">
+                <dl>
+                    <dt>
+                        <span id="setimg">
+                            <img src="@(user.PortraitUrl)" alt="" />
+                        </span>
+                    </dt>
+                    <dd style="padding: 28px 0 0 0;">
+                        <span>@(user.Name)</span>
+                    </dd>
+                    <dd>
+                        <span class="span1">级别：@(user.userTypeName)</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="bellowsss single">
+                <div style="text-align:center;margin:10px">
+                    <button style="background-color: #40B7AB;color:white;border-radius:5px;padding:3px 9px;" type="button" onclick="showimg()">@(string.IsNullOrWhiteSpace(user.WxQRCode) == false?"修改":"上传")微信二维码</button>
+                </div>
+                @if (string.IsNullOrWhiteSpace(user.WxQRCode) == false)
+{
+    <div style="text-align:center;margin:10px">
+
+        <img src="@(user.WxQRCode)" alt="" style="width:100%" id="show" />
+    </div>
+                }
+
+                <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/Common/jquery.form.js"></script>
+<script>
+    $(function () {
+        $("#file_temporaryImage").change(function (e) {
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    var actionUrl = "/MyInfo/UpMyWxQRCode";
+                    $("#show").attr("src", this.result);
+                    $("#form1").ajaxSubmit({
+                        type: "POST",//提交类型
+                        url: actionUrl,//请求地址
+                        data: {},//请求数据
+                        success: function (rtn) {//请求成功后的函数
+                            if (rtn == "ok") {
+                                layer.open({
+                                    content: "恭喜您，更换成功",
+                                    btn: '我知道了'
+                                });
+                            }
+                            else {
+                                layer.open({ content: rtn, btn: '我知道了' });
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+    })
+    function showimg() {
+        //底部对话框
+        $("#file_temporaryImage").click();
+    }
+</script>
+
+

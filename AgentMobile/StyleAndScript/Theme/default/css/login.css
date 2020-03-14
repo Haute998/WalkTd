@@ -1,0 +1,137 @@
+﻿.veger-bgfj {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.veger-fch {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 30px;
+    box-sizing: border-box;
+}
+
+.veger-fch-div {
+    min-height: 89vh;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.veger-logo {
+    text-align: center;
+    padding: 50px 0 20px;
+}
+
+.veger-padding8 {
+    padding: 80px 0 0;
+}
+
+.veger-padding2 {
+    padding: 15px 0 0;
+}
+
+.veger-padding5 {
+    padding: 50px 0 0;
+}
+
+.veger-w2 {
+    text-align: center;
+    padding: 0 5%;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.veger-w3 {
+    width: 85%;
+    margin: 0 auto;
+}
+
+    .veger-w3 input, textarea {
+        box-sizing: border-box;
+    }
+
+.veger-w4 {
+    padding: 15px 8% 0;
+    font-size: 0.75rem;
+    line-height: 12px;
+}
+
+.veger-input9 {
+    width: 100%;
+    margin: 0 auto;
+    height: 43px;
+    border: 1px solid #666;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #000;
+    text-indent: 45px;
+    -webkit-appearance: none;
+}
+
+.veger-zh {
+    background: #fff url(../../../../zk/icon3.png) no-repeat;
+    background-position: left 12px top 12px;
+    background-size: 16px;
+}
+
+.veger-pwd {
+    background: #fff url(../../../../zk/icon4.png) no-repeat;
+    background-position: left 12px top 12px;
+    background-size: 16px;
+}
+
+.veger-btn {
+    width: 70%;
+    height: 43px;
+    border: 1px solid #595757;
+    background: #595757;
+    border-radius: 25px;
+    letter-spacing: 1px;
+    font-size: 16px;
+    color: #fff;
+    margin: 0 auto;
+    display: block;
+}
+
+.veger-foot {
+    width: 100%;
+    text-align: center;
+    color: #c3c3c3;
+    font-size: 0.75rem;
+    height: 20px;
+    line-height: 20px;
+}
+/*复选框*/
+
+.gcs-checkbox {
+    display: none;
+}
+
+    .gcs-checkbox + label {
+        background-color: white;
+        border-radius: 0px;
+        border: 1px solid #bcbcbc;
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: bottom;
+        line-height: 10px;
+    }
+
+        .gcs-checkbox + label:hover {
+            cursor: pointer;
+            border: 1px solid #bcbcbc;
+        }
+
+    .gcs-checkbox:checked + label {
+        background-color: #bcbcbc;
+        background: #bcbcbc;
+        border: 1px solid #bcbcbc;
+    }
+
+        .gcs-checkbox:checked + label:after {
+            content: "\2714";
+            color: white;
+        }

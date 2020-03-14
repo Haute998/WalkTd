@@ -1,0 +1,200 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <script src="~/js/common/Datehelper.js"></script>
+    <title>二级经销商审核</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 渠道客户管理 <span class="c-gray en">&gt;</span> 二级经销商审核 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                关键字：
+                <input type="text" name="keyword" id="" placeholder=" 请输入搜索关键字" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+    
+            <th>
+                授权编号
+            </th>
+            <th>
+                名称
+            </th>
+            <th>
+                电话
+            </th>
+            <th>
+                身份证
+            </th>
+            <th>
+                微信号
+            </th>
+            <th>
+                级别名称
+            </th>
+            <th>
+                上级名称
+            </th>
+            <th>
+                上级电话
+            </th>
+            <th>
+                推荐人
+            </th>
+            <th>
+                申请时间
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${ck.Identifier}
+            </td>
+            <td>
+                ${ck.Name}
+            </td>
+            <td>
+                ${ck.Phone}
+            </td>
+            <td>
+                ${ck.Card}
+                <a style="text-decoration: none" data-id="${ck.CardUrl}" class="ml-5 delete" onclick="ShowCard(this)" href="javascript:;" title="预览">
+                    <i class="Hui-iconfont">&#xe602;</i>
+                </a>
+            </td>
+            <td>
+                ${ck.wxNo}
+            </td>
+            <td>
+                ${ck.LevelName}
+                <a title="编辑级别" href="javascript:;"
+                   onclick="layer_show('编辑级别', '/C_User/GetLeverPage/${ck.ID}', '450', '150')" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+            </td>
+            <td>
+                ${ck.ChiefName}
+            </td>
+            <td>
+                ${ck.ChiefPhone}
+            </td>
+            <td>
+                ${ck.IName}
+            </td>
+            <td>
+                ${ChangeDateFormat(ck.DatCreate).Format("yyyy-MM-dd hh:mm:ss")}
+            </td>
+            <td>
+                ${ck.state}
+            </td>
+            <td class="f-14 td-manage">
+                <a style="text-decoration: none" data-id="${ck.ID}" class="ml-5 delete" onclick="Verify(this)" href="javascript:;" title="审核">
+                    <i class="Hui-iconfont">&#xe6a7;</i>
+                </a>
+                <a style="text-decoration: none" data-id="${ck.ID}" class="ml-5 delete" onclick="del(this)" href="javascript:;" title="删除">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/C_UserNoDirectly/GetVerityPage";
+    function Verify(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要审核吗？', function (index) {
+            $.post("/C_User/GetVerify", { "ID": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已审核!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+    function del(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要删除吗？', function (index) {
+            $.post("/C_User/GetUserDel", { "ID": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+    function ShowCard(obj) {
+        var id = $(obj).attr("data-id");
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img src="@WeConfig.wx_domain' +id + '" style="width:100%;height:100%;">'
+        });
+    }
+</script>
+

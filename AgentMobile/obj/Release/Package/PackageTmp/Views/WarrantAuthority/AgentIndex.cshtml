@@ -1,0 +1,58 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model C_User
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>防伪查询 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content">
+                <div class="centent_total">
+                    <div class="fy_fwcx_img">
+                        <img class="img1" src="/images/9.png" alt="" />
+                    </div>
+                    <div class="sqdls_up">
+                        <img src="/WarrantImg/MyWarrantImg.ashx?id=@Model.UserName" width="100%" />
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/Home/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+

@@ -1,0 +1,345 @@
+/* reset.css */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: 'Microsoft YaHei';
+}
+
+body {
+    line-height: 1.5;
+    color: #333333;
+    padding: 0px;
+    margin: 0px;
+    background: #fff;
+    font-family: 'Microsoft YaHei';
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+caption, th, td {
+    text-align: left;
+    font-weight: normal;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: "";
+}
+
+blockquote, q {
+    quotes: "" "";
+}
+
+img {
+    border: none;
+    vertical-align: top;
+}
+
+body { /* IOS��ֹ΢�ŵ��������С */
+    -webkit-text-size-adjust: 100% !important;
+}
+/* typography.css */
+body {
+    font-size: 12px;
+    background: #fff;
+    font-family: Verdana;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+h4 {
+    font-size: 13px;
+}
+
+h5 {
+    font-size: 12px;
+}
+
+h6 {
+    font-size: 1em;
+}
+
+    h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {
+        margin: 0;
+    }
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #333333;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+    a:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+blockquote {
+    margin: 1.5em;
+    color: #666;
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em, dfn {
+    font-style: italic;
+}
+
+dfn {
+    font-weight: bold;
+}
+
+sup, sub {
+    line-height: 0;
+}
+
+abbr, acronym {
+    border-bottom: 1px dotted #666;
+}
+
+address {
+    margin: 0 0 1.5em;
+    font-style: italic;
+}
+
+del {
+    color: #666;
+}
+
+pre {
+    margin: 1.5em 0;
+    white-space: pre;
+}
+
+pre, code, tt {
+    font: 1em 'andale mono', 'lucida console', monospace;
+    line-height: 1.5;
+}
+
+li ul, li ol {
+    margin: 0;
+}
+
+ul, ol {
+    margin: 0;
+    list-style: none;
+}
+
+dl {
+}
+
+    dl dt {
+        font-weight: bold;
+    }
+
+dd {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    width: 100%;
+    overflow: hidden;
+}
+
+th {
+    font-weight: bold;
+}
+
+th, td, caption {
+    padding: 0;
+}
+
+tfoot {
+    font-style: italic;
+}
+
+/* forms.css */
+label {
+    font-weight: 700;
+}
+
+fieldset {
+    padding: 1.4em;
+    margin: 0 0 1.5em 0;
+    border: 1px solid #ccc;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+input {
+    padding: 0;
+    margin: 0;
+}
+
+/* grid.css */
+.container {
+    margin: 0 auto;
+}
+
+.hide {
+    display: none;
+}
+
+hr {
+    background: #ddd;
+    color: #ddd;
+    clear: both;
+    float: none;
+    width: 100%;
+    height: .1em;
+    margin: 0 0 1.45em;
+    border: none;
+}
+
+    hr.space {
+        background: #fff;
+        color: #fff;
+    }
+
+.clearfix:after, .container:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+.clearfix, .container {
+    display: block;
+}
+
+.clear {
+    clear: both;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
+input {
+    font-family: 'Microsoft YaHei';
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+/* ��б����� */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace;
+}
+/* ͳһ�ȿ����� */
+small {
+    font-size: 12px;
+}
+/* С�� 12px �����ĺ����Ķ�, �� small �� */
+
+/** �����б�Ԫ�� **/
+ul, ol {
+    list-style: none;
+}
+
+/** �����ı���ʽԪ�� **/
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+sup {
+    vertical-align: text-top;
+}
+/* ����, ���ٶ��иߵ�Ӱ�� */
+sub {
+    vertical-align: text-bottom;
+}
+
+/** ���ñ?Ԫ�� **/
+legend {
+    color: #000;
+}
+/* for ie6 */
+fieldset, img {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* img ������������ img �ޱ߿� */
+button, input, select, textarea {
+    font-size: 100%;
+}
+/* ʹ�ñ?Ԫ���� ie ���ܼ̳������С */
+/* ע��optgroup �޷����� */
+
+/** ���ñ��Ԫ�� **/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ���� HTML5 Ԫ�� */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+    /* ȥ���߹���ʽ */
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+input:focus, img:focus {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.zkm {
+    margin-top: 50px;
+}
+
+.zxm {
+    margin-bottom: 70px;
+}

@@ -1,0 +1,149 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@*@model C_User*@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>修改上级</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <input type="hidden" name="ID" value="@ViewBag.User.ID" />
+            <input type="hidden" name="C_UserTypeID" value="@ViewBag.User.C_UserTypeID" />
+            @*@Html.HiddenFor(m => m.ID)
+            @Html.HiddenFor(m => m.C_UserTypeID)*@
+            <div class="text-c">
+                关键字：
+                <input type="text" name="keyword" id="" placeholder=" 请输入搜索关键字" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <button name="" id="Change" class="btn btn-success" onclick="ChangeCustomer()" type="button">
+                    <i class="Hui-iconfont">&#xe647;</i> 修改
+                </button>
+                <button name="" id="Change" class="btn btn-success" onclick="ChangeCustomerBy()" type="button">
+                    <i class="Hui-iconfont">&#xe647;</i> 总部
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+            </th>
+            <th>
+                授权编号
+
+            </th>
+            <th>
+                名称
+            </th>
+            <th>
+                电话
+            </th>
+            <th>
+                身份证
+            </th>
+
+            <th>
+                级别名称
+            </th>
+            <th>
+                状态
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                <input type="radio" value="${ck.ID}" onclick="cklst()" name="ids" />
+            </td>
+            <td>
+                ${ck.Identifier}
+            </td>
+            <td>
+                ${ck.Name}
+            </td>
+            <td>
+                ${ck.Phone}
+            </td>
+            <td>
+                ${ck.Card}
+            </td>
+            <td>
+                ${ck.LevelName}
+            </td>
+            <td>
+                ${ck.state}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/C_User/GetOldChiefPage";
+    function ChangeCustomer() {
+        layer.confirm('确认要修改上级吗？', function () {
+            if ($("input[type='radio']:checked").val() == undefined) {
+                layer.msg('请选择上级!', { icon: 1, time: 1000 });
+            }
+            $.post("/C_User/GetChangeOldChief", { "id": $("input[type='radio']:checked").val(), "OldId": "@(ViewBag.User.ID)" }, function (rtn) {
+                if (rtn == "ok") {
+                    parent.window.location.href = parent.window.location.href;
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            });
+        });
+    }
+
+    function ChangeCustomerBy() {
+        layer.confirm('确认要把上级修改成总部吗？', function () {
+            $.post("/C_User/GetChangeOldChief", { "id": 0, "OldId": "@(ViewBag.User.ID)" }, function (rtn) {
+                if (rtn == "ok") {
+                    parent.window.location.href = parent.window.location.href;
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            });
+        });
+    }
+</script>

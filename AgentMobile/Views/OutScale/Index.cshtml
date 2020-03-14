@@ -1,0 +1,238 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>选择订单 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+        #mainMenuBar table {
+            background-color: #323232;
+        }
+
+            #mainMenuBar table tr td {
+                width: 28.3%;
+                color: #fff;
+            }
+
+                #mainMenuBar table tr td input {
+                    background: none;
+                    width: 17px;
+                    height: 17px;
+                    background-color: #7a5053;
+                    border: 1px solid #fff;
+                    color: #fff;
+                    position: relative;
+                    top: 12px;
+                    left: 1.5rem;
+                }
+
+                #mainMenuBar table tr td.zt {
+                    width: 15%;
+                }
+
+        .border a {
+            display: block;
+        }
+
+        .border .fhtj_ul1 {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <div id="container">
+            <div id="mainMenuBarAnchor">
+            </div>
+            <div id="mainMenuBar">
+                <div class="shoushu" id="show2">
+                    <div class="div2 jiantou11111">
+                        <a title="返回" href="javascript:history.go(-1)">
+                            <img src="/images/11111.png" />返回
+                        </a>
+                    </div>
+                    <form id="condition" data-ajax="false">
+                        <div class="div1">
+                            <input type="text" name="keyword" class="TextBox1" placeholder="请输入代理姓名查询订单" style="-webkit-appearance: none;" />
+                        </div>
+                        <div class="div2">
+                            <img src="/images/57.png" onclick="tosearch(this)" />
+                        </div>
+                    </form>
+                </div>
+                <table>
+                    <tr>
+                        <td class="zt">
+                            单号
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            代理
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="page1" data-role="page">
+        <div data-role="content" id="content">
+            <div class="centent_total" id="222">
+                <button id="ordermore" onclick="LoadOrder(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/Common/ArithmeticHelper.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script type="text/x-jquery-tmpl" id="orderDetailtmp">
+        {{each(i,ck) RtnList}}
+        <div class="border js-agentdiv">
+            <a href="/OutScale/GetOrderIDIndex/${ck.OrderNo}">
+                <ul class="fhtj_ul1">
+                    <li class="left">
+                        <img src="@(WeModels.WeConfig.b_domain)${ck.OrderImgSrc}" style="border-radius: 50%;width: 20px;height: 20px;" />${ck.OrderNo}
+                    </li>
+                    <li class="right">
+                        ${ck.OrderMan}
+                    </li>
+                </ul>
+            </a>
+        </div>
+        {{/each}}
+    </script>
+    <script>
+        var loading;
+        $(function () {
+            LoadOrder($("#ordermore"));
+        })
+        function LoadOrder(obj) {
+            loading = layer.open({ type: 2, content: '加载中' });
+            var gopage = $(obj).attr("data-pageindex");
+            var json = $("form").serializeArray();
+            json.push({ "name": "pageIndex", "value": gopage });
+            json.push({ "name": "pageSize", "value": 10 });
+            $.post("/OutScale/LoadOutScaleOrder", json, function (data) {
+                layer.close(loading);
+                if (data.thisCnt > 0) {
+                    if (data.rowEnd < data.totalCnt) {
+                        $(obj).show();
+                    }
+                    else {
+                        $(obj).hide();
+                    }
+                    $("#orderDetailtmp").tmpl(data).insertBefore('#ordermore');
+                    $(obj).attr("data-pageindex", accAdd(gopage, 1));
+                }
+                else {
+                    $(obj).hide();
+                }
+            })
+        }
+        function tosearch(obj) {
+            $("#ordermore").attr("data-pageindex", 1);
+            $(".js-agentdiv").remove();
+            LoadOrder("#ordermore");
+        }
+    </script>
+
+    <script type='text/javascript'>
+
+        $(document).ready(function () {
+
+            var sch = $(window).height(),
+          wah = (sch - 80)
+            $('#top_intro').css('height', wah);
+
+
+
+            $(window).resize(function () {
+                var sch = $(window).height();
+                wah = (sch - 80)
+                $('#top_intro').css('height', wah);
+
+            });
+
+
+            im = 'http://wizardwiz.co.uk/ww/one.jpg';
+            $('.le-background').css('background-image', 'url(' + im + ')');
+
+            $(window).scroll(function (e) {
+                var s = $(window).scrollTop(),
+                  d = $(document).height(),
+                  c = $(window).height(),
+                  f = 100,
+                  a = 40,
+            imblur = 'http://wizardwiz.co.uk/ww/two.jpg';
+                opacityVal = (s / 300);
+                titleopac = (s / 450);
+
+                $('.blurred').css('opacity', opacityVal);
+                $('.blurred').css('background-image', 'url(' + imblur + ')');
+
+
+                if (s > f) {
+                    $('#project-list').css('opacity', titleopac);
+                }
+
+                else {
+                    $('#project-list').css('opacity', 0);
+                }
+
+
+                if (s > a) {
+                    $('.icon-arrow-down ').css('opacity', 0);
+                    $('.icon-arrow-down ').css('bottom', 20);
+                }
+
+                else {
+                    $('.icon-arrow-down ').css('opacity', 1);
+                    $('.icon-arrow-down ').css('bottom', 0);
+                }
+
+            });
+
+
+        });
+
+        $(document).ready(function () {
+            // Cache selectors for faster performance.
+            var $window = $(window),
+              $mainMenuBar = $('#mainMenuBar'),
+              $mainMenuBarAnchor = $('#mainMenuBarAnchor');
+
+            // Run this on scroll events.
+            $window.scroll(function () {
+                var window_top = $window.scrollTop();
+                var div_top = $mainMenuBarAnchor.offset().top;
+                if (window_top > div_top) {
+                    // Make the div sticky.
+                    $mainMenuBar.addClass('stick');
+                    $mainMenuBarAnchor.height($mainMenuBar.height());
+                }
+                else {
+                    // Unstick the div.
+                    $mainMenuBar.removeClass('stick');
+                    $mainMenuBarAnchor.height(0);
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
+

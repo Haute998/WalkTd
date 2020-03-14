@@ -1,0 +1,202 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>礼品管理</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/common/ArithmeticHelper.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 积分商城 <span class="c-gray en">&gt;</span> 礼品管理<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                礼品状态：<span class="select-box" style="width: 150px">
+                    <select class="select" name="PublishStat" size="1">
+                        <option value="" selected>全部</option>
+                        <option value="已上架">已上架</option>
+                        <option value="未上架">未上架</option>
+                    </select>
+                </span>礼品名称：
+                <input type="text" name="GoodsName" id="" placeholder=" 输入礼品名称" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l">
+                    <a class="btn btn-primary radius examine" data-title="批量上架" data-href="" onclick="toPublishs(1)"
+                       href="javascript:;"><i class="Hui-iconfont">&#xe615;</i>批量上架</a>
+                    <a class="btn btn-secondary radius" data-title="批量下架" data-href="" onclick="toPublishs(0)"
+                       href="javascript:;"><i class="Hui-iconfont">&#xe631;</i>批量下架</a>
+                    <a class="btn btn-primary radius" data-title="添加产品" onclick="Hui_admin_tab(this)" data-href="/jf_Goods/AddGoods">
+                        <i class="Hui-iconfont">
+                            &#xe600;
+                        </i> 添加礼品
+                    </a>
+                </span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script src="~/js/layer-v3.0.1/layer/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                <input type="checkbox" name="checkall" onclick="tocheckall(this)" value="" />
+            </th>
+            <th>
+                礼品名称
+            </th>
+            <th>
+                礼品主图
+            </th>
+            <th>
+                兑换积分
+            </th>
+            <th>
+                库存
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                <input type="checkbox" value="${ck.ID}" onclick="cklst()" name="ids" />
+            </td>
+            <td>
+                ${ck.GoodsName}
+            </td>
+            <td>
+                <img src="${ck.Main_img}" width="50" height="50" />
+            </td>
+            <td>
+                ${ck.SaleIntegral}
+            </td>
+            <td>
+                ${ck.Quantity}
+            </td>
+            <td>
+                ${ck.PublishStat}
+            </td>
+            <td class="f-14 td-manage">
+                <a style="text-decoration: none" class="examine" data-href="/jf_Goods/GoodsDetailEdit/${ck.ID}" data-title="产品详情编写" onclick="Hui_admin_tab(this)" href="javascript:;"
+                   title="产品详情编写"><i class="Hui-iconfont">&#xe60c;</i></a> <a style="text-decoration: none"
+                                                                              class="ml-5 delete" onclick="MGoods_del(this,${ck.ID})" href="javascript:;" title="删除">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/jf_Goods/GetGoodsPage";
+
+    function MGoods_del(obj,id)
+    {
+        layer.confirm('产品删除须谨慎，确认要删除吗？', function (index) {
+
+            $.post("/jf_Goods/DelMGoods",{"id":id},function(rtn)
+            {
+                if(rtn=="ok")
+                {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                }
+                else
+                {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+
+    function toPublishs(stat)
+    {
+        var json=$("input[name='ids']:checked").serializeArray();
+        json.push({ "name": "isPublish", "value": stat });
+
+        layer.confirm('确定要'+(stat==1?'上架':'下架')+'所选产品吗？',function(index)
+        {
+            $.post("/jf_Goods/toPublishs",json,function(rtn)
+            {
+                if(rtn=="ok")
+                {
+                    window.location.href=window.location.href;
+                }
+                else
+                {
+                    layer.alert(rtn);
+                }
+            })
+        })
+    };
+
+    function tocheckall(obj)
+    {
+        if ($(obj).is(":checked")) {
+            $("input[name='ids']").attr("checked", 'true');
+        }
+        else
+        {
+            $("input[name='ids']").removeAttr("checked");
+        }
+    }
+
+    function cklst()
+    {
+        if ($("input[name='ids']:checked").length <= 0)
+        {
+            $("input[name='checkall']").removeAttr("checked");
+        }
+        else if ($("input[name='ids']:checked").length >= $("input[name='ids']").length) {
+            $("input[name='checkall']").attr("checked", 'true')
+        }
+    }
+    var DiscountTmpIndex="";
+   
+</script>

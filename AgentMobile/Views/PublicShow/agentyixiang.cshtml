@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+    string username = ViewData["username"].ToString();
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>代理申请主页 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+        .jlxq .div2 ul li {
+            width: 25%;
+            color: #fff;
+        }
+
+        .jlmx table {
+            margin-top: 0;
+            border-top: none;
+        }
+
+            .jlmx table tr td {
+                width: 50%;
+                border-right: 1px solid #777776;
+            }
+    </style>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content">
+                <div class="centent_total">
+                    <div class="fy_fwcx_img">
+                        <img class="img1" src="/images/9.png" alt="" />
+                    </div>
+                    <div class="fy_dlht_lm">
+                        <table>
+                            <tr>
+                                <td class="you" style="border-bottom: 1px solid #cacbcb;">
+                                    <dl>
+                                        <a href="/agentApply/liaojie?username=@(username)">
+                                            <dt>
+                                                <img src="/images/liaojie.png" />
+                                            </dt>
+                                            <dd>
+                                                我想了解
+                                            </dd>
+                                        </a>
+                                    </dl>
+                                </td>
+
+                                <td style="border-bottom: 1px solid #cacbcb;">
+                                    <dl>
+                                        <a href="/agentApply/query">
+                                            <dt>
+                                                <img src="/images/agentapply.png" />
+                                            </dt>
+                                            <dd>
+                                                代理申请
+                                            </dd>
+                                        </a>
+                                    </dl>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/Home/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script>
+    var loading;
+
+</script>

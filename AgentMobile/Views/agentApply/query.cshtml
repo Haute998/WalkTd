@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>代理申请</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content">
+                <div class="centent_total">
+                    <div class="fy_fwcx_img">
+                        <img class="img1" src="/images/9.png" alt="" />
+                    </div>
+                    <div class="fy_fwcx_img">
+                        <img class="img234" src="/images/26.png" alt="" />
+                    </div>
+                    <div class="sqdls_up">
+                        <table class="t2">
+                            <tr>
+                                <td>
+                                    <input id="parentname" type="text" placeholder="请输入上级账号" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr class="r33">
+                                <td style="text-align: center;">
+                                    <button id="toapply" type="button" style="background-color: #40B7AB; color: white; padding: 10px; width: 80%; border-radius: 5px; border: 0; border: none; ">点击查询</button>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    var loading;
+    $(function ()
+    {
+        $("#toapply").click(function ()
+        {
+            loading = layer.open({
+                type: 2
+  , content: '查询中'
+            });
+            var parentname = $("#parentname").val();
+            $.post("/agentApply/checkuser", { "id": parentname }, function (rtn) {
+                if (rtn == "ok") {
+                    window.location.href = "/agentApply/Index?id=" + parentname;
+                }
+                else {
+                    layer.close(loading);
+                    layer.open({ content: rtn, btn: '我知道了' });
+                }
+            }).error(function ()
+            {
+                layer.close(loading);
+                layer.open({ content: "网络错误", btn: '我知道了' });
+            });
+
+
+            
+        });
+    })
+</script>

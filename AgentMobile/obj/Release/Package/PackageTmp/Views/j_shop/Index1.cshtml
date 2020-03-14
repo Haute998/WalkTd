@@ -1,0 +1,132 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>积分排行榜</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/new/css/ListStyle.css?20170810" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="~/css/StyleSheet1.css?20170810" rel="stylesheet" />
+</head>
+
+
+<body class="bj-hui">
+    <!--顶部通用样式-->
+    @*<div class="com-title">
+            <a title="返回" href="javascript:history.go(-1)" class="return"></a><a title="菜单" href="javascript:void(0);"
+                                                                                 class="home_menu"><span></span></a>
+        </div>*@
+
+    <div class="home_box">
+        <div class="div1">
+            <img src="~/images/9.png" class="qq" />
+        </div>
+        <div class="HH_div3">
+        </div>
+        <div class="div2">
+            <table>
+                <tr>
+                    <td><dl><a href="/j_shop/Index6"><dt><img src="~/images/lpdh.png" /></dt><dd>礼品商城</dd></a></dl></td>
+                    <td><dl><a href="/j_shop/Index1"><dt><img src="~/images/ph.png" /></dt><dd>积分排行</dd></a></dl></td>
+                    <td><dl><a href="/j_shop/jifengo"><dt><img src="~/images/wyjf.png" /></dt><dd>我要积分</dd></a></dl></td>
+                    <td><dl><a href="/j_shop/ren"><dt><img src="~/images/grzx.png" /></dt><dd>个人信息</dd></a></dl></td>
+                </tr>
+            </table>
+        </div>
+        <div class="list-pic">
+            <ul id="orderhtml"></ul>
+        </div>
+    </div>
+    <script>
+        $('footer a').click(function () {
+            $(this).addClass('on').siblings().removeClass('on');
+        })
+    </script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="orderjs">
+    {{each(i,ck) RtnList}}
+
+    <li>
+        <a href="javascript:void(0)">
+            <div class="pic">
+                {{if ck.headimgurl!=""}}
+                <img src="${ck.wx_head}" width="50%" onerror="this.src='images/no-brand-logo.png'" />
+                {{else}}
+                <img src="${ck.head}" width="50%" onerror="this.src='images/no-brand-logo.png'" />
+                {{/if}}
+
+            </div>
+            <div class="neirong" style="width:60%">
+                <h3 class="dbt">
+
+                    <span>${ck.UserName}</span>
+
+                </h3>
+                <p class="xzsm">
+                    积分 : <span class="jgsz">${ck.jf}</span>
+                </p>
+                <p class="jiage">
+                    排名 : <span class="bold">第</span><span>${i+1}名</span>
+                </p>
+            </div>
+        </a>
+    </li>
+    {{/each}}
+
+</script>
+
+<script>
+
+    var pageIndex = 1;
+    var state = "";
+    var isloading = false;
+    var isok = false;
+    $(function () {
+        loaddata();
+
+        $(document).scroll(function () {
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                if (isok = true) {
+                    return false;
+                }
+                loaddata();
+            }
+        })
+    })
+
+    function loaddata() {
+        if (isloading == true) { return false; }
+        isloading = true;
+        $("#nomore").remove();
+        if ($("#loading").length <= 0) {
+            $("#orderhtml").append("<p id='loading' style='text-align:center'><img src='/Images/system/waitLoad.gif'/></p>");
+        }
+        $.post("/j_shop/rank1", { "pageIndex": pageIndex, "pageSize": 10000 }, function (data) {
+            $("#loading").remove();
+            $("#nomore").remove();
+            if (data != "") {
+                $("#orderjs").tmpl(data).appendTo("#orderhtml");
+                pageIndex++;
+            }
+            else {
+                if ($("#nomore").length <= 0) {
+                    $("#orderhtml").append("<p id='nomore' style='text-align:center'>没有更多了哦</p>");
+                    isok = true;
+                }
+            }
+            isloading = false;
+
+
+        })
+    }
+</script>

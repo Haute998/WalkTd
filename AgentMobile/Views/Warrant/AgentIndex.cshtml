@@ -1,0 +1,183 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>下级经销商详细信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/StyleAndScript/css/table.css?@(WeConfig.css_version)" rel="stylesheet" />
+
+    <style type="text/css">
+        ul, li {
+            padding:0;
+            margin:0;
+        }
+        ul li {
+            list-style:none;
+        }
+
+        .userhead {
+            width:100%;
+            font-size:14px;
+        }
+
+            .userhead table {
+                width:100%;
+                border:0;
+                border-spacing:0; 
+            }
+            .userhead tr td {
+                padding:0; 
+            }
+
+            .userhead tr td:first-child {
+                width:100px;
+                padding:1.2rem 1.2rem 0.5rem 0.8rem;
+            }
+
+        .headImg {
+            width:100%;
+        }
+
+            .headImg img {
+                width:100%;
+            }
+
+        .userInfo {
+            margin-top:1.5rem;
+            width:100%;
+            height:200px;
+            font-size:14px;
+        }
+
+            .userInfo span {
+                display:block;
+                width:100%;
+                height:26px;
+                line-height:26px;
+                border-bottom:2px solid #1b4f9b;
+            }
+
+            .userInfo em {
+               font-style:normal;
+            }
+            .userInfo a {
+                line-height:26px;
+            }
+
+            .userInfo li {
+                padding:0 1rem;
+            }
+
+        .infoContent {
+            width:100%;
+            min-height:30px;
+            padding:0.3rem 0;
+        }
+
+        #RName {
+            font-size:20px;
+            font-weight:bold;
+            color:#1b4f9b;
+        }
+
+        #Info li {
+            height:24px;
+            line-height:24px;
+            color:#999;
+        }
+
+            #Info li:first-child {
+                padding:20px 0 10px 0;
+            }
+
+            #Info li span:first-child {
+                width:50px;
+                text-align:justify;
+                text-align-last:justify;
+                display:inline-block;
+            }
+
+            #Info li span:last-child {
+                color:#333;
+            }
+    </style>
+
+</head>
+<body>
+    <div id="AgentHead">
+        <dl>
+            <dd><a href="/MyAgentsInfo/Index"><img id="BtnClose" src="/images/11111.png" /></a></dd>
+            <dd>下级经销商详细信息</dd>
+            <dd></dd>
+        </dl>
+    </div>
+
+    <div class="userhead">
+        <table>
+            <tr>
+                <td>
+                    <div class="headImg">
+                        <img src="" onerror="this.onerror = null; this.src = '/images/27.png?@(WeConfig.img_version)'"/>
+                    </div>
+                </td>
+                <td>
+                    <div id="Info">
+                        <ul>
+                            <li><a id="RName">@(user.Name)</a>
+                            <a onclick="UptCUser('@user.UserName')"><img src="~/images/54.png" style="margin-right:25px;float:right" /></a>
+                                
+                            </li>
+                            <li>
+                                <span>授权号</span>：<span>@(user.Identifier)</span>
+                            </li>
+                            <li>
+                                <span>级别</span>：<span>@(user.userTypeName)</span>
+                            </li>
+                            <li>
+                                <span>电话</span>：<span>@(user.Phone)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="userInfo">
+        <ul>
+            <li>
+                <span><em>公司名称</em></span>
+                <div class="infoContent">
+                    <a>@(user.wxNo)</a>
+                </div>
+            </li>
+            <li>
+                <span><em>地址</em></span>
+                <div class="infoContent">
+                    <a>@(user.Province + user.City + user.Area + user.WxQRCode)</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+    function UptCUser(obj) {
+        location.href = "/Warrant/EditCustomer?UserName=" + obj;
+    }
+</script>

@@ -1,0 +1,161 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>我的领取记录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/new/ordercss/ectouch.css?2017" rel="stylesheet" type="text/css" />
+    <link href="/layout/new/ordercss/style.css" rel="stylesheet" type="text/css" />
+    <link href="/layout/new/ordercss/iconfont.css" rel="stylesheet" type="text/css" />
+    <script src="/layout/new/orderjs/TouchSlide.1.1.source.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="/layout/new/orderjs/common_js.js" type="text/javascript"></script>
+    <script src="/layout/new/orderjs/jquery.reveal.js" type="text/javascript"></script>
+
+
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+
+    <script src="~/js/common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+
+    <style type="text/css">
+        footer {
+            height: 1.3rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+
+            footer a {
+                width: 25%;
+                float: left;
+                text-align: center;
+                line-height: .55rem;
+                margin-top: .2rem;
+            }
+
+                footer a i {
+                    display: block;
+                }
+
+        .on {
+            color: #2a7cec;
+        }
+
+        .floor .title a i, .Group_buy .title_name a i {
+            font-size: 0.82rem;
+        }
+
+        .product_content {
+            padding-top: 0.5rem;
+        }
+
+            .product_content span, .product_content h2 {
+                font-weight: normal;
+                padding: 0.5rem 0;
+                color: #999;
+            }
+
+                .product_content h2 i {
+                    font-size: 1rem;
+                    color: #2a7cec;
+                }
+    </style>
+
+
+</head>
+<body style="background: #ecedf1;">
+
+
+
+
+
+    <div class="Layout_style">
+        <div class="com-title">
+            <a title="返回" href="javascript:history.go(-1)" class="return"></a><a title="菜单" href="javascript:void(0);"
+                                                                                 class="home_menu"><span></span></a>领取记录
+        </div>
+        <div class="order_style clearfix">
+            <div id="Order_Manage">
+                <div class="bd" id="order-bd">
+                    <div class="con">
+                        <ul class="list" data-ordershow=""></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="orderjs">
+    {{each(i,ck) RtnList}}
+    <li class="order_style">
+        <div class="order_title">
+            <span class="Numbering   f_l">${ChangeDateFormat(ck.Dat).Format("yyyy-MM-dd hh:mm")}</span><span class="status  f_r">
+            ${ck.logContents}
+
+
+            </span>
+        </div>
+    </li>
+    {{/each}}
+</script>
+
+<script>
+    var loading;
+    var pageIndex = 1;
+    var isloading = false;
+    var isok = false;
+    $(function () {
+        loaddata();
+
+        $(document).scroll(function () {
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                if (isok = true) {
+                    return false;
+                }
+                loaddata();
+            }
+        })
+
+
+    })
+
+    function loaddata() {
+        if (isloading == true) { return false; }
+        isloading = true;
+        $("#nomore").remove();
+        if ($("#loading").length <= 0) {
+            $("[data-ordershow='']").append("<p id='loading' style='text-align:center'><img src='/Images/system/waitLoad.gif'/></p>");
+        }
+        $.post("/xfz/Getlingqurecord", { "pageIndex": pageIndex }, function (data) {
+            $("#loading").remove();
+            $("#nomore").remove();
+            if (data != "") {
+                $("#orderjs").tmpl(data).appendTo("[data-ordershow='']");
+                pageIndex++;
+            }
+            else {
+                if ($("#nomore").length <= 0) {
+                    $("[data-ordershow='']").append("<p id='nomore' style='text-align:center'>没有更多了哦</p>");
+                    isok = true;
+                }
+            }
+            isloading = false;
+        })
+    }
+
+
+</script>

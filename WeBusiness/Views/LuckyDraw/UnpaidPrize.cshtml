@@ -1,0 +1,208 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model LotteryPrizes
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>待发奖品</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                防伪码：
+                <input type="text" name="IntegralCode" id="" placeholder=" 请输入防伪码" style="width: 200px" class="input-text" />
+                奖项分类
+                <span class="select-box" style="width: 100px">
+                    @Html.DropDownListFor(m => m.PrizeLevel, SelectListHelper.GetPrizeType(), new { @class = "select sel", @onchange = "checkType(this)" })
+                </span>
+                关键字：
+                <input type="text" name="keyword" placeholder="流水号/活动/奖品" style="width: 200px" class="input-text" value="" />
+                <span style="display:none" class="js-nospan">
+                    中奖时间：
+                    <input type="text" name="DatB" id="" placeholder=" 请输入时间" style="width: 150px" class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                    至
+                    <input type="text" name="DatE" id="" placeholder=" 请输入时间" style="width: 150px" class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+
+                    奖品名称：
+                    <input type="text" name="PrizeName" id="" placeholder=" 请输入奖品名称" style="width: 250px" class="input-text" />
+                </span>
+
+                <input type="text" name="States" placeholder="状态" style="width:250px;display:none;" class="input-text" value="未发放" />
+
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <button name="" id="Export" onclick="Exports()" class="btn btn-success" type="button" style="display:none;">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+            
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+
+<script src="~/js/common/ArithmeticHelper.js"></script>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                中奖时间
+            </th>
+            <th>
+                防伪码
+            </th>
+            <th>
+                活动标题
+            </th>
+            <th>
+                奖品图片
+            </th>
+            <th>
+                奖品等级
+            </th>
+            <th>
+                奖品名称
+            </th>
+            <th>
+                中奖人姓名
+            </th>
+            <th>电话</th>
+            <th>地址</th>
+            <th>微信别名</th>
+            <th>微信头像</th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            @*<td>
+                    <a href="javascript:void(0)" style="color:blue" data-title="查看记录详情" title="查看记录详情" _href="/LotteryRecord/RecordDetail?serialNumber=${ck.SerialNumber}" onclick="Hui_admin_tab(this)"> ${ck.SerialNumber}</a>
+                </td>*@
+            <td>
+                ${ChangeDateFormat(ck.Dat).Format("yyyy-MM-dd hh:mm:ss")}
+            </td>
+            <td>
+                ${ck.IntegralCode}
+            </td>
+            <td>
+                ${ck.ActivityTitle}
+            </td>
+            <td>
+                <img src="${ck.PrizeImgUrl}" width="50" height="50" />
+            </td>
+            <td>
+                ${ck.PrizeLevel}
+            </td>
+            <td>
+                ${ck.PrizeName}
+            </td>
+            <td>
+                ${ck.Name}
+            </td>
+            <td>
+                ${ck.Phone}
+            </td>
+            <td>
+                ${ck.RecAddress}
+            </td>
+            <td>${ck.UserWxName}</td>
+            <td><img src="${ck.UserWxImg}" width="50" height="50"></td>
+            <td class="f-14 td-manage">
+                {{if !ck.IsNot}}
+                <a style="text-decoration: none" data-id="${ck.ID}" class="ml-5 delete" onclick="Verify(this)" href="javascript:;" title="发放">
+                    <i class="Hui-iconfont">&#xe6a7;</i>
+                </a>
+                {{/if}}
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/LuckyDraw/GetRecords";
+    function Exports() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/LuckyDraw/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+
+    function morecondition(obj) {
+        if ($(".js-nospan").is(':visible')) {
+            $(".js-nospan").hide();
+            $(obj).text("更多");
+        }
+        else {
+            $(".js-nospan").show();
+            $(obj).text("隐藏");
+        }
+    }
+
+    function checkType(obj) {
+        var type = $(obj).val();
+
+        if (type == "全部" || type.indexOf("谢谢") != -1) {
+            $("#Export").hide();
+        }
+        else {
+            $("#Export").show();
+        }
+    }
+
+    function Verify(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要发放吗？', function (index) {
+            $.post("/LuckyDraw/GetVerify", { "ID": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已发放!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+        });
+    }
+
+</script>

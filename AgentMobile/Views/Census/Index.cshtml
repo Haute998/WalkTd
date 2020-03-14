@@ -1,0 +1,204 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>销售统计 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .jlxq {
+            border-bottom: none;
+        }
+
+            .jlxq .div2 .fy_cpchmx_table1 {
+                width: 100%;
+            }
+
+                .jlxq .div2 .fy_cpchmx_table1 tr {
+                    border-bottom: 1px solid #2baca1;
+                }
+
+                    .jlxq .div2 .fy_cpchmx_table1 tr td {
+                        background-color: #fff;
+                        padding: 5px;
+                        color: #737373;
+                        width: 33.3%;
+                        padding-bottom: 3px;
+                        text-align: center;
+                        font-size: 12px;
+                        word-break: break-all;
+                    }
+
+            .jlxq .div2 .gdg tr td {
+                color: #333;
+            }
+    </style>
+    <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#container').highcharts({
+                //禁用标题
+                title :{
+                    text:null
+                },
+                chart: {
+                    backgroundColor: 'white'
+                },
+                //禁用版权
+                credits: {
+                    enabled: false // 禁用版权信息
+                },
+                exporting: {
+                    enabled: false //用来设置是否显示‘打印’,'导出'等功能按钮，不设置时默认为显示  
+                },
+                xAxis: {
+                    labels: {
+                        enabled: false
+                    },
+                    gridLineColor: 'white',
+                    tickWidth: 0,
+                    lineColor: 'white'
+                    //plotLines: {
+                    //    enabled: false
+                    //}
+                },
+              
+                yAxis: {
+                    labels: {
+                        enabled: false
+                    },
+                    tickWidth: 0,
+                    lineColor: 'white'
+                },
+                tooltip: {
+                    valueSuffix: '°C'
+                },
+                legend: {
+                    enabled: false
+
+                },
+                series: [{
+                    name: 'Tokyo',
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5]
+                }]
+            });
+        });
+    </script>
+
+</head>
+<body style="background: #fff;">
+    <form id="form1">
+        <div id="page1" data-role="page">
+            <div class="dlhtt" id="dlhtt" style="background: url(/images/tcrjbg.png); background-size: 100% 100%;">
+                <dl>
+                    <dt>
+                        <img src="@(user.PortraitUrl)" alt="" />
+                    </dt>
+                    <dd style="padding: 28px 0 0 0;">
+                        <span>@(user.Name)</span>
+                    </dd>
+                    <dd>
+                        <span class="span1">级别：@(user.userTypeName)</span>
+                    </dd>
+                </dl>
+            </div>
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+                        <script src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script>
+                        <div id="container" style="min-width: 310px; height: 250px; margin: 0 -80px"></div>
+                    </div>
+                    <div style="width: 90%; padding: 0 0 20px 0; margin: 0 auto; /*这里放查询结果*/">
+                        <div class="jlxq">
+                            <div class="div1">
+                                团队当月业绩详情
+                            </div>
+                            <div class="div2">
+                                <table class="fy_cpchmx_table1 gdg">
+                                    <tr>
+                                        <td>
+                                            姓名
+                                        </td>
+                                        <td>
+                                            级别
+                                        </td>
+                                        <td>
+                                            销售额
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="fy_cpchmx_table1">
+                                    <tr>
+                                        <td>
+                                            申
+                                        </td>
+                                        <td>
+                                            总代
+                                        </td>
+                                        <td>
+                                            ￥1000
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            申
+                                        </td>
+                                        <td>
+                                            总代
+                                        </td>
+                                        <td>
+                                            ￥1000
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            申
+                                        </td>
+                                        <td>
+                                            总代
+                                        </td>
+                                        <td>
+                                            ￥1000
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/Order/Manage">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>维修记录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/StyleSheet1.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <script type="text/javascript">
+        window.onload = function () {
+            var oImg = document.getElementById('page');
+            oImg.style.width = '100%';
+            oImg.style.height = document.documentElement.clientHeight / 1 + 'px';
+            //高度为可视区的1/3
+        }
+    </script>
+
+</head>
+<body>
+
+    <div id="page" class="banner">
+        <img src="/images/banner.png" width="100%" />
+        <p class="hx-p2 hx-padding-top30">请输入您的手机号进行查询</p>
+        <p class="hx-p2"><input class="hx-txt" id="Phone" type="text" placeholder="请输入手机号" /></p>  
+        <p class="hx-p2 hx-padding-top55"><input class="hx-btn" id="bd" type="button" value="提  交" /></p>
+    </div>
+</body>
+</html>
+<script src="~/js/Common/CookieHelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    $(function () {
+
+        $("#bd").click(function () {
+            var Phone = $("#Phone").val();
+            if (Phone == "") {
+                layer.open({
+                    content: '请输入电话号码！！'
+   , btn: '我知道了'
+                });
+                return;
+            }
+            window.location.href = "/Problem/Logs?phone=" + Phone;
+
+            layer.open({
+                type: 2
+   , content: '加载中'
+            });
+        
+        })
+    })
+</script>
+

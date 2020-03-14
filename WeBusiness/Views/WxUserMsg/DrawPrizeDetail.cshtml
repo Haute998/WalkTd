@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>幸运抽奖</title>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v0.2" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+    <style type="text/css">
+        .layui-container {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">待发中奖记录</li>
+                    <li>已发中奖记录</li>
+                    <li>抽奖统计</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe src="/LuckyDraw/UnpaidPrize" width="100%" frameborder="0" height="500" scrolling="no" onload="setIframeHeight(this)"></iframe>
+                    </div>
+                    <div class="layui-tab-item">
+                        <iframe src="/LuckyDraw/AwardedPrize" width="100%" frameborder="0" height="500" scrolling="no" onload="setIframeHeight(this)"></iframe>
+                    </div>
+                    <div class="layui-tab-item">
+                        <iframe src="/LuckyDraw/DrawPrizeCount" width="100%" frameborder="0" height="500" scrolling="no" onload="setIframeHeight(this)"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script type="text/javascript">
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
+    </script>
+</body>
+</html>

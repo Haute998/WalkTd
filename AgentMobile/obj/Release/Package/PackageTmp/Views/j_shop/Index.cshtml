@@ -1,0 +1,125 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_Consumer user = ViewData["user"] as C_Consumer;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>促销员积分商城</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div id="page1" data-role="page">
+        <div class="HH_div1">
+            <div class="left"><dl><dt><img src="/layout/jfshop/images/TCtx.png" /></dt><dd class="t">@(user.UserName)</dd><dd>@(user.Mobile)</dd></dl></div>
+            <div class="right"><input id="Button1" onclick="window.location.href = '/j_shop/jifengo'" type="button" value="获取积分" /></div>
+        </div>
+        <div class="HH_div2">
+            <table>
+                <tr>
+                    <td class="left">
+                        <div><a href="javascript:void(0)"><span><img src="/layout/jfshop/images/TCjifen.png" /></span><span>积分</span><em>@(user.jf)</em></a></div>
+                    </td>
+                    <td>
+                        <div><a href="/j_shop/MyOrders"><span><img src="/layout/jfshop/images/TCtuihuan.png" /></span><span>兑换记录</span></a></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="HH_div3">
+            <p class="p1">积分兑换</p>
+
+            <div id="goodslst">
+
+            </div>
+        </div>
+    </div>
+    <div class="code"><img onclick="history.go(-1)" src="/layout/jfshop/images/TCfan.png" /></div>
+
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="goodsjs">
+    {{each(i,ck) RtnList}}
+
+    <div class="HH_div4">
+        <dl>
+            <dt>
+                <img src="@(WeConfig.b_domain)${ck.Main_img}" alt="" />
+            </dt>
+            <dd>
+                <div class="left"><p>${ck.GoodsName}</p><p><span><img src="/layout/jfshop/images/TCjf.png" /></span><em>${ck.SaleIntegral}</em>
+                    
+                    @*<span>已兑换<em> 2</em>件</span>*@
+                    
+                    </p></div>
+                <div class="right"><input id="Button1" data-goodsid="${ck.ID}" type="button" value="立即兑换" onclick="tobuy(this)" /></div>
+            </dd>
+        </dl>
+    </div>
+
+
+    {{/each}}
+</script>
+<script>
+
+    var pageIndex = 1;
+    var isloading = false;
+    var isok = false;
+    $(function () {
+        loaddata();
+        $(document).scroll(function () {
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                if (isok = true) {
+                    return false;
+                }
+                loaddata();
+            }
+        })
+
+    })
+
+    function loaddata() {
+        if (isloading == true) { return false; }
+        isloading = true;
+        $("#nomore").remove();
+        if ($("#loading").length <= 0) {
+            $("#goodslst").append("<p id='loading' style='text-align:center'><img src='/Images/system/waitLoad.gif'/></p>");
+        }
+        $.post("/j_shop/GoodsList", { "pageIndex": pageIndex }, function (data) {
+            $("#loading").remove();
+            $("#nomore").remove();
+            if (data != "") {
+                $("#goodsjs").tmpl(data).appendTo("#goodslst");
+                pageIndex++;
+            }
+            else {
+                if ($("#nomore").length <= 0) {
+                    $("#goodslst").append("<p id='nomore' style='text-align:center'>没有更多了哦</p>");
+                    isok = true;
+                }
+            }
+            isloading = false;
+
+        })
+    }
+
+    function tobuy(obj)
+    {
+        var id = $(obj).attr("data-goodsid");
+        window.location.href = "/j_buy/order?mpk="+id+"&cartids=0&type=mail&cnt=" + 1;
+    }
+</script>

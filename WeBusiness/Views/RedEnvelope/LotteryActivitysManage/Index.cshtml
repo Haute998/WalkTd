@@ -1,0 +1,242 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/js/layui-v1.0.3/layui/layui.js"></script>
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>活动管理</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/common/jquery.qrcode.min.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 抽奖活动 <span class="c-gray en">&gt;</span> 活动管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                活动名称
+            </th>
+            <th>
+                期限
+            </th>
+            <th>开关</th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${ck.Title}
+            </td>
+            <td>
+                {{if IsTimeLimit==true}}
+                <label>${ChangeDateFormat(DatB).Format("yyyy-MM-dd")} 至 ${ChangeDateFormat(DatE).Format("yyyy-MM-dd")}</label>
+                {{else}}
+                <label>不限</label>
+                {{/if}}
+            </td>
+
+            {{if ck.IsActive==true}}
+            <td>
+                <label style="color:#00ff21;font-weight:bold">已开启</label>
+            </td>
+            {{else}}
+            <td>
+                <label style="color: #ff0000; font-weight: bold">已关闭</label>
+            </td>
+            {{/if}}
+
+
+            <td class="f-14 td-manage">
+                <a title="编辑" href="javascript:;"
+                   onclick="layer_show2('活动修改', '/LotteryActivitysManage/Edit/${ck.ID}', '900', '500')" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+
+                <a title="奖励设置" href="javascript:;"
+                   onclick="openedit(this)" data-id="${ck.ID}" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe667;</i>
+                </a>
+
+
+                <a title="查看链接" href="javascript:;"
+                   onclick="showUrl(this)" data-id="${ck.ID}" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe695;</i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script type="text/x-jquery-tmpl" id="qrcodetmp">
+    <p id="qcode" style="text-align:center;display:none"></p>
+    <p style="text-align:center;"><img id="qcodeimg" /></p>
+</script>
+<script>
+    var dataUrl = "/LotteryActivitysManage/GetPage";
+
+    function del(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('删除后奖项等信息都会被删除，确认要删除吗？', function (index) {
+
+            $.post("/LotteryActivitysManage/ToDel", { "id": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+
+    function openedit(obj) {
+        var id = $(obj).attr("data-id");
+        layer_show2('奖项设置', '/LotteryActivitysAreaRedPack/Index?activityID=' + id, '900', '500');
+    }
+
+    function openeditfunc(id) {
+        layer_show2('奖励设置', '/LotteryActivitysAreaRedPack/Index?activityID=' + id, '900', '500');
+    }
+
+    function todels() {
+        var json = $("input[name='ids']:checked").serializeArray();
+        layer.confirm('确定要删除所选活动吗？', function (index) {
+            $.post("/LotteryActivitysManage/ToDels", json, function (rtn) {
+                if (rtn == "ok") {
+                    getjsondata(thispage);
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+        })
+    };
+
+    function tocheckall(obj) {
+        if ($(obj).is(":checked")) {
+            $("input[name='ids']").attr("checked", 'true');
+        }
+        else {
+            $("input[name='ids']").removeAttr("checked");
+        }
+    }
+
+    function cklst() {
+        if ($("input[name='ids']:checked").length <= 0) {
+            $("input[name='checkall']").removeAttr("checked");
+        }
+        else if ($("input[name='ids']:checked").length >= $("input[name='ids']").length) {
+            $("input[name='checkall']").attr("checked", 'true')
+        }
+    }
+
+
+    function showUrl(obj) {
+        var id = $(obj).attr("data-id");
+        var InviteUrl = "@(WeModels.VConfig.wx_domain)" + "/RedPack/pack/" + id;
+        var url = "<p style='text-align:center'>" + InviteUrl + "</p>" + $("#qrcodetmp").html();
+
+        layer.alert(url);
+        showcode(InviteUrl);
+    }
+
+
+    function layer_show2(title, url, w, h) {
+        if (title == null || title == '') {
+            title = false;
+        };
+        if (url == null || url == '') {
+            url = "404.html";
+        };
+        if (w == null || w == '') {
+            w = 800;
+        };
+        if (h == null || h == '') {
+            h = ($(window).height() - 50);
+        };
+        var index = layer.open({
+            type: 2,
+            area: [w + 'px', h + 'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade: 0.4,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+
+    function showcode(InviteUrl) {
+        $("#qcode").empty();
+        var str = toUtf8(InviteUrl);
+        $('#qcode').qrcode({
+            render: "canvas",
+            text: str
+        });
+        var canvas = $("#qcode").find("canvas")[0];
+        $("#qcodeimg").attr("src", canvas.toDataURL("image/png"));
+    }
+    function toUtf8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    }
+</script>

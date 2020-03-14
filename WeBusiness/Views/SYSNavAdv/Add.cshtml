@@ -1,0 +1,132 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model SYSAdv
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加商城导航图片</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/ImgUpload/lrz.bundle.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加商城导航图片</legend>
+    </fieldset>
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">商城导航图片</label>
+            <div class="layui-input-block">
+                <span class="imagebox">
+                </span>
+                <img id="addimg" src="~/images/system/addImg.png" onerror="javascript: this.src = '~/images/system/addImg.png';"  onclick="$('#goodsimg').click();" />
+                <input id="goodsimg" hidden="hidden" name="goodsimg" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:200px">推荐尺寸 641px*621px</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(m => m.Url, new { @class = "layui-input", @maxlength = "50", @placeholder = "请输入链接" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(m => m.Sort, new { @type = "number", @class = "layui-input", @maxlength = "7", @placeholder = "请输入排序" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn submit">保存</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        layui.use('form', function () {
+            var form = layui.form();
+
+            //监听提交
+            form.on('submit(go)', function (data) {
+                if ($("input[name='goodsimg']").val() == "") {
+                    layer.alert("请添加商城导航图片！");
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+<script>
+    $(function () {
+
+        var imgbase64 = '';
+        // 图片压缩预览
+        $('#goodsimg').on('change', function () {
+            console.log(this.files[0])
+            lrz(this.files[0], { width: 600 }).then(function (rst) {
+                    // 处理成功会执行
+                    console.log(rst);
+                    imgbase64 = rst.base64;
+                    var img = new Image();
+                    img.src = imgbase64;
+                    if (!!$('.imagebox').find('img')) {
+                        $('.imagebox').find('img').remove('img');
+                    }
+                    $('.imagebox').append($(img))
+                    $('img').addClass('image')
+                    
+                    $("#addimg").hide();
+                    $('.imagebox img').bind("click", function () {
+                        $('#goodsimg').click();
+                    });
+                })
+                .catch(function (err) {
+                    // 处理失败会执行
+                })
+                .always(function () {
+                    // 不管是成功失败，都会执行
+                });
+        })
+
+        // 提交按钮点击事件
+        $('.submit').on('click', function () {
+
+            var formData = new FormData();
+            formData.append('image', imgbase64);
+            formData.append('Url', $("#Url").val());
+            formData.append('Sort', $("#Sort").val());
+
+            $.ajax({
+                type: 'POST',
+                url: '/SYSNavAdv/ToAdd',
+                data: formData,
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == "ok") {
+                        parent.location.href = parent.location.href;
+                    }
+                    else {
+                        layer.alert(data);
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+</script>

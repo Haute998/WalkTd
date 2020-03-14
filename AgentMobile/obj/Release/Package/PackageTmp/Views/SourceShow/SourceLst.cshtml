@@ -1,0 +1,129 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_User user = ViewData["user"] as C_User;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>图文资料</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/css/SourceShow/css/XWshangping.css?2017" rel="stylesheet" />
+    <link href="~/css/SourceShow/css/common.css" rel="stylesheet" />
+    <link href="~/css/SourceShow/css/XWtp.css" rel="stylesheet" />
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#first-tab").addClass('buttonHover');
+        });
+
+        function navigate_tabs(container, tab) {
+            $(".b").css('display', 'none');
+            $(".a").css('display', 'none');
+
+            $("#first-tab").removeClass('buttonHover');
+            $("#second-tab").removeClass('buttonHover');
+
+            $("#" + tab).addClass('buttonHover');
+            $("." + container).show('slow');
+        }
+    </script>
+
+</head>
+<body>
+    <div class="xianghua">
+        <div id="wrap">
+            <input type="hidden" name="dayType" value="today"/>
+            <div class="sd"> <a href="javascript:void(0);" data-daytype="today" class="buttons js-condition" id="first-tab">今日图文</a> <a href="javascript:void(0);" data-daytype="history" class="buttons js-condition" id="second-tab">历史图文</a></div>
+            <div id="body">
+                <div class="a">
+                    <div class="dskjf">
+                        <button id="todayhtml" onclick="LoadSources(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+
+                    </div>
+                </div>
+                <div class="b">
+                    <div class="dskjf">
+                        <button id="historyhtml" onclick="LoadSources(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script type="text/x-jquery-tmpl" id="producttmp">
+    {{each(i,ck) RtnList}}
+    <dl onclick="window.location.href = '/SourceShow/Detail/${ck.ID}?fromuser=@(user.UserName)'">
+        <dd class="dd2">
+            <div class="li1">${ck.Title}</div>
+            <div>${ChangeDateFormat(ck.DatEdit).Format("yyyy-MM-dd")}</div>
+        </dd>
+        <dt><img src="@(WeModels.WeConfig.b_domain)${ck.Img}" /></dt>
+    </dl>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    var isfirst=true;
+    $(function () {
+        LoadSources($("#todayhtml"));
+
+
+        $(".js-condition").click(function ()
+        {
+            isfirst = false;
+            var daytype = $(this).attr("data-daytype");
+            $("[name='dayType']").val(daytype);
+            if (daytype == "today") {
+                navigate_tabs('a', 'first-tab');
+                LoadSources($("#todayhtml"));
+
+            }
+            else
+            {
+                navigate_tabs('b', 'second-tab');
+                LoadSources($("#historyhtml"));
+            }
+
+        });
+
+    })
+    function LoadSources(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var daytype = $("[name='dayType']").val();
+        var gopage = $(obj).attr("data-pageindex");
+        $.post("/SourceShow/LoadSources", { "pageIndex": gopage, "pageSize": 10, "dayType": daytype }, function (data) {
+            layer.close(loading);
+            
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#producttmp").tmpl(data).insertBefore(obj);
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+            if (isfirst==true&&data.totalCnt <= 0 && daytype=="today")
+            {
+                $("[data-daytype='history']").click();
+            }
+
+        })
+    }
+</script>

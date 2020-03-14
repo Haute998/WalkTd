@@ -1,0 +1,212 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的意向代理 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .jlxq {
+            border-bottom: none;
+        }
+
+            .jlxq .div2 table {
+                border-bottom: 1px solid #777776;
+                width: 100%;
+            }
+
+                .jlxq .div2 table.gfh tr td {
+                    font-weight: bold;
+                    height: 20px;
+                    line-height: 20px;
+                    color: #332c2b;
+                }
+
+            .jlxq .div2 .fy_cpchmx_table1 tr td {
+                background-color: #fefefe;
+                padding: 5px;
+                color: #737373;
+                width: 25%;
+                text-align: center;
+                font-size: 12px;
+                word-break: break-all;
+                border-left: 1px solid #777776;
+            }
+
+        .jlmx table {
+            margin-top: 10px;
+        }
+
+        .jlmx table {
+            border-right: none;
+            border-left: none;
+            border-bottom: none;
+            border-top: 1px solid #cfcfd0;
+        }
+
+            .jlmx table tr th {
+                border-bottom: 1px solid #cfcfd0;
+            }
+
+            .jlmx table tr td {
+                border-right: none;
+            }
+
+        #mainMenuBar table {
+            width: 100%;
+            border-bottom: 1px solid #cfcfd0;
+            border-top: 1px solid #cfcfd0;
+        }
+
+            #mainMenuBar table tr td {
+                width: 14.5%;
+                color: #333;
+                font-size: 12px;
+                text-align: center;
+                border-right: 1px solid #cfcfd0;
+            }
+
+                #mainMenuBar table tr td a {
+                    color: #333;
+                }
+
+                #mainMenuBar table tr td.shzt {
+                    color: #ef8888;
+                }
+
+
+        .tdfocus {
+            background-color: #cfcfd0;
+        }
+    </style>
+</head>
+<body style="background: rgb(235, 235, 235);">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        <table class="tt2">
+                            <tr>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    关键词：
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="tt3">
+                            <tr>
+                                <td class="td2">
+                                    <input id="keyword" name="keyword" type="text" placeholder="输入手机号、姓名" style="background: url(/images/66.png)center 0px no-repeat;
+                                    background-size: 100% 100%;" />
+                                </td>
+                                <td class="td3" id="search">
+                                    <img src="/images/99.png" alt="" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="width: 100%;">
+                        <div class="jlmx">
+                            <button id="xqhtml" onclick="Loadxqs(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script type="text/x-jquery-tmpl" id="xqtmp">
+  
+    {{each(i,ck) RtnList}}
+    <table class="js-orderstab">
+        <tr class="tr1" style="border-bottom: 1px solid #c6c4cb;">
+            <td class="td1" colspan="3">
+                <ul>
+                    <li>姓名:${ck.Name}</li>
+                    <li>手机号:${ck.Phone}</li>
+                    <li>微信号：${ck.wxNo}</li>
+                    <li>地址：${ck.Province}${ck.City}${ck.Area}</li>
+                    <li>${ChangeDateFormat(ck.DatCreate).Format("yyyy-MM-dd hh:mm")}</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 5px; background: none; border-bottom: none;"></td>
+        </tr>
+    </table>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        Loadxqs($("#xqhtml"));
+        $("#search").click(function () {
+            $("#xqhtml").attr("data-pageindex", 1);
+            $(".js-orderstab").remove();
+            Loadxqs($("#xqhtml"));
+        });
+    })
+
+    function Loadxqs(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        var json = $("#form1").serializeArray();
+        json.push({ "pageIndex": gopage, "pageSize": 10 });
+        $.post("/MyAgentsInfo/LoadMy_yixiang", json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#xqtmp").tmpl(data).insertBefore('#xqhtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+</script>

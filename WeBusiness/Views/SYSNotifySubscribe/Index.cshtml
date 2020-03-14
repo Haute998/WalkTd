@@ -1,0 +1,124 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>消息订阅</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 个人中心 <span class="c-gray en">&gt;</span> 消息订阅 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                关键字：
+                <input type="text" name="keyword" id="" placeholder=" 请输入搜索关键字" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+               订阅
+            </th>
+            <th>
+                消息类别
+            </th>
+            <th>
+                备注
+            </th>
+            <th>
+                订阅者
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                {{if ck.elseSubscriber!=ck.Subscriber}}
+                <input type="checkbox" data-id="${ck.ID}" value="${ck.ID}" checked="checked" onclick="cklst(this)" name="ids" />
+                {{else}}
+                <input type="checkbox" data-id="${ck.ID}" value="${ck.ID}" onclick="cklst(this)" name="ids" />
+                {{/if}}
+            </td>
+            <td>
+                ${ck.MsgType}
+            </td>
+            <td>
+                ${ck.Remark}
+            </td>
+            <td>
+                {{if ck.Subscriber!=''}}
+                <label>${ck.Subscriber.substring(1,ck.Subscriber.length-1)}</label>
+                {{else}}
+                <label>${ck.Subscriber}</label>
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/SYSNotifySubscribe/GetPage";
+
+    function cklst(obj) {
+        var type = 0;
+        var id = $(obj).attr("data-id");
+        if ($(obj).is(":checked")) {
+            type = 1;
+        }
+        else
+        {
+            type = 0;
+        }
+        $.post("/SYSNotifySubscribe/SubscriberByID", { "id": id, "type": type }, function (rtn)
+        {
+            if (rtn == "ok") {
+                getjsondata(thispage);
+            }
+            else
+            {
+                layer.alert(rtn);
+            }
+        })
+    }
+</script>

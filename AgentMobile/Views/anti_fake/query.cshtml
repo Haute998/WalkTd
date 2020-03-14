@@ -1,0 +1,226 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    string ip = ViewData["ip"] as string;
+    string code = ViewData["fwcode"] as string;
+    InviteCode code2 = ViewData["fwcode"] as InviteCode;
+    string istime = (code2 == null || code2.IsTime == false) ? "0" : "1";
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head id="Head1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>防伪查询</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <link href="/css/slc/common.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="/css/main.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="/css/slc/slc.css?@(WeConfig.css_version)" rel="stylesheet" />
+</head>
+<body onload="getvcode()">
+    <form id="form1">
+        <div class="TC-fwcx">
+            <div id="div1">
+                <div class="veger-bgfj">
+                    <div class="veger-fch">
+                        <div class="veger-fch-div">
+                            <div class="veger-logo"><img src="/images/logo.png?@(WeConfig.img_version)" width="17%" /></div>
+                            <div class="veger-w1">欢迎使用通程防伪查询系统</div>
+                            <div class="veger-w2">感谢您购买通程防伪的产品</div>
+                            <div class="veger-w2">防伪防窜货溯源、系统集成服务商</div>
+                            <div class="veger-w3 veger-padding8"><input class="veger-input9" id="Sel" type="number" placeholder="请输入16位数的防伪码" maxlength="16" /></div>
+                            <div class="veger-w3 veger-padding5"><input class="veger-btn" id="login" type="button" value="查询" /></div>
+                        </div>
+                        <div class="veger-foot">&copy;&nbsp;通程防伪&nbsp;提供技术支持</div>
+                    </div>
+                </div>
+            </div>
+            <!--防伪码无效-->
+            <div class="div2" id="div2" style="display:none;">
+                <div class="slc-bg">
+                    <div class="slc-fch">
+                        <div class="slc-fch-div">
+                            <div class="slc-jgimg"><img src="/images/error.png" height="90px" /></div>
+                            <div class="slc-d10">防伪码无效</div>
+                            <div class="slc-d11">您好！您所查询的防伪码不存在！</div>
+                        </div>
+                        <div class="slc-foot">&copy;&nbsp;技术支持：&nbsp;&nbsp;通程防伪</div>
+                    </div>
+                </div>
+            </div>
+            <!--防伪码已被查询-->
+            <div class="div2" id="div3" style="display:none;">
+                <div class="slc-bg">
+                    <div class="slc-fch">
+                        <div class="slc-fch-div">
+                            <div class="slc-jgimg"><img src="/images/caveat.png" height="90px" /></div>
+                            <div class="slc-d10">防伪码已被查询</div>
+                            <div class="slc-d11">首次查询时间为<span id="shijian"></span></div>
+                            <div class="slc-d11">这个产品可能被使用过,或是模仿！</div>
+                        </div>
+                        <div class="slc-foot">&copy;&nbsp;技术支持：&nbsp;&nbsp;通程防伪</div>
+                    </div>
+                </div>
+            </div>
+            <!--防伪码有效-->
+            <div class="div2" id="div4" style="display:none;">
+                <div class="slc-bg">
+                    <div class="slc-fch">
+                        <div class="slc-fch-div">
+                            <div class="slc-jgimg"><img src="/images/success.png" height="90px" /></div>
+                            <div class="slc-d10">防伪码有效</div>
+                            <div class="slc-d11">恭喜您查询的产品为深圳市通程防伪科技有限公司所生产的正牌产品，请放心使用!谢谢~</div>
+                        </div>
+                        <div class="slc-foot">&copy;&nbsp;技术支持：&nbsp;&nbsp;通程防伪</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="@(ip)" id="ip" />
+    </form>
+</body>
+</html>
+@if (IsWx == "1")
+{
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script>
+    var time;
+    var istime = "@(istime)";
+    var province;
+    var city;
+    var ip = $("#ip").val();
+    var loading;
+    $("#Scan").click(function () {
+        wx.scanQRCode({
+            needResult: 1,                      // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"],    // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (res) {
+                var scale = res.resultStr.split('x/')[2]; // 当needResult 为 1 时，扫码返回的结果
+                if (scale == null) {
+                    scale = res.resultStr.split('x/')[1];
+                }
+                $("#Sel").val(scale);
+            },
+            fail: function (res) {
+                layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+            }
+        });
+    })
+
+    $(function () {
+
+        $("#login").click(function () {
+            var TextVal = $("#Sel").val();
+            if (TextVal == "") {
+                layer.open({
+                    content: '防伪码不能为空！！', btn: '我知道了'
+                });
+                return;
+            }
+
+            if (TextVal.length < 16) {
+                layer.open({
+                    content: '防伪码不能小于16位！！', btn: '我知道了'
+                });
+                return;
+            }
+
+            loading = layer.open({ type: 2, content: '加载中' });
+            $.getJSON("http://ck.fw-12365.com/ashx/SecurityQueryApi.ashx?Key=tc201805051108&FWCode=" + TextVal + "&Lang=en-gb", function (json) {
+                layer.close(loading);
+
+                if (json.State==1) {
+                    debugger
+                    document.getElementById('div1').style.display = "none";
+                    document.getElementById('div2').style.display = "none";
+                    document.getElementById('div3').style.display = "none";
+                    document.getElementById('div4').style.display = "block";
+                } else if (json.State == 0) {
+                    document.getElementById('div1').style.display = "none";
+                    document.getElementById('div2').style.display = "block";
+                    document.getElementById('div3').style.display = "none";
+                    document.getElementById('div4').style.display = "none";
+
+                } else if (json.State > 1) {
+
+                    document.getElementById('div1').style.display = "none";
+                    document.getElementById('div2').style.display = "none";
+                    document.getElementById('div3').style.display = "block";
+                    document.getElementById('div4').style.display = "none";
+                    $("#shijian").html(json.FirstDate);
+
+                }
+                else {
+                    document.getElementById('div2').style.display = "none";
+                    document.getElementById('div3').style.display = "none";
+                    document.getElementById('div4').style.display = "none";
+                }
+            });
+
+        });
+    });
+
+    function show() {
+
+        document.getElementById('div1').style.display = "none";
+        document.getElementById('div2').style.display = "none";
+        document.getElementById('div3').style.display = "none";
+        document.getElementById('div4').style.display = "none";
+    }
+    var timer;
+
+</script>

@@ -1,0 +1,193 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/city-picker.js"></script>
+
+    <style>
+        .layui-form-select {
+            display: none;
+        }
+
+        .qw {
+            display: block;
+            width: 128px;
+            float: left;
+            margin-right: 8px;
+            height: 38px;
+            line-height: 38px;
+            line-height: 36px\9;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>换货的故障问题描述</legend>
+    </fieldset>
+    <form class="layui-form" action="" id="form1">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">换货故障问题</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("problem", "", new { @class = "layui-input", @lay_verify = "required", @placeholder = "请输入换货故障问题", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; "></label>
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="go">保存</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form();
+
+            //监听提交
+            form.on('submit(go)', function (data) {
+                TemporaryMedia();
+                return false;
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        // select 元素
+        var $selectorProvince = $("#province");
+        var $selectorCity = $("#city");
+        var $selectorDistrict = $("#district");
+
+        // 地区的默认值，通过select的default-data获取
+        var defaultProvince = $selectorProvince.attr('data-default');
+        var defaultCity = $selectorCity.attr('data-default');
+        var defaultDistrict = $selectorDistrict.attr('data-default');
+
+        if (!defaultProvince) defaultProvince = currentProvince;
+        if (!defaultCity) defaultCity = currentCity;
+
+        // 初始化
+        initSelector($selectorProvince, provinces);
+        initSelector($selectorCity, getCities(defaultProvince));
+        initSelector($selectorDistrict, getDistricts(defaultProvince, defaultCity));
+
+        // 选择省份
+        $selectorProvince.change(function () {
+            currentProvince = $(this).val();
+            initSelector($selectorCity, getCities(currentProvince));
+            $selectorCity.trigger('change');
+        })
+
+        // 选择城市
+        $selectorCity.change(function () {
+            currentCity = $(this).val();
+            initSelector($selectorDistrict, getDistricts(currentProvince, currentCity));
+        })
+
+        // 初始化选择框 其中 data 表示包含所有选择项的数组
+        function initSelector(selectObj, data) {
+            // 空的数据直接隐藏select元素
+            if (data == "") {
+                selectObj.hide();
+                selectObj.html("");
+            } else {
+                selectObj.show();
+            }
+
+            var str = "";
+            var selected = selectObj.attr('data-default');
+            for (var i = 0; i < data.length; i++) {
+                var _data = data[i];
+                if (_data === selected) {
+                    str += '<option selected="selected" value="' + _data + '">' + _data + '</option>';
+                } else {
+                    str += '<option value="' + _data + '">' + _data + '</option>';
+                }
+            }
+            selectObj.html(str);
+        }
+    </script>
+
+</body>
+</html>
+<script src="~/js/common/jquery.form.js"></script>
+<script>
+    $(function () {
+        $(".js-addimg").click(function () {
+            $(this).parent().find(".js-goodsimg").click();
+        });
+        $(".js-goodsimg").change(function (e) {
+            var obj = this;
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    //$("#addimg").attr("src", this.result);
+                    $(obj).parent().find(".js-addimg").attr("src", this.result);
+                    //$("#addimg").attr("width", window.screen.width / 1.5);
+                    //$("#addimg").attr("height", img.height * (window.screen.width / 1.5 / img.width));
+                }
+
+            }
+        });
+        $("#province").ProvinceCity();
+    })
+
+    function TemporaryMedia() {
+        //判断上传控件中是否选择了图片
+        var image = $("[name='Img']").val();
+        loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        //提交请求处理的url
+        var actionUrl = "/problem/toAdd1";
+        var json = $("form").serializeArray();
+        //开始ajax操作
+        $("#form1").ajaxSubmit({
+
+            type: "POST",//提交类型
+            url: actionUrl,//请求地址
+            data: json,//请求数据
+            success: function (rtn) {//请求成功后的函数
+                layer.close(loading);
+                if (rtn == "ok") {
+                    //提交成功
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.getjsondata(parent.thispage);
+                    parent.layer.close(index); //再执行关闭
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            },
+            error: function (rtn) {
+                layer.close(loading);
+                layer.alert(JSON.stringify(rtn));
+            },//请求失败的函数
+            async: true
+
+        });
+
+
+    }
+</script>

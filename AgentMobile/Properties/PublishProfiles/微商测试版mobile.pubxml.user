@@ -1,0 +1,1660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>E:\通程\微商管理系统测试版\发布\mobile</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/AgentMobile.dll">
+      <publishTime>07/28/2017 11:11:26</publishTime>
+    </File>
+    <File Include="bin/DAL.dll">
+      <publishTime>12/07/2016 17:23:02</publishTime>
+    </File>
+    <File Include="bin/HtmlAgilityPack.dll">
+      <publishTime>08/06/2012 21:30:08</publishTime>
+    </File>
+    <File Include="bin/LitJson.dll">
+      <publishTime>11/24/2016 18:31:03</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>12/07/2016 10:20:29</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Mvc.FixedDisplayModes.dll">
+      <publishTime>12/07/2016 10:20:30</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>12/09/2016 10:50:39</publishTime>
+    </File>
+    <File Include="bin/NPOI.dll">
+      <publishTime>11/28/2016 18:43:16</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>12/07/2016 10:20:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>12/07/2016 10:20:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>12/07/2016 10:20:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>12/07/2016 10:20:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>12/07/2016 10:20:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>12/07/2016 10:20:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>12/07/2016 10:20:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>12/07/2016 10:20:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>12/07/2016 10:20:29</publishTime>
+    </File>
+    <File Include="bin/ThoughtWorks.QRCode.dll">
+      <publishTime>04/18/2017 17:51:57</publishTime>
+    </File>
+    <File Include="bin/WeModels.dll">
+      <publishTime>07/28/2017 10:08:51</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Net.Http.Formatting.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Helpers.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Http.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Http.WebHost.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Mvc.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Razor.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Deployment.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Razor.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.resources.dll">
+      <publishTime>12/07/2016 10:20:31</publishTime>
+    </File>
+    <File Include="css/animate.css">
+      <publishTime>12/07/2016 18:35:20</publishTime>
+    </File>
+    <File Include="css/article/000.css">
+      <publishTime>04/20/2017 15:15:46</publishTime>
+    </File>
+    <File Include="css/article/iconfont.css">
+      <publishTime>04/20/2017 15:15:46</publishTime>
+    </File>
+    <File Include="css/bellows-theme.css">
+      <publishTime>04/18/2017 17:51:49</publishTime>
+    </File>
+    <File Include="css/bellows.css">
+      <publishTime>12/07/2016 16:11:24</publishTime>
+    </File>
+    <File Include="css/H-ui.reset.css">
+      <publishTime>12/07/2016 18:47:36</publishTime>
+    </File>
+    <File Include="css/index.css">
+      <publishTime>04/18/2017 17:51:49</publishTime>
+    </File>
+    <File Include="css/jd_cart.css">
+      <publishTime>12/22/2016 18:27:01</publishTime>
+    </File>
+    <File Include="css/jlpmain.css">
+      <publishTime>07/26/2017 17:51:30</publishTime>
+    </File>
+    <File Include="css/lrtk.css">
+      <publishTime>12/07/2016 16:11:24</publishTime>
+    </File>
+    <File Include="css/PageMobile/endpic.css">
+      <publishTime>12/26/2016 10:32:47</publishTime>
+    </File>
+    <File Include="css/PageMobile/gdt-style.css">
+      <publishTime>12/27/2016 14:54:18</publishTime>
+    </File>
+    <File Include="css/PageMobile/main.css">
+      <publishTime>12/26/2016 10:32:47</publishTime>
+    </File>
+    <File Include="css/reset.css">
+      <publishTime>12/07/2016 18:35:19</publishTime>
+    </File>
+    <File Include="css/SourceShow/css/common.css">
+      <publishTime>04/20/2017 11:47:24</publishTime>
+    </File>
+    <File Include="css/SourceShow/css/XWshangping.css">
+      <publishTime>04/20/2017 14:16:28</publishTime>
+    </File>
+    <File Include="css/SourceShow/css/XWtp.css">
+      <publishTime>04/20/2017 11:47:24</publishTime>
+    </File>
+    <File Include="css/SourceShow/js/jquery-1.9.1.js">
+      <publishTime>04/20/2017 11:47:24</publishTime>
+    </File>
+    <File Include="css/TCCstyle.css">
+      <publishTime>12/19/2016 14:17:25</publishTime>
+    </File>
+    <File Include="Echarts/echarts.js">
+      <publishTime>04/18/2017 17:51:40</publishTime>
+    </File>
+    <File Include="Echarts/HtmlPage1.html">
+      <publishTime>04/18/2017 17:51:40</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>12/09/2016 10:50:33</publishTime>
+    </File>
+    <File Include="Highcharts/js/exporting.js">
+      <publishTime>12/22/2016 21:33:09</publishTime>
+    </File>
+    <File Include="Highcharts/js/highcharts.js">
+      <publishTime>12/22/2016 21:33:09</publishTime>
+    </File>
+    <File Include="images/1.png">
+      <publishTime>12/20/2016 11:25:57</publishTime>
+    </File>
+    <File Include="images/111.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/11111.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/1482737607.png">
+      <publishTime>12/26/2016 15:45:00</publishTime>
+    </File>
+    <File Include="images/2.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/20.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/21.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/24.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/2412.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/25.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/26.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/27.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/29.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/3.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/30.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/31.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/32.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/33.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/34.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/35.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/36.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/37.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/38.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/39.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/4.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/40.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/41.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/42.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/43.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/44.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/45.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/46.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/47.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/48.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/49.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/5.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/50.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/51.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/52.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/53.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/54.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/55.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/56.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/57.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/58.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/59.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/6.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/61.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/63.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/64.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/66.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/69.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/7.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/71.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/72.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/73.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/74.png">
+      <publishTime>12/20/2016 15:12:50</publishTime>
+    </File>
+    <File Include="images/77.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/79.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/8.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/88.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/89.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/9.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/90.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/91.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/92.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/93.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/94.png">
+      <publishTime>12/24/2016 15:10:32</publishTime>
+    </File>
+    <File Include="images/95.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/96.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/99.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/addImg.png">
+      <publishTime>07/20/2017 18:09:01</publishTime>
+    </File>
+    <File Include="images/agentapply.png">
+      <publishTime>07/26/2017 18:24:59</publishTime>
+    </File>
+    <File Include="images/anniu.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/anniu1.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/article.png">
+      <publishTime>07/10/2017 16:30:58</publishTime>
+    </File>
+    <File Include="images/articleget.png">
+      <publishTime>06/02/2017 16:29:06</publishTime>
+    </File>
+    <File Include="images/audio_widget_01%402x.png">
+      <publishTime>12/26/2016 10:32:47</publishTime>
+    </File>
+    <File Include="images/cgimg.png">
+      <publishTime>04/18/2017 17:51:41</publishTime>
+    </File>
+    <File Include="images/css_sprite01.png">
+      <publishTime>12/26/2016 10:32:47</publishTime>
+    </File>
+    <File Include="images/ddfh.png">
+      <publishTime>04/18/2017 17:51:41</publishTime>
+    </File>
+    <File Include="images/delect.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/delete_down.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/delete_up.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/fanhui.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/furxbg.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/fuwurexian.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/fwdiandian.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/fwdiandianthis.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/gcw.png">
+      <publishTime>12/27/2016 14:53:37</publishTime>
+    </File>
+    <File Include="images/gwc.png">
+      <publishTime>12/27/2016 11:13:27</publishTime>
+    </File>
+    <File Include="images/Introducer.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/jiantou.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/liaojie.png">
+      <publishTime>07/26/2017 18:23:45</publishTime>
+    </File>
+    <File Include="images/lm.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/logo.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/logo/wxchatlogo.png">
+      <publishTime>06/02/2017 17:45:43</publishTime>
+    </File>
+    <File Include="images/lsfh.png">
+      <publishTime>04/18/2017 17:51:41</publishTime>
+    </File>
+    <File Include="images/MyCode.jpg">
+      <publishTime>04/18/2017 17:51:41</publishTime>
+    </File>
+    <File Include="images/sjbb.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/smbg.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/sys_item_selected.gif">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/syws.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/tcrjbg.png">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/tcrjlh.png">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="images/thjl.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/thsm.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/tjagent.png">
+      <publishTime>07/27/2017 09:22:00</publishTime>
+    </File>
+    <File Include="images/us/about.png">
+      <publishTime>04/18/2017 18:40:20</publishTime>
+    </File>
+    <File Include="images/us/contact.png">
+      <publishTime>04/18/2017 18:40:59</publishTime>
+    </File>
+    <File Include="images/us/uslogo.png">
+      <publishTime>04/18/2017 18:46:01</publishTime>
+    </File>
+    <File Include="images/warrant.jpg">
+      <publishTime>04/18/2017 17:51:48</publishTime>
+    </File>
+    <File Include="images/wddd.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/wdkc.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/wydh.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/xjchjl.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/xjkhdd.png">
+      <publishTime>04/18/2017 17:51:47</publishTime>
+    </File>
+    <File Include="images/正确.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="images/错误.png">
+      <publishTime>12/20/2016 11:26:00</publishTime>
+    </File>
+    <File Include="js/artEditor-master/.gitignore">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/artEditor.iml">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/dist/index.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/dist/index.min.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/example/css/style.css">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/example/img/img.png">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/example/js/index.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/example/js/jquery-1.11.2.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/gulpfile.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/index.html">
+      <publishTime>07/07/2017 12:02:52</publishTime>
+    </File>
+    <File Include="js/artEditor-master/LICENSE">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/package.json">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/README.md">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/service/21.png">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/service/service.php">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/service/test.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/src/index.js">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/artEditor-master/_config.yml">
+      <publishTime>07/07/2017 12:01:02</publishTime>
+    </File>
+    <File Include="js/Common/ArithmeticHelper.js">
+      <publishTime>12/13/2016 15:08:29</publishTime>
+    </File>
+    <File Include="js/Common/CookieHelper.js">
+      <publishTime>12/13/2016 15:08:31</publishTime>
+    </File>
+    <File Include="js/Common/danmu/css/normalize.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/css/zzsc-demo.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/dist/css/barrager.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/dist/css/close.png">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/dist/js/jquery.barrager.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/dist/js/jquery.barrager.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/index.html">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/js/jquery-1.11.0.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/js/jquery-2.1.1.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/css/bootstrap-theme.min.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/css/bootstrap.min.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/css/style.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/barrager.png">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/cute.png">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/haha.gif">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/heisenberg.png">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/ie.png">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/mj.gif">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/img/yaseng.png">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/js/bootstrap.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/js/bootstrap.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/js/jquery-1.9.1.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/js/tinycolor-0.9.15.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/pick-a-color/css/pick-a-color-1.2.3.min.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/pick-a-color/js/pick-a-color-1.2.3.min.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/syntaxhighlighter/scripts/shAutoloader.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/syntaxhighlighter/scripts/shBrushJScript.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/syntaxhighlighter/scripts/shBrushPhp.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/syntaxhighlighter/scripts/shCore.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/syntaxhighlighter/scripts/shLegacy.js">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/danmu/static/syntaxhighlighter/styles/shCoreDefault.css">
+      <publishTime>12/15/2016 17:46:45</publishTime>
+    </File>
+    <File Include="js/Common/Datehelper.js">
+      <publishTime>12/19/2016 20:26:48</publishTime>
+    </File>
+    <File Include="js/Common/desHelper.js">
+      <publishTime>12/19/2016 20:14:47</publishTime>
+    </File>
+    <File Include="js/Common/jquery.form.js">
+      <publishTime>12/15/2016 16:22:34</publishTime>
+    </File>
+    <File Include="js/Common/jquery.qrcode.min.js">
+      <publishTime>12/19/2016 18:16:16</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/demo.url">
+      <publishTime>12/14/2016 17:26:28</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/doc/官网.url">
+      <publishTime>12/14/2016 17:26:28</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/doc/有问必答.url">
+      <publishTime>12/14/2016 17:26:28</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/layer_mobile/layer.js">
+      <publishTime>12/14/2016 17:26:28</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/layer_mobile/need/layer.css">
+      <publishTime>04/18/2017 17:51:49</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/layim.url">
+      <publishTime>12/14/2016 17:26:28</publishTime>
+    </File>
+    <File Include="js/Common/layer.mobile-v2.0/更新日志.txt">
+      <publishTime>12/14/2016 17:26:28</publishTime>
+    </File>
+    <File Include="js/hhSwipe.js">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="js/index.js">
+      <publishTime>12/19/2016 22:48:27</publishTime>
+    </File>
+    <File Include="js/jquery-1.10.2.min.js">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="js/jquery-1.11.2.min.js">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="js/jquery.js">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="js/jquery.min.js">
+      <publishTime>12/23/2016 17:46:34</publishTime>
+    </File>
+    <File Include="js/jquery.tmpl.min.js">
+      <publishTime>12/13/2016 15:08:28</publishTime>
+    </File>
+    <File Include="js/PageMobile/99_main.js">
+      <publishTime>04/18/2017 17:51:49</publishTime>
+    </File>
+    <File Include="js/PageMobile/coffee.js">
+      <publishTime>12/26/2016 10:32:48</publishTime>
+    </File>
+    <File Include="js/PageMobile/init.mix.js">
+      <publishTime>12/26/2016 10:32:48</publishTime>
+    </File>
+    <File Include="js/PageMobile/offline.js">
+      <publishTime>12/26/2016 10:32:48</publishTime>
+    </File>
+    <File Include="js/setcity/css/LArea.css">
+      <publishTime>12/14/2016 10:44:00</publishTime>
+    </File>
+    <File Include="js/setcity/js/LArea.js">
+      <publishTime>12/14/2016 15:37:46</publishTime>
+    </File>
+    <File Include="js/setcity/js/LAreaData1.js">
+      <publishTime>12/14/2016 15:37:46</publishTime>
+    </File>
+    <File Include="js/setcity/js/LAreaData2.js">
+      <publishTime>12/14/2016 15:37:47</publishTime>
+    </File>
+    <File Include="js/setcity2/css/LArea.css">
+      <publishTime>07/14/2017 16:13:37</publishTime>
+    </File>
+    <File Include="js/setcity2/js/LArea.js">
+      <publishTime>07/14/2017 16:13:37</publishTime>
+    </File>
+    <File Include="js/setcity2/js/LAreaData1.js">
+      <publishTime>07/14/2017 16:13:37</publishTime>
+    </File>
+    <File Include="js/setcity2/js/LAreaData2.js">
+      <publishTime>07/14/2017 16:13:37</publishTime>
+    </File>
+    <File Include="js2/cartjs.js">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="js2/jquery.js">
+      <publishTime>12/13/2016 10:02:39</publishTime>
+    </File>
+    <File Include="layout/artui/api.js">
+      <publishTime>07/20/2017 10:18:51</publishTime>
+    </File>
+    <File Include="layout/artui/mui.css">
+      <publishTime>07/20/2017 09:05:22</publishTime>
+    </File>
+    <File Include="layout/artui/mui.min.js">
+      <publishTime>07/20/2017 09:06:24</publishTime>
+    </File>
+    <File Include="layout/artui/plupload.full.min.js">
+      <publishTime>07/20/2017 09:08:41</publishTime>
+    </File>
+    <File Include="layout/artui/qiniu.js">
+      <publishTime>07/20/2017 17:11:56</publishTime>
+    </File>
+    <File Include="layout/artui/wx.css">
+      <publishTime>07/20/2017 09:05:50</publishTime>
+    </File>
+    <File Include="layout/fonts/mui-icons-extra.ttf">
+      <publishTime>07/20/2017 09:45:53</publishTime>
+    </File>
+    <File Include="layout/fonts/mui.ttf">
+      <publishTime>07/20/2017 09:45:53</publishTime>
+    </File>
+    <File Include="layout/weui-master/.gitignore">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/.travis.yml">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/bower.json">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/CHANGELOG.md">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/CONTRIBUTING.md">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/example.css">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/example.js">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_footer.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_footer_link.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_intro.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_actionSheet.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_article.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_button.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_cell.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_dialog.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_feedback.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_flow.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_form.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_icons.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_layout.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_msg.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_nav.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_panel.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_progress.png">
+      <publishTime>06/02/2017 16:44:51</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_search.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_search_bar.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_special.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_tab.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_toast.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_z-index.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_nav_zindex.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/icon_tabbar.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/layers/content.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/layers/navigation.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/layers/popout.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/layers/transparent.gif">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/logo.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/pic_160.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/pic_article.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/images/vcode.jpg">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/index.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/actionSheet.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/button.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/cell.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/dialog1.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/dialog2.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/grid.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/icons.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/progress.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/qrcode.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/result.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/text.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/toast1.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/snapshot/toast2.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/example/zepto.min.js">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/style/weui.css">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/dist/style/weui.min.css">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/gulpfile.js">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/package.json">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/README.md">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/README_cn.md">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/example.js">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/example.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/actionsheet.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/article.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/badge.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/button.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/dialog.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/flex.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/footer.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/gallery.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/grid.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/home.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/icons.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/input.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/layers.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/list.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/loadmore.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/msg.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/msg_success.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/msg_warn.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/navbar.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/panel.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/picker.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/preview.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/progress.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/searchbar.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/slider.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/tabbar.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/toast.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/fragment/uploader.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_footer.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_footer_link.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_intro.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_feedback.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_form.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_layout.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_nav.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_search.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_special.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_nav_z-index.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/icon_tabbar.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/layers/content.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/layers/navigation.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/layers/popout.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/layers/transparent.gif">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/logo.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/pic_160.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/pic_article.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/images/vcode.jpg">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/index.html">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/button.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/cell.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/dialog1.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/dialog2.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/grid.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/icons.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/progress.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/qrcode.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/result.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/text.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/toast1.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/snapshot/toast2.png">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/example/zepto.min.js">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/fn.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/mixin/mobile.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/mixin/setArrow.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/mixin/setOnepx.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/mixin/text.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/reset.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/color.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/global.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/weui-button.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/weui-cell.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/weui-dialog.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/weui-grid.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/weui-msg.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/base/variable/weui-progress.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/icon/weui-font.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/icon/weui-icon_font.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/weui.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-agree/weui-agree.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-animate/weui-animate.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_default.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_disabled.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_global.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_loading.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_plain.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_primary.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-btn_warn.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-button/weui-button.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-access.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-cell_global.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-cell_swiped.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-check.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-check/weui-checkbox.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-check/weui-check_common.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-check/weui-radio.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-form.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-form/weui-form-preview.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-form/weui-form_common.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-form/weui-select.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-form/weui-vcode.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-gallery.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-switch.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-cell/weui-uploader.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-flex/weui-flex.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-footer/weui-footer.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-grid/weui-grid.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-loading/weui-loading.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-media-box/weui-media-box.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-page/weui-article.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-page/weui-msg.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-panel/weui-panel.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-picker/weui-picker.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-progress/weui-progress.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-searchbar/weui-searchbar.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-slider/weui-slider.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tab/weui-navbar.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tab/weui-tab.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tab/weui-tabbar.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tips/weui-actionsheet.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tips/weui-badge.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tips/weui-dialog.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tips/weui-loadmore.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tips/weui-mask.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="layout/weui-master/src/style/widget/weui-tips/weui-toast.less">
+      <publishTime>06/02/2017 16:44:52</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>12/09/2016 10:50:42</publishTime>
+    </File>
+    <File Include="Views/agentApply/Index.cshtml">
+      <publishTime>07/28/2017 11:10:21</publishTime>
+    </File>
+    <File Include="Views/agentApply/Index_Recommended.cshtml">
+      <publishTime>07/28/2017 11:10:54</publishTime>
+    </File>
+    <File Include="Views/agentApply/liaojie.cshtml">
+      <publishTime>07/26/2017 20:49:20</publishTime>
+    </File>
+    <File Include="Views/agentApply/query.cshtml">
+      <publishTime>07/11/2017 08:56:45</publishTime>
+    </File>
+    <File Include="Views/agentback/agentNoAudit.cshtml">
+      <publishTime>04/18/2017 17:51:37</publishTime>
+    </File>
+    <File Include="Views/agentback/agentyixiang.cshtml">
+      <publishTime>07/26/2017 18:38:04</publishTime>
+    </File>
+    <File Include="Views/agentback/Index.cshtml">
+      <publishTime>07/27/2017 11:25:33</publishTime>
+    </File>
+    <File Include="Views/agentback/ScaleIndex.cshtml">
+      <publishTime>07/26/2017 17:54:36</publishTime>
+    </File>
+    <File Include="Views/AgentKnow/Index.cshtml">
+      <publishTime>04/18/2017 17:51:19</publishTime>
+    </File>
+    <File Include="Views/AgentKnow/ProfityIndex.cshtml">
+      <publishTime>04/18/2017 17:51:19</publishTime>
+    </File>
+    <File Include="Views/anti_fake/query.cshtml">
+      <publishTime>04/18/2017 17:51:38</publishTime>
+    </File>
+    <File Include="Views/articleget/articleEdit.cshtml">
+      <publishTime>07/20/2017 18:35:47</publishTime>
+    </File>
+    <File Include="Views/articleget/articleEdit2.cshtml">
+      <publishTime>07/21/2017 09:07:48</publishTime>
+    </File>
+    <File Include="Views/articleget/Index.cshtml">
+      <publishTime>07/20/2017 09:02:12</publishTime>
+    </File>
+    <File Include="Views/BlackCustomer/Index.cshtml">
+      <publishTime>04/18/2017 17:51:19</publishTime>
+    </File>
+    <File Include="Views/Census/Index.cshtml">
+      <publishTime>04/18/2017 17:51:21</publishTime>
+    </File>
+    <File Include="Views/C_UserCart/Index.cshtml">
+      <publishTime>04/18/2017 17:51:20</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>07/28/2017 11:07:34</publishTime>
+    </File>
+    <File Include="Views/Home/Login.cshtml">
+      <publishTime>06/17/2017 17:25:35</publishTime>
+    </File>
+    <File Include="Views/MyAddress/Edit.cshtml">
+      <publishTime>04/18/2017 17:51:23</publishTime>
+    </File>
+    <File Include="Views/MyAddress/Index.cshtml">
+      <publishTime>04/18/2017 17:51:23</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/agentDetail.cshtml">
+      <publishTime>04/18/2017 17:51:27</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/AgentsInfoIndex.cshtml">
+      <publishTime>04/18/2017 17:51:27</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/AgentsNoAudit.cshtml">
+      <publishTime>04/18/2017 17:51:27</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/Index.cshtml">
+      <publishTime>07/27/2017 09:12:10</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/MyAgentHome.cshtml">
+      <publishTime>07/27/2017 11:26:54</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/My_yixiang.cshtml">
+      <publishTime>07/27/2017 09:56:40</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/UpgradeDetail.cshtml">
+      <publishTime>04/18/2017 17:51:27</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/UpgradeNoAudit.cshtml">
+      <publishTime>04/18/2017 17:51:27</publishTime>
+    </File>
+    <File Include="Views/MyAgentsInfo/UpgradeNoAuditAgent.cshtml">
+      <publishTime>04/18/2017 17:51:27</publishTime>
+    </File>
+    <File Include="Views/myarticle/Detail.cshtml">
+      <publishTime>07/10/2017 16:55:18</publishTime>
+    </File>
+    <File Include="Views/myarticle/myart.cshtml">
+      <publishTime>07/21/2017 09:15:16</publishTime>
+    </File>
+    <File Include="Views/MyCenter/ApplyUpgrade.cshtml">
+      <publishTime>04/18/2017 17:51:28</publishTime>
+    </File>
+    <File Include="Views/MyCenter/EditPwd.cshtml">
+      <publishTime>04/18/2017 17:51:28</publishTime>
+    </File>
+    <File Include="Views/MyCenter/IntroducerCode.cshtml">
+      <publishTime>04/18/2017 17:51:28</publishTime>
+    </File>
+    <File Include="Views/MyCenter/InviteCode.cshtml">
+      <publishTime>04/18/2017 17:51:28</publishTime>
+    </File>
+    <File Include="Views/MyCode/Index.cshtml">
+      <publishTime>04/18/2017 17:51:17</publishTime>
+    </File>
+    <File Include="Views/MyInfo/AuthCert.cshtml">
+      <publishTime>04/18/2017 17:51:29</publishTime>
+    </File>
+    <File Include="Views/MyInfo/Index.cshtml">
+      <publishTime>07/27/2017 11:54:00</publishTime>
+    </File>
+    <File Include="Views/MyInfo/MyWxQRCode.cshtml">
+      <publishTime>04/25/2017 09:08:05</publishTime>
+    </File>
+    <File Include="Views/MyRebate/Index.cshtml">
+      <publishTime>04/18/2017 17:51:30</publishTime>
+    </File>
+    <File Include="Views/MyRebate/My_tjs.cshtml">
+      <publishTime>07/27/2017 09:30:55</publishTime>
+    </File>
+    <File Include="Views/MyRebate/OutRebate.cshtml">
+      <publishTime>04/18/2017 17:51:30</publishTime>
+    </File>
+    <File Include="Views/MyRebate/OutRebateDetail_tj.cshtml">
+      <publishTime>04/18/2017 17:51:30</publishTime>
+    </File>
+    <File Include="Views/MyRebate/OutRebateList_tj.cshtml">
+      <publishTime>04/18/2017 17:51:30</publishTime>
+    </File>
+    <File Include="Views/MyRebate/RebateDetail_nh.cshtml">
+      <publishTime>04/18/2017 17:51:30</publishTime>
+    </File>
+    <File Include="Views/MyRebate/RebateDetail_tj.cshtml">
+      <publishTime>04/18/2017 17:51:30</publishTime>
+    </File>
+    <File Include="Views/OpenSource/Index.cshtml">
+      <publishTime>07/26/2017 17:56:12</publishTime>
+    </File>
+    <File Include="Views/OpenSource/openImg.cshtml">
+      <publishTime>07/13/2017 19:26:30</publishTime>
+    </File>
+    <File Include="Views/OpenSource/openvideo.cshtml">
+      <publishTime>07/14/2017 11:26:17</publishTime>
+    </File>
+    <File Include="Views/Order/JuniorOrderDetail.cshtml">
+      <publishTime>04/18/2017 17:51:32</publishTime>
+    </File>
+    <File Include="Views/Order/Manage.cshtml">
+      <publishTime>07/26/2017 17:58:57</publishTime>
+    </File>
+    <File Include="Views/Order/MyJuniorOrders.cshtml">
+      <publishTime>07/25/2017 09:29:59</publishTime>
+    </File>
+    <File Include="Views/Order/MyOrders.cshtml">
+      <publishTime>07/25/2017 09:44:43</publishTime>
+    </File>
+    <File Include="Views/Order/OrderDetail.cshtml">
+      <publishTime>04/18/2017 17:51:32</publishTime>
+    </File>
+    <File Include="Views/Order/ProductsDetail.cshtml">
+      <publishTime>04/18/2017 17:51:32</publishTime>
+    </File>
+    <File Include="Views/Order/ToShop.cshtml">
+      <publishTime>04/20/2017 14:38:06</publishTime>
+    </File>
+    <File Include="Views/OutScale/AgentIndex.cshtml">
+      <publishTime>04/18/2017 17:51:34</publishTime>
+    </File>
+    <File Include="Views/OutScale/GetAgentIndex.cshtml">
+      <publishTime>07/14/2017 19:28:20</publishTime>
+    </File>
+    <File Include="Views/OutScale/GetOrderIDIndex.cshtml">
+      <publishTime>07/27/2017 11:14:40</publishTime>
+    </File>
+    <File Include="Views/OutScale/GetOutDetailIndex.cshtml">
+      <publishTime>04/18/2017 17:51:34</publishTime>
+    </File>
+    <File Include="Views/OutScale/GetOutScaleDetailIndex.cshtml">
+      <publishTime>04/18/2017 17:51:34</publishTime>
+    </File>
+    <File Include="Views/OutScale/Index.cshtml">
+      <publishTime>07/11/2017 15:38:15</publishTime>
+    </File>
+    <File Include="Views/ProductShow/Index.cshtml">
+      <publishTime>04/18/2017 17:51:35</publishTime>
+    </File>
+    <File Include="Views/ProductShow/ProductsDetail.cshtml">
+      <publishTime>04/18/2017 17:51:35</publishTime>
+    </File>
+    <File Include="Views/PublicShow/agentyixiang.cshtml">
+      <publishTime>07/28/2017 11:07:17</publishTime>
+    </File>
+    <File Include="Views/PublicShow/CompanyProfile.cshtml">
+      <publishTime>12/22/2016 11:41:04</publishTime>
+    </File>
+    <File Include="Views/PublicShow/support.cshtml">
+      <publishTime>04/19/2017 11:59:57</publishTime>
+    </File>
+    <File Include="Views/RtnScale/GetOutDetailIndex.cshtml">
+      <publishTime>04/18/2017 17:51:35</publishTime>
+    </File>
+    <File Include="Views/RtnScale/Index.cshtml">
+      <publishTime>04/18/2017 17:51:35</publishTime>
+    </File>
+    <File Include="Views/RtnScale/RtnScaleDetail.cshtml">
+      <publishTime>04/18/2017 17:51:35</publishTime>
+    </File>
+    <File Include="Views/SaleCensus/AgentUserNameIndex.cshtml">
+      <publishTime>04/18/2017 17:51:17</publishTime>
+    </File>
+    <File Include="Views/SaleCensus/AgentUserNameIndexSale.cshtml">
+      <publishTime>04/18/2017 17:51:17</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>12/22/2016 11:41:04</publishTime>
+    </File>
+    <File Include="Views/Shared/ShardPage.cshtml">
+      <publishTime>04/24/2017 16:16:28</publishTime>
+    </File>
+    <File Include="Views/SourceShow/article.cshtml">
+      <publishTime>06/02/2017 21:45:25</publishTime>
+    </File>
+    <File Include="Views/SourceShow/articlenew.cshtml">
+      <publishTime>06/03/2017 09:32:05</publishTime>
+    </File>
+    <File Include="Views/SourceShow/Detail.cshtml">
+      <publishTime>04/24/2017 16:19:06</publishTime>
+    </File>
+    <File Include="Views/SourceShow/SourceLst.cshtml">
+      <publishTime>07/13/2017 09:25:34</publishTime>
+    </File>
+    <File Include="Views/Stock/AgentStockByUserNameIndex.cshtml">
+      <publishTime>04/18/2017 17:51:16</publishTime>
+    </File>
+    <File Include="Views/Stock/AgentStockIndex.cshtml">
+      <publishTime>04/18/2017 17:51:16</publishTime>
+    </File>
+    <File Include="Views/Stock/Index.cshtml">
+      <publishTime>04/18/2017 17:51:16</publishTime>
+    </File>
+    <File Include="Views/test/damoo.cshtml">
+      <publishTime>04/18/2017 17:51:38</publishTime>
+    </File>
+    <File Include="Views/test/Index.cshtml">
+      <publishTime>12/22/2016 10:42:52</publishTime>
+    </File>
+    <File Include="Views/Warrant/AgentIndex.cshtml">
+      <publishTime>07/25/2017 08:29:31</publishTime>
+    </File>
+    <File Include="Views/Warrant/MyIndex.cshtml">
+      <publishTime>06/17/2017 18:15:26</publishTime>
+    </File>
+    <File Include="Views/WarrantAuthority/AgentIndex.cshtml">
+      <publishTime>04/18/2017 17:51:36</publishTime>
+    </File>
+    <File Include="Views/WarrantAuthority/Index.cshtml">
+      <publishTime>04/18/2017 17:51:36</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>12/09/2016 10:50:33</publishTime>
+    </File>
+    <File Include="Views/WeChat/Index.cshtml">
+      <publishTime>04/18/2017 17:51:36</publishTime>
+    </File>
+    <File Include="WarrantImg/MyCode.ashx">
+      <publishTime>04/18/2017 17:51:40</publishTime>
+    </File>
+    <File Include="WarrantImg/MyWarrantImg.ashx">
+      <publishTime>12/19/2016 22:48:27</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>06/12/2017 09:56:04</publishTime>
+    </File>
+    <File Include="Xml/XMLTeam.xml">
+      <publishTime>04/18/2017 17:51:40</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

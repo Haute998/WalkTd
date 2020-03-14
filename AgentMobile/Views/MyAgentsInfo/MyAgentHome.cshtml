@@ -1,0 +1,149 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的代理 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <script src="/js/jquery.js" type="text/javascript"></script>
+    <link href="/css/jlpmain.css?20161225" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <style type="text/css">
+        .accordion .link {
+            padding: 15px 15px 15px 6em;
+            color: #fac800;
+        }
+    </style>
+    <script type="text/javascript">
+        //$(function () {
+        //    var t;
+        //    $(".news").hover(function () {
+        //        clearInterval(t);
+        //    }, function () {
+        //        t = setInterval(function () {
+        //            var ul = $(".list");
+        //            var liHeight = ul.find("li:last").height();
+        //            ul.animate({ marginTop: liHeight + "px" }, 1000, function () {
+        //                ul.find("li:last").prependTo(ul);
+        //                ul.find("li:first").hide();
+        //                ul.css({ marginTop: 0 });
+        //                ul.find("li:first").fadeIn(800);
+        //            });
+        //        }, 3000);
+        //    }).trigger("mouseleave");
+        //});
+    </script>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div data-role="page" id="page1">
+            <div class="dlhtt" id="dlhtt" style="background: url(/images/tcrjbg.png); background-size: 100% 100%;">
+                <dl>
+                    <dt>
+                        <img src="@(user.PortraitUrl)" alt="" />
+                    </dt>
+                    <dd style="padding: 28px 0 0 0;">
+                        <span>@(user.Name)</span>
+                    </dd>
+                    <dd>
+                        <span class="span1">级别：@(user.userTypeName)</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="news">
+                <ul class="gg">
+                    <li>公司公告</li>
+                </ul>
+                <ul class="list"><li>      <marquee scrollamount="2" id="sysnotifys"></marquee>        </li></ul>
+            </div>
+            <div class="fy_dlht_lm">
+                <table>
+                    <tr>
+                        <td class="you">
+                            <dl>
+                                <a href="/MyAgentsInfo/Index">
+                                    <dt>
+                                        <img src="/images/33.png" />
+                                    </dt>
+                                    <dd>
+                                        下级代理
+                                    </dd>
+                                </a>
+                            </dl>
+                        </td>
+                        <td class="you">
+                            <dl>
+                                <a href="/MyRebate/My_tjs">
+                                    <dt>
+                                        <img src="/images/tjagent.png" />
+                                    </dt>
+                                    <dd>
+                                        我推荐的代理
+                                    </dd>
+                                </a>
+                            </dl>
+                        </td>
+                        <td>
+                            <dl>
+                                <a href="/MyAgentsInfo/My_yixiang">
+                                    <dt>
+                                        <img src="/images/liaojie.png" />
+                                    </dt>
+                                    <dd>
+                                        我的意向代理
+                                    </dd>
+                                </a>
+                            </dl>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="notifytmp">
+    <span>${Title}</span>
+</script>
+<script>
+    $(function () {
+        getsysnotify();
+    })
+    function getsysnotify() {
+        $.post("/SYSMNotify/GetTop5", {}, function (data) {
+            if (data != "") {
+                $("#notifytmp").tmpl(data).appendTo("#sysnotifys");
+            }
+        })
+    }
+</script>

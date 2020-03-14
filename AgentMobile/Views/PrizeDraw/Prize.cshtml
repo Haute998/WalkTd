@@ -1,0 +1,723 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    LotteryActivitys activity = ViewData["activity"] as LotteryActivitys;
+    bool IsWx = Convert.ToBoolean(ViewData["IsWx"]);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>抽奖活动</title>
+    @*<title>@(activity.Title)</title>*@
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/css/pricedraw/StyleSheet1.css?20170418" rel="stylesheet" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/page/pricedraw/awardRotate.js"></script>
+    <link href="~/css/pricedraw/TCCstyle.css?v20181226" rel="stylesheet" />
+
+    <link href="~/js/setcity2/css/LArea.css?201707141613" rel="stylesheet" />
+    <script src="~/js/setcity2/js/LAreaData1.js?201707141613"></script>
+    <script src="~/js/setcity2/js/LArea.js?20181228"></script>
+
+    <style type="text/css">
+        ul, li {
+            padding: 0;
+            margin: 0;
+        }
+
+        #Winning {
+            height: 400px;
+            top: 44%;
+        }
+
+        #Winning li {
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 5px;
+        }
+
+        #Winning dl {
+            width: 100%;
+        }
+
+        #Winning dl dd {
+            width: 25%;
+            float: left;
+        }
+
+        #Winning dl dd:nth-child(2) {
+            width: 70%;
+        }
+
+        .choujiang .huodong .ceneter {
+            width: 70%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #UserInfo {
+            padding: 0 20px;
+        }
+
+        dl dd:nth-child(1) {
+            width: 60px;
+        }
+
+        .boxchou {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #fff;
+            filter: alpha(opacity=0);
+            -moz-opacity: 0;
+            -khtml-opacity: 0;
+            opacity: 0;
+            display: none;
+        }
+
+        #lblTile {
+            display: none;
+            color: #ff6a00;
+        }
+
+        .login-button {
+            text-align: center;
+        }
+
+        #fwm {
+            outline: none;
+            font-weight: bold;
+            font-size: 16px;
+            color: #eb0606;
+        }
+
+        .priceName {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        #UserInfo input {
+            .login-input input.list-input;
+        }
+
+        .list-input {
+            font-family: Microsoft YaHei;
+            float: left;
+            color: #333;
+            line-height: 30px;
+            height: 26px;
+            width: 100%;
+            border: #ccc 1px solid;
+            text-indent: 5px;
+            margin-left: 5px;
+            -webkit-appearance: none;
+            background-origin: content-box;
+            font-weight: normal;
+            background-color: #fff;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            outline: none;
+        }
+
+        .list-tarea-input {
+            font-family: Microsoft YaHei;
+            float: left;
+            color: #333;
+            line-height: 20px;
+            height: 60px;
+            width: 100%;
+            border: #ccc 1px solid;
+            text-indent: 5px;
+            margin-left: 5px;
+            -webkit-appearance: none;
+            background-origin: content-box;
+            font-weight: normal;
+            background-color: #fff;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            outline: none;
+        }
+
+        .btnPrize {
+            float: left;
+            background-color: #c62a2a;
+            color: #fff;
+            border: none;
+            height: 30px;
+            width: 80px;
+            margin-left: 10px;
+            font-family: 微软雅黑;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -webkit-appearance: none;
+        }
+
+        .pname {
+            color: #c62a2a;
+            font-weight: bold;
+        }
+
+        .zgbg {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: #fff url(../images/zge-icon3.png) right 13px top 7px no-repeat;
+            background-size: 6px;
+        }
+    </style>
+</head>
+<body style="background: #da3038 url(/images/lottery/bg.png) center 0 no-repeat;background-size: 100%;">
+    <div class="jiangxiang login-header" onclick="show()">
+        <a href="javascript:void(0);">
+            <img src="/images/lottery/sm.png" />奖项说明
+        </a>
+    </div>
+
+    <div class="jiangpin">
+        <a href="/PrizeDraw/PrizeRec">
+            <img src="~/images/lottery/mine.png" />
+        </a>
+    </div>
+
+    <div class="choujiang">
+        <div class="huodong">
+            <div class="ceneter">
+                <div class="banner">
+                    <div class="turnplate" style="background-image: url(/images/lottery/Turntable.png?v001); background-size: 100% 100%; padding-left:12px;padding-top:10px; padding-right:10px; padding-bottom:20px;">
+                        <canvas class="item" id="wheelcanvas" width="422" height="422"></canvas>
+                        <img class="pointer" src="/images/lottery/pointer.png?v001" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <img src="/images/lottery/activity.png" width="100%" />
+    </div>
+
+    <div class="guize" id="guize">
+        <div class="login-input-content">
+            <div class="guize_index_cd">
+                <p class="js-prizeshow">
+                    <em>奖项说明</em>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lefu-bg" id="lefu-bg" onclick="noshow()"></div>
+
+    <div class="boxchou" onclick="onhide()"></div>
+    <div class="login" id="fwmtmp" style="display:none;border:0;">
+        <div class="login-input-content">
+            <div class="login-input">
+                <label style="font-size:14px;">
+                    请输入防伪码
+                </label>
+                <img src="~/images/错误.png" width="16" height="16" style="float:right;margin-right:5px;margin-top:5px;" onclick="onhide()" />
+            </div>
+            <div class="login-input login-pos">
+                <input id="fwm" name="fwm" type="text" class="list-input" maxlength="16"  re/>
+                <img id="Scan" src="~/images/lottery/scanning.png" class="login-sm" />
+            </div>
+        </div>
+        <div class="login-button">
+            <a id="lblTile">正在验证防伪码，等待抽奖...</a>
+            <a href="javascript:void(0);" id="A1">
+                <input type="button" onclick="godraw()" value="确定抽奖" class="btnPrize" />
+            </a>
+        </div>
+    </div>
+
+    <div class="login-bg">
+    </div>
+
+    <div id="Winning" class="login" style="display:none">
+        <ul id="PrizeInfo">
+            <li style="height:30px; line-height:30px;"><span>恭喜您获得了</span><span style='color:#239cd9' class="lvl"></span></li>
+            <li><label style='color:#c62a2a' class="priceName"></label></li>
+            <li style="height:100px;">
+                <div style='text-align:center;'>
+                    <img class="priceImg" width='100' height='80' src="" />
+                </div>
+            </li>
+        </ul>
+        <ul id="UserInfo">
+            <li><dl><dd>手机号码：</dd><dd><input id="phone" name="phone" type="text" class="list-input" maxlength="11" placeholder="请输入手机" /></dd></dl></li>
+            <li><dl><dd>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</dd><dd><input id="name" name="name" type="text" class="list-input" maxlength="11" placeholder="请输入姓名" /></dd></dl></li>
+            <li>
+                <dl>
+                    <dd>收货地址：</dd>
+                    <dd>
+                        <input class="zgbg list-input" readonly="readonly" id="PCAs" name="PCAs" type="text" placeholder='请选择收货地址' />
+                        <input id="PCAids" name="PCAids" type="hidden" value="" />
+                    </dd>
+                </dl>
+            </li>
+            <li style="height:60px;"><dl><dd>详细地址：</dd><dd><textarea id="address" class="list-tarea-input" name="address" rows="3" placeholder="请输入详细收货地址" cols="26"></textarea></dd></dl></li>
+            <li style="text-align:center; margin-top:15px;"><input type="button" id="SubInfo" onclick="SubmitPrizeInfo(this)" value="提交" data-id="0" style=" background-color:#da3038;color:#fff; border:none; height:26px; width:60px;" /></li>
+        </ul>
+    </div>
+
+    <script src="~/js/page/pricedraw/ScrollText.js"></script>
+    <script src="~/js/common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+    @if (IsWx)
+    {
+        <script>
+            wx.config({
+                debug: false,                           // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@(ViewData["AppID"])',          // 必填，公众号的唯一标识
+                timestamp: "@(ViewData["timestamp"])",  // 必填，生成签名的时间戳
+                nonceStr: '@(ViewData["nonceStr"])',    // 必填，生成签名的随机串
+                signature: '@(ViewData["signature"])',  // 必填，签名，见附录1
+                jsApiList: ['checkJsApi',
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'hideMenuItems',
+                            'showMenuItems',
+                            'hideAllNonBaseMenuItem',
+                            'showAllNonBaseMenuItem',
+                            'translateVoice',
+                            'startRecord',
+                            'stopRecord',
+                            'onRecordEnd',
+                            'playVoice',
+                            'pauseVoice',
+                            'stopVoice',
+                            'uploadVoice',
+                            'downloadVoice',
+                            'chooseImage',
+                            'previewImage',
+                            'uploadImage',
+                            'downloadImage',
+                            'getNetworkType',
+                            'openLocation',
+                            'getLocation',
+                            'hideOptionMenu',
+                            'showOptionMenu',
+                            'closeWindow',
+                            'scanQRCode',
+                            'chooseWXPay',
+                            'openProductSpecificView',
+                            'addCard',
+                            'chooseCard',
+                            'openCard'
+                ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+        </script>
+    }
+
+    <script>
+        function show() {
+            $('.guize').show();
+            $('.lefu-bg').show();
+        }
+        function noshow() {
+            $("#Winning").hide();
+
+            $('.guize').hide();
+            $('.lefu-bg').hide();
+        }
+
+        function showPrize() {
+            $("#Winning").show();
+            $('.lefu-bg').show();
+        }
+        function onhide() {
+            $('.boxchou').hide();
+            $('.login').hide();
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        var scroll2 = new ScrollText("breakNewsList", "pre2", "next2", true, 60, true);
+        scroll2.LineHeight = 63;
+    </script>
+
+    <script type="text/javascript">
+        var loading;
+        var isgoing = false;
+        var turnplate = {
+            restaraunts: [], 			//大转盘奖品名称
+            colors: [], 				//大转盘奖品区块对应背景颜色
+            outsideRadius: 192, 		//大转盘外圆的半径
+            textRadius: 155, 			//大转盘奖品位置距离圆心的距离
+            insideRadius: 60, 		//大转盘内圆的半径
+            startAngle: 0, 			//开始角度
+
+            bRotate: false				//false:停止;ture:旋转
+        };
+        var rotateFn;
+
+        $(document).ready(function () {
+            var area1 = new LArea();
+            area1.init({
+                'trigger': '#PCAs',     // 触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+                'valueTo': '#PCAids',   // 选择完毕后id属性输出到该位置
+                'keys': {
+                    id: 'name',
+                    name: 'name'
+                }, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+                'type': 1, //数据源类型
+                'data': LAreaData //数据源
+            });
+
+            //$("#Winning").show();
+
+            $("#Scan").click(function () {
+                var iswx = "@(IsWx)";
+                if (iswx != "true") {
+                    layer.open({ content: "不是微信浏览器，无法扫描", btn: '我知道了' });
+                    return
+                }
+
+                wx.scanQRCode({
+                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (data) {
+                        if (data.resultStr != null && data.resultStr != "") {
+                            var arrayStr = data.resultStr.split(/[,=-\\/]/);
+                            if (arrayStr.length > 1) {
+                                $("#fwm").val(arrayStr[arrayStr.length - 1]);
+                                QueryCode();
+                            }
+                            else {
+                                layer.open({ content: "此条码无法抽奖!", btn: '我知道了' });
+                            }
+                        }
+                    },
+                    fail: function (res) {
+                        layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+                    }
+                });
+            })
+
+            loading = layer.open({ type: 2, content: '加载中' });
+            $.post("/PrizeDraw/GetPrize", { "id": "@(activity.ID)" }, function (data) {
+                layer.close(loading);
+                if (data != "") {
+                    turnplate.restaraunts = data;
+                    turnplate.colors = [];
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        if (i == (data.length - 1)) {
+                            turnplate.colors.push("#febf66");
+                        }
+                        else if (i == 2) {
+                            turnplate.colors.push("#FFFDD4");
+                        }
+                        else if (i % 2 == 0) {
+                            turnplate.colors.push("#FFEAB0");
+                        }
+                        else {
+                            turnplate.colors.push("#ffcc99");
+                        }
+
+                        $("body").append(" <img width=27 height=27 src=\"" + "@(WeModels.WeConfig.b_domain)" + data[i].PrizeImgUrl + "\" id=\"prize" + data[i].ID + "\" style=\"display: none;\" />");
+                        $(".js-prizeshow").append("<li class=\"jx\"><span class=\"span1\">" + data[i].PrizeLevel + "</span>：<span class='pname'>" + data[i].PrizeName + "</span></li>");
+                    }
+                }
+                else {
+
+                }
+
+                var rotateTimeOut = function () {
+                    $('#wheelcanvas').rotate({
+                        angle: 0,
+                        animateTo: 2160,
+                        duration: 8000,
+                        callback: function () {
+                            alert('网络超时，请检查您的网络设置！');
+                        }
+                    });
+                };
+
+                //旋转转盘 item:奖品位置; txt：提示语;
+                rotateFn = function (item, txt) {
+
+                    var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length * 2));
+                    if (angles < 270) {
+                        angles = 270 - angles;
+                    } else {
+                        angles = 360 - angles + 270;
+                    }
+                    $('#wheelcanvas').stopRotate();
+                    $('#wheelcanvas').rotate({
+                        angle: 0,
+                        animateTo: angles + 1800,
+                        duration: 8000,
+                        callback: function () {
+                            isgoing = false;
+                            if (txt.IsNot) {
+                                layer.open({
+                                    content: txt.PrizeLevel, btn: '我知道了'
+                                });
+                            } else {
+                                var imgurl = "@(WeModels.WeConfig.b_domain)" + txt.PrizeImgUrl;
+                                var priceName = txt.PrizeName;
+                                var lvl = txt.PrizeLevel;
+
+                                $(".priceImg").attr("src", imgurl);
+                                $(".lvl").html(lvl);
+                                $(".priceName").html(priceName);
+                                showPrize();
+                            }
+                            turnplate.bRotate = !turnplate.bRotate;
+                        }
+                    });
+                };
+
+                $('.pointer').click(function () {
+                    if (isgoing == true) {
+                        layer.open({
+                            content: '抽奖正在进行', skin: 'msg', time: 2 //2秒后自动关闭
+                        });
+                        return false;
+                    }
+                    alertfwm();
+                    });
+                //对转盘进行渲染
+
+                drawRouletteWheel();
+            })
+        });
+
+        function rnd(n, m) {
+            var random = Math.floor(Math.random() * (m - n + 1) + n);
+            return random;
+
+        }
+
+        //页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
+        //window.onload = function () {
+        //    drawRouletteWheel();
+        //};
+
+        function drawRouletteWheel() {
+            var canvas = document.getElementById("wheelcanvas");
+            if (canvas.getContext) {
+                //根据奖品个数计算圆周角度
+                var arc = Math.PI / (turnplate.restaraunts.length / 2);
+                var ctx = canvas.getContext("2d");
+                //在给定矩形内清空一个矩形
+                ctx.clearRect(0, 0, 422, 422);
+                //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式
+                ctx.strokeStyle = "#FFBE04";
+                //font 属性设置或返回画布上文本内容的当前字体属性
+                ctx.font = 'bold 26px Microsoft YaHei';
+                for (var i = 0; i < turnplate.restaraunts.length; i++) {
+
+                    var angle = turnplate.startAngle + i * arc;
+                    ctx.fillStyle = turnplate.colors[i];
+                    ctx.beginPath();
+                    //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）
+                    ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);
+                    ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+                    ctx.stroke();
+                    ctx.fill();
+                    //锁画布(为了保存之前的画布状态)
+                    ctx.save();
+
+                    //----绘制奖品开始----
+                    //ctx.fillStyle = "#333";
+                    ctx.fillStyle = "#ff0000";
+                    var text = turnplate.restaraunts[i].PrizeLevel;
+                    var line_height = 17;
+                    //translate方法重新映射画布上的 (0,0) 位置
+                    ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+
+                    //rotate方法旋转当前的绘图
+                    ctx.rotate(angle + arc / 2 + Math.PI / 2);
+
+                    /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+                    if (text.indexOf("M") > 0) {//流量包
+                        var texts = text.split("M");
+                        for (var j = 0; j < texts.length; j++) {
+                            ctx.font = j == 0 ? 'bold 20px Microsoft YaHei' : '16px Microsoft YaHei';
+                            if (j == 0) {
+                                ctx.fillText(texts[j] + "M", -ctx.measureText(texts[j] + "M").width / 2, j * line_height);
+                            } else {
+                                ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                            }
+                        }
+                    } else if (text.indexOf("M") == -1 && text.length > 6) {//奖品名称长度超过一定范围
+                        text = text.substring(0, 6) + "||" + text.substring(6);
+                        var texts = text.split("||");
+                        for (var j = 0; j < texts.length; j++) {
+                            ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+                        }
+                    } else {
+                        //在画布上绘制填色的文本。文本的默认颜色是黑色
+                        //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+                        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+                    }
+
+                    //alert(JSON.stringify(turnplate.restaraunts));
+                    // 添加对应图标
+                    if (turnplate.restaraunts[i].PrizeImgUrl != "") {
+                        var img = document.getElementById("prize" + turnplate.restaraunts[i].ID);
+                        ctx.drawImage(img, -20, 15, 50, 50);
+                        
+                        //debugger;
+                        ////img.onload = loadImage(ctx, img);
+                        //var loadImage = function(ctxs,imgs){
+                        //    ctxs.drawImage(imgs, -20, 15, 50, 50);
+                        //}
+                    }
+
+                    //else if (text.indexOf("谢谢参与") >= 0) {
+                    //    var img = document.getElementById("sorry-img");
+                    //    img.onload = function () {
+                    //        ctx.drawImage(img, -15, 10);
+                    //    };
+                    //    ctx.drawImage(img, -15, 10);
+                    //}
+                    //把当前画布返回（调整）到上一个save()状态之前
+                    ctx.restore();
+                    //----绘制奖品结束----
+                }
+            }
+        }
+        function godraw() {
+            if (isgoing == true) {
+                layer.open({
+                    content: '抽奖正在进行', skin: 'msg', time: 2 //2秒后自动关闭
+                });
+                return false;
+            }
+
+            var Phone = $("[name='Phone']").val();
+            var Name = $("[name='Name']").val();
+            var fwm = $("[name='fwm']").val();
+            if (Phone == "") {
+                layer.open({ content: '请输入手机号', btn: '我知道了' });
+                return false;
+            }
+            if (fwm == "") {
+                layer.open({ content: '请输入防伪码', btn: '我知道了' });
+                return false;
+            }
+            if (Name == "") {
+                layer.open({ content: '请输入姓名', btn: '我知道了' });
+                return false;
+            }
+            layer.closeAll();
+
+            $("#lblTile").show();
+            $("#A1").hide();
+            //loading = layer.open({ type: 2, content: '加载中...' });
+            isgoing = true;
+            $.post("/PrizeDraw/toPrizeDraw", { "ActivityID": "@(activity.ID)", "fwm": fwm, "Phone": Phone, "Name": Name }, function (rtn) {
+                layer.close(loading);
+                //var array = new Array();
+                //array = rtn.split("|");
+                $("#lblTile").hide();
+                $("#A1").show();
+
+                if (rtn.IsPrize) {
+                    $("#fwmtmp").hide();
+                    $(".boxchou").hide();
+                    //抽奖
+                    if (turnplate.bRotate) return;
+                    turnplate.bRotate = !turnplate.bRotate;
+                    //获取随机数(奖品个数范围内)
+                    //var item = rnd(1, turnplate.restaraunts.length);
+                    var item = -1;
+                    //奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+                    //测试
+                    for (var i = 1; i <= turnplate.restaraunts.length; i++) {
+                        if (turnplate.restaraunts[i - 1].ID == rtn.PrizeID) {
+                            item = i;
+                            break;
+                        }
+                    }
+                    if (item < 0) {
+                        layer.open({ content: '抽奖出错了，请稍候再试', btn: '我知道了' });
+                        return false;
+                    }
+
+                    if (rtn.IsNot) {
+                        $("#BtnClose").show();
+                        $("#UserInfo").hide();
+                        $("#Winning").height(260);
+                    }
+                    else {
+                        $("#BtnClose").hide();
+                        $("#UserInfo").show();
+                        $("#Winning").height(400);
+                        $("#SubInfo").attr("data-id", rtn.ID)
+                    }
+
+                    rotateFn(item, turnplate.restaraunts[item - 1]);
+                    console.log(item);
+                }
+                else {
+                    isgoing = false;
+                    layer.open({ content: rtn.ResultStr, btn: '我知道了' });
+                }
+            })
+        }
+
+        function alertfwm() {
+            //页面层
+            //layer.open({
+            //    type: 1
+            //  , content: $("#fwmtmp").html()
+            //  , anim: 'up'
+            //  , style: 'position:fixed; bottom:0; left:0; width: 100%; height: 200px; padding:10px 0; border:none;'
+            //});
+            $("#fwmtmp").show();
+            $(".boxchou").show();
+        }
+    </script>
+
+    <script>
+        function SubmitPrizeInfo(obj) {
+            var id = $(obj).attr("data-id");
+            var phone = $("#phone").val();
+            var name = $("#name").val();
+            var address = $("#PCAs").val() + $("#address").val();
+            address = address.replace(/,/g, "");
+
+            if (id > 0) {
+                $.post("/PrizeDraw/UploadPrizeInfo", { ID: id, Phone: phone, Name: name, Address: address },
+                    function (rtn) {
+                        if (rtn == "ok") {
+                            $("#Winning").hide();
+                            layer.open({ content: '提交成功，等待奖品发放.', btn: '我知道了' });
+
+                        }
+                        else {
+                            layer.open({ content: '信息提交失败！', btn: '我知道了' });
+                        }
+                    });
+            }
+        }
+
+        function hideFun() {
+            $("#Winning").hide();
+        }
+    </script>
+
+</body>
+</html>

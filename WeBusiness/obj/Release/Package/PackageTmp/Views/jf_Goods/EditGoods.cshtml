@@ -1,0 +1,109 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model jf_Goods
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>礼品基本信息修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>基本信息修改（可修改主图）</legend>
+    </fieldset>
+    <form class="layui-form" method="post" action="/jf_Goods/ToEditGoods" enctype="multipart/form-data">
+        @Html.HiddenFor(m => m.ID)
+        <div class="layui-form-item">
+            <label class="layui-form-label">礼品主图</label>
+            <div class="layui-input-block">
+                <span>
+                    <img height="78" width="80" id="addimg" src="~/images/system/addImg.png" />
+                    <input id="goodsimg" hidden="hidden" name="goodsimg" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                </span>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:200px">250px*250px</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">礼品名称</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(m => m.GoodsName, new { @class = "layui-input", @lay_verify = "required", @required = "", @maxlength = "50", @placeholder = "请输入礼品名称" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库存</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(m => m.Quantity, new { @type = "number", @lay_verify = "required", @class = "layui-input", @maxlength = "7", @placeholder = "请输入库存" })
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">兑换积分</label>
+            <div class="layui-input-block">
+                @Html.TextBoxFor(m => m.SaleIntegral, new { @type = "number", @lay_verify = "required", @class = "layui-input", @maxlength = "7", @placeholder = "请输入兑换积分" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="go">保存</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form();
+            //自定义验证规则
+            form.verify({
+                price: [/^(:?(:?\d+.\d+)|(:?\d+))$/, '价格格式不对']
+            });
+            //监听提交
+            form.on('submit(go)', function (data) {
+            });
+        });
+    </script>
+</body>
+
+</html>
+<script>
+    $(function () {
+        var ToEditGoods_Msg = "@(Model!=null?(Model.error):"")";
+        if (ToEditGoods_Msg == "ok") {
+            window.parent.location = window.parent.location;
+        }
+        else if (ToEditGoods_Msg!="")
+        {
+            layer.alert(ToEditGoods_Msg);
+        }
+        var oldMain_img = "@Model.Main_img";
+
+        if (oldMain_img != "") {
+            $("#addimg").attr("src", oldMain_img);
+        }
+        $("#addimg").click(function () {
+            $("#goodsimg").click();
+        });
+        $("#goodsimg").change(function (e) {
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    $("#addimg").attr("src", this.result);
+                    //$("#addimg").attr("width", window.screen.width / 1.5);
+                    //$("#addimg").attr("height", img.height * (window.screen.width / 1.5 / img.width));
+                }
+
+            }
+        });
+    })
+</script>

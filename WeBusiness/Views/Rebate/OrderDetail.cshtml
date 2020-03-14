@@ -1,0 +1,173 @@
+﻿@using WeModels
+@using WeModels.Models.OrderModel
+@{
+
+    Layout = null;
+}
+@model OrderVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.jqprint-0.3.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script>
+        function printme() {
+            var loading = layer.load(1, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            $("#prints").jqprint({
+                debug: true,
+                importCSS: true,
+                printContainer: true,
+                operaSupport: true
+            });
+            layer.close(loading);
+        }
+
+    </script>
+</head>
+<body>
+    <div class="layui-elem-quote">
+        <p>
+            订单详情（@(Model.order.OrderNo)）<span style="float:right;">
+                <button name="" onclick="printme()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe652;</i> 打印
+                </button>
+            </span>
+        </p>
+    </div>
+    <div id="prints">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>订单基本信息</legend>
+        </fieldset>
+        <table class="layui-table" style="margin:20px;text-align:center">
+            <thead>
+                <tr style="color:#b3b3b3;border:1px solid black">
+                    <td>订单编号</td>
+                    <td>订单总价(元)</td>
+                    <td>订单创建时间</td>
+                    <td>订单状态</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@(Model.order.OrderNo)</td>
+                    <td style="color: red">@(Model.order.SumPrice)</td>
+                    <td>@(Model.order.DatCreate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    <td>@(Model.order.OrderState)</td>
+                </tr>
+            </tbody>
+        </table>
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>买家信息</legend>
+        </fieldset>
+        <table class="layui-table" style="margin: 20px; text-align: center">
+            <thead>
+                <tr style="color:#b3b3b3;">
+                    <td>订单联系人</td>
+                    <td>订单联系人电话</td>
+                    <td>买家备注</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@(Model.order.OrderMan)</td>
+                    <td>@(Model.order.OrderMobile)</td>
+                    <td>@(Model.order.Remark)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>产品信息</legend>
+        </fieldset>
+        <table class="layui-table" style="margin: 20px; text-align: center">
+            <thead>
+                <tr style="color:#b3b3b3;">
+                    <td>产品名称</td>
+                    <td>产品图片</td>
+                    <td>数量</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ProductSnap product in Model.ProSnapLst)
+                {
+                    <tr>
+                        <td>@(product.ProductName)</td>
+                        <td><img width="100" src="@(product.Main_img)" /></td>
+                        <td>@(product.GetCnt)</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="orderLogtmp">
+    {{each(i,ck) RtnList}}
+    {{if ck.LogType=="支付"}}
+    <tr style="color:red">
+        {{else ck.LogType=="审核"}}
+    <tr style="color:blue">
+        {{else}}
+    <tr>
+        {{/if}}
+        <td style="border:none">${ck.LogType}</td>
+        <td style="border:none;">${ck.Logs}</td>
+        <td style="border:none">${ChangeDateFormat(ck.Dat).Format("yyyy-MM-dd hh:mm:ss")}</td>
+        <td style="border:none">${ck.Oper}</td>
+    </tr>
+    {{/each}}
+</script>
+<script>
+    layui.use('form', function () {
+        var form = layui.form();
+
+        //监听提交
+        form.on('submit(save)', function (data) {
+            return false;
+
+        });
+    });
+
+    var pageIndex = 1;
+
+    $(function () {
+        getlog();
+    })
+    function getlog() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.getJSON("/OrderManage/GetOrderLogPage", { "pageIndex": pageIndex, "orderNo": "@(Model.order.OrderNo)" }, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+                $("#orderLogtmp").tmpl(data).appendTo('#orderLogshow');
+                $("#more").show();
+                pageIndex++;
+
+            }
+            else {
+                $("#more").hide();
+                layer.msg('没有订单日志啦', { icon: 6, time: 1000 });
+            }
+        });
+    }
+    function getmore() {
+        getlog();
+    }
+</script>

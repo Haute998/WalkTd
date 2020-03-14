@@ -1,0 +1,90 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_ConsumerWxVM user = ViewData["user"] as C_ConsumerWxVM;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="~/css/jlpmain.css?20170810" rel="stylesheet" />
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+    <title>个人信息</title>
+</head>
+<body style="background:#fff;">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="dlhtt1" id="dlhtt" style="background: url(/images/txbj.jpg); background-size: 100% 100%;">
+                <dl>
+                    <dt onclick="showimg()">
+                        <span id="setimg">
+                            @if (user.userWxInfo != null)
+                            {
+                                <img src="@(user.userWxInfo.headimgurl)" />
+                            }
+                            else
+                            {
+
+                                <img src="/layout/jfshop/images/TCtx.png" />
+                            }
+                        </span>
+                        <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+                    </dt>
+                    <dd style="padding: 18px 0 0 0;">
+                        <span>@(user.userWxInfo != null && string.IsNullOrWhiteSpace(user.userWxInfo.nickname) == false ? user.userWxInfo.nickname : user.user.UserName)</span>
+                    </dd>
+                    <dd>
+                        <span class="span1">积分：@(user.user.jf)</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="bellowsss single">
+
+
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">角色</span><span class="span4">@(user.user.Type)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">姓名</span><span class="span4">@(user.user.Name)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">性别</span><span class="span4">@(user.user.Sex)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">电话</span><span class="span4">@(user.user.Mobile)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">地址</span><span class="span4">@(user.user.Province + user.user.City + user.user.Area + user.user.Address)</span>
+                        </div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>退货申请</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/StyleSheet1.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <script type="text/javascript">
+        window.onload = function () {
+            var oImg = document.getElementById('page');
+            oImg.style.width = '100%';
+            oImg.style.height = document.documentElement.clientHeight / 1 + 'px';
+            //高度为可视区的1/3
+        }
+    </script>
+
+</head>
+<body>
+    <div id="page1">
+        <div class="zl-home">
+            <p class="zl-p4 text-align padding-top-40"><input id="SN" type="text" class="zl-txt1" placeholder="S/N" onchange="a()"/></p>
+            <p class="zl-p4 text-align"><input id="Phone" type="text" class="zl-txt1" placeholder="手机" disabled="disabled" /></p>
+            <p class="zl-p4 text-align">
+                @Html.DropDownList("problem", WeModels.SelectListHelper.GetEntitysAll1(), new { @class = "zl-sel1" })
+            </p>
+            <p class="zl-p4 text-align">
+                <textarea id="Name" rows="5" cols="20" class="zl-textarea" placeholder="留言备注"></textarea>
+            </p>
+
+            <p class="zl-p1 text-align padding-top-40"><input class="hx-btn" id="bd" type="button" value="提  交" /></p>
+        </div>
+    </div>
+
+</body>
+</html>
+<script src="~/js/Common/CookieHelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    $(function () {
+
+        $("#bd").click(function () {
+            var Name = $("#Name").val();
+            var SN = $("#SN").val();
+            var Phone = $("#Phone").val();
+            if (Phone == "") {
+                layer.open({
+                    content: '请输入电话号码！！'
+   , btn: '我知道了'
+                });
+                return;
+            }
+            var problem = $('#problem option:selected').val();
+            if (problem == "- -请选择- -") {
+                layer.open({
+                    content: '请选择故障问题'
+   , btn: '我知道了'
+                });
+                return;
+            }
+
+            layer.open({
+                type: 2
+   , content: '加载中'
+            });
+            $.post("/Problem/ToAdd", { "Phone": Phone, "Contents": problem, "Name": Name, "SN": SN }, function (data) {
+                if (data == "ok") {
+                    layer.open({
+                        content: "提交成功"
+  , btn: ['我知道了']
+  , yes: function (index) {
+      window.location.href = "/Problem/Logs?phone=" + Phone;
+      layer.close(index);
+  }
+                    });
+
+                }
+                else {
+                    layer.closeAll()
+                    layer.open({
+                        content: data
+  , btn: '我知道了'
+                    });
+                }
+            })
+        })
+    })
+    function a() {
+        
+        var SN = $("#SN").val();
+        $.post("/Problem/cha", { "SN": SN }, function (data) {
+            rtnArray = data.split("|");
+            if (rtnArray[0] == "OK") {
+
+                $("#Phone").val(rtnArray[1]);
+               
+            }
+        })
+        //var problem = $("#problem option:selected").val();
+    }
+</script>
+

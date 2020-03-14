@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+    string code = ViewData["code"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>防窜货积分</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var oImg = document.getElementById('page1');
+            oImg.style.width = '100%';
+            oImg.style.height = document.documentElement.clientHeight / 1 + 'px';
+        }
+    </script>
+
+</head>
+<body>
+    <div id="page1" data-role="page" style="background: url(/images/tj.jpg); background-size:100% 100%; ">
+        <div class="QLR-home1">
+            <img src="/layout/jfshop/images/TClogo.png" />
+        </div>
+        <div class="QLR-home2">
+            <table>
+                <tr>
+                    <td><dl><a href="http://www.my-software.net/shouye.aspx"><dt><img src="/layout/jfshop/images/TCgfwz.png" /></dt></a></dl></td>
+                </tr>
+                <tr>
+                    <td><dl><a href="@(string.IsNullOrWhiteSpace(code) ? "/cuanhuo/pre" : "/cuanhuo/Index?ID=" + code)"><dt><img src="/layout/jfshop/images/TCfchcx.png" /></dt></a></dl></td>
+                </tr>
+                <tr>
+                    <td><dl><a href="/xfz/Index6"><dt><img src="/layout/jfshop/images/TCxfzjf.png" /></dt></a></dl></td>
+                </tr>
+                <tr>
+                    <td><dl><a href="/j_shop/Index"><dt><img src="/layout/jfshop/images/TCcxyjf.png" /></dt></a></dl></td>
+                </tr>
+                <tr>
+                    <td><dl><a href="/Home/Login"><dt><img src="/layout/jfshop/images/TCjxsdl.png" /></dt></a></dl></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

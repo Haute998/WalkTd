@@ -1,0 +1,338 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.0" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+    <script src="~/js/common/jquery.qrcode.min.js"></script>
+    <title>设备管理</title>
+    <style type="text/css">
+        .layui-container {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">总部扫码APP管理</li>
+                    <li>代理APP管理</li>
+                </ul>
+                <div class="layui-tab-content">
+
+                    <div class="layui-tab-item layui-show">
+                        <form id="AddAppFrm" class="layui-form" action="">
+                            <div style="width:100%; padding:20px 5px 10px 5px;">
+                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" onclick="AddAPP()"><i class="layui-icon">&#xe654;</i>添加新版扫码APP</button>
+                            </div>
+                            <div class="layui-form">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width="100">
+                                        <col width="200">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="text-c">
+                                            <th>选择</th>
+                                            <th>
+                                                版本号
+                                            </th>
+                                            <th>
+                                                应用名称
+                                            </th>
+                                            <th>
+                                                应用大小
+                                            </th>
+                                            <th>
+                                                上传时间
+                                            </th>
+                                            <th>
+                                                操作
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="PdaAPPTb"></tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-tab-item">
+                        <form id="AddAgentAppFrm" class="layui-form" action="">
+                            <div style="width:100%; padding:20px 5px 10px 5px;">
+                                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" onclick="AddAgentAPP()"><i class="layui-icon">&#xe654;</i>添加代理APP</button>
+                            </div>
+                            <div class="layui-form">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width="100">
+                                        <col width="200">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="text-c">
+                                            <th>选择</th>
+                                            <th>
+                                                版本号
+                                            </th>
+                                            <th>
+                                                应用名称
+                                            </th>
+                                            <th>
+                                                应用大小
+                                            </th>
+                                            <th>
+                                                上传时间
+                                            </th>
+                                            <th>
+                                                操作
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="PdaAgentAPPTb"></tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/x-jquery-tmpl" id="AppDataTmpl">
+        <tr>
+            <td><input type="checkbox" data-id="${ID}" name="ChkIsOK" title="" lay-filter="defult" lay-skin="primary" ${IsOK?"checked":""}></td>
+            <td>${Ver}</td>
+            <td>${AppName}</td>
+            <td>${Size}</td>
+            <td>${CreatTime}</td>
+            <td>
+                <a title="扫码下载APP" href="javascript:;" onclick="ShowBarCodeImage('@(WeConfig.b_domain)${AppPath}')"><img src="/images/qr_code.png" width="16" /></a>
+                <a title="下载" href="${AppPath}" download="w3logo"><i class="layui-icon layui-icon-download-circle"></i></a>
+                <a title="删除" href="javascript:void(0)" onclick="DelAppVer(this,'${ID}')"><i class="layui-icon layui-icon-close"></i></a>
+            </td>
+        </tr>
+    </script>
+
+    <script type="text/x-jquery-tmpl" id="AgentAppDataTmpl">
+        <tr>
+            <td><input type="checkbox" data-id="${ID}" name="ChkIsOK" title="" lay-filter="defult" lay-skin="primary" ${IsOK?"checked":""}></td>
+            <td>${Ver}</td>
+            <td>${AppName}</td>
+            <td>${Size}</td>
+            <td>${CreatTime}</td>
+            <td>
+                <a title="扫码下载APP" href="javascript:;" onclick="ShowBarCodeImage('@(WeConfig.b_domain)${AppPath}')"><img src="/images/qr_code.png" width="16" /></a>
+                <a title="下载" href="${AppPath}" download="w3logo"><i class="layui-icon layui-icon-download-circle"></i></a>
+                <a title="删除" href="javascript:void(0)" onclick="DelAgentAppVer(this, '${ID}')"><i class="layui-icon layui-icon-close"></i></a>
+            </td>
+        </tr>
+    </script>
+
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script type="text/javascript">
+
+            layui.use('form', function () {
+                var form = layui.form;
+
+                form.on('checkbox(defult)', function (data) {
+                    if (this.checked) {
+                        var appId = $(this).attr("data-id");
+                        $("input[name='ChkIsOK']").prop("checked", false);
+                        var obj = this;
+
+                        $.post("/PDA/SetDefult", { ID: appId }, function (rtn) {
+                            if (rtn == "ok") {
+                                $(obj).prop("checked", true);
+                                layui.form.render();
+                            }
+                            else {
+                                layer.alert(rtn);
+                            }
+                        });
+                    }
+                    else {
+                        $(this).prop("checked", false);
+                    }
+
+                    layui.form.render();
+                });
+            });
+
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+    </script>
+
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+                LoadPdaAPP();
+                LoadAgentPdaAPP();
+            });
+
+            function LoadPdaAPP()
+            {
+                $.get("/PDA/GetAllPdaAPP", function (data) {
+                    $("#PdaAPPTb").empty();
+                    $("#AppDataTmpl").tmpl(data).appendTo('#PdaAPPTb');
+                    layui.form.render();
+                });
+            }
+
+            function LoadAgentPdaAPP() {
+                $.get("/PDA/GetAgentAllPdaAPP", function (data) {
+                    $("#PdaAgentAPPTb").empty();
+                    $("#AgentAppDataTmpl").tmpl(data).appendTo('#PdaAgentAPPTb');
+                    layui.form.render();
+                });
+            }
+
+            function admin_edit(title, url, id, w, h) {
+                layer.open({
+                    type: 2,
+                    shade: false,
+                    area: [w, h],
+                    content: url,
+                    title: title,
+                    zIndex: layer.zIndex,
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    }
+                });
+            }
+
+            function toPublish(obj, isPublish, id) {
+                var thislay = layer.confirm('确定要' + (isPublish == "启用" ? '启用' : '禁用') + 'PDA设备吗？', function (index) {
+                    $.post("/PDA/toPublish", { "isPublish": isPublish, "id": id }, function (rtn) {
+                        if (rtn == "ok") {
+                            window.location.href = location.href;
+                        }
+                        else {
+                            layer.alert(rtn);
+                        }
+                    })
+                })
+            }
+
+            function AddDevice() {
+                layer.open({
+                    type: 2,
+                    shade: false,
+                    area: ['500px', '400px'],
+                    title: 'PDA权限设置',
+                    content: '/PDA/Add',
+                    zIndex: layer.zIndex,
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    }
+                });
+            }
+
+            function AddAPP()
+            {
+                layer.open({
+                    type: 2,
+                    shade: false,
+                    area: ['500px', '400px'],
+                    title: '添加新版扫码APP',
+                    content: '/PDA/AddAPP',
+                    zIndex: layer.zIndex,
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    }
+                });
+            }
+
+            function AddAgentAPP()
+            {
+                layer.open({
+                    type: 2,
+                    shade: false,
+                    area: ['500px', '400px'],
+                    title: '添加新版代理APP',
+                    content: '/PDA/AddAgentAPP',
+                    zIndex: layer.zIndex,
+                    success: function (layero) {
+                        layer.setTop(layero);
+                    }
+                });
+            }
+            
+            function DelAppVer(obj,ID)
+            {
+                var thislay = layer.confirm('确定要删除此版本App应用吗？此删除可能造成PDA无法使用的风险，请谨慎操作。', function (index) {
+                    $.post("/PDA/DelAppVer", { id: ID }, function (rtn) {
+                        if (rtn == "ok")
+                        {
+                            layer.closeAll();
+
+                            if ($(obj).parent().parent().find("input[name='ChkIsOK']").prop("checked"))
+                            {
+                                var prevTr = $(obj).parent().parent().prev();
+                                prevTr.find("input[name='ChkIsOK']").prop("checked", true);
+                                layui.form.render();
+                            }
+
+                            $(obj).parent().parent().remove();
+                        }
+                        else
+                        {
+                            layer.open({content:rtn,btn:"知道了"});
+                        }
+                    });
+                })
+            }
+
+            function DelAgentAppVer(obj, ID) {
+                var thislay = layer.confirm('确定要删除此版本代理App应用吗？此删除可能造成代理PDA无法使用的风险，请谨慎操作。', function (index) {
+                    $.post("/PDA/DelAgentAppVer", { id: ID }, function (rtn) {
+                        if (rtn == "ok") {
+                            layer.closeAll();
+
+                            if ($(obj).parent().parent().find("input[name='ChkIsOK']").prop("checked")) {
+                                var prevTr = $(obj).parent().parent().prev();
+                                prevTr.find("input[name='ChkIsOK']").prop("checked", true);
+                                layui.form.render();
+                            }
+
+                            $(obj).parent().parent().remove();
+                        }
+                        else {
+                            layer.open({ content: rtn, btn: "知道了" });
+                        }
+                    });
+                })
+            }
+            
+            function ShowBarCodeImage(str)
+            {
+                layer.open({
+                    title:"扫码下载APP",
+                    content: "<div id='qrcode'></div>"
+                });
+
+                jQuery('#qrcode').qrcode({
+                    render: "canvas", //也可以替换为table
+                    width: 200,
+                    height: 200,
+                    text: str
+                });
+            }
+    </script>
+</body>
+</html>

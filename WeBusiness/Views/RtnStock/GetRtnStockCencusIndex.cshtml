@@ -1,0 +1,161 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<Product> ProductList = Product.GetEntitysAll();
+}
+@model ScaleRtnStoke
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>退货统计</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+        .select-box {
+            width: 200px;
+        }
+    </style>
+    <script src="~/js/common/Datehelper.js?v001"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/layout/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 仓库管理 <span class="c-gray en">&gt;</span> 退货统计 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" method="post" id="condition">
+            <input name="orderby" type="hidden" value="" />
+            <div class="text-c">
+                <span class="js-nospan">
+                    创建时间：
+                    <input type="text" name="DatCreateB" id="" placeholder=" 请输入时间" style="width: 100px" readonly="readonly" autocomplete="off"
+                           class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                    至
+                    <input type="text" name="DatCreateE" id="" placeholder=" 请输入时间" style="width: 100px" readonly="readonly" autocomplete="off"
+                           class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                </span>
+                退货单号：
+                <input type="text" name="OrderNo" placeholder=" 请输入单号" style="width:135px;" class="input-text" />
+                产品：
+                <span class="select-box">
+                    <select class="select" size="1" name="ProductNumber">
+                        <option value="" selected>——全部——</option>
+                        @foreach (Product p in ProductList)
+                        {
+                            <option value="@p.ProductNumber">@p.ProductName</option>
+                        }
+                    </select>
+                </span>
+                关键字：
+                <input type="text" name="keyword" id="" placeholder=" 请输入条码/产品名称/退货人" style="width: 200px" class="input-text" />
+
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+            </div>
+            
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging1")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <caption>
+        <label style="color:#cc0606;font-size:14px;font-weight:bold;line-height:30px;">
+            @if (PDAUserMsg.Param.MiddlePacking)
+            {
+                <span>大箱：</span><span id="BigCount">0</span>
+                <span>中箱：</span><span id="MiddleCount">0</span>
+            }
+            else
+            {
+                <span>大箱：</span><span id="MiddleCount">0</span>
+            }
+
+            ,总数量：<span id="SmallCount">0</span>
+        </label>
+    </caption>
+    <thead>
+        <tr class="text-c">
+            <th class="js-sortfleld sorting" data-fleld="ProductNumber" onclick="tosort(this)">
+                退货日期
+            </th>
+            <th>退货单号</th>
+            <th class="js-sortfleld sorting" data-fleld="ProductName" onclick="tosort(this)">
+                大箱码
+            </th>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        { 
+            <th class="js-sortfleld sorting" data-fleld="C_Name" onclick="tosort(this)">
+                中箱码
+            </th>
+        }
+
+            <th>
+                产品编号
+            </th>
+            <th>
+                产品名称
+            </th>
+            <th>产品码数量</th>
+            <th>退货员</th>
+            <th>
+                明细
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${formatDateTime_Two(ck.ReturnTime,1)}
+            </td>
+            <td>${ck.OrderNo}</td>
+        @if (PDAUserMsg.Param.MiddlePacking)
+        { 
+            <td>${ck.BigCode}</td>
+        }
+
+            <td>${ck.MiddleCode}</td>
+            <td>
+                ${ck.ProductNumber}
+            </td>
+            <td>${ck.ProductName}</td>
+            <td>${ck.SmallCount}</td>
+            <td>${ck.OperaUser}-${ck.PRealName}</td>
+            <td><a href="javascript:;" onclick="OpenShowDetail('${ck.ReturnTime}', '${ck.OrderNo}', '${ck.BigCode}', '${ck.MiddleCode}', '${ck.ProductNumber}')">查看</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/RtnStock/GetRtnStockCencusPage";
+
+    function OpenShowDetail(time, orderno, bigcode, middlecode, pno) {
+
+        layer_show('查看退货产品条码明细', '/RtnStock/InSmallStockDetailIndex?Time=' + time + '&OrderNo=' + orderno + '&Bigcode=' + bigcode + '&Middlecode=' + middlecode + '&PNo=' + pno, '900', '500');
+        
+    }
+</script>

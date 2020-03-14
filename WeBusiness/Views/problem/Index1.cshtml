@@ -1,0 +1,144 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>换货故障问题管理</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>换货故障问题<span class="c-gray en">&gt;</span> 换货故障问题 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition" method="post" action="/C_User/DirectlyIndex_inport" enctype="multipart/form-data">
+            <div class="text-c" style="text-align:left">
+
+
+
+                <input type="file" hidden="hidden" name="infile" id="infile" onchange="inchange()" />
+
+                @*<a href="~/BaseFile/DirectlyIndex_inport.txt">导入模版</a>*@
+
+                &nbsp;
+                查找：
+                <input type="text" name="keyword" id="" placeholder=" 问题" style="width: 250px"
+                       class="input-text" />
+
+                <button name="" id="search" class="btn btn-primary" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <button name="" onclick="layer_show('添加', '/problem/add1', '900', '500')" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 添加
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                ID
+            </th>
+            <th>
+               换货故障问题
+            </th>
+
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${ck.ID}
+            </td>
+            <td>
+                ${ck.problem}
+            </td>
+
+
+            <td class="f-14 td-manage">
+
+                <a style="text-decoration: none" data-id="${ck.ID}" class="ml-5 delete" onclick="del(this)" href="javascript:;" title="删除">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/problem/GetPage1";
+
+    $(function () {
+        if ("@TempData["ToProductAdd_err"]" != "") {
+            layer.alert("@TempData["ToProductAdd_err"]");
+        }
+    })
+
+    function inchange() {
+        $("#SubmitCode").click();
+    }
+    function Exports() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/C_User/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+    function del(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要删除吗？', function (index) {
+            $.post("/problem/Delete", { "ID": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+
+
+    function inport() {
+        $("#infile").click();
+    }
+
+</script>

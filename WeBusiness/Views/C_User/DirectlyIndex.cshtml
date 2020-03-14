@@ -1,0 +1,219 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>经销商资料管理</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    @*<script src="~/layout/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>*@
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 渠道客户管理 <span class="c-gray en">&gt;</span> 经销商资料管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition" method="post" action="/C_User/DirectlyIndex_inport" enctype="multipart/form-data">
+            <input name="orderby" type="hidden" value="" />
+            <div class="text-c" style="text-align:left">
+                <button name="" onclick="layer_show('添加', '/C_User/DirectlyIndex_Add', '900', '500')" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 添加
+                </button>
+                <button name="" id="Export" onclick="Exports()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出
+                </button>
+
+                <input type="file" hidden="hidden" name="infile" id="infile" onchange="inchange()" />
+                <button name="" onclick="window.location.href = '/C_User/inportgo'" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe644;</i> 导入
+                </button>
+                @*<a href="~/BaseFile/DirectlyIndex_inport.txt">导入模版</a>*@
+                &nbsp;
+                查找：
+                <input type="text" name="keyword" id="" placeholder=" 经销商名称/联系方式/经销商编号/级别名称" style="width: 250px"
+                       class="input-text" />
+
+                <button name="" id="search" class="btn btn-primary" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <input id="SubmitCode" hidden="hidden" value="上传" type="submit" />
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th class="js-sortfleld sorting" data-fleld="UserName" onclick="tosort(this)">
+                经销商编号
+            </th>
+            <th>
+                经销商名称
+            </th>
+            <th class="js-sortfleld sorting" data-fleld="LevelName" onclick="tosort(this)">
+                经销商级别
+            </th>
+            <th>
+                联系人
+            </th>
+            <th>
+                联系方式
+            </th>
+            <th>
+                地址
+            </th>
+            @*<th>
+                    状态
+                </th>*@
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${ck.UserName}
+            </td>
+            <td>
+                ${ck.Name}
+            </td>
+            <td>
+                ${ck.LevelName}
+                <a title="编辑级别" href="javascript:;"
+                   onclick="layer_show('编辑级别', '/C_User/GetLeverPage/${ck.ID}', '450', '150')" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+            </td>
+            <td>
+                ${ck.wxNo}
+            </td>
+            <td>
+                ${ck.Phone}
+            </td>
+            @*<td>
+                ${ck.Card}
+                <a style="text-decoration: none" data-id="${ck.CardUrl}" class="ml-5 delete" onclick="ShowCard(this)" href="javascript:;" title="预览">
+                    <i class="Hui-iconfont">&#xe602;</i>
+                </a>
+            </td>*@
+    
+            <td>
+                ${ck.Province}${ck.City}${ck.Area}${ck.WxQRCode}
+            </td>
+            @*<td>
+                    ${ck.state}
+                </td>*@
+            <td class="f-14 td-manage">
+                <a title="经销商信息" href="javascript:;"
+                   onclick="layer_show('经销商信息', '/C_User/CustomerMsg/${ck.UserName}', '900', '500')" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe695;</i>
+                </a>
+
+                <a title="编辑" href="javascript:;"
+                   onclick="layer_show('编辑', '/C_User/DirectlyEditIndex/${ck.ID}', '900', '500')" class="ml-5 edit" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe60c;</i>
+                </a>
+                <a style="text-decoration: none" data-id="${ck.ID}" class="ml-5 delete" onclick="del(this)" href="javascript:;" title="删除">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/C_User/GetPage";
+
+    $(function () {
+        if ("@TempData["ToProductAdd_err"]" != "") {
+            layer.alert("@TempData["ToProductAdd_err"]");
+        }
+    })
+
+    function inchange() {
+        $("#SubmitCode").click();
+    }
+    function Exports() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/C_User/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+    function del(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要删除吗？', function (index) {
+            $.post("/C_User/GetUserDel", { "ID": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+    function GetBlack(obj) {
+        var id = $(obj).attr("data-id");
+        layer.confirm('确认要拉黑吗？', function (index) {
+
+            $.post("/C_User/GetUserBlack", { "ID": id }, function (rtn) {
+                if (rtn == "ok") {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已拉黑!', { icon: 1, time: 1000 });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+
+    function inport() {
+        $("#infile").click();
+    }
+    function ShowCard(obj) {
+        var id = $(obj).attr("data-id");
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img src="' + id + '" style="width:100%;height:100%;">'
+        });
+    }
+</script>

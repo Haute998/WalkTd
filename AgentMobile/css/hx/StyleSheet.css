@@ -1,0 +1,454 @@
+html, body {
+    margin: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    cursor: hand;
+    cursor: pointer;
+    text-decoration: none;
+    -moz-transition: all 0.5s ease;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+body {
+    margin: 0 auto;
+    padding: 0;
+    background: #fff;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+
+.d7, .d8, .d9 {
+    height: 5px;
+    background: #d7d7d7;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.hongbao {
+    text-align: center;
+}
+
+.TC-fwcx {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+    .TC-fwcx .div1,
+    .TC-fwcx .div2,
+    .TC-fwcx .div3 {
+        width: 100%;
+    }
+
+    .TC-fwcx .div1 {
+        background: #fff;
+    }
+
+
+.logo img {
+    display: block;
+    width: 30%;
+    margin: 0 auto;
+    padding-top: 5vh;
+}
+
+.tc-box1 {
+    padding-top: 5vh;
+    text-align: center;
+    letter-spacing: 0.5px;
+    color: #000;
+    font-size: 0.85rem;
+    line-height: 25px;
+}
+
+    .tc-box1 .p1 {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+
+.tc-box2 {
+    width: 80%;
+    margin: 5vh auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+    .tc-box2 .p1 {
+        color: #333;
+        font-size: 1em;
+        line-height: 35px;
+        letter-spacing: 0.5px;
+    }
+
+.tc-TextBox > div {
+    float: left;
+}
+
+.tc-txt {
+    height: 35px;
+    width: 95%;
+    background: #fff;
+    outline: 0;
+    border: 1px solid #ccc;
+    color: #333;
+    font-size: 14px;
+    text-indent: 5px;
+    line-height: normal;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+.fw-txt {
+    width: 80%;
+    text-align: left;
+}
+
+.BtnQuery {
+    width: 20%;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    background: #626262;
+    background: -webkit-linear-gradient(#626262, #626262); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#626262, #626262); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#626262, #626262); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#626262, #626262); /* 标准的语法 */
+}
+
+.qCenter {
+    margin-top: 30px;
+}
+
+.tc-box3 {
+    border-bottom: 1px solid #d3d3d4;
+    padding: 2vh 0;
+    width: 90%;
+    margin: 0 auto 2vh;
+}
+
+    .tc-box3 p {
+        color: #e50012;
+        font-size: 1.2em;
+        text-align: center;
+        font-weight: bold;
+        line-height: 25px;
+        letter-spacing: 1px;
+    }
+
+.tc-box4 {
+    font-size: 14px;
+    margin-bottom: 2vh;
+}
+
+.TC-fwcx .div2 div.cx2 p {
+    color: #333;
+    font-size: 0.9em;
+    text-align: center;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
+}
+
+    .TC-fwcx .div2 div.cx2 p.p1 {
+        font-size: 0.9em;
+        line-height: 17px;
+    }
+
+    .TC-fwcx .div2 div.cx2 p.p2 {
+        font-size: 0.9em;
+        text-align: left;
+        color: #e50012;
+        margin: 6vh 0 1vh 0;
+    }
+
+    .TC-fwcx .div2 div.cx2 p.p3 {
+        font-size: 0.9em;
+        text-align: left;
+        line-height: 17px;
+    }
+
+    .TC-fwcx .div2 div.cx2 p img {
+        height: 70px;
+        padding: 5vh 0 5vh 0;
+    }
+
+.TC-fwcx .div2 div.jiaxi {
+    color: #333;
+    padding-top: 10px;
+}
+
+    .TC-fwcx .div2 div.jiaxi p input {
+        height: 40px;
+        width: 100%;
+        background: #fff;
+        text-align: left;
+        outline: 0;
+        border: 0;
+        color: #333;
+        display: inline-block;
+        font-size: 1em;
+        line-height: normal;
+    }
+
+    .TC-fwcx .div2 div.jiaxi p a {
+        color: -webkit-link;
+        line-height: 40px;
+        font-size: 1em;
+        text-decoration: underline;
+        margin-left: 10px;
+        border-top: 1px solid #d3d3d4;
+        border-bottom: 1px solid #d3d3d4;
+    }
+
+.TC-fwcx .div2 div.zaici {
+    text-align: center;
+}
+
+    .TC-fwcx .div2 div.zaici input {
+        height: 45px;
+        width: 65%;
+        background: #d7d7d7;
+        border-radius: 7px;
+        outline: 0;
+        border: 0;
+        color: #333;
+        display: inline-block;
+        font-size: 1em;
+        line-height: normal;
+        margin: 5vh auto 3vh auto;
+    }
+
+
+.inputTitle {
+    text-align: left;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+
+.gonggao {
+    background: #fafbfa;
+    overflow: hidden;
+    height: 30px;
+    padding: 5px 0;
+    line-height: 30px;
+    color: #333;
+    font-size: 12px;
+}
+
+    .gonggao dl dt {
+        width: 14%;
+        float: left;
+        text-align: center;
+    }
+
+        .gonggao dl dt img {
+            height: 30px;
+        }
+
+    .gonggao dl dd {
+        margin-left: 14%;
+    }
+
+        .gonggao dl dd p {
+            width: 95%;
+        }
+
+
+.zhichi, .zhichi1 {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #999;
+    padding: 10px 0 20px 0;
+}
+
+.zkm-cx {
+    color: #777;
+    font-size: 10px;
+    text-align: center;
+    position: relative;
+}
+
+    .zkm-cx .pp1 {
+        height: 1px;
+        width: 15%;
+        background: #999;
+        position: absolute;
+        top: 9px;
+        left: 10%;
+    }
+
+    .zkm-cx .pp2 {
+        height: 1px;
+        width: 15%;
+        background: #999;
+        position: absolute;
+        top: 9px;
+        right: 10%;
+    }
+
+    .zkm-cx div {
+        width: 185px;
+        display: block;
+        margin: 0 auto;
+        background: #fff;
+    }
+
+.telephone {
+    width: 80%;
+    margin: 20px auto 0;
+}
+
+    .telephone img {
+        float: left;
+        width: 52px;
+        margin-top: 10px;
+    }
+
+    .telephone p {
+        padding-left: 70px;
+    }
+
+    .telephone .telephone-p1 {
+        color: #333;
+        font-size: 14px;
+        padding-bottom: 5px;
+    }
+
+    .telephone .telephone-p2 {
+        color: #666;
+        font-size: 10px;
+    }
+
+.qiye {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+    .qiye li {
+        list-style: none;
+        font-size: 12px;
+        color: #333;
+        padding-bottom: 5px;
+    }
+
+        .qiye li.l1 {
+            font-size: 14px;
+            padding-bottom: 8px;
+        }
+
+            .qiye li.l1 span {
+                width: 12px;
+                height: 12px;
+                display: block;
+                border-radius: 100px;
+                border: 1px solid #30a561;
+                float: left;
+                margin-right: 5px;
+                margin-top: 3.5px;
+            }
+
+                .qiye li.l1 span em {
+                    width: 8px;
+                    height: 8px;
+                    margin: 2px auto;
+                    display: block;
+                    border-radius: 100px;
+                    background: #30a561;
+                }
+
+        .qiye li.l2 {
+            padding-left: 20px;
+        }
+
+        .qiye li.lA {
+            color: -webkit-link;
+            font-size: 1em;
+            height: 40px;
+            line-height: 40px;
+            border-top: 1px solid #d3d3d4;
+            border-bottom: 1px solid #d3d3d4;
+            text-decoration: underline;
+        }
+
+            .qiye li.lA a {
+                margin-left: 20px;
+            }
+
+.greenMark {
+    width: 12px;
+    height: 12px;
+    display: block;
+    border-radius: 100px;
+    border: 1px solid #30a561;
+    float: left;
+    margin-right: 5px;
+    margin-top: 3.5px;
+}
+
+    .greenMark em {
+        width: 8px;
+        height: 8px;
+        margin: 2px auto;
+        display: block;
+        border-radius: 100px;
+        background: #30a561;
+    }
+
+.verify {
+    padding-top: 20px;
+    overflow: hidden;
+}
+
+    .verify ul {
+        width: 100%;
+    }
+
+        .verify ul li {
+            width: 30%;
+            list-style: none;
+            float: left;
+            text-align: center;
+            font-size: 14px;
+        }
+
+#NoticeInfo {
+    color: Red;
+}
+
+
+.PressMask {
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ewm {
+    text-align: center;
+    margin: 10px auto 0;
+    width: 90%;
+}
+
+.width-90 {
+    width: 90%;
+    margin: 0 auto;
+}

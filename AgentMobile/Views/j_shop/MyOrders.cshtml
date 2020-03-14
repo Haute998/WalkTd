@@ -1,0 +1,298 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    string state = ViewData["state"] as string;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>我的兑换记录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/new/ordercss/ectouch.css?2017" rel="stylesheet" type="text/css" />
+    <link href="/layout/new/ordercss/style.css" rel="stylesheet" type="text/css" />
+    <link href="/layout/new/ordercss/iconfont.css" rel="stylesheet" type="text/css" />
+    <script src="/layout/new/orderjs/TouchSlide.1.1.source.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="/layout/new/orderjs/common_js.js" type="text/javascript"></script>
+    <script src="/layout/new/orderjs/jquery.reveal.js" type="text/javascript"></script>
+
+
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+
+    <script src="~/js/common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+
+    <style type="text/css">
+        footer {
+            height: 1.3rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+
+            footer a {
+                width: 25%;
+                float: left;
+                text-align: center;
+                line-height: .55rem;
+                margin-top: .2rem;
+            }
+
+                footer a i {
+                    display: block;
+                }
+
+        .on {
+            color: #2a7cec;
+        }
+
+        .floor .title a i, .Group_buy .title_name a i {
+            font-size: 0.82rem;
+        }
+
+        .product_content {
+            padding-top: 0.5rem;
+        }
+
+            .product_content span, .product_content h2 {
+                font-weight: normal;
+                padding: 0.5rem 0;
+                color: #999;
+            }
+
+                .product_content h2 i {
+                    font-size: 1rem;
+                    color: #2a7cec;
+                }
+    </style>
+
+
+</head>
+<body style="background: #ecedf1;">
+
+
+
+
+
+    <div class="Layout_style">
+        <div class="com-title">
+            <a title="返回" href="javascript:history.go(-1)" class="return"></a><a title="菜单" href="javascript:void(0);"
+                                                                                 class="home_menu"><span></span></a>兑换记录
+        </div>
+        <!--订单管理界面-->
+        <div class="order_style clearfix">
+            <div id="Order_Manage">
+                <div class="hd">
+                    <ul>
+                        <li data-condition="" class="condition" data-i="0">全部</li>
+                        <li data-condition="待支付" class="condition" data-i="1">待兑换</li>
+                        <li data-condition="待发货" class="condition" data-i="2">待发货</li>
+                        <li data-condition="待收货" class="condition" data-i="3">待收货</li>
+                        <li data-condition="交易完成" class="condition" data-i="4">已完成</li>
+                        <li data-condition="已取消" class="condition" data-i="5">已取消</li>
+                    </ul>
+                </div>
+                <div class="bd" id="order-bd">
+                    <div class="con">
+                        <ul class="list" data-ordershow=""></ul>
+                    </div>
+                    <div class="con">
+                        <ul class="list" data-ordershow="待支付"></ul>
+                    </div>
+                    <div class="con">
+                        <ul class="list" data-ordershow="待发货"></ul>
+                    </div>
+                    <div class="con">
+                        <ul class="list" data-ordershow="待收货"></ul>
+                    </div>
+                    <div class="con">
+                        <ul class="list" data-ordershow="交易完成"></ul>
+                    </div>
+                    <div class="con">
+                        <ul class="list" data-ordershow="已取消"></ul>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                var deindex = $("[data-condition='@(state)']").parent().find("li").index($("[data-condition='@(state)']"));
+                TouchSlide({
+                    slideCell: "#Order_Manage",
+                    defaultIndex: deindex,
+                    endFun: function (i, c) { //高度自适应
+                        var bd = document.getElementById("order-bd");
+                        //bd.parentNode.style.height = bd.children[i].children[0].offsetHeight + "px";
+                        if (i > 0) bd.parentNode.style.transition = "200ms"; //添加动画效果
+
+                        state = $("[data-i="+i+"]").attr("data-condition");
+                        pageIndex = 1;
+                        $("[data-ordershow='" + state + "']").empty();
+                        loaddata();
+
+                    }
+
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="orderjs">
+    {{each(i,ck) RtnList}}
+    <li class="order_style">
+        <div class="order_title">
+            <span class="Numbering   f_l">单号：${ck.OrderNo}</span><span class="status  f_r">
+                状态：
+                {{if ck.OrderState=="待支付"}}
+                <i>待兑换</i>
+                {{else}}
+                <i>${ck.OrderState}</i>
+                {{/if}}
+
+
+
+            </span>
+        </div>
+        <div class="product_img clearfix">
+            <a href="/j_shop/orderDetail?orderno=${ck.OrderNo}" class="img">
+                <img src="@(WeConfig.b_domain)${ck.OrderImgSrc}" width="80" height="80" />
+            </a> <span class="title">${ck.OrderName}</span>
+            <div class="product_content">
+
+            </div>
+        </div>
+        <div class="operating">
+            <span class="price">合计：<i style="background-image: url(/images/jifen.png); background-size:15px; padding-left: 18px; background-repeat: no-repeat">${ck.SumIntegral}</i></span>
+            {{if ck.OrderState=="待支付"}}
+            <a href="javascript:void(0)" class="detailed_link" onclick="topay(this)" data-orderno="${ck.OrderNo}" data-price="${ck.SumIntegral}"
+               style="background-color: #2a7cec; color: #fff; border: 1px solid #2a7cec">立即兑换</a>
+            {{else ck.OrderState=="待收货"}}
+            <a class="detailed_link" href="javascript:void(0)" data-orderno="${ck.OrderNo}" data-stat="${ck.OrderState}" onclick="orderReceipt(this)" style="background-color: #2a7cec;
+                                        color: #fff; border: 1px solid #2a7cec">确认收货</a>
+            <a href="/j_OrderShow/logistics?orderno=${ck.OrderNo}" class="detailed_link">查看物流</a>
+            {{/if}}
+
+        </div>
+    </li>
+    {{/each}}
+</script>
+
+<script>
+    var loading;
+    var pageIndex = 1;
+    var state = "@(state)";
+    var isloading = false;
+    var isok = false;
+    $(function () {
+        $("[data-condition='" + state + "']").addClass("on");
+        $(".condition").not($("[data-condition='" + state + "']")).removeClass("on");
+        //loaddata();
+
+        $(document).scroll(function () {
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                if (isok = true) {
+                    return false;
+                }
+                loaddata();
+            }
+        })
+
+        //查询
+        //$(".condition").click(function () {
+        //    var obj = this;
+        //    state = $(obj).attr("data-condition");
+        //    pageIndex = 1;
+        //    $("[data-ordershow='" + state + "']").empty();
+        //    loaddata();
+        //})
+
+
+    })
+
+    function loaddata() {
+        if (isloading == true) { return false; }
+        isloading = true;
+        $("#nomore").remove();
+        if ($("#loading").length <= 0) {
+            $("[data-ordershow='" + state + "']").append("<p id='loading' style='text-align:center'><img src='/Images/system/waitLoad.gif'/></p>");
+        }
+        $.post("/j_shop/GetMyOrders", { "pageIndex": pageIndex, "state": state }, function (data) {
+            $("#loading").remove();
+            $("#nomore").remove();
+            if (data != "") {
+                $("#orderjs").tmpl(data).appendTo("[data-ordershow='" + state + "']");
+                pageIndex++;
+            }
+            else {
+                if ($("#nomore").length <= 0) {
+                    $("[data-ordershow='" + state + "']").append("<p id='nomore' style='text-align:center'>没有更多了哦</p>");
+                    isok = true;
+                }
+            }
+            isloading = false;
+        })
+    }
+
+    function topay(obj)
+    {
+        var orderno = $(obj).attr("data-orderno");
+        var price = $(obj).attr("data-price");
+        layer.open({
+            content: "您确定要使用<label style='color:red'> " + price + "</label> 积分兑换该礼品吗？"
+    , btn: ['兑换', '不要']
+    , yes: function (index) {
+        layer.close(index);
+
+        loading = layer.open({ type: 2, content: '正在兑换' });
+        $.post("/j_buy/jfpay", { "orderno": orderno }, function (payrtn) {
+            layer.close(loading);
+            if (payrtn == "ok") {
+                layer.open({
+                    content: "兑换成功", btn: '我知道了', yes: function () {
+                        //支付成功
+                        window.location.href = "/j_shop/orderDetail?orderno=" + orderno;
+                    }
+                });
+            }
+            else {
+                layer.open({
+                    content: payrtn, btn: '我知道了', yes: function () {
+                        window.location.href = "/j_shop/orderDetail?orderno=" + orderno;
+                    }
+                });
+            }
+        }).error(function () {
+            layer.open({ content: "找不到网啦!找不到网啦!", btn: '我知道了' });
+        });
+
+
+    }
+        });
+    }
+
+    function orderReceipt(obj) {
+        if (!confirm("您要确认收货吗？")) {
+            return false;
+        }
+        loading = layer.open({ type: 2, content: '确认收货中' });
+        $.post("/j_shop/orderReceipt", { "orderNo": $(obj).attr("data-orderno") }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                pageIndex = 1;
+                $("[data-ordershow='" + $(obj).attr("data-stat") + "']").empty();
+                loaddata();
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+    }
+</script>

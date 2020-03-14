@@ -1,0 +1,201 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>退换货管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <link href="/css/common2.css" rel="stylesheet" />
+    <link href="/css/main2.css?20170822" rel="stylesheet" />
+    <style type="text/css">
+        .centent_total {
+            padding-bottom: 0;
+        }
+
+        .fy_dlxxxq .fy_xq .div2 ul li {
+            padding-left: 4.5em;
+        }
+        .fy_dlxxxq .fy_xq .div1{
+            height:30px;
+        }
+    </style>
+
+</head>
+<body style="background: #E1E1E1">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="shlb">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="td1 fff">
+                            <a href="/MyAgentsInfo/AgentsNoAudit">退换货审核</a>
+                        </td>
+                        <td>
+                        <a href="/MyAgentsInfo/AgentsInfoIndex">审核记录</a>
+                        </td>
+                        
+</tr>
+                </table>
+            </div>
+            <div class="centent_total" style="background-color: #fff;">
+                <div class="sqdls_up">
+                    <table class="tt2">
+                        <tr>
+                            <td>
+                                关键词：
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="tt3">
+                        <tr>
+                            <td class="td2">
+                                <input id="keyword" name="keyword" type="text" placeholder="请输入姓名、手机" style="background: url(/images/66.png)center 0px no-repeat;
+                                background-size: 100% 100%;" />
+                            </td>
+                            <td class="td3" onclick="tosearch()">
+                                <img src="/images/99.png" alt="" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="fy_dlxxxq">
+                <button id="agentshtml" onclick="Loadagents(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+            </div>
+            <div class="dsh_an" style="margin: 0 auto; width: 90%;">
+                <div class="div1">
+                    <span>
+                        <button type="button" onclick="audit(this)" style="background-color: #000000; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none; ">确定审核</button>
+                    </span> <span>
+                        <button type="button" onclick="del(this)" style="background-color: #000000; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">确定删除</button>
+                    </span>
+                </div>
+            </div>
+
+            <br />
+            @*<div class="QLRcode"><a href="/agentback/Index"><img src="/layout/jfshop/images/TCfan.png" /></a></div>*@
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script type="text/x-jquery-tmpl" id="agentstmp">
+    {{each(i,ck) RtnList}}
+    <div class="fy_xq js-agentsdiv">
+        @*<a href="/MyAgentsInfo/agentDetail/${ck.ID}">*@
+            <div class="div1">
+                <input name="cklst" type="checkbox" value="${ck.ID}" class="yc an" onclick="this.className=/checked/ig.test(this.className)?this.className.replace('checked',''):(this.className+' checked')" />
+                @*代理级别:${ck.userTypeName}*@
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>手机号： ${ck.Phone}</li>
+                    <li>手机号： ${ck.SN}</li>
+                    <li>报修时间：${ChangeDateFormat(ck.DatCreate).Format("yyyy-MM-dd")}</li>
+                    <li>故障问题： ${ck.Contents}</li>
+                    <li>备注： ${ck.Name}</li>
+                    <li>退/换货： ${ck.State}</li>
+                    <li>状态： ${ck.State2}</li>
+                </ul>
+            </div>
+        @*</a>*@
+    </div>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        Loadagents($("#agentshtml"));
+    })
+    function Loadagents(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        var json = $("#form1").serializeArray();
+        json.push({ "name": "pageIndex", "value": gopage });
+        json.push({ "name": "pageSize", "value": 10 });
+        $.post("/MyAgentsInfo/LoadAgentsNoAudit",json,function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#agentstmp").tmpl(data).insertBefore('#agentshtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+
+    function audit(obj)
+    {
+        if ($("input[name='cklst']:checked").length <= 0) {
+            layer.open({ content: "要先勾选您要审核的退货信息", btn: '我知道了' });
+            return false;
+        }
+
+        layer.open({
+            content: '您确定要审核所选维修信息吗？'
+  , btn: ['确定', '不要']
+  , yes: function (index) {
+      $.post("/MyAgentsInfo/AuditByIDs", $("input[name='cklst']:checked").serialize(), function (rtn) {
+          if (rtn == "ok") {
+              $(".js-agentsdiv").remove();
+              $("#agentshtml").attr("data-pageindex", 1)
+              Loadagents($("#agentshtml"));
+          }
+          else {
+              layer.open({content:rtn, btn: '我知道了'});
+          }
+      });
+      layer.close(index);
+  }
+        });
+    }
+
+
+    function del(obj) {
+        if ($("input[name='cklst']:checked").length <= 0) {
+            layer.open({ content: "要先勾选您要删除的维修信息哦", btn: '我知道了' });
+            return false;
+        }
+
+        layer.open({
+            content: '您确定要删除所选维修信息吗？'
+  , btn: ['确定', '不要']
+  , yes: function (index) {
+      $.post("/MyAgentsInfo/DelByIDs", $("input[name='cklst']:checked").serialize(), function (rtn) {
+          if (rtn == "ok") {
+              $(".js-agentsdiv").remove();
+              $("#agentshtml").attr("data-pageindex",1)
+              Loadagents($("#agentshtml"));
+          }
+          else {
+              layer.open({ content: rtn, btn: '我知道了' });
+          }
+      });
+      layer.close(index);
+  }
+        });
+    }
+
+    function tosearch()
+    {
+        $(".js-agentsdiv").remove();
+        $("#agentshtml").attr("data-pageindex", 1)
+        Loadagents($("#agentshtml"));
+    }
+</script>

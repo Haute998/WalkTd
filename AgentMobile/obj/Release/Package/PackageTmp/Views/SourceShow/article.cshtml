@@ -1,0 +1,55 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_UserArticle article = ViewData["article"] as C_UserArticle;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <style type="text/css">
+        .section {
+            word-break: break-word;
+        }
+    </style>
+    <title>@(article.title)</title>
+    <meta name="Description" content="@(article.Descs)" />
+    <link href="~/css/article/000.css" rel="stylesheet" />
+    <link href="~/css/article/iconfont.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="" />
+</head>
+<body>
+    <div style='margin:0 auto;display:none;'>
+        <img id="wx_pic" src='@(WeConfig.b_domain + article.coverImgUrl)' />
+    </div>
+    <div class="meipian">
+        <div class="meipian-bg"></div>
+        <div class="meipian-main">
+            <h1 class="meipian-title">@(article.title)</h1>
+
+            <div class="meipian_meta clearfix">
+
+                <a href="/">@(article.C_UserName)</a>
+
+                <span>@(article.DatEdit.ToString("yyyy-MM-dd HH:mm"))</span>
+            </div>
+            <div class="meipian-content" style="padding-left:10px;padding-right:10px">
+
+                <!--文章内容-->
+                @Html.Raw(HttpUtility.UrlDecode(article.contents))
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

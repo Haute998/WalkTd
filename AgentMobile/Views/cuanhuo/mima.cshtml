@@ -1,0 +1,150 @@
+﻿@{
+    Layout = null;
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>防窜货查询</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="/css/index1.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            
+        }
+        .QLRcode {
+            position: fixed;
+            right: 5%;
+            bottom: 6%;
+            width: 35px;
+            height: 35px;
+        }
+
+          
+    </style>
+</head>
+<body>
+    <div id="page1" data-role="page">
+        <div class="TX">
+            <img src="/images/top.png" />
+        </div>
+        <div class="QLR-home5">
+            <dl>
+                <dd>
+                    <input id="Sel" type="text" class="su" name="mima" placeholder="请输入密码" onkeydown="return subData();" maxlength="8" />
+                    <input id="Scan" type="button" value="" class="PERFECTsm1" />
+                </dd>
+            </dl>
+        </div>
+        <div class="QLR-home6">
+            <input id="btn_search" type="button" value="确认" @*onclick="ShowData()"*@ />
+        </div>
+        <div class="ems_top1">
+            <p> <a class="remarkLg"></a> </p>
+        </div>
+       @* <div class="QLRcode"><a href="/Home/Index"><img src="/layout/jfshop/images/TCfan.png" /></a></div>*@
+    </div>
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Besiness_js_jsconfig.js"></script>
+@if (IsWx == "1")
+{
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script>
+    $(function () {
+
+
+
+        $("#btn_search").click(function () {
+            debugger
+            var TextVal = $("#Sel").val();
+            if (TextVal=="") {
+                layer.open({
+                    content: '密码不能为空！！'
+   , btn: '我知道了'
+                });
+                return;
+            }
+         
+            //window.location.href = '/cuanhuo/Index?ID=' + TextVal;
+    
+            $.post("/cuanhuo/tomima", { "mima": TextVal }, function (rtn) {
+                if (rtn == "ok") {
+                            window.location.href = '/cuanhuo/pre';
+                }
+                else {
+                    
+                    layer.open({ content: rtn, btn: '我知道了' });
+                }
+            }).error(function () {
+                layer.close(loading);
+                layer.open({ content: "网络错误", btn: '我知道了' });
+            });
+         
+
+        });
+    })
+</script>

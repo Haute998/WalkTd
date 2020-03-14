@@ -1,0 +1,159 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>修改密码</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <style type="text/css">
+        input, button, select, textarea {
+            outline: none;
+        }
+        ul, li {
+            margin:0;
+            padding:0;
+        } 
+        #Content {
+            margin:20px 0 10px 0;
+            font-size:14px;
+        }
+
+        #Content ul li {
+            width:100%;
+            height:46px;
+            line-height:46px;
+            text-align:center;
+            list-style:none;
+            color:#777;
+        }
+
+            #Content ul li span:first-child {
+                width:60px;
+                text-align:justify;
+                text-align-last:justify;
+                display:inline-block;
+            }
+
+            #Content ul li input {
+                width:180px;
+                height:20px;
+                line-height:20px;
+                border:1px solid #999;
+                border-radius:5px;
+                padding:4px 8px;
+            }
+
+        #End {
+            width:100%;
+            text-align:center;
+        }
+
+        #save {
+            width:100px;
+            height:30px;
+            border:1px solid #1b4f9b;
+            background-color:#1b4f9b;
+            border-radius:5px;
+            color:#fff;
+        }
+
+        #Tit {
+            color:#ff0000;
+        }
+
+        .title {
+            width:100%;
+            height:40px;
+            line-height:40px;
+            color:#ce5703;
+            text-align:center;
+            display:block;
+        }
+    </style>
+</head>
+<body style="background:#fff;">
+
+    <div id="AgentHead">
+        <dl>
+            <dd><a href="/MyInfo/Index"><img src="/images/11111.png" /></a></dd>
+            <dd>修改密码</dd>
+            <dd></dd>
+        </dl>
+    </div>
+    <div id="Content">
+        <span class="title">提示：初始密码为手机号后6位</span>
+        <form id="form1">
+            <ul>
+                <li><span>原始密码</span>：<input type="password" placeholder="请输入初始密码" name="oldpwd" /></li>
+                <li><span>新密码</span>：<input type="password" placeholder="请输入初始密码" name="newpwd" /></li>
+                <li><span>确认密码</span>：<input type="password" placeholder="请再次输入新密码" name="twonewpwd" /></li>
+                <li><a id="Tit"></a></li>
+            </ul>
+        </form>
+    </div>
+
+    <div id="End">
+        <button type="button" id="save">确认修改</button>
+    </div>
+</body>
+</html>
+<script>
+    $(function ()
+    {
+        $("#save").click(function ()
+        {
+            if (VerifyInfo()) {
+                $.post("/MyCenter/toEditPwd", $("#form1").serialize(), function (rtn) {
+                    if (rtn != "ok") {
+                        $("#Tit").html(rtn);
+                    }
+                    else {
+                        window.location.href = "/Home/Login";
+                    }
+                })
+            }
+        });
+    })
+
+    function VerifyInfo()
+    {
+        var OldPwd = $("input[name=oldpwd]").val().trim();
+        var NewPwd = $("input[name=newpwd]").val().trim();
+        var Two_NewPwd = $("input[name=twonewpwd]").val().trim();
+
+        if (OldPwd == "")
+        {
+            $("#Tit").html("请输入旧密码");
+            return false;
+        }
+        if (NewPwd == "")
+        {
+            $("#Tit").html("请输入新密码");
+            return false;
+        }
+        if (Two_NewPwd == "") {
+            $("#Tit").html("请输入确认密码");
+            return false;
+        }
+        if (NewPwd != Two_NewPwd)
+        {
+            $("#Tit").html("新密码与确定密码不一致！");
+            return false;
+        }
+
+        return true;
+    }
+</script>

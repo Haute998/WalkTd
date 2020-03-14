@@ -1,0 +1,340 @@
+﻿
+<script src="~/js/jquery.tmpl.min.js"></script>
+<br />
+<div>
+    <div class="page" id="wayui_pagehtml" style="display:none">
+        每页显示：<span class="select-box" style="width: 100px">
+                 <select class="select" id="pageSize" name="pageSize" size="1">
+                     <option value="10" selected>10</option>
+                     <option value="20">20</option>
+                     <option value="50">50</option>
+                 </select>
+        </span>
+        <input type="button" id="lastpage" class="btn" value="上一页">
+        <input type="button" id="nextpage" class="btn" value="下一页">
+        第<span style="color:red;font-weight:600" id="thispage">0</span>页
+        共<span style="color:red;font-weight:600" id="totalpage">0</span>页
+        当前显示第<span style="color:red;font-weight:600" id="rowBegin">0</span>-<span style="color:red;font-weight:600" id="rowEnd">0</span>条记录，共<span id="totalCnt" style="color:red;font-weight:600">0</span>条记录
+        <input type="text" id="skippage" class="input-text" style="width:50px;text-align:center;" onchange="this.value=this.value.replace(/\D*/g,'')">
+        <input type="button" id="skipto" class="btn btn-default radius" value="跳转">
+    </div>
+
+</div>
+@using DAL
+@using WeBusiness.Models
+@model pagingType
+<link href="~/js/orso/orso.css" rel="stylesheet" />
+<script src="~/js/orso/orso.min.js"></script>
+
+<script type="text/x-jquery-tmpl" id="viewdatatmp">
+    <div style="margin-top:20px">
+            <div class="box">
+                <div>
+                    <li style="background-color: #2d9ef2; color: white; padding: 5px">未显示的字段</li>
+                    <div class="js-box_l box_l">
+                        {{each(i,ck) viewdata}}
+                        {{if ischeck==false}}
+                        <li class="js-field">${ck.name}</li>
+                        {{/if}}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="box_m">
+                    <a href="javascript:" id="allleft"><<</a>
+                    <a href="javascript:" id="left"><</a>
+                    <a href="javascript:" id="right">></a>
+                    <a href="javascript:" id="allright">>></a>
+                </div>
+                <form id="viewdataform">
+                    <div>
+                        <li style="background-color:#2d9ef2;color:white;padding:5px">已显示的字段</li>
+                        <div class="js-box_r box_r">
+                            {{each(i,ck) viewdata}}
+                            {{if ischeck==true}}
+                            <li class="js-field">${ck.name}</li>
+                            {{/if}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </form>
+                    <div class="box_m">
+                        <a href="javascript:" id="alltop">首个</a>
+                        <a href="javascript:" id="top">向上</a>
+                        <a href="javascript:" id="bottom">向下</a>
+                        <a href="javascript:" id="allbottom">最后</a>
+                    </div>
+                </div>
+
+        <p style="text-align:center">
+            <button name="" class="btn btn-success" type="button" onclick="saveview()">
+                保存
+            </button>
+        </p>
+    </div>
+
+</script>
+<script type="text/x-jquery-tmpl" id="shitubutton">
+    <button name="" class="btn btn-success" type="button" onclick="shitu()">
+        <i class="Hui-iconfont">&#xe695;</i> 视图
+    </button>
+</script>
+<script>
+    var thispage = 1;//当前页
+    var viewdata=[];
+    $(function () {
+
+        if (window.location.href.indexOf("/C_User/DirectlyIndex") >= 0) {
+
+            $("#shitubutton").tmpl().prependTo("#condition .text-c");
+        }
+        else
+        {
+            $("#shitubutton").tmpl().appendTo("#condition .text-c");
+        }
+
+        if ("@(Model==null?"1":Model.firstload)"!="0")
+        {
+            getview();
+        }
+
+        $("#lastpage").click(function () {
+            getjsondata("last");
+        })
+        $("#nextpage").click(function () {
+            getjsondata("next");
+        })
+        $("#skipto").click(function () {
+            getjsondata($("#skippage").val());
+        })
+        $("#search").click(function () {
+            getjsondata(1);
+        })
+        $("select[name='pageSize']").change(function () {
+            getjsondata(thispage);
+        })
+    });
+
+    function getview() {
+
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $.post("/Main/getview", {"url":"@(Request.Url.ToString().Replace("//", "").SubStringSafe(Request.Url.ToString().Replace("//", "").IndexOf('/'), Request.Url.ToString().Replace("//", "").Length))"}, function (data) {
+            layer.close(loading);
+            viewdata = data;
+            //取数据
+            getjsondata(thispage);
+        }).error(function ()
+        {
+            getjsondata(thispage);
+        })
+    }
+
+    function getjsondata(gotype, func) {
+       
+        gotype = gotype == "" ? 1 : gotype;
+        var gopage = thispage;
+        if (gotype == "last") {
+            if (gopage == 1) {
+                return false;
+            }
+            gopage--;
+        }
+        else if (gotype == "next") {
+            gopage++;
+        }
+        else {
+            gopage = gotype;
+        }
+        var loading= layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        var json = $("#condition").serializeArray();
+        json.push({ "name": "pageIndex", "value": gopage });
+        json.push({ "name": "pageSize", "value": $("#pageSize").val() });
+
+        $.getJSON(dataUrl + "?" + (new Date().getSeconds + Math.random()), json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+                $("#datahtml").empty();
+                $("#datajs").tmpl(data).appendTo('#datahtml');
+                thispage = data.pageIndex;
+                $("#thispage").text(thispage);
+
+                $("#rowBegin").text(data.rowBegin);
+                $("#rowEnd").text(data.rowEnd);
+                $("#totalCnt").text(data.totalCnt);
+                $("#totalpage").text(data.totalPage);
+                $("#skippage").val(thispage);
+
+                //加载视图
+                if (viewdata != null && viewdata != undefined && viewdata.length > 0)
+                {
+                    $("#datahtml thead tr th").each(function (i, o) {
+
+
+                        if (JSON.stringify(viewdata).indexOf("\"ShowName\":\"" + $.trim($(o).text()) + "\"") < 0) {
+                            $(o).hide();
+                            
+
+                            $("#datahtml tbody tr").each(function (j, p)
+                            {
+                                $(p).find("td").eq(i).hide();
+                            })
+
+                        }
+                        else {
+                            $(o).show();
+
+                            $("#datahtml tbody tr").each(function (j, p) {
+                                $(p).find("td").eq(i).show();
+                            })
+                        }
+                    });
+
+                    $(viewdata).each(function (i,o)
+                    {
+                        var first_th_obj = $("#datahtml thead tr th").not(".js-notview").first();
+                        $("#datahtml thead tr th").each(function (j, p)
+                        {
+                            if (o.ShowName == $.trim($(p).text()))
+                            {
+                                $(first_th_obj).before($(p).prop("outerHTML"));
+                                $(p).remove();
+                                first_th_obj = $("#datahtml thead tr th").not(".js-notview").first();
+
+                                $("#datahtml tbody tr").each(function (k, q) {
+                                    var firstobj = $(q).find("td").not(".js-notview").first();
+                                    var thisobj = $(q).find("td").eq(j);
+                                    $(firstobj).before($(thisobj).prop("outerHTML"));
+                                    $(thisobj).remove();
+                                })
+
+                                return;
+                            }
+                        });
+
+                    });
+                }
+
+            }
+            else {
+                $("#thispage").text(thispage);
+                $("#datahtml").find("tbody").empty();
+                layer.msg('什么都没有', { icon: 6, time: 1000 });
+            }
+            if (data.totalPage>1) {
+                $("#wayui_pagehtml").show();
+            }
+            else
+            {
+                $("#wayui_pagehtml").hide();
+            }
+            if (func != undefined)
+            {
+                func();
+            }
+            
+            $(".sorting").each(function (l, r) {
+                console.log(l);
+                $(r).attr("title", "根据" + $.trim($(r).text()) + "进行排序");
+            });
+        });
+    }
+
+    function shitu() {
+        var viewdatashow = [];
+        $("#datahtml thead tr th").each(function (i, o) {
+            var ischeck = false;
+            if ($(o).is(":hidden")==false)
+            {
+                ischeck = true;
+            }
+            if ($.trim($(o).text()).length > 0)
+            {
+                viewdatashow.push({ "name": $.trim($(o).text()), "i": i, "ischeck": ischeck });
+            }
+        });
+
+        var tmpdata = { "viewdata": viewdatashow };
+        layer.open({
+            type: 1,
+            title: "字段移到右边即可显示",
+            area: ['50%', '50%'],
+            content: $("#viewdatatmp").tmpl(tmpdata).html() //这里content是一个普通的String
+        });
+
+        $(".box").orso({
+            boxl: ".js-box_l",//左边大盒子
+            boxr: ".js-box_r",//右边大盒子
+            boxlrX: ".js-field",//移动小盒子
+            boxon: "choose",//点击添加属性
+            idclass: true,//添加的属性是否为class//true=class; false=id;
+            boxlan: "#left",//单个向左移动按钮
+            boxran: "#right",//单个向右移动按钮
+            boxtan: "#top",//单个向上移动按钮
+            boxban: "#bottom",//单个向下移动按钮
+            boxalllan: "#allleft",//批量向左移动按钮
+            boxallran: "#allright",//批量向右移动按钮
+            boxalltan: "#alltop",//移动第一个按钮
+            boxallban: "#allbottom"//移动最后一个按钮
+        })
+    }
+
+    function saveview() {
+
+        var fields_tag = $("#viewdataform").find(".js-field");
+
+        if (fields_tag.length <= 0)
+        {
+            layer.alert("必选一个或以上");
+            return false;
+        }
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        var TableUrl = "@(Request.Url.ToString().Replace("//", "").SubStringSafe(Request.Url.ToString().Replace("//", "").IndexOf('/'), Request.Url.ToString().Replace("//", "").Length))";
+        var fieldjson = [];
+        fieldjson.push({ "name": "TableUrl", "value": TableUrl });
+
+        $(fields_tag).each(function (i, o)
+        {
+            if ($.trim($(fields_tag[i]).text()).length>0)
+            {
+                fieldjson.push({ "name": "ShowNames", "value": $.trim($(fields_tag[i]).text()) });
+            }
+        })
+        $.post("/Main/saveview", fieldjson, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                layer.closeAll();
+                getview();
+            }
+            else {
+                layer.alert(rtn);
+            }
+        })
+    }
+
+    function tosort(obj) {
+        var fleld = $(obj).attr("data-fleld");
+        var sortby = "asc";
+        if ($(obj).attr("class").indexOf("sorting_asc") >= 0) {
+            sortby = "desc";
+        }
+        $("[name='orderby']").val(fleld + " " + sortby);
+        getjsondata(thispage, function () {
+            if (sortby == "desc") {
+                $("[data-fleld='" + fleld + "']").removeClass("sorting_asc").removeClass("sorting").addClass("sorting_desc");
+
+                $("[data-fleld='" + fleld + "']").attr("title", "根据" +$.trim($("[data-fleld='" + fleld + "']").text())+"从大到小");
+            }
+            else {
+                $("[data-fleld='" + fleld + "']").removeClass("sorting_desc").removeClass("sorting").addClass("sorting_asc")
+                $("[data-fleld='" + fleld + "']").attr("title", "根据" + $.trim($("[data-fleld='" + fleld + "']").text()) + "从小到大");
+            }
+
+            $(".js-sortfleld").not("[data-fleld='" + fleld + "']").removeClass("sorting_asc").removeClass("sorting_desc").addClass("sorting");
+        });
+    }
+</script>

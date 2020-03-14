@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>关于系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .accordion {
+            background: none;
+        }
+
+        .submenu a {
+            padding: 2%;
+        }
+
+        .accordion .link {
+            margin-bottom: 0;
+        }
+    </style>
+
+</head>
+<body style="background: #fff;">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <ul id="accordion" class="accordion">
+                <li class="lii">
+                    <div class="link" style="border-top: none;">
+                        <i class="fa fa-paint-brush">
+                            <img src="~/images/us/about.png" />
+                        </i>关于我们<span class="dfcj"></span><i class="fa fa-chevron-down">
+                            <img src="/images/jiantou.png" class="img77" alt="" />
+                        </i>
+                    </div>
+                    <ul class="submenu">
+                        <li style="margin-left:4em;padding:2%;height:40px"><a href="javascript:void(0)" style="background-image: url(/images/us/uslogo.png);background-repeat:no-repeat;padding-left:32px">深圳通程软件开发有限公司<span class="dfcj"></span></a></li>
+                    </ul>
+                </li>
+
+                <li class="lii">
+                    <div class="link" style="border-top: none;">
+                        <i class="fa fa-paint-brush">
+                            <img src="~/images/us/contact.png" />
+                        </i>联系我们<span class="dfcj"></span><i class="fa fa-chevron-down">
+                            <img src="/images/jiantou.png" class="img77" alt="" />
+                        </i>
+                    </div>
+                    <ul class="submenu">
+                        <li><a class="df" href="tel:400-7777-316">400-7777-316<span class="dfcj"></span></a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+            @*<div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>*@
+        </div>
+        <script src='/js/jquery.js'></script>
+        <script src="/js/index.js"></script>
+    </form>
+</body>
+
+</html>

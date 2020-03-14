@@ -1,0 +1,192 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<BaseParameters> paras = Model;
+    List<BaseParameters> parasTypes = Model.Distinct(new List_Para_DistinctBy_Type()).OrderBy(m => m.Sort).ToList();
+}
+@model List<BaseParameters>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>系统参数</title>
+    @*<link href="~/js/layui/css/layui.css" rel="stylesheet" />*@
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div style="margin-left:50px">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+            <legend>系统设置</legend>
+        </fieldset>
+
+        <div class="layui-tab layui-tab-brief" lay-filter="demo">
+            <ul class="layui-tab-title">
+                @foreach (BaseParameters parasType in parasTypes)
+                {
+                    <li class="@(parasTypes.IndexOf(parasType) == 0 ? "layui-this" : "")" data-title-id="@(parasType.ID)">@(parasType.Type)</li>
+                }
+            </ul>
+            <div class="layui-tab-content">
+                @foreach (BaseParameters parasType in parasTypes)
+                {
+                    <div class="layui-tab-item @(parasTypes.IndexOf(parasType) == 0 ? "layui-show" : "") js-prize-tab" data-id="@(parasType.Type)">
+
+                        <div class="js-imgdiv" data-id="@(parasType.ID)">
+                            @foreach (BaseParameters para in paras)
+                            {
+                                if (para.Type == parasType.Type)
+                                {
+
+                                    if (para.valType == "image")
+                                    {
+                                        <form class="js-imgform" data-paraid="@(para.ID)">
+                                            <input class="js-goodsimg" data-paraid="@(para.ID)" hidden="hidden" name="paraimg" data-input="ver" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                                        </form>
+
+                                    }
+                                }
+                            }
+                        </div>
+                        <form class="layui-form js-form" action="" data-id="@(parasType.ID)">
+                            @foreach (BaseParameters para in paras)
+                            {
+                                if (para.Type == parasType.Type)
+                                {
+
+                                    if (para.valType == "image")
+                                    {
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label" style="width:100px">@(para.NickName)</label>
+                                            <div class="layui-input-inline" style="width:300px">
+                                                <input type="hidden" name="parakey" value="@(para.ParametersKey)" />
+                                                <span>
+                                                    <img class="js-addimg" data-typeid="@(parasType.ID)" data-id="@(para.ID)" src="@(string.IsNullOrWhiteSpace(para.ParametersVal) ? "/images/system/addImg.png" : para.ParametersVal) " />
+                                                    @*<input class="js-goodsimg" data-id="@(para.ID)" hidden="hidden" name="paraimg" data-input="ver" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" />*@
+                                                    <input type="hidden" name="paraval" data-paraid="@(para.ID)" data-id="@(para.ID)" value="@(para.ParametersVal)" />
+                                                </span>
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">@(para.Remark)</div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label" style="width:100px">@(para.NickName)</label>
+                                            <div class="layui-input-inline" style="width:300px">
+                                                <input type="hidden" name="parakey" value="@(para.ParametersKey)" />
+                                                <input name="paraval" type="@(para.valType == "password"?"password":"text")" class="layui-input" data-id="@(para.ID)" data-input="ver" placeholder="请输入@(para.NickName)" value="@(para.ParametersVal)" autocomplete="off" />
+                                            </div>
+                                            <div class="layui-form-mid layui-word-aux">@(para.Remark)</div>
+                                        </div>
+                                    }
+
+                                }
+                            }
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 100px; "></label>
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn" data-id="@(parasType.ID)" onclick="save(this)">保存</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+<script src="~/js/layer-v3.0.1/layer/layer.js"></script>
+
+<script src="~/js/common/jquery.form.js"></script>
+
+<script>
+
+    $(function () {
+        $(".js-addimg").each(function (i, o) {
+            var imgheight = 50;
+            var imgwidth = Number($(o).attr("width")) * (imgheight / Number($(o).attr("height")));
+            $(o).attr("height", imgheight).attr("width", imgwidth)
+        });
+    })
+    var changeimgobj;
+    $(".js-addimg").click(function () {
+        //$(this).parent().find(".js-goodsimg").click();
+        var obj = this;
+        changeimgobj = obj;
+        $(".js-imgdiv[data-id='" + $(obj).attr("data-typeid") + "']").find("input[data-paraid='" + $(obj).attr("data-id") + "']").click();
+    });
+    $(".js-goodsimg").change(function (e) {
+        var obj = this;
+        var file = e.target.files[0] || e.dataTransfer.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                var img = new Image();
+                img.src = this.result;
+                //$(obj).parent().find(".js-addimg").attr("src", this.result);
+                $(changeimgobj).attr("src", this.result);
+            }
+
+        }
+        TemporaryMedia(obj);
+
+    });
+    //保存
+    function save(obj) {
+        var typeid = $(obj).attr("data-id");
+        //$(".js-form[data-id='" + typeid + "']").find("[name='parakey']").serialize();
+        var json = $(".js-form[data-id='" + typeid + "']").serialize();
+        $.post("/BaseParameters/ToSave", json, function (rtn) {
+            if (rtn == "ok") {
+                layer.msg("保存成功");
+            }
+            else {
+                layer.alert(rtn);
+            }
+        })
+    }
+    function TemporaryMedia(obj) {
+        loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        //提交请求处理的url
+        var actionUrl = "/BaseParameters/saveImg?paraID=" + $(obj).attr("data-paraid");
+        //开始ajax操作
+        $(".js-imgform[data-paraid='" + $(obj).attr("data-paraid") + "']").ajaxSubmit({
+
+            type: "POST",//提交类型
+            url: actionUrl,//请求地址
+            data: {},//请求数据
+            success: function (rtn) {//请求成功后的函数
+                var rtnArray = new Array();
+                rtnArray = rtn.split('|');
+                if (rtnArray[0] == "ok") {
+                    //$(obj).parent().find("[name='paraval']").val(rtn);
+                    $(".js-form").find("[name='paraval'][data-paraid='" + $(obj).attr("data-paraid") + "']").val(rtnArray[1]);
+                    layer.close(loading);
+                }
+                else {
+                    layer.close(loading);
+                    layer.alert(rtn);
+                }
+            },
+            error: function (rtn) {
+                layer.close(loading);
+                layer.alert(JSON.stringify(rtn));
+            },//请求失败的函数
+            async: true
+
+        });
+
+
+    }
+</script>

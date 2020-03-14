@@ -1,0 +1,238 @@
+﻿@using WeModels;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>退换货统计单</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?201699222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+
+    <style type="text/css">
+        .jlxq {
+            border-bottom: none;
+        }
+
+            .jlxq .div2 table {
+                border-bottom: 1px solid #332c2b;
+                width: 100%;
+            }
+
+                .jlxq .div2 table.gfh tr td {
+                    font-weight: bold;
+                    height: 30px;
+                    line-height: 30px;
+                    color: #332c2b;
+                }
+
+            .jlxq .div2 .fy_cpchmx_table1 tr td {
+                background-color: #fefefe;
+                padding: 5px;
+                color: #737373;
+                width: 25%;
+                text-align: center;
+                font-size: 12px;
+                word-break: break-all;
+                border-left: 1px solid #332c2b;
+            }
+    </style>
+</head>
+<body>
+    <form id="condition" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content" id="content">
+                @*<div class="shlb">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <a href="/MyAgentsInfo/AgentsInfoIndex">审核记录</a>
+                            </td>
+                            <td class="td1 fff">
+                                <a href="/MyAgentsInfo/AgentstuiIndex">上传退换货单</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>*@
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                  
+                        @*<table class="tt2">
+                            <tr>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    关键词：
+                                </td>
+                            </tr>
+                        </table>*@
+                        @*<table class="tt3">
+                            <tr>*@
+                                @*<td class="td2">
+                                    <input type="hidden" value="@ViewData["OrderNo"]" name="O_ID" />
+                                    <input id="Text1" type="text" name="keyword" placeholder="请输入产品名称" style="background: url(/images/66.png)center 0px no-repeat;
+                                    background-size: 100% 100%;" />
+                                </td>*@
+                                @*<td class="td3">
+                                    <img src="/images/zzz.png" alt="" onclick="tosearch(this)" />
+                                </td>*@
+                            @*</tr>
+                        </table>*@
+                    </div>
+                    <div style="width: 90%; padding: 0 0 20px 0; margin: 0 auto; /*这里放查询结果*/">
+                        <div class="jlxq">
+                            <div class="div1">
+                                退换货统计单
+                            </div>
+                            <div class="div2">
+                                <table class="fy_cpchmx_table1 gfh">
+                                    <tr>
+                                        <td>
+                                            产品名称
+                                        </td>
+                                        <td>
+                                            下级经销商
+                                        </td>
+                                        <td>
+                                            退/换货
+                                        </td>
+                                        <td>
+                                            数量
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                <button id="more" onclick="LoadOrder(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="All_foot">
+                    <div class="foot">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="/agentback/ScaleIndex">
+                                        <div class="div1">
+                                            <img src="/images/25.png" alt="" />
+                                        </div>
+                                        <div class="div2">
+                                            返回首页
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>*@
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="Detailtmp">
+    {{each(i,ck) RtnList}}
+    <table class="fy_cpchmx_table1 js-agentdiv">
+        <tr>
+            <td>
+                ${ck.ProductName}
+            </td>
+            <td>
+                ${ck.XName}
+            </td>
+            <td>
+                ${ck.State}
+            </td>
+            <td>
+                ${ck.sl}
+            </td>
+        </tr>
+    </table>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        LoadOrder($("#more"));
+        LoadDateTimeJS();
+    })
+    function LoadOrder(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        //不是表单的值加入表单传值
+        var json = $("form").serializeArray();
+        json.push({ "name": "pageIndex", "value": gopage });
+        json.push({ "name": "pageSize", "value": 10 });
+        $.post("/MyAgentsInfo/GetC_Usertuitj2", json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#Detailtmp").tmpl(data).insertBefore('#more');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1));
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+    function LoadDateTimeJS() {
+        var nowData = new Date();
+        var opt = {
+            theme: 'ios', //设置显示主题
+            mode: 'scroller', //设置日期选择方式，这里用滚动
+            display: 'bottom', //设置控件出现方式及样式
+            preset: 'date', //日期:年 月 日 时 分
+            //minDate: '1970/01/01',
+            //maxDate: new Date(nowData.getFullYear(), nowData.getMonth(), nowData.getDate() + 7, 22, 00),
+            dateFormat: 'yyyy-mm-dd', // 日期格式
+            //dateOrder: 'yyyymmdd', //面板中日期排列格式
+            stepMinute: 5,          //设置分钟步长
+            yearText: '年',
+            monthText: '月',
+            dayText: '日',
+            //hourText: '时',
+            //minuteText: '分',
+            lang: 'zh', //设置控件语言};
+            onSelect: function (valueText, inst) {
+                $(".pChk").hide();
+            }
+        };
+        $('#TextTime').mobiscroll(opt);
+        $('#TextTime2').mobiscroll(opt);
+    }
+    function tosearch(obj) {
+            layer.open({
+                content: '您确定要上传退换货单给上级吗？'
+      , btn: ['确定', '不要']
+      , yes: function (index) {
+          $.post("/MyAgentsInfo/AuditByIDtuihuan", {}, function (rtn) {
+              if (rtn == "ok") {
+                  $(".js-agentsdiv").remove();
+                  $("#agentshtml").attr("data-pageindex", 1)
+                  Loadagents($("#agentshtml"));
+              }
+              else {
+                  layer.open({ content: rtn, btn: '我知道了' });
+              }
+          });
+          layer.close(index);
+      }
+            });
+        }
+    
+</script>

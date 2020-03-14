@@ -1,0 +1,316 @@
+﻿<#@ assembly name="System.Core"#>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+<#@ assembly name="System.Configuration" #>
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ import namespace="System.Data"#>
+<#@ import namespace="System.Data.SqlClient"#>
+
+
+
+<#+ 
+    #region Code
+    public class DBSchemaFactory
+    {
+        //static readonly string DatabaseType = "SqlServer";
+        public static IDBSchema GetDBSchema()
+        {
+            IDBSchema dbSchema;
+            dbSchema =new SqlServerSchema();
+            return dbSchema;
+        }
+    }
+
+    public interface IDBSchema : IDisposable
+    {
+        List<string> GetTablesList();
+
+        Table GetTableMetadata(string tableName);
+    }
+
+    public class SqlServerSchema : IDBSchema
+    {
+        public string ConnectionString = "Data Source=192.168.2.200;Initial Catalog=AntiConflict_Standard;User ID=sa;Password=Sa123;";
+        
+        public SqlConnection conn;
+
+        public SqlServerSchema()
+        {
+            conn = new SqlConnection(ConnectionString);
+            conn.Open();
+        }
+
+        public List<string> GetTablesList()
+        {
+            DataTable dt = conn.GetSchema("Tables");
+            List<string> list = new List<string>();
+            foreach (DataRow row in dt.Rows)
+            {
+				if(row["TABLE_NAME"].ToString().IndexOf("VER_")<0)
+				{
+					list.Add(row["TABLE_NAME"].ToString());
+				}
+            }
+            return list;
+        }
+
+        public Table GetTableMetadata(string tableName)
+        {
+            string selectCmdText = string.Format("SELECT * FROM [{0}]", tableName);
+            SqlDataAdapter ad = new SqlDataAdapter(selectCmdText,conn);
+            System.Data.DataSet dsTable = new DataSet();
+            ad.FillSchema(dsTable, SchemaType.Mapped, tableName);
+
+            string sqlGetColumnComment = string.Format("SELECT OBJECT_NAME(c.object_id) [Table],c.name [Column],ISNULL(ex.value,'') [Description] FROM sys.columns c LEFT OUTER JOIN sys.extended_properties ex ON ex.major_id = c.object_id AND ex.minor_id = c.column_id AND ex.name = 'MS_Description' WHERE OBJECTPROPERTY(c.object_id, 'IsMsShipped')=0  AND OBJECT_NAME(c.object_id) = '{0}'",tableName);
+            System.Data.DataSet dsColComment = new DataSet();
+            ad = new SqlDataAdapter(sqlGetColumnComment,conn);
+            ad.Fill(dsColComment);
+
+            Table table = new Table(dsTable.Tables[0],dsColComment.Tables[0]);
+            return table;
+        }
+
+        public void Dispose()
+        {
+            if (conn != null)
+                conn.Close();
+        }
+    }
+
+   
+    public class Table
+    {
+        public string ColumnTypeNames;
+        
+        public string ColumnNames;
+        public string ColumnNamesWithoutAutoIncrement;
+        public string ColumnNamesWithAT;
+        public string ColumnNamesWithATWithoutAutoIncrement;
+        public string column4update;
+        public string StringColumns="";
+        
+        public List<Column> PKs;
+        public List<Column> FKs;
+        public List<Column> Columns;
+        
+        
+
+        public Table(DataTable t,DataTable col)
+        {
+            FKs=new List<Column>();
+            this.PKs = this.GetPKList(t);
+            this.Columns = this.GetColumnList(t,col);
+            this.ColumnTypeNames = this.SetColumnNames();
+
+            this.ColumnNames = this.SetColumnNames();
+            this.ColumnNamesWithoutAutoIncrement = this.SetColumnNamesWithoutAutoIncrement();
+            this.ColumnNamesWithAT = this.SetColumnNamesWithAT();
+            this.ColumnNamesWithATWithoutAutoIncrement = this.SetColumnNamesWithATWithoutAutoIncrement();
+
+        }
+
+
+        public List<Column> GetPKList(DataTable dt)
+        {
+            List<Column> list = new List<Column>();
+            Column c = null;
+            if (dt.PrimaryKey.Length > 0)
+            {
+                list = new List<Column>();
+                foreach (DataColumn dc in dt.PrimaryKey)
+                {
+                    c = new Column(dc);
+                    list.Add(c);
+                }
+            }
+            return list;
+        }
+
+        private List<Column> GetColumnList(DataTable dt,DataTable dtColRemark)
+        {
+            List<string> listVarchar = new List<string>();
+
+            List<Column> list = new List<Column>();
+            Column c = null;
+            int cnt=0;
+            foreach (DataColumn dc in dt.Columns)
+            {
+                c = new Column(dc);
+                c.Desc=dtColRemark.Select(string.Format("column='{0}'",dc.ColumnName))[0].ItemArray[2].ToString();
+                list.Add(c);
+
+                if(!dc.AutoIncrement)
+                {
+                    column4update+=dc.ColumnName+"=@"+dc.ColumnName+",";
+                }
+
+                if(dc.DataType.Name.Equals("String"))
+                {
+                    listVarchar.Add(dc.ColumnName+":"+dc.MaxLength);
+                }
+
+                if(cnt>0 && cnt<4 && dc.ColumnName.ToUpper().EndsWith("ID"))
+                {
+                    FKs.Add(c);
+                }
+                cnt++;
+            }
+            StringColumns=string.Join("|",listVarchar.ToArray());
+
+            return list;
+        }
+
+        private string SetColumnTypeNames()
+        {
+            List<string> list = new List<string>();
+            foreach (Column c in this.Columns)
+            {                
+                list.Add(string.Format("{0} {1}", c.TypeName, c.LowerColumnName));
+            }
+            return string.Join(",", list.ToArray());
+        }
+
+        private string SetColumnNames()
+        {
+            List<string> list = new List<string>();
+            foreach (Column c in this.Columns)
+            {
+                list.Add(string.Format("{0}", c.ColumnName));
+            }
+            return string.Join(",", list.ToArray());
+        }
+
+        private string SetColumnNamesWithAT()
+        {
+            List<string> list = new List<string>();
+            foreach (Column c in this.Columns)
+            {
+                list.Add(string.Format("@{0}", c.ColumnName));
+            }
+            return string.Join(",", list.ToArray());
+        }
+
+        private string SetColumnNamesWithoutAutoIncrement()
+        {
+            List<string> list = new List<string>();
+            foreach (Column c in this.Columns)
+            {
+                if(c.IsAutoIncrement.ToUpper().Equals("FALSE"))
+                {
+                    list.Add(string.Format("{0}", c.ColumnName));
+                }
+            }
+            return string.Join(",", list.ToArray());
+        }
+
+        private string SetColumnNamesWithATWithoutAutoIncrement()
+        {
+            List<string> list = new List<string>();
+            foreach (Column c in this.Columns)
+            {
+                if(c.IsAutoIncrement.ToUpper().Equals("FALSE"))
+                {
+                    list.Add(string.Format("@{0}", c.ColumnName));
+                }
+            }
+            
+            return string.Join(",", list.ToArray());
+        }
+
+
+    }
+
+
+    public class Column
+    {
+        DataColumn columnBase;
+
+        public Column(DataColumn columnBase)
+        {
+            this.columnBase = columnBase;
+        }
+
+        public string ColumnName { get { return this.columnBase.ColumnName; } }
+
+        public string MaxLength { get { return this.columnBase.MaxLength.ToString(); } }
+
+        public string TypeName 
+        { 
+            get 
+            {                
+                return this.columnBase.DataType.Name;
+            } 
+        }
+
+        public string IsAutoIncrement 
+        { 
+            get 
+            {                
+                return this.columnBase.AutoIncrement.ToString();
+            } 
+        }
+
+        public string LowerColumnName
+        {
+            get
+            {
+                return string.Format("_{0}", this.ColumnName.ToString().ToLower());
+            }
+        }
+
+        public string Desc { get; set; }
+    }
+
+    public class Helper
+    {
+        public static string GenPrivateField(string typeName,string name)
+        {
+            string rtn="";
+            string t = GetCSharpType(typeName);
+            switch(t)
+            {
+                case "string": rtn=string.Format("{0} {1} = string.Empty;",t,name);break;
+                case "DateTime": rtn=string.Format("{0} {1} = new DateTime(1900,1,1);",t,name);break;
+                default: rtn=string.Format("{0} {1};",t,name); break;
+            }
+            return rtn;
+        }
+
+
+        public static string GetCSharpType(string typeName)
+        {
+            string csharpType = typeName.ToLower();
+            switch (typeName)
+            {
+                case "Boolean": csharpType = "bool"; break;
+                case "Int32": csharpType = "int"; break;
+                case "Int16": csharpType = "Int16"; break;
+                case "Byte": csharpType = "byte"; break;
+                case "Decimal": csharpType = "decimal"; break;
+                case "DateTime": csharpType = "DateTime"; break;
+            }
+            return csharpType;
+        }
+
+        public static string GenSetter(string typeName,string len)
+        {
+            string t = GetCSharpType(typeName);
+            string rtn="value";
+            switch(t)
+            {
+                case "string": rtn=string.Format("DAL.StrHelper.NullAndChineseStrLengthChk(value, 0, {0})",len);break;                                      
+                case "DateTime": rtn="(value.Year < 1900 ? DateTime.Parse(\"1900-01-01\") : value)";break;
+            }
+            return rtn;
+        }
+
+        public static string GetType(string typeName)
+        {
+            string result = typeName;
+            return result;
+        }
+    }
+
+    #endregion
+#>

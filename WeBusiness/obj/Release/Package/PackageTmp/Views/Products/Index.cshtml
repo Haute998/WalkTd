@@ -1,0 +1,321 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>产品管理</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/layout/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 产品管理 <span class="c-gray en">&gt;</span> 全部产品 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <input name="orderby" type="hidden" value="" />
+            <div class="text-c">
+                产品状态：<span class="select-box" style="width: 150px">
+                    <select class="select" name="States" size="1">
+                        <option value="" selected>全部</option>
+                        <option value="已上架">已上架</option>
+                        <option value="未上架">未上架</option>
+                    </select>
+                </span>产品名称：
+                <input type="text" name="GoodsName" id="" placeholder=" 请输入产品名称" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l">
+                    <a href="javascript:;" onclick="Product_dels()" class="btn btn-danger radius delete">
+                        <i class="Hui-iconfont">&#xe6e2;</i>批量删除
+                    </a>
+                    <a class="btn btn-primary radius examine" data-title="批量上架" onclick="toPublishs('已上架')"
+                       href="javascript:;"><i class="Hui-iconfont">&#xe615;</i>批量上架</a>
+                    <a class="btn btn-primary radius examine" data-title="批量下架" onclick="toPublishs('已下架')"
+                       href="javascript:;"><i class="Hui-iconfont">&#xe631;</i>批量下架</a>
+                    <a class="btn btn-primary radius" data-title="添加产品" onclick="Product_Add('添加产品', '/Products/ProductAdd', '500', '500')">
+                        <i class="Hui-iconfont">&#xe600;</i> 添加产品
+                    </a>
+                    @*<a class="btn btn-primary radius export" data-title="导出Excel" onclick="Export_Excel()"
+                       href="javascript:;"><i class="Hui-iconfont">&#xe644;</i>导出Excel</a>*@
+                </span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th class="js-notview">
+                <input type="checkbox" name="checkall" onclick="tocheckall(this)" value="" />
+            </th>
+            <th class="js-sortfleld sorting" data-fleld="ProductNumber" onclick="tosort(this)">
+                产品编号
+            </th>
+
+            <th>
+                产品名称
+            </th>
+            <th>
+                规格型号
+            </th>
+            <th>
+                价格
+            </th>
+            <th>
+                产品图片
+            </th>
+          
+            <th class="js-sortfleld sorting" data-fleld="AddTime" onclick="tosort(this)">
+                添加时间
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td class="js-notview">
+                <input type="checkbox" value="${ck.ProductID}" onclick="cklst()" name="ids" />
+            </td>
+            <td>
+                ${ck.ProductNumber}
+            </td>
+            <td>
+                ${ck.ProductName}
+            </td>
+            <td>
+                ${ck.bianma}
+            </td>
+            <td>
+                ${ck.kw}
+            </td>
+            <td>
+                <img src="${ck.ProductImg}" width="50" height="50" />
+            </td>
+           
+            <td>
+                ${ChangeDateFormat(ck.AddTime).Format("yyyy-MM-dd hh:mm:ss")}
+            </td>
+            <td class="td-status">
+                {{if ck.States=="已上架"}}
+                <span class="label label-success radius">${ck.States}</span>
+                {{else}}
+                <span class="label label-default radius">${ck.States}</span>
+                {{/if}}
+            </td>
+            <td class="f-14 td-manage">
+
+                @*<a style="text-decoration: none" class="ml-5 edit" onclick="imgtxtedit('图文详情编写', '/Products/ImgTxtEdit?id=${ck.ProductID}', '600', '500')" href="javascript:;"
+                   title="图文详情编写"><i class="Hui-iconfont">&#xe685;</i></a>&nbsp;*@
+
+
+                @*<a style="text-decoration: none" class="ml-5 edit" onclick="layer_show('修改价格信息', '/Product_Lever/Index?productID=${ck.ProductID}', '450', '350')" href="javascript:;"
+                   title="修改价格信息"><i class="Hui-iconfont">&#xe63a;</i></a>&nbsp;*@
+
+
+                {{if ck.States=="已上架"}}
+                <a style="text-decoration: none" onclick="toPublish(this,'下架', '${ck.ProductID}')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe631;</i></a>
+                {{else}}
+                <a style="text-decoration: none" onclick="toPublish(this, '上架', '${ck.ProductID}')" href="javascript:;" title="上架"><i class="Hui-iconfont">&#xe615;</i></a>
+                {{/if}}
+                <a style="text-decoration: none" class="ml-5 edit" onclick="Products_edit('修改产品信息', '/Products/ProductDetailEdit/${ck.ProductID}', '500', '500')" href="javascript:;"
+                   title="修改产品信息"><i class="Hui-iconfont">&#xe6df;</i></a>
+                <a title="删除" href="javascript:;" onclick="Product_del(this, '${ck.ProductID}')" class="ml-5 delete" style="text-decoration: none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/Products/GetProductPage";
+   //添加弹窗
+    function Product_Add(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+    //修改弹窗    
+    function Products_edit(title, url, w, h) {
+        layer_show(title, url, w, h);
+    }
+    function imgtxtedit(title, url, w, h)
+    {
+        if (title == null || title == '') {
+            title = false;
+        };
+        if (url == null || url == '') {
+            url = "404.html";
+        };
+        if (w == null || w == '') {
+            w = 800;
+        };
+        if (h == null || h == '') {
+            h = ($(window).height() - 50);
+        };
+       var index= layer.open({
+            type: 2,
+            area: [w + 'px', h + 'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shade: 0.4,
+            title: title,
+            content: url
+       });
+       layer.full(index);
+    }
+    function Product_del(obj,id)
+    {
+        layer.confirm('删除产品后不可恢复，确认要删除吗？', function (index) {
+
+            $.post("/Products/DelProduct",{"id":id},function(rtn)
+            {
+                if(rtn=="ok")
+                {
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                }
+                else
+                {
+                    layer.alert(rtn);
+                }
+            })
+
+        });
+    }
+    //上架或下架
+    function toPublish(obj,isPublish,id)
+    {
+        var thislay= layer.confirm('确定要'+(isPublish=="上架"?'上架':'下架')+'产品吗？',function(index)
+        {
+            $.post("/Products/toPublish",{"isPublish":isPublish,"id":id},function(rtn)
+            {
+                if(rtn=="ok")
+                {                
+                    getjsondata(thispage);
+                    layer.close(thislay);
+                }
+                else
+                {
+                    layer.alert(rtn);
+                }
+            })
+        })
+
+    }
+    //批量删除
+    function Product_dels()
+    {
+        var json=$("input[name='ids']:checked").serializeArray();
+        if (json.length==0) {
+            layer.alert("请选中要操作的行！");
+        }else{
+            var thislay= layer.confirm('删除产品后不可恢复，确认要删除吗？',function(index)
+            {
+                $.post("/Products/DelProducts",json,function(rtn)
+                {
+                    if(rtn=="ok")
+                    {
+                        getjsondata(thispage);
+                        layer.close(thislay);
+                    }
+                    else
+                    {
+                        layer.alert(rtn);
+                    }
+                })
+            })
+        }
+    }
+    //批量上架或下架
+    function toPublishs(States)
+    {
+        var json=$("input[name='ids']:checked").serializeArray();
+        if (json.length==0) {
+            layer.alert("请选中要操作的行！");
+        }else{
+            json.push({ "name": "isPublish", "value": States });
+
+            var thislay= layer.confirm('确定要'+(States=="已上架"?'上架':'下架')+'所选产品吗？',function(index)
+            {
+                $.post("/Products/toPublishs",json,function(rtn)
+                {
+                    if(rtn=="ok")
+                    {
+                        getjsondata(thispage);
+                        layer.close(thislay);
+                    }
+                    else
+                    {
+                        layer.alert(rtn);
+                    }
+                })
+            })
+        }
+    };
+
+    function tocheckall(obj)
+    {
+        if ($(obj).is(":checked")) {
+            $("input[name='ids']").attr("checked", 'true');
+        }
+        else
+        {
+            $("input[name='ids']").removeAttr("checked");
+        }
+    }
+
+    function cklst()
+    {
+        if ($("input[name='ids']:checked").length <= 0)
+        {
+            $("input[name='checkall']").removeAttr("checked");
+        }
+        else if ($("input[name='ids']:checked").length >= $("input[name='ids']").length) {
+            $("input[name='checkall']").attr("checked", 'true')
+        }
+    }
+    //导出Excel
+    function Export_Excel() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/Products/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+</script>

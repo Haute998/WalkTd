@@ -1,0 +1,327 @@
+﻿@using WeModels
+@using WeModels.Models.OrderModel
+@{
+    Layout = null;
+}
+@model OrderVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>订单详情 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <link href="/css/H-ui.reset.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/animate.css" />
+    <link rel="stylesheet" href="/css/jd_cart.css" />
+    <style type="text/css">
+        .jlmx table {
+            margin-top: 10px;
+        }
+
+        .jlmx table {
+            border-right: none;
+            border-left: none;
+            border-bottom: none;
+            border-top: 1px solid #cfcfd0;
+        }
+
+            .jlmx table tr th {
+                border-bottom: 1px solid #cfcfd0;
+            }
+
+            .jlmx table tr td {
+                border-right: none;
+            }
+
+        #mainMenuBar table {
+            width: 100%;
+            border-bottom: 1px solid #cfcfd0;
+            border-top: 1px solid #cfcfd0;
+        }
+
+            #mainMenuBar table tr td {
+                width: 14.5%;
+                color: #333;
+                font-size: 12px;
+                text-align: center;
+                border-right: 1px solid #cfcfd0;
+            }
+
+                #mainMenuBar table tr td.shzt {
+                    color: #ef8888;
+                }
+
+
+        .tdfocus {
+            background-color: #cfcfd0;
+        }
+    </style>
+</head>
+<body style="background: #fff;">
+
+    <div data-role="content" id="content">
+        <div class="centent_total" style="padding-bottom:0px">
+            <div style="width: 100%;">
+                <div class="jlmx">
+
+
+                    <table class="js-orderstab">
+                        <tr>
+                            <th colspan="1">
+                                订单编号：
+                            </th>
+                            <th colspan="1">
+                                @(Model.order.OrderNo)
+                            </th>
+                            <th style="text-align: center; padding-left: 0; color: #3b4481;" rowspan="1">
+                                @(Model.order.OrderState)
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                下单日期：@(Model.order.DatCreate.ToString("yyyy-MM-dd HH:mm:ss"))
+                            </th>
+                        </tr>
+                        <tr class="tr1" style="border-bottom: 1px solid #c6c4cb;">
+                            <td class="td1" colspan="3">
+                                <ul>
+                                    <li>收货人姓名:@(Model.order.OrderName)</li>
+                                    <li>收货人电话:@(Model.order.OrderMobile)</li>
+                                    <li>地址:@(Model.order.Address)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        @if (Model.postInfo != null) 
+                        {
+                        <tr class="tr1" style="border-bottom: 1px solid #c6c4cb;">
+                            <td class="td1" colspan="3">
+                                <ul>
+                                    <li>快递名称:@(Model.postInfo.PostName)</li>
+                                    <li>快递单号:@(Model.postInfo.PostNo)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        }
+                        <tr>
+                            <th colspan="2" style="color: #434141; height: 30px; line-height: 30px;">
+                                订单金额：<span style="color:red">@(Model.order.SumPrice)</span> 元
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="height: 5px; background: none; border-bottom: none;"></td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="jd_shop">
+                <div class="jd_shop_con">
+
+                    @foreach (ProductSnap product in Model.ProSnapLst)
+                    {
+
+                        <div class="product">
+                            <div class="shop_info clearfix" style="padding-left:10px">
+                                <a href="#" class="img_box f_left">
+                                    <img src="@(WeConfig.b_domain + product.Main_img)" alt="" />
+                                </a>
+                                <div class="info_box">
+                                    <a class="p_name" href="#">
+                                        @(product.ProductName)
+                                    </a>
+                                    <p class="p_price">
+                                        &yen;<label class="js-price"><span style="color:red">@(product.BuyPrice)</span> X@(product.GetCnt)</label>
+                                    </p>
+                                    <div class="p_opition">
+                                        <div class="delete_box f_right">
+                                            @*<span class="delete_up"></span><span class="delete_down"></span>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            @*<div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="zongji">
+                        <span>数量 : <label class="js-setcnt">@(carts.FindAll(m => m.IsCheck).Sum(m => m.GetCnt))</label></span><span>总金额 : <label class="js-setprice">@(carts.FindAll(m => m.IsCheck).Sum(m => m.GetCnt * m.Price_agent))</label>元</span>
+
+                    </div>
+                    <div class="mygwc_shxx">
+                        <table>
+                            <tr class="tr1">
+                                <th>
+                                    收货信息
+                                </th>
+                            </tr>
+                        </table>
+                        <table class="table1">
+                            <tr>
+                                <td class="td1">
+                                    收货人姓名：
+                                </td>
+                                <td>
+                                    <input type="hidden" id="ContactID" name="ContactID" value="@(nowMail.ID)" />
+                                    <input id="ContactName" name="ContactName" placeholder="请输入收货人姓名" value="@(nowMail.ContactName)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    收货人电话：
+                                </td>
+                                <td>
+                                    <input id="TextBox1" name="ContactMobile" placeholder="请输入收货人电话" maxlength="11" value="@(nowMail.ContactMobile)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    收货人地址：
+                                </td>
+                                <td>
+                                    <textarea id="Address" name="Address" placeholder="请输入收货人地址">@(nowMail.Province + nowMail.City + nowMail.Area + nowMail.Address)</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gwc1">
+                        <div class="div1">
+                            <button type="button" onclick="location.href = '/MyAddress/Index?type=set'" style="background-color: #40B7AB; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">常用地址本</button>
+                        </div>
+                        <div class="div2">
+                            <button type="button" onclick="ordergo()" style="background-color: #40B7AB; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">生成订单</button>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </form>
+@if (Model.order.OrderState == "待审核")
+                                {
+    <div data-role="content" id="content">
+        <div class="centent_total" style="padding-bottom:0px">
+            <div style="width: 100%;">
+                <div class="jlmx">
+
+
+                    <table class="js-orderstab">
+                        <tr>
+                            <th style="height: 30px; line-height: 30px; text-align: right; padding-right: 15px;">
+                                    <span style="border: 1px solid #049d8f; padding: 3px 8px; color: #049d8f;" data-orderno="@(Model.order.OrderNo)" onclick="tocancel(this)"><a>取消订单</a></span>
+                              
+                            </th>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="height: 5px; background: none; border-bottom: none;"></td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div> 
+}
+
+    @if (Model.postInfo != null)
+    {
+        <div data-role="content" id="content">
+            <div class="centent_total" style="padding-bottom:0px">
+                <div style="width: 100%;">
+                    <div class="jlmx">
+
+
+                        <table class="js-orderstab">
+                            <tr>
+                                <th style="height: 30px; line-height: 30px; text-align: right; padding-right: 15px;">
+                                    <a onclick="wuliu(this)" data-type="@(Model.postInfo.PostName)" data-postid="@(Model.postInfo.PostNo)" href="javascript:void(0)" style="border: 1px solid #049d8f; padding: 3px 8px; color: #049d8f;">查物流</a>
+
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="height: 5px; background: none; border-bottom: none;"></td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="All_foot">
+        <div class="foot">
+            <table>
+                <tr>
+                    <td>
+                        <a href="/agentback/Index">
+                            <div class="div1">
+                                <img src="/images/25.png" alt="" />
+                            </div>
+                            <div class="div2">
+                                返回首页
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script>
+    function tocancel(obj) {
+        var orderno = $(obj).attr("data-orderno");
+
+        layer.open({
+            content: "您确定要取消订单【" + orderno + "】吗？"
+   , btn: ['确定', '不要']
+   , yes: function (index) {
+
+       $.post("/Order/orderCancel", { "orderNo": orderno }, function (rtn) {
+           if (rtn == "ok") {
+               layer.open({ content: '订单【' + orderno + "】取消成功", skin: 'msg', time: 2 });
+               window.location.href = window.location.href;
+           }
+           else {
+               layer.open({ content: rtn, btn: '我知道了' });
+           }
+       })
+
+       layer.close(index);
+   }
+        });
+
+
+    }
+
+
+    function wuliu(obj) {
+        var type = $(obj).attr("data-type");
+        var postid = $(obj).attr("data-postid");
+        window.location.href = "https://m.kuaidi100.com/index_all.html?type=" + type + "&postid=" + postid + "&callbackurl=" + window.location.href;
+    }
+</script>

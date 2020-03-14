@@ -1,0 +1,105 @@
+﻿@using WeModels
+@{
+
+    Layout = null;
+}
+@model jf_OrderVM
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>订单发货</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <div class="layui-elem-quote">
+        <p>订单号：@(Model.order.OrderNo)</p>
+    </div>
+    <fieldset class="layui-elem-field" style="margin:20px">
+        <legend>订单信息</legend>
+        <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width:auto">订单号</label>
+                <label class="layui-form-label" style="width:auto">@(Model.order.OrderNo)</label>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width:auto">买家备注</label>
+                <label class="layui-form-label" style="width:auto">@(Model.order.Remark)</label>
+            </div>
+        </div>
+    </fieldset>
+    @if (Model.mail != null)
+    {
+        <fieldset class="layui-elem-field" style="margin:20px">
+            <legend>邮寄信息</legend>
+            <div class="layui-field-box">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:auto">收货人</label>
+                    <label class="layui-form-label" style="width:auto">@(Model.mail.ContactName)</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:auto">收货电话</label>
+                    <label class="layui-form-label" style="width:auto">@(Model.mail.ContactMobile)</label>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:auto">收货地址</label>
+                    <label class="layui-form-label" style="width:auto">@(Model.mail.Address)</label>
+                </div>
+            </div>
+        </fieldset>
+    }
+
+
+    <form class="layui-form">
+        <input type="hidden" name="OrderNo" value="@(Model.order.OrderNo)" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">快递公司</label>
+            <div class="layui-input-block">
+                @Html.DropDownList("CodeID", SelectListHelper.GetKDList(null), "", new { @lay_verify = "required", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-mid layui-word-aux">您可到快递公司收录里添加更多快递</div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">快递单号</label>
+            <div class="layui-input-block">
+                @Html.TextBox("PostNo", "", new { @class = "layui-input", @lay_verify = "required", @required = "", @maxlength = "50", @placeholder = "请输入快递单号" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="save" type="button" lay-submit lay-filter="save">提交发货信息</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script>
+    layui.use('form', function () {
+        var form = layui.form();
+
+        //监听提交
+        form.on('submit(save)', function (data) {
+            $.post("/jf_lpOrder/ToSendOrder", $("form").serialize(), function (rtn) {
+                if (rtn == "ok") {
+                    layer.alert("发货成功", function (index) {
+                        layer.close(index);
+                        parent.location.href = parent.location.href;
+                    });
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            });
+            return false;
+
+        });
+    });
+</script>

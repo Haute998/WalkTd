@@ -1,0 +1,331 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel;
+@{
+    Layout = null;
+    List<C_UserCartVM> carts = ViewData["carts"] as List<C_UserCartVM>;
+    C_UserMail nowMail = ViewData["nowMail"] as C_UserMail;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>购物车</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <link href="/css/H-ui.reset.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/animate.css" />
+    <link rel="stylesheet" href="/css/jd_cart.css" />
+    <link href="/css/index1.css" rel="stylesheet" />
+    <link href="~/css/main2.css" rel="stylesheet" />
+    <style>
+        .code {
+            position: fixed;
+            right: 5%;
+            bottom: 10%;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body style="background: #fff;">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="jd_shop">
+                <div class="jd_shop_con">
+
+                    @foreach (C_UserCartVM cart in carts) 
+                    {
+                        
+                    <div class="product" data-productdiv="@(cart.ID)">
+                        <div class="check_box">
+                            <input name="checkitem" type="checkbox" data-cartid="@(cart.ID)" @(cart.IsCheck?"checked=\"checked\"":"") value="" class="yc @(cart.IsCheck?"checked":"")" onclick="tocheck(this)" />
+                        </div>
+                        <div class="shop_info clearfix">
+                            <a href="#" class="img_box f_left">
+                                <img src="@(WeConfig.b_domain+cart.ProductImg)" alt="" />
+                            </a>
+                            <div class="info_box">
+                                <a class="p_name" href="#">
+                                    @(cart.ProductName)
+                                </a>
+                                <p class="p_price">
+                                    &yen;<label class="js-price">@(cart.Price_agent)</label>
+                                </p>
+                                <div class="p_opition">
+                                    <div class="change_num f_left">
+                                        <span onclick="reduce(this)" data-productid="@(cart.GoodsID)">-</span>
+                                        <input type="tel" name="buycnt" data-oldval="@(cart.GetCnt)" data-productid="@(cart.GoodsID)" onchange="EditFromCart(this)" value="@(cart.GetCnt)" />
+                                        <span onclick="add(this)" data-productid="@(cart.GoodsID)">+</span>
+                                    </div>
+                                    <div class="delete_box f_right" data-cartid="@(cart.ID)" onclick="del(this)">
+                                        <span class="delete_up"></span><span class="delete_down"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+
+                </div>
+            </div>
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="zongji">
+                        <span>数量 : <label class="js-setcnt">@(carts.FindAll(m=>m.IsCheck).Sum(m => m.GetCnt))</label></span><span>总金额 : <label class="js-setprice">@(carts.FindAll(m => m.IsCheck).Sum(m => m.GetCnt * m.Price_agent))</label>元</span>
+
+                    </div>
+                    <div class="mygwc_shxx">
+                        <table>
+                            <tr class="tr1">
+                                <th>
+                                    收货信息
+                                </th>
+                            </tr>
+                        </table>
+                        <table class="table1">
+                            <tr>
+                                <td class="td1">
+                                    收货人姓名：
+                                </td>
+                                <td>
+                                    <input type="hidden" id="ContactID" name="ContactID" value="@(nowMail.ID)"/>
+                                    <input id="ContactName" name="ContactName" placeholder="请输入收货人姓名" value="@(nowMail.ContactName)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    收货人电话：
+                                </td>
+                                <td>
+                                    <input id="TextBox1" name="ContactMobile" placeholder="请输入收货人电话" maxlength="11" value="@(nowMail.ContactMobile)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    收货人地址：
+                                </td>
+                                <td>
+                                    <textarea id="Address" name="Address" placeholder="请输入收货人地址">@(nowMail.Province + nowMail.City + nowMail.Area + nowMail.Address)</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gwc1">
+                        <div class="div1">
+                            @*<button type="button" onclick="location.href = '/MyAddress/Index?type=set'" style="background-color: #006DB8; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">常用地址本</button>*@
+                        </div>
+                        <div class="div2">
+                            <button type="button" onclick="ordergo()" style="background-color: #006DB8; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">生成订单</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="QLRcode"><a href="/Order/ToShop"><img src="/layout/jfshop/images/TCfan.png" /></a></div>
+        </div>
+        @*<script src='/js2/jquery.js'></script>
+        <script src="/js2/cartjs.js"></script>*@
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script>
+    var loading;
+    function ordergo()
+    {
+        if ($(".js-setcnt").text() == "" || $(".js-setcnt").text() <= 0)
+        {
+            layer.open({ content: '请先选择产品！', skin: 'msg', time: 2 });
+            return false;
+        }
+        loading = layer.open({
+            type: 2
+, content: '正在生成订单'
+        });
+        $.post("/Order/orderCreate", $("#form1").serialize(), function (rtn)
+        {
+            layer.close(loading);
+            var rtnArray = new Array;
+            rtnArray = rtn.split("|");
+            if (rtnArray[0] == "ok") {
+                layer.open({
+                    content: "生成订单成功，订单编号为【" + rtnArray[1] + "】", btn: '我知道了', yes: function (index) {
+                        window.location.href = "/Order/MyOrders";
+                        layer.close(index)
+                    }
+                });
+            }
+            else {
+                layer.open({ content: rtnArray[1], btn: '我知道了' });
+            }
+        })
+    }
+
+
+    function add(obj) {
+        loading = layer.open({
+            type: 2
+, content: '加载中'
+        });
+        var productid = $(obj).attr("data-productid");
+        $.post("/C_UserCart/AddToCart", { "ProductID": productid, "GetCnt": 1 }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                var oldcnt = $(obj).parent().find("[name='buycnt']").val();
+                $(obj).parent().find("[name='buycnt']").val(accAdd(oldcnt, 1));
+                $(obj).parent().find("[name='buycnt']").attr("data-oldval", accAdd(oldcnt, 1));
+                aritPrice();
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+
+
+    }
+
+    function reduce(obj) {
+        var oldcnt = $(obj).parent().find("[name='buycnt']").val();
+        if (oldcnt <= 1) {
+            layer.open({ content: '不能再少啦', skin: 'msg', time: 2 });
+            return false;
+        }
+        loading = layer.open({
+            type: 2
+, content: '加载中'
+        });
+        var productid = $(obj).attr("data-productid");
+        $.post("/C_UserCart/ReduceFromCart", { "ProductID": productid, "Cnt": 1 }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                $(obj).parent().find("[name='buycnt']").val(Subtr(oldcnt, 1));
+                $(obj).parent().find("[name='buycnt']").attr("data-oldval", Subtr(oldcnt, 1));
+                aritPrice();
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+
+    }
+
+
+    //从购物车修改
+    function EditFromCart(obj) {
+        var productid = $(obj).attr("data-productid");
+        var cnt = $(obj).val();
+        if (parseInt(cnt) <= 0) {
+            layer.open({ content: '商品数量需要大于0', btn: '我知道了' });
+            $(obj).val($(obj).attr("data-oldval"));
+            return false;
+        }
+        loading = layer.open({
+            type: 2
+, content: '加载中'
+        });
+        $.post("/C_UserCart/EditFromCart", { "ProductID": productid, "Cnt": cnt }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                
+                $(obj).attr("data-oldval", cnt);
+                aritPrice();
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+    }
+
+    function tocheck(obj)
+    {
+        loading = layer.open({
+            type: 2
+, content: '加载中'
+        });
+        var id = $(obj).attr("data-cartid");
+        if (/checked/ig.test(obj.className)) {
+
+            $.post("/C_UserCart/CheckByID", { "id":id, "type":0 }, function (rtn)
+            {
+                layer.close(loading);
+                if (rtn == "ok") {
+                    obj.className = obj.className.replace('checked', '');
+                    aritPrice();
+                }
+                else
+                {
+                    layer.open({ content: '网络错误', skin: 'msg', time: 2 });
+                }
+            })
+
+        }
+        else
+        {
+            $.post("/C_UserCart/CheckByID", { "id": id, "type": 1 }, function (rtn) {
+                layer.close(loading);
+                if (rtn == "ok") {
+                    obj.className = (obj.className + ' checked');
+                    aritPrice();
+                }
+                else {
+                    layer.open({ content: '网络错误', skin: 'msg', time: 2 });
+                }
+            })
+        }
+    }
+
+
+    function del(obj)
+    {
+        layer.open({
+            content: '您确定要删除吗？'
+            , btn: ['删除', '不要']
+            , yes: function (index) {
+                var id = $(obj).attr("data-cartid");
+                loading = layer.open({
+                    type: 2
+, content: '删除中'
+                });
+                $.post("/C_UserCart/del", { "id": id }, function (rtn) {
+                    layer.close(loading);
+           if (rtn == "ok") {
+               $("[data-productdiv='" + id + "']").remove();
+               aritPrice();
+               layer.open({ content: '删除成功', skin: 'msg', time: 2 });
+           }
+           else {
+               layer.open({ content: '删除失败', skin: 'msg', time: 2 });
+           }
+           $('.delete_up').css('transform', 'none')
+       })
+   }
+        });
+    }
+
+
+    function aritPrice()
+    {
+        var allcnt = 0;
+        var allprice = 0;
+        $("[name='checkitem']:checked").each(function ()
+        {
+            var id = $(this).attr("data-cartid");
+            var price = $("[data-productdiv='" + id + "']").find(".js-price").text();
+            var cnt = $("[data-productdiv='" + id + "']").find("[name='buycnt']").val();
+            allcnt = accAdd(allcnt, cnt);
+            allprice = accAdd(allprice, accMul(price, cnt));
+
+        });
+        $(".js-setcnt").text(allcnt);
+        $(".js-setprice").text(allprice);
+    }
+</script>

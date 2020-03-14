@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeBusiness", "WeBusiness\WeBusiness.csproj", "{6FA31C63-56FC-4023-806E-27ED2C655363}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeModels", "WeModels\WeModels.csproj", "{AFCA6A71-78D8-48BA-A305-7C19DEBDFCB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentMobile", "AgentMobile\AgentMobile.csproj", "{FF827BEF-7570-4F87-ADD7-D1EE75011F59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FA31C63-56FC-4023-806E-27ED2C655363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA31C63-56FC-4023-806E-27ED2C655363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA31C63-56FC-4023-806E-27ED2C655363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA31C63-56FC-4023-806E-27ED2C655363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFCA6A71-78D8-48BA-A305-7C19DEBDFCB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFCA6A71-78D8-48BA-A305-7C19DEBDFCB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCA6A71-78D8-48BA-A305-7C19DEBDFCB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFCA6A71-78D8-48BA-A305-7C19DEBDFCB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF827BEF-7570-4F87-ADD7-D1EE75011F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF827BEF-7570-4F87-ADD7-D1EE75011F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF827BEF-7570-4F87-ADD7-D1EE75011F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF827BEF-7570-4F87-ADD7-D1EE75011F59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

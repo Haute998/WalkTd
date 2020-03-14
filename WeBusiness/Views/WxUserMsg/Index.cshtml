@@ -1,0 +1,325 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>客户列表</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 微会员  <span class="c-gray en">&gt;</span> 会员明细 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <input name="orderby" type="hidden" value="" />
+            <div class="text-c">
+                关注状态：<span class="select-box" style="width: 150px">
+                    <select class="select" name="wx_subscribeStat" size="1">
+                        <option value="" selected>全部</option>
+                        <option value="1">已关注</option>
+                        <option value="0">未关注</option>
+                    </select>
+                </span>
+                关键字：
+                <input type="text" name="keyword" placeholder=" 请输入客户ID/昵称/手机号" style="width: 250px"
+                       class="input-text" value="" />
+                关注时间：
+                <input type="text" name="DatCreateB" id="" placeholder=" 请输入时间" style="width: 150px"
+                       class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                至
+                <input type="text" name="DatCreateE" id="" placeholder=" 请输入时间" style="width: 150px"
+                       class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                @*<button onclick="morecondition(this)" class="btn btn-default size-MINI radius" type="button">
+                        更多
+                    </button>*@
+                @*<span style="display:none" class="js-nospan">
+                        客户ID：
+                        <input type="text" name="UserName" placeholder=" 请输入客户ID" style="width: 250px"
+                               class="input-text" value="" />
+                        微信昵称：
+                        <input type="text" name="wx_nickname" placeholder=" 请输入微信昵称" style="width: 250px"
+                               class="input-text" value="" />
+                    </span>*@
+                <button id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <button name="" id="Export" onclick="Exprots()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出
+                </button>
+                <input id="SubmitCode" hidden="hidden" value="上传" type="submit" />
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+                <span class="l">
+                    <a class="btn btn-primary radius add" href="javascript:;"
+                       onclick="sendText('群发文本消息', '/WxMsgSend/TextMsg', '800', '500')">
+                        <i class="Hui-iconfont">
+                            &#xe603;
+                        </i> 群发文本消息
+                    </a>
+                    <a class="btn btn-primary radius add" href="javascript:;"
+                       onclick="sendNews('群发图文消息', '/WxMsgSend/NewsMsg', '1000', '800')">
+                        <i class="Hui-iconfont">
+                            &#xe685;
+                        </i> 群发图文消息
+                    </a>
+                    <a class="btn btn-warning radius" href="javascript:;"
+                       onclick="DeFriend()">
+                        <i class="Hui-iconfont">
+                            &#xe631;
+                        </i> 拉黑
+                    </a>
+                    <a class="btn btn-success radius" href="javascript:;"
+                       onclick="NoDeFriend()">
+                        <i class="Hui-iconfont">
+                            &#xe6e1;
+                        </i> 取消拉黑
+                    </a>
+                </span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+
+        </form>
+
+        @*<table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+            @Html.Partial("_Paging")*@
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th width="25">
+                <input type="checkbox" name="checkall" onclick="checkall(this)" value="" />
+            </th>
+            <th>
+                头像
+            </th>
+            <th>
+                客户ID
+            </th>
+            <th>
+                昵称
+            </th>
+            <th>
+                关注状态
+            </th>
+            <th class="js-sortfleld sorting" data-fleld="wx_subscribe_time" onclick="tosort(this)">
+                关注时间
+            </th>
+            <th>
+                使用状态
+            </th>
+            <th>
+                是否会员
+            </th>
+
+            <th>
+                手机号
+            </th>
+
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                <input type="checkbox" value="${ck.ID}" onclick="cklst()" name="cklst" />
+            </td>
+            <td>
+                <img class="round" width="50" height="50" src="${ck.wx_headimgurl==null?ck.PortraitUrl:ck.wx_headimgurl}" />
+            </td>
+            <td>
+                ${ck.UserName}
+            </td>
+            <td>
+                ${ck.wx_nickname==null?ck.NickName:ck.wx_nickname}
+            </td>
+            {{if ck.wx_subscribe!=null}}
+            <td>
+                {{if ck.wx_subscribe==true}}
+                已关注
+                {{else}}
+                未关注
+                {{/if}}
+                {{else}}
+                未关注
+            </td>
+            {{/if}}
+            {{if ck.wx_subscribe!=null}}
+            <td>
+                {{if ck.wx_subscribe==true}}
+                ${ChangeDateFormat(ck.wx_subscribe_time).Format("yyyy-MM-dd hh:mm:ss")}
+                {{/if}}
+            </td>
+            {{/if}}
+            <td>
+                {{if IsValid==true}}
+                <label>可用</label>
+                {{else}}
+                <label style="color:red">已拉黑</label>
+                {{/if}}
+            </td>
+            <td>
+                {{if ck.Grade>0}}
+                <label>会员</label>
+                {{else}}
+                <label>非会员</label>
+                {{/if}}
+            </td>
+
+            <td>
+                ${ck.Mobile}
+            </td>
+
+            <td>
+                <a title="更新微信信息"
+                   href="javascript:;" data-title="更新微信信息" data-username="${ck.UserName}" onclick="updatewx(this)" class="ml-5" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe68f;</i>
+                </a>
+                @*<a title="设置为推广员"
+                   href="javascript:;" data-title="设置为推广员" data-username="${ck.UserName}" onclick="updatetg(this)" class="ml-5" style="text-decoration: none">
+                    <i class="Hui-iconfont">&#xe6d1;</i>
+                </a>*@
+            </td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/WxUserMsg/GetUserPages";
+    function Exprots() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/WxUserMsg/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+    function sendText(title, url, w, h) {
+        var cklst = $("input[name='cklst']:checked").serialize();
+        layer_show(title, url + "?" + cklst, w, h);
+    }
+    function sendNews(title, url, w, h) {
+        var cklst = $("input[name='cklst']:checked").serialize();
+        layer_show(title, url + "?" + cklst, w, h);
+    }
+    //全选或全不选
+    function checkall(obj) {
+        if ($(obj).is(":checked")) {
+            $("input[name='cklst']").prop("checked", 'true');
+        }
+        else {
+            $("input[name='cklst']").removeAttr("checked");
+        }
+    }
+    function cklst() {
+        if ($("input[name='cklst']:checked").length <= 0) {
+            $("input[name='checkall']").removeAttr("checked");
+        }
+        else if ($("input[name='cklst']:checked").length >= $("input[name='cklst']").length) {
+            $("input[name='checkall']").prop("checked", 'true')
+        }
+    }
+    function DeFriend() {
+        layer.confirm('被拉黑的客户将无法访问商城，确定要拉黑吗?', { icon: 3, title: '提示' }, function (index) {
+            //do something
+
+            $.post("/WxUserMsg/DeFriend", $("input[name='cklst']:checked").serialize(), function (rtn) {
+                if (rtn == "ok") {
+                    getjsondata(thispage);
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+            layer.close(index);
+        });
+
+    }
+    function NoDeFriend() {
+        layer.confirm('确定将所选客户移出黑名单吗?', { icon: 3, title: '提示' }, function (index) {
+            //do something
+
+            $.post("/WxUserMsg/NoDeFriend", $("input[name='cklst']:checked").serialize(), function (rtn) {
+                if (rtn == "ok") {
+                    getjsondata(thispage);
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+            layer.close(index);
+        });
+
+    }
+    function morecondition(obj) {
+        if ($(".js-nospan").is(':visible')) {
+            $(".js-nospan").hide();
+            $(obj).text("更多");
+        }
+        else {
+            $(".js-nospan").show();
+            $(obj).text("隐藏");
+        }
+    }
+    function inchange() {
+        $("#SubmitCode").click();
+    }
+    function updatewx(obj) {
+        var UserName = $(obj).attr("data-username");
+        $.post("/WxUserMsg/UpdateWx", { "UserName": UserName }, function (rtn) {
+            if (rtn == "ok") {
+                getjsondata(thispage);
+            }
+            else {
+                layer.alert(rtn);
+            }
+        })
+    }
+    function updatetg(obj) {
+        var UserName = $(obj).attr("data-username");
+        $.post("/WxUserMsg/UpdateEmail", { "UserName": UserName }, function (rtn) {
+            if (rtn == "ok") {
+                getjsondata(thispage);
+            }
+            else {
+                layer.alert(rtn);
+            }
+        })
+    }
+</script>

@@ -1,0 +1,157 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+@model RebateStatistics
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的返利 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .accordion {
+            background: none;
+        }
+
+        .submenu a {
+            padding: 2%;
+        }
+
+        .accordion .link {
+            margin-bottom: 0;
+        }
+    </style>
+
+</head>
+<body style="background: #fff;">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="dlhtt" id="dlhtt" style="background: url(/images/tcrjbg.png); background-size: 100% 100%;">
+                <dl>
+                    <dt>
+                        <img src="@(user.PortraitUrl)" alt="" />
+                    </dt>
+                    <dd style="padding: 28px 0 0 0;">
+                        <span>@(user.Name) , <span style="font-size: 0.6rem;">您好</span></span>
+                    </dd>
+                    <dd>
+                        <span class="span1">级别：@(user.userTypeName)</span>
+                    </dd>
+                </dl>
+                <div class="syfl">
+                    <div class="qb">
+                        <div class="div11">
+                            本月应收 : @(decimal.Round(Model.thisMonMoney,2))
+                        </div>
+                        <div class="div22">
+                            （推荐返利 @(decimal.Round(Model.thisMonMoneyTJ,2))）
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="shlb">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="td1 fff">
+                            <a href="/MyRebate/Index">应收返利</a>
+                        </td>
+                        <td>
+                            <a href="/MyRebate/OutRebate">应付返利</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <ul id="accordion" class="accordion">
+                <li class="lii">
+                    <div class="link" style="border-top: none;"> 
+                        <i class="fa fa-paint-brush">
+                            <img class="img1" src="/images/92.png" alt="" />
+                        </i>本月待收返利<span class="dfcj">@(decimal.Round(Model.thisMonMoney,2))</span><i class="fa fa-chevron-down">
+                            <img src="/images/jiantou.png" class="img77" alt="" />
+                        </i>
+                    </div>
+                    <ul class="submenu">
+                        <li><a class="df" href="javascript:void(0)">推荐返利<span class="dfcj">@(decimal.Round(Model.thisMonMoneyTJ,2))</span></a></li>
+                        <li><a class="df" href="javascript:void(0)">拿货返利<span class="dfcj">@(decimal.Round(Model.thisMonMoneyNH,2))</span></a></li>
+                        <li style="overflow: hidden;">
+                            <div>
+                                <a href="/MyRebate/RebateDetail_tj?dattype=thismon">
+                                    <span class="span11">推荐返利明细</span>
+                                </a>
+                                <a href="/MyRebate/RebateDetail_nh?dattype=thismon"><span class="span22">拿货返利明细</span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="lii">
+                    <div class="link" style="border-top: none;">
+                        <i class="fa fa-paint-brush">
+                            <img class="img1" src="/images/92.png" alt="" />
+                        </i>历史返利<span class="dfcj">@(decimal.Round(Model.HistoryMoney,2))</span><i class="fa fa-chevron-down">
+                            <img src="/images/jiantou.png" class="img77" alt="" />
+                        </i>
+                    </div>
+                    <ul class="submenu">
+                        <li><a class="df" href="javascript:void(0)">推荐返利<span class="dfcj">@(decimal.Round(Model.HistoryMoneyTJ,2))</span></a></li>
+                        <li><a class="df" href="javascript:void(0)">拿货返利<span class="dfcj">@(decimal.Round(Model.HistoryMoneyNH,2))</span></a></li>
+                        <li style="overflow: hidden;">
+                            <div>
+                                <a href="/MyRebate/RebateDetail_tj?dattype=history">
+                                    <span class="span11">推荐返利明细</span>
+                                </a>
+                                <a href="/MyRebate/RebateDetail_nh?dattype=history"><span class="span22">拿货返利明细</span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="lii" onclick="window.location.href = '/MyRebate/My_tjs'">
+                    <div class="link" style="border-top: none;">
+                        <i class="fa fa-paint-brush">
+                            <img class="img1" src="/images/20.png" alt="" />
+                        </i>我推荐的人<span class="dfcj">@(Model.My_tjs_cnt)</span><i class="fa fa-chevron-down">
+                            <img src="/images/jiantou.png" class="img77" alt="" />
+                        </i>
+                    </div>
+                </li>
+
+            </ul>
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src='/js/jquery.js'></script>
+        <script src="/js/index.js"></script>
+    </form>
+</body>
+
+</html>

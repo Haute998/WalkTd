@@ -1,0 +1,157 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<BaseMain> mrList = ViewBag.MenuRights;
+    HashSet<int> haRights = ViewBag.HashRights;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    @*<link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <title>桌面展示设置</title>
+    <style type="text/css">
+        .permission-list > dd {
+            padding: 0;
+        }
+
+            .permission-list > dd > dl {
+                padding: 2px 0px;
+            }
+
+                .permission-list > dd > dl > dd {
+                    margin-left: 0;
+                }
+    </style>*@
+
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.0" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <title>桌面展示设置</title>
+</head>
+<body>
+    @*<article class="page-container">
+        <form action="" method="post" class="form form-horizontal" id="form-admin-role-add">
+            <div class="row cl">
+                <label class="form-label col-xs-3 col-sm-2"><input type="checkbox" name="checkall" onclick="tocheckall(this)" value="" />&nbsp;权限：</label>
+                <div class="formControls col-xs-9 col-sm-10">
+
+                    <dl class="permission-list js-lanmu">
+                        <dd>
+                            <dl class="cl permission-list2">
+
+                                <dd class="funlist">
+
+                                    @foreach (BaseMain rt in mrList)
+                                    {
+                                        <label class="">
+                                            <input type="checkbox" name="idlist" value="@(rt.ID)" @(haRights.Contains(rt.ID) ? "checked" : "") />
+                                            @(rt.ShowName)
+                                        </label>
+                                    }
+
+                                </dd>
+                            </dl>
+                        </dd>
+
+                    </dl>
+
+
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                    <button type="button" onclick="toconfig()" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+                </div>
+            </div>
+        </form>
+    </article>*@
+
+    @*<script src="~/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+    <script type="text/javascript" src="/layout/lib/icheck/jquery.icheck.min.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>*@
+
+    <form class="layui-form" action="" style="margin:15px 20px 5px 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:85px">桌面显示权限</label>
+            <div class="layui-input-inline" style="width:300px">
+                @foreach (BaseMain rt in mrList)
+                {
+                    <input type="checkbox" name="idlist" title="@(rt.ShowName)" value="@(rt.ID)" lay-skin="primary" @(rt.IsCheck ? "checked" : "")>
+                }
+            </div>
+        </div>
+        <div class="layui-form-item" style="padding-top:20px;">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-sm" type="button" onclick="toconfig()">确定保存</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script type="text/javascript">
+
+        layui.use('form', function () {
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+    </script>
+
+    <script type="text/javascript">
+        function toconfig() {
+            var IdSet = "";
+            $("input[name='idlist']:checked").each(function () {
+                if (IdSet != "") IdSet += ",";
+                IdSet += $(this).val();
+            });
+
+            $.ajax({
+                url: "/Main/ToSetUserDesktop",
+                type: "post",
+                data: "DesktopIDSet=" + IdSet,
+                success: function (rtn) {
+                    if (rtn == "ok") {
+                        parent.location.reload();
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                }
+            });
+        }
+
+        //全选或全不选
+        function tocheckall(obj) {
+            if ($(obj).is(":checked")) {
+                $("input[type='checkbox']").prop("checked", 'true');
+            }
+            else {
+                $("input[type='checkbox']").removeAttr("checked");
+            }
+        }
+    </script>
+</body>
+</html>

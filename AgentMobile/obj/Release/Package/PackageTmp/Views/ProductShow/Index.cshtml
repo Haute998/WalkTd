@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="robots" content="all" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="pragma" content="no-cach" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="copyright" content="" />
+    <meta name="description" content="" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>产品展示</title>
+    <link href="~/css/ProductStyle.css" rel="stylesheet" />
+    <link href="~/css/dropload.css" rel="stylesheet" media="all" />
+</head>
+
+<body ontouchstart="" id="container" style="">
+        <header class="tabHead" style="background-image:url(/images/shangping_banner.png);background-attachment: fixed;background-repeat: no-repeat;background-size:100%;">
+            @*<span class="active">全部产品<small>（3）</small></span>*@
+            @*<span>分类产品<small>（116）</small></span>*@
+            @*<b class="border"></b>*@
+        </header>
+        <article class="khfxWarp">
+            <section class="khfxPane" style="display:block">
+
+                <section class="khfxPane"></section>
+            </section>
+        </article>
+
+        <script src="~/js/jquery.min.js"></script>
+        <script src="~/js/dropload.js"></script>
+
+        <script>
+            $(function () {
+                var itemIndex = 0;
+                var tabLoadEndArray = [false, false, false];
+                var tabLenghtArray = [10, 10, 10];
+                var tabPageIndexArray = [1, 1, 1];
+                var tabPageSizeArray = [5, 5, 5];
+                var tabScroolTopArray = [0, 0, 0];
+                var dropload = $('.khfxWarp').dropload({
+                    scrollArea: window,
+                    domDown: {
+                        domClass: 'dropload-down',
+                        domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+                        domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                        domNoData: '<div class="dropload-noData">已无数据</div>'
+                    },
+                    loadDownFn: function (me) {
+
+                        setTimeout(function () {
+                            if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                            $.ajax({
+                                type: 'POST',
+                                url: '/ProductShow/GetProductPage',
+                                data: { "pageIndex": tabPageIndexArray[itemIndex], "pageSize": tabPageSizeArray[itemIndex] },
+                                dataType: 'json',
+                                success: function (data) {
+
+                                    var result = '';
+                                    tabPageIndexArray[itemIndex]++;
+                                    if (data.RtnList.length > 0) {
+                                        for (var index = 0; index < data.RtnList.length; index++) {
+                                            if (itemIndex == 0) {
+                                                result += ''
+                                                + '    <hgroup class="khfxRow">'
+                                                + '      <div class="mid">'
+                                                + '        <img class="photo" src="@(WeModels.WeConfig.b_domain)' + data.RtnList[index].ProductImg + '" >'
+                                                + '        <span>' + data.RtnList[index].ProductName + '</span> '
+                                                + '        <span><label>零售价：</label><em>¥' + data.RtnList[index].kw + '</em></span> '
+                                                + '      </div>'
+                                                + '    </hgroup>';
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        tabLoadEndArray[itemIndex] = true;
+                                    }
+
+                                    if (data.RtnList.length <= tabPageSizeArray[itemIndex]) tabLoadEndArray[itemIndex] = true;
+
+                                    $('.khfxPane').eq(itemIndex).append(result);
+                                    me.resetload();
+                                }
+                            });
+                        }, 500);
+
+                        //setTimeout(function () {
+                        //if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                        //var result = ''; for (var index = 0; index < 10; index++) {
+                        //    if (tabLenghtArray[itemIndex] > 0) { tabLenghtArray[itemIndex]--; } else { tabLoadEndArray[itemIndex] = true; break; }
+                        //    if (itemIndex == 0) {
+                        //        result
+                        //        += ''
+                        //        + '    <hgroup class="khfxRow">'
+                        //        + '      <div class="mid">'
+                        //        + '        <img class="photo" src="images/img01.png" >'
+                        //        + '        <span><label>昵称：</label>弦上漫步</span> '
+                        //        + '        <span><label>账号：</label>' + tabLenghtArray[itemIndex] + '</span> '
+                        //        + '        <span><label>手机：</label>1391****746</span> '
+                        //        + '        <span><label>券商：</label>中信证券</span> '
+                        //        + '      </div>'
+                        //        + '    </hgroup>';
+                        //    } else if (itemIndex == 1) {
+                        //        result
+                        //        += ''
+                        //        + '    <hgroup class="khfxRow">'
+                        //        + '      <header><span>已提交资料</span>2015-10-18  23:32:13</header>'
+                        //        + '      <div class="mid">'
+                        //        + '        <img class="photo" src="images/img01.png" >'
+                        //        + '        <span><label>昵称：</label>弦上漫步</span> '
+                        //        + '        <span><label>账号：</label>' + tabLenghtArray[itemIndex] + '</span> '
+                        //        + '        <span><label>手机：</label>1391****746</span> '
+                        //        + '        <span><label>券商：</label>中信证券</span> '
+                        //        + '      </div>'
+                        //        + '    </hgroup>';
+                        //    }
+                        //}
+                        //$('.khfxPane').eq(itemIndex).append(result); me.resetload();
+
+                        //}, 500);
+                    }
+                });
+
+                $('.tabHead span').on('click', function () {
+                    tabScroolTopArray[itemIndex] = $(window).scrollTop();
+                    var $this = $(this); itemIndex = $this.index(); $(window).scrollTop(tabScroolTopArray[itemIndex]);
+                    $(this).addClass('active').siblings('.tabHead span').removeClass('active');
+                    $('.tabHead .border').css('left', $(this).offset().left + 'px');
+                    $('.khfxPane').eq(itemIndex).show().siblings('.khfxPane').hide();
+                    if (!tabLoadEndArray[itemIndex]) { dropload.unlock(); dropload.noData(false); } else { dropload.lock('down'); dropload.noData(); }
+                    dropload.resetload();
+                });
+            });
+        </script>
+
+</body>
+</html>

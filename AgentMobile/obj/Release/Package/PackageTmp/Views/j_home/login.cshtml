@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+    string username = ViewData["username"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>促销员登录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="~/layout/jfshop/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page1" data-role="page">
+        <form id="form1">
+
+            <div class="QLR-home1">
+                <img src="/layout/jfshop/images/TClogo.png" />
+            </div>
+
+            <div class="QLR-home7">促销员积分系统</div>
+            <div class="QLR-home5">
+                <dl>
+                    <dd>
+                        <img src="/layout/jfshop/images/TCname.png" /><input name="UserName" type="text" placeholder="请输入账号" value="@(username)" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dd>
+                        <img src="/layout/jfshop/images/TCpwd.png" /><input name="Pwd" type="password" placeholder="请输入密码" />
+                    </dd>
+                </dl>
+            </div>
+            <p class="zhuce"><a href="/j_home/reg">立即注册</a></p>
+            <div class="QLR-home6">
+                <input id="btn_login" type="button" value="登  录" />
+            </div>
+        </form>
+    </div>
+    <div class="code"><img onclick="history.go(-1)" src="/layout/jfshop/images/TCfan.png" /></div>
+</body>
+</html>
+
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    var loading;
+    $(function ()
+    {
+        $("#btn_login").click(function ()
+        {
+            loading = layer.open({
+                type: 2
+, content: '正在登录中', shadeClose: false
+            });
+
+            $.post("/j_home/tologin", $("#form1").serializeArray(), function (rtn) {
+                layer.close(loading);
+                if (rtn == "ok") {
+                    window.location.href = "/j_shop/Index6";
+                }
+                else {
+                    layer.open({
+                        content: rtn
+   , skin: 'msg'
+   , time: 2 //2秒后自动关闭
+                    });
+
+                }
+            })
+        });
+    })
+</script>

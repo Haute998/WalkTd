@@ -1,0 +1,194 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_Consumer user = ViewData["user"] as C_Consumer;
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>促销员获取积分</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+</head>
+<body style="background:#fff;">
+    <div id="page1" data-role="page">
+        @*<div class="HH_div1">
+                    <div class="left"><dl><dt><img src="/layout/jfshop/images/TCtx.png" /></dt><dd class="t">@(user.UserName)</dd><dd>@(user.Mobile)</dd></dl></div>
+                    <div class="right"><input id="Button1" type="button" value="获取积分" /></div>
+                </div>
+                <div class="HH_div2">
+                    <table>
+                        <tr>
+                            <td class="left">
+                                <div><a><span><img src="/layout/jfshop/images/TCjifen.png" /></span><span>积分</span><em>@(user.jf)</em></a></div>
+                            </td>
+                            <td>
+                                <div><a href="/j_shop/MyOrders"><span><img src="/layout/jfshop/images/TCtuihuan.png" /></span><span>兑换记录</span></a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="QLR-home8">
+                    <dl>
+                        <dd>输入积分码输入积分</dd>
+                        <dd><input id="Text1" name="code" type="text" /></dd>
+                    </dl>
+                </div>
+                <div class="QLR-home6">
+                    <input type="button" id="getbynum" value="立即领取" />
+                </div>
+                <div class="QLR-home6" style="margin-top: 3vh;">
+                    <input type="button" id="saoyisao" value="扫一扫" />
+                </div>
+
+
+            </div>
+            <div class="code"><img onclick="history.go(-1)" src="/layout/jfshop/images/TCfan.png" /></div>*@
+        <div class="home_box">
+            <div class="div1">
+                <img src="~/images/9.png" class="qq" />
+            </div>
+
+            <div class="div2">
+                <table>
+                    <tr>
+                        <td><dl><a href="/j_shop/Index6"><dt><img src="~/images/lpdh.png" /></dt><dd>礼品商城</dd></a></dl></td>
+                        <td><dl><a href="/j_shop/Index1"><dt><img src="~/images/ph.png" /></dt><dd>积分排行</dd></a></dl></td>
+                        <td><dl><a href="/j_shop/jifengo"><dt><img src="~/images/wyjf.png" /></dt><dd>我要积分</dd></a></dl></td>
+                        <td><dl><a href="/j_shop/ren"><dt><img src="~/images/grzx.png" /></dt><dd>个人信息</dd></a></dl></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="QLR-home8">
+            <dl>
+                <dd>输入积分码输入积分</dd>
+                <dd><input id="Text1" name="code" type="text" /></dd>
+            </dl>
+        </div>
+        <div class="QLR-home6">
+            <input type="button" id="getbynum" value="立即领取" />
+        </div>
+        <div class="QLR-home6" style="margin-top: 3vh;">
+            <input type="button" id="saoyisao" value="扫一扫" />
+        </div>
+    </div>
+    <div class="code"><img onclick="history.go(-1)" src="/layout/jfshop/images/TCfan.png" /></div>
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+@if (IsWx == "1")
+{
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script>
+    var loading;
+    $(function ()
+    {
+        $("#getbynum").click(function () {
+            var code = $("input[name='code']").val();
+            if (code == "") {
+                layer.open({ content: '请先填写积分码哦', skin: 'msg', time: 2 });
+                return false;
+            }
+            toget(code, "input");
+        });
+        $("#saoyisao").click(function () {
+            if ("@(IsWx)" != "1") {
+                layer.open({ content: '请在微信中打开', skin: 'msg', time: 2 });
+                return false;
+            }
+
+            wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                    $("input[name='code']").val(res.resultStr.substr(res.resultStr.indexOf("code=") + 5, res.resultStr.length - 1));
+                    toget(result, "qrcode");
+                },
+                fail: function (res) {
+                    layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+                }
+            });
+        });
+    })
+    function toget(code, type) {
+        loading = layer.open({ type: 2, content: '正在拼命的领取中' });
+        $.post("/j_shop/toGet", { "code": code, "type": type }, function (rtn) {
+            layer.close(loading);
+            var rtnArray = new Array();
+            rtnArray = rtn.split("|");
+
+            if (rtnArray[0] == "ok") {
+                layer.open({
+                    content: '恭喜您，成功领取到' + rtnArray[1] + "个积分", btn: '我知道了', yes: function () {
+                        window.location.href = "/j_shop/Index";
+                    }
+                });
+            }
+            else {
+                layer.open({ content: rtnArray[1], btn: '我知道了' });
+            }
+        })
+    }
+</script>

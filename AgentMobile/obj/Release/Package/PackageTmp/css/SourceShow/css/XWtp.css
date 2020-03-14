@@ -1,0 +1,89 @@
+/* CSS Document */
+
+.hsd img {
+	width: 100%;
+}
+.maskja table, .fgf table {
+	width: 100%;
+	margin: 15px auto;
+}
+.maskja table tr td {
+	width: 33.3%;
+	color: #7575755;
+	font-size: 14px;
+	text-align: center;
+}
+.fgf table tr td {
+	width: 50%;
+	color: #7575755;
+	font-size: 14px;
+	text-align: center;
+}
+.maskja table tr td.you, .fgf table tr td.you {
+	border-right: 1px solid #ccc;
+}
+.lkjkj {
+	text-align: center;
+	width: 100%;
+}
+.lkjkj div {
+	margin: 0 auto;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 75%;
+}
+.lkjkj div input.text {
+	width: 75%;
+	text-indent: 5px;
+	color: #757575;
+	font-size: 14px;
+	height: 30px;
+	border: 0;
+}
+.lkjkj div input.button {
+	width: 25%;
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+	height: 30px;
+	border: 0;
+	background-color: #ff756b;
+}
+.dskjf {
+	width: 90%;
+	margin: 0 auto;
+}
+.dskjf dl {
+	width: 100%;
+	overflow: hidden;
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+}
+.dskjf dl dt {
+	width: 25%;
+	float: right;
+	text-align: center;
+}
+.dskjf dl dt img {
+	width: 100%;
+	margin-top: 5px;
+}
+.dskjf dl dd {
+	float: left;
+	overflow: hidden
+}
+.dskjf dl dd.dd2 {
+	width: 70%;
+}
+.dskjf dl dd div {
+	width: 100%;
+	color: #737373;
+	font-size: 0.8rem;
+	word-wrap: break-word;
+}
+.dskjf dl dd div.li1 {
+	font-weight: bold;
+	font-size: 0.9rem;
+	min-height: 60px;
+}

@@ -1,0 +1,127 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_Consumer user = ViewData["user"] as C_Consumer;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="~/css/jlpmain.css?20170810" rel="stylesheet" />
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+    <title>个人信息</title>
+</head>
+<body style="background:#fff;">
+    <form id="form1" data-ajax="false">
+        <div class="home_box">
+            <div class="div1">
+                <img src="~/images/9.png" class="qq" />
+            </div>
+            <div class="div2">
+                <table>
+                    <tr>
+                        <td><dl><a href="/j_shop/Index6"><dt><img src="~/images/lpdh.png" /></dt><dd>礼品商城</dd></a></dl></td>
+                        <td><dl><a href="/j_shop/Index1"><dt><img src="~/images/ph.png" /></dt><dd>积分排行</dd></a></dl></td>
+                        <td><dl><a href="/j_shop/jifengo"><dt><img src="~/images/wyjf.png" /></dt><dd>我要积分</dd></a></dl></td>
+                        <td><dl><a href="/j_shop/ren"><dt><img src="~/images/grzx.png" /></dt><dd>个人信息</dd></a></dl></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="HH_div3">
+
+            </div>
+        </div>
+        </div>
+        <div id="page1" data-role="page">
+            <div class="dlhtt1" id="dlhtt" style="background: url(/images/txbj.jpg); background-size: 100% 100%;">
+                <dl>
+                    <dt onclick="showimg()">
+                        <span id="setimg">
+                            <img src="/layout/jfshop/images/TCtx.png" />
+                        </span>
+                        <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+                    </dt>
+                    <dd style="padding: 18px 0 0 0;">
+                        <span>@(user.UserName)</span>
+                    </dd>
+                    <dd>
+                        <span class="span1">积分：@(user.jf)</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="bellowsss single">
+
+                <a href="/j_shop/lingqurecord">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">领取记录</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                        </div>
+                    </div>
+                </a>
+                <a href="/j_shop/MyOrders">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">兑换记录</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                        </div>
+                    </div>
+                </a>
+                <a href="/j_mymail/MyAddress">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">地址管理</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                        </div>
+                    </div>
+                </a>
+                <a href="/j_shop/datashow">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">个人资料</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                        </div>
+                    </div>
+                </a>
+                @*<a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">角色</span><span class="span4">@(user.Type)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">姓名</span><span class="span4">@(user.Name)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">性别</span><span class="span4">@(user.Sex)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">电话</span><span class="span4">@(user.Mobile)</span>
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript:void(0)">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">地址</span><span class="span4">@(user.Province+user.City+user.Area+user.Address)</span>
+                        </div>
+                    </div>
+                </a>*@
+
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>代理手机端公告</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">标题</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("Title", "", new { @class = "layui-input", @lay_verify = "required", @placeholder = "请输入标题", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">链接</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("Url", "", new { @class = "layui-input", @placeholder = "输入链接", @autocomplete = "off" })
+                @*<div class="layui-btn layui-btn-normal layui-btn-small" onclick="setmarticle()">选择代理手机端文章</div>*@
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; ">排序</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("Sort", "", new { @class = "layui-input", @placeholder = "请输入排序序号", @autocomplete = "off" })
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; "></label>
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="go">保存</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form();
+
+            //监听提交
+            form.on('submit(go)', function (data) {
+                $.post("/SYSMNotify/ToAdd", $("form").serialize(), function (rtn) {
+                    if (rtn == "ok") {
+                        parent.window.location.href = parent.window.location.href;
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
+<script>
+    function setmarticle()
+    {
+        var index = layer.open({
+            type: 2,
+            title: "选择文章作为公告",
+            area: ['900px', '500px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/SYSMNotify/SetMArticle/'
+        });
+    }
+    function setmarticleBack(id)
+    {
+        var url = "@(WeConfig.wx_domain)" + "/MArticle/Detail/" + id;
+        $("#Url").val(url);
+    }
+</script>

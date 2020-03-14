@@ -1,0 +1,137 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.0" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+
+    <title>菜单添加</title>
+</head>
+<body>
+
+    <form class="layui-form" action="" style="margin:15px 20px 5px 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">栏目</label>
+            <div class="layui-input-block">
+                @Html.DropDownList("ParentID", SelectListHelper.GetParentMenu(null), new { @class = "select" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="MenuName" required lay-verify="required" placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单链接</label>
+            <div class="layui-input-block">
+                <input type="text" name="MenuUrl" required lay-verify="required" placeholder="请输入链接地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline">
+                <input type="number" name="Sort" required lay-verify="required" placeholder="请输入序列号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否启用</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="IsValid" lay-skin="switch" lay-text="启用|禁用" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否显示</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="IsShow" lay-skin="switch" lay-text="显示|隐藏" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否维护</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="IsRobot" lay-skin="switch" lay-text="公开|维护" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-filter="formDemo" onclick="toadd()"><i class="layui-icon">&#xe654;</i>添加</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".permission-list dt input:checkbox").click(function () {
+                $(this).closest("dl").find("dd input:checkbox").prop("checked", $(this).prop("checked"));
+            });
+
+            $(".permission-list2 dd input:checkbox").click(function () {
+                var l = $(this).parent().parent().find("input:checked").length;
+                var l2 = $(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+                if ($(this).prop("checked")) {
+                    $(this).closest("dl").find("dt input:checkbox").prop("checked", true);
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked", true);
+                }
+                else {
+                    if (l == 0) {
+                        $(this).closest("dl").find("dt input:checkbox").prop("checked", false);
+                    }
+                    if (l2 == 0) {
+                        $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked", false);
+                    }
+                }
+            });
+
+            $("#form-admin-role-add").validate({
+                rules: {
+                    roleName: {
+                        required: true,
+                    },
+                },
+                onkeyup: false,
+                focusCleanup: true,
+                success: "valid",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit();
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+<script>
+    function toadd() {
+        $.post("/B_Menu/MenusToAdd", $("form").serialize(), function (rtn) {
+            if (rtn == "ok") {
+                parent.location.href = parent.location.href;
+            }
+            else {
+                layer.alert(rtn);
+            }
+        })
+    }
+</script>

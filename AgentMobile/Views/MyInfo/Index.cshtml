@@ -1,0 +1,175 @@
+﻿@using WeModels;
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我的信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain2.css" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <link href="/css/main2.css" rel="stylesheet" />
+    <link href="/css/index1.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="TX">
+                <div class="dlhtt" id="dlhtt">
+                    <dl>
+                        <dt onclick="showimg()">
+                            <span id="setimg">
+                                <img src="~/images/27.png?@(WeConfig.img_version)" alt="" id="show" />
+                            </span>
+                            <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+                        </dt>
+                        <dd>
+                            <span class="title">@(user.Name)</span>
+                        </dd>
+                        <dd>
+                            <span class="span2 white">授权级别：@(user.userTypeName)</span>
+                        </dd>
+                        <dd>
+                            @*<span class="span2">上级经销商：@(user.ChiefName)</span><br />*@
+                            <span class="span2 white">授权时间：@(user.DatCreate.ToString("yyyy-MM-dd"))</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="bellowsss single">
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span11">授权号</span><span class="span33">@(user.Identifier)</span>
+                    </div>
+                </div>
+
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span11">电话</span><span class="span33">@(user.Phone)</span>
+                    </div>
+                </div>
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span11">经销商等级</span><span class="span33">@(user.userTypeName)</span>
+                    </div>
+                </div>
+                @*<div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span11">微信号</span><span class="span33">@(user.wxNo)</span>
+                    </div>
+                </div>*@
+                @*<div class="bellows__item" onclick="window.location.href = '/MyInfo/MyWxQRCode'">
+                    <div class="bellows__header1">
+                        <span class="span11">我的微信二维码</span><span class="span4"> &nbsp;<img class="img5" src="/images/jiantou.png" /></span>
+                    </div>
+                </div>*@
+                @*<div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span11">身份证号</span><span class="span33">@(user.Card)</span>
+                    </div>
+                </div>*@
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span11">授权人（上级）</span><span class="span33">@(string.IsNullOrWhiteSpace(user.ChiefName) ? "总部" : user.ChiefName)</span>
+                    </div>
+                </div>
+                @*<div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span11">推荐人</span><span class="span33">@(user.IName)</span>
+                        </div>
+                    @*</div>
+                <div class="bellows__item" onclick="window.location.href = '/MyAddress/Index'">
+                    <div class="bellows__header1">
+                        <span class="span11">常用地址本</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                    </div>
+                </div>*@
+                <div class="bellows__item" onclick="window.location.href = '/MyCenter/EditPwd'">
+                    <div class="bellows__header1">
+                        <span class="span11">修改登录密码</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                    </div>
+                </div>
+                @*
+                <div class="bellows__item" onclick="window.location.href = '/MyCenter/ApplyUpgrade'">
+                    <div class="bellows__header1">
+                        <span class="span11">我要升级</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                    </div>
+                </div>
+                *@
+                <div class="bellows__item" onclick="window.location.href = '/PublicShow/support'">
+                    <div class="bellows__header1">
+                        <span class="span11">关于系统</span><span class="span4">V1.7 &nbsp;<img class="img5" src="/images/jiantou.png" /></span>
+                    </div>
+                </div>
+                <div class="bellows__item" onclick="window.location.href = '/Home/LoginOut'">
+                    <div class="bellows__header1">
+                        <span class="span11">退出登录</span><span class="span4"><img class="img5" src="/images/jiantou.png" /></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="QLRcode"><a href="/agentback/Index"><img src="/layout/jfshop/images/TCfan.png" /></a></div>
+
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/Common/jquery.form.js"></script>
+<script>
+    $(function () {
+        $("#file_temporaryImage").change(function (e) {
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    var actionUrl = "/MyInfo/MyImg";
+                    $("#show").attr("src", this.result);
+                    $("#form1").ajaxSubmit({
+                        type: "POST",//提交类型
+                        url: actionUrl,//请求地址
+                        data: {},//请求数据
+                        success: function (rtn) {//请求成功后的函数
+                            if (rtn == "ok") {
+                                layer.open({
+                                    content: "恭喜您，更换成功",
+                                    btn: '我知道了'
+                                });
+                            }
+                            else {
+                                layer.open({ content: rtn, btn: '我知道了' });
+                            }
+                        }
+                    });
+
+                }
+            }
+        });
+    })
+    function showimg() {
+        //底部对话框
+        layer.open({
+            content: '是否替换个人图标'
+          , btn: ['从相册中选择', '取消']
+          , skin: 'footer'
+          , yes: function (index) {
+              layer.close(index);
+              $("#file_temporaryImage").click();
+          }
+        });
+    }
+</script>
+
+

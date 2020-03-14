@@ -1,0 +1,770 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_UserArticle article = ViewData["article"] as C_UserArticle;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <title>文章编辑</title>
+    <link href="~/layout/artui/mui.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Public/wx/css/wx.css" />
+    <style type="text/css">
+        body {
+            background-color: #f1f1f1;
+            text-shadow: 0 0 2px #ccc;
+            font-family: -apple-system-font, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        }
+
+        .mui-bar-nav {
+            /*box-shadow: none;
+            -webkit-box-shadow: none;
+            background-color: inherit;*/
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            text-align: left;
+            box-shadow: 0 0 10px #ccc;
+            text-shadow: none;
+            overflow: hidden;
+            margin: 5px;
+            padding: 5px;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+
+        .rich_media_content .editor-mode {
+            border: dashed 1px red;
+            padding: 5px;
+            position: relative;
+        }
+
+        .rich_media_content span.editor-mode,
+        .rich_media_content strong.editor-mode {
+            display: inline-block;
+            margin: 1px;
+        }
+
+        .rich_media_content .editor-mode:after {
+            font-family: Muiicons;
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            color: red;
+            font-size: 24px;
+            content: '\e400';
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .layui-m-layer textarea {
+            width: 92%;
+        }
+
+        .mui-bar-tab-button-group {
+            text-align: center;
+            height: 50px;
+        }
+
+            .mui-bar-tab-button-group span {
+                display: inline-block;
+                line-height: 50px;
+            }
+
+                .mui-bar-tab-button-group span.tag-article-save {
+                    background-color: #007aff;
+                    color: #fff;
+                }
+
+                .mui-bar-tab-button-group span.tag-article-preview {
+                    background-color: #4cd964;
+                    color: #fff;
+                }
+
+                .mui-bar-tab-button-group span.tag-text-del,
+                .mui-bar-tab-button-group span.tag-picture-del {
+                    background-color: #dd524d;
+                    color: #fff;
+                }
+
+                .mui-bar-tab-button-group span.tag-text-modify {
+                    background-color: #007aff;
+                    color: #fff;
+                }
+
+                .mui-bar-tab-button-group span.tag-text-insert-ad {
+                }
+
+                .mui-bar-tab-button-group span.tag-picture-insert-ad,
+                .mui-bar-tab-button-group span.tag-ad-insert {
+                    background-color: #007aff;
+                    color: #fff;
+                }
+
+                .mui-bar-tab-button-group span.tag-text-cancel,
+                .mui-bar-tab-button-group span.tag-picture-cancel,
+                .mui-bar-tab-button-group span.tag-ad-cancel {
+                    background-color: #c7c7cc;
+                    color: #fff;
+                }
+
+        .mui-control-content {
+            background-color: white;
+            min-height: 215px;
+        }
+
+            .mui-control-content .mui-loading {
+                margin-top: 50px;
+            }
+
+        #itemAdEdit > div {
+            padding: 10px;
+        }
+
+        #itemAdEdit h5 {
+            color: #000;
+            line-height: 20px;
+            border-left: 3px solid #007aff;
+            padding-left: 6px;
+            margin: 10px 0px;
+        }
+
+        #itemAdEdit img {
+            width: 80px;
+            height: 80px;
+            border: 1px dashed #999;
+        }
+
+        #itemAdEdit textarea {
+            width: 88%;
+        }
+
+        #itemAdEdit span.progress-mask {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 80px;
+            height: 80px;
+            opacity: 0.8;
+            display: block;
+            background-color: #ccc;
+            line-height: 80px;
+            text-align: center;
+            /*z-index: 1;*/
+        }
+
+        #itemAdEdit span.progress-text {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            width: 80px;
+            height: 80px;
+            display: block;
+            color: #007aff;
+            font-weight: bold;
+            line-height: 80px;
+            text-align: center;
+            font-size: 30px;
+            /*z-index: 1;*/
+        }
+
+        #itemAdTemplate .mui-scroll-wrapper {
+            height: 320px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 id="title" class="mui-title">文章编辑器</h1>
+        <a href="/" class="mui-icon mui-icon-closeempty mui-pull-right"></a>
+    </header>
+    <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+        <span class="mui-col-xs-6 tag-article-save">保存</span>
+        <span class="mui-col-xs-6 tag-article-preview">预览</span>
+    </nav>
+    <div class="mui-content">
+        <div class="container">
+            <h5>标题：</h5>
+            <div class="mui-input-row">
+                <input id="article_id" type="text" value="@(article.title)">
+            </div>
+        </div>
+        <div class="container">
+            <h5>内容：</h5>
+            <div class="rich_media_content " id="article_content">
+                <div class="tag-container">
+
+
+                          @Html.Raw(HttpUtility.UrlDecode(article.contents))
+                
+                 </div>
+
+            </div>
+
+        </div>
+    </div>
+    <footer>
+        &copy; 2016
+    </footer>
+
+    <div id="modal-text" style="display:none;">
+        <header class="mui-bar mui-bar-nav">
+            <h1 id="title" class="mui-title">文本操作</h1>
+        </header>
+        <div class="mui-content mui-content-padded">
+            <div class="mui-input-row">
+                <textarea class="tag-text-teaxarea" rows="8" placeholder=""></textarea>
+            </div>
+            <!--<div class="mui-button-row">
+                <button class="mui-btn mui-btn-primary tag-text-modify" type="button" onclick="return false;">修改</button>&nbsp;&nbsp;
+                <button class="mui-btn mui-btn-grey tag-text-cancel" type="button" onclick="return false;">取消</button>
+            </div>-->
+        </div>
+        <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+            <span class="mui-col-xs-3 tag-text-del">删除</span>
+            <span class="mui-col-xs-3 tag-text-modify">修改</span>
+            <span class="mui-col-xs-3 tag-text-insert-ad">插入广告</span>
+            <span class="mui-col-xs-3 tag-text-cancel">取消</span>
+        </nav>
+    </div>
+    <div id="modal-picture" style="display:none;">
+        <header class="mui-bar mui-bar-nav">
+            <h1 id="title" class="mui-title">图片操作</h1>
+        </header>
+        <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+            <span class="mui-col-xs-4 tag-picture-del">删除</span>
+            <span class="mui-col-xs-4 tag-picture-insert-ad">插入广告</span>
+            <span class="mui-col-xs-4 tag-picture-cancel">取消</span>
+        </nav>
+    </div>
+
+    <!--<script type="text/javascript" src="/Public/wx/js/zepto.js"></script>-->
+    <script src="~/layout/artui/mui.min.js"></script>
+    <script src="~/layout/artui/api.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <script src="~/layout/artui/plupload.full.min.js"></script>
+    <script src="~/layout/artui/qiniu.js"></script>
+    <script id="modal-ad" type="text/html">
+        <header class="mui-bar mui-bar-nav">
+            <h1 id="title" class="mui-title">插入广告</h1>
+        </header>
+        <div class="mui-content">
+            <div id="slider" class="mui-slider">
+                <div id="sliderSegmentedControl"
+                     class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                    <a class="mui-control-item" href="#itemAdEdit">
+                        编辑图文
+                    </a>
+                    <a class="mui-control-item" href="#itemAdTemplate">
+                        模版选择
+                    </a>
+                </div>
+                <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+                <div class="mui-slider-group">
+                    <div id="itemAdEdit" class="mui-slider-item mui-control-content mui-active">
+                        <div>
+                            <h5>广告图片：</h5>
+                            <div id='container' class="mui-input-row">
+                                <form id="form1">
+                                    <img id="pickfiles" src="/images/addImg.png" style="z-index: 1;" onclick="ol()">
+                                    <input id="imgurl" name="imgurl" type="file" hidden="hidden" accept="image/jpg.image/jpeg,image/png,image/gif"/>
+                                </form>
+
+                                @*<span class="progress-text"></span>
+                                <span class="progress-mask"></span>*@
+                            </div>
+                            <h5>文本内容：</h5>
+                            <div class="mui-input-row">
+                                <input id="ad_picture_url" type="hidden">
+                                <textarea id="ad_text" rows="5" placeholder="广告文本内容"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="itemAdTemplate" class="mui-slider-item mui-control-content">
+                        <div class="mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view mui-table-view-radio"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="mui-bar mui-bar-tab mui-bar-tab-button-group">
+                <span class="mui-col-xs-6 tag-ad-insert">插入</span>
+                <span class="mui-col-xs-6 tag-ad-cancel">取消</span>
+            </nav>
+    </script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/jquery.form.js"></script>
+    <script type="text/javascript">
+        mui.init();
+        var cover;
+        mui.ready(function () {
+
+            //递归选择可编辑的内容
+            recursive(document.querySelector("#article_content div"));
+
+            //去除img的边框
+            mui('#article_content img').each(function (index, item) {
+                item.style.border = null;
+            });
+
+            //修正视频高宽
+            var width = document.documentElement.clientWidth;
+            [].forEach.call(document.querySelectorAll("iframe.video_iframe"), function (item, index) {
+                item.width = width;
+                item.height = width / 1.33;
+                item.src = item.getAttribute('data-src').replace('preview', 'player')
+                        .replace(/width=(\w+)?/g, 'width=' + item.width).replace(/height=(\w+)?/g, 'width=' + item.height);
+                item.style.width = width + 'px';
+                item.style.height = width / 1.33 + 'px';
+            });
+
+        });
+
+        function ol()
+        {
+            $("#imgurl").click();
+        }
+
+        function on()
+        {
+            //判断上传控件中是否选择了图片  
+            //var image = $("#imgurl").val();
+            //if ($.trim(image) == "") {
+            //    layer.open({ content: "请选择图片！", btn: '我知道了' });
+            //    return;
+            //}
+            loading = layer.open({
+                type: 2
+     , content: '提交中',shadeClose:false
+            });
+            //提交请求处理的url  
+            var actionUrl = "/articleget/upimg/@(article.ID)";
+            //开始ajax操作  
+            $("#form1").ajaxSubmit({
+
+                type: "POST",//提交类型  
+                url: actionUrl,//请求地址  
+                data: [{ "name":"imgbase","value": $("#pickfiles").attr("src") }],//请求数据  
+                success: function (rtn) {//请求成功后的函数  
+                    layer.close(loading);
+                    if (rtn.code == "ok") {
+                        document.querySelector("#ad_picture_url").value = rtn.msg;
+                        $("#pickfiles").attr("src",rtn.msg);
+                    }
+                    else {
+                        layer.open({ content: rtn.msg, btn: '我知道了' });
+                    }
+                },
+                error: function (rtn) {
+                    layer.close(loading);
+                    layer.open({
+                        content:JSON.stringify(rtn)
+  , skin: 'msg'
+  , time: 2 //2秒后自动关闭
+                    });
+                },//请求失败的函数  
+                async: true
+
+            });
+        }
+
+        /*
+         * 递归选择可编辑的内容
+         */
+        function recursive(element) {
+            var childrens = element.children;
+            if (childrens && childrens.length > 0) {
+                for (var i = 0; i < childrens.length; i++) {
+                    recursive(childrens[i]);
+                }
+                //alert($.trim(element.textContent));
+                //if ($.trim(element.textContent).length > 0) {
+                //    element.classList.add("editor-mode");
+                //    element.classList.add("editor-mode-text");
+                //}
+            } else {
+                if (element.tagName == "IMG") {
+                    element.classList.add("editor-mode");
+                    element.classList.add("editor-mode-picture");
+                    element.style.zIndex = 1;
+                } else if (element.tagName == "IFRAME") {
+                    element.parentNode.classList.add("editor-mode");
+                    element.parentNode.classList.add("editor-mode-picture");
+                } else if (element.tagName == 'BR') {
+                    element.parentNode.classList.add("editor-mode");
+                    element.parentNode.classList.add("editor-mode-text");
+                }
+
+                else {
+                    if ($.trim(element.textContent) != '') {
+                        element.classList.add("editor-mode");
+                        element.classList.add("editor-mode-text");
+                    }
+                    else {
+                        var parent = element.parentNode;
+                        element.remove();
+                        recursive(parent);
+                    }
+                }
+            }
+        }
+        ;
+
+        /*
+         * 文本编辑-点击事件
+         */
+        mui('#article_content').on('tap', '.editor-mode', function (e) {
+
+            e.stopPropagation();
+
+            $target = e.target;
+
+            if ($target.classList.contains('editor-mode-picture')) {
+                showImgEditor($target);
+            } else {
+                showTextEditor($target);
+            }
+        });
+
+        /*
+         * 弹出文本编辑框
+         */
+        function showTextEditor(target) {
+            //弹出编辑窗
+            layer.open({
+                type: 1,
+                content: document.getElementById('modal-text').innerHTML,
+                anim: 'up',
+                style: 'position:fixed; bottom:0; left:0; width: 100%; height: 300px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+            });
+            //文本赋值
+            document.querySelector('.layui-m-layer textarea').value = target.innerText;
+
+            //文本编辑-点击事件-修改按钮
+            mui('.layui-m-layer').on('tap', '.tag-text-modify', function (e) {
+                target.innerText = document.querySelector('.layui-m-layer textarea.tag-text-teaxarea').value;
+                layer.closeAll();
+            });
+            //文本编辑-点击事件-取消按钮
+            mui('.layui-m-layer').on('tap', '.tag-text-cancel', function (e) {
+                layer.closeAll();
+            });
+            //文本编辑-点击事件-删除按钮
+            mui('.layui-m-layer').on('tap', '.tag-text-del', function (e) {
+                var parent = target.parentNode;
+                parent.removeChild(target);
+                recursive(parent);
+                layer.closeAll();
+            });
+            //文本编辑-点击事件-插入广告
+            mui('.layui-m-layer').on('tap', '.tag-text-insert-ad', function (e) {
+                layer.closeAll();
+                showAdEditor(target);
+            });
+        }
+
+        /*
+         * 弹出图片编辑框
+         */
+        function showImgEditor(target) {
+
+            //弹出编辑窗
+            layer.open({
+                type: 1,
+                content: document.getElementById('modal-picture').innerHTML,
+                anim: 'up',
+                style: 'position:fixed; bottom:0; left:0; width: 100%; height: 150px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+            });
+
+
+            //图片编辑-点击事件-取消按钮
+            mui('.layui-m-layer').on('tap', '.tag-picture-cancel', function (e) {
+                layer.closeAll();
+            });
+            //图片编辑-点击事件-删除按钮
+            mui('.layui-m-layer').on('tap', '.tag-picture-del', function (e) {
+                target.parentNode.removeChild(target);
+                layer.closeAll();
+            });
+            //图片编辑-点击事件-插入广告
+            mui('.layui-m-layer').on('tap', '.tag-picture-insert-ad', function (e) {
+                layer.closeAll();
+                showAdEditor(target);
+            });
+        }
+
+        /*
+         * 弹出广告编辑框
+         */
+        function showAdEditor(target) {
+            var $target = target;
+            //弹出编辑窗
+            layer.open({
+                type: 1,
+                content: document.getElementById('modal-ad').innerText,
+                anim: 'up',
+                shadeClose: false,
+                style: 'position:fixed; bottom:0; left:0; width: 100%; height: 450px; padding:10px 0; border:none;background-color: #efeff4; -webkit-animation-duration: .5s; animation-duration: .5s;'
+            });
+
+            $("#imgurl").change(function (e) {
+                var file = e.target.files[0] || e.dataTransfer.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function () {
+                        var img = new Image();
+                        img.src = this.result;
+                        $("#pickfiles").attr("src", this.result);
+
+                        on();
+                    }
+                }
+            });
+
+            //禁用背景滚动
+            document.querySelector('body').style.overflow = 'hidden';
+            mui('.mui-slider').slider();
+            mui('.mui-scroll-wrapper.mui-slider-indicator.mui-segmented-control').scroll({
+                scrollY: false,
+                scrollX: true,
+                indicators: false,
+                snap: '.mui-control-item'
+            });
+
+            //广告编辑-点击事件-插入按钮
+            mui('.layui-m-layer').on('tap', '.tag-ad-insert', function (e) {
+
+                while (!$target.parentNode.classList.contains('tag-container') || target.parentNode.tagName == 'BODY') {
+                    $target = $target.parentNode;
+                }
+
+                //获取广告图片与文字内容
+                var content, picture_url;
+                if (document.getElementById("itemAdEdit").classList.contains('mui-active')) {
+                    content = document.querySelector("#ad_text").value.trim();
+                    picture_url = document.querySelector("#ad_picture_url").value.trim();
+                    if ('' == picture_url) {
+                        layer.open({
+                            content: '请上传广告图片！',
+                            skin: 'msg',
+                            time: 2 //2秒后自动关闭
+                        });
+                        return;
+                    }
+                } else {
+                    //获取选取的模版
+                    var li = document.querySelector("#itemAdTemplate li.mui-selected");
+                    if (!li) {
+                        layer.open({
+                            content: '请选择模版！',
+                            skin: 'msg',
+                            time: 2 //2秒后自动关闭
+                        });
+                        return;
+                    }
+                    content = li.getAttribute('data-content');
+                    picture_url = li.getAttribute('data-picture');
+                }
+
+                //插入广告图片节点
+                var p = document.createElement('p');
+                var img = document.createElement('img');
+                img.src = picture_url;
+                img.style = "max-width:100%";
+                img.className = 'editor-mode';
+                p.appendChild(img);
+                $target.parentNode.insertBefore(p, $target.nextSibling);
+                //插入广告文本节点
+                var p2 = document.createElement('p');
+                p2.innerHTML = content;
+                p2.className = 'editor-mode';
+                if (p2.innerHTML != '') {
+                    $target.parentNode.insertBefore(p2, p.nextSibling);
+                }
+
+                layer.closeAll();
+                //开启背景滚动
+                document.querySelector('body').style.overflow = '';
+            });
+            //广告编辑-点击事件-取消按钮
+            mui('.layui-m-layer').on('tap', '.tag-ad-cancel', function (e) {
+                layer.closeAll();
+                //开启背景滚动
+                document.querySelector('body').style.overflow = '';
+            });
+            //绑定七牛上传
+            bindQiniu();
+        }
+
+        /*
+         * 七牛上传图片
+         */
+        function bindQiniu() {
+
+            return;
+            var uploader = Qiniu.uploader({
+                runtimes: 'html5',
+                browse_button: 'pickfiles',
+                container: 'container',
+                drop_element: 'container',
+                max_file_size: '10mb',
+                dragdrop: true,
+                chunk_size: '4mb',
+                //uptoken_url: api.server_url_prefix + '/qiniu/uptoken',
+                uptoken: 'QAL-CN3yXZl6X4yln0A4xrD2DmFXVzFojzeg7-gz:Q0qrTiWmXzP1mYVBtVI0TbRhqMI=:eyJzY29wZSI6InN4Y2FyZCIsImRlYWRsaW5lIjoxNTAwNTE2MDYyLCJ1cEhvc3RzIjpbImh0dHA6XC9cL3VwLnFpbml1LmNvbSIsImh0dHA6XC9cL3VwbG9hZC5xaW5pdS5jb20iLCItSCB1cC5xaW5pdS5jb20gaHR0cDpcL1wvMTgzLjEzMS43LjE4Il19',
+                domain: 'http://upload.qiniu.com/',
+                //            filters: {
+                //                mime_types: [ //只允许上传图片文件
+                //                    {
+                //                        title: "图片文件",
+                //                        extensions: "jpg,png,jpeg,exif,gif,raw"
+                //                    }
+                //                ]
+                //            },
+                //					resize: {
+                //						width: 1024
+                //					},
+                get_new_uptoken: false,
+                auto_start: true,
+                unique_names: false,
+                save_key: false,
+                init: {
+                    'FilesAdded': function (up, files) {
+                        plupload.each(files, function (file) {
+                            var preloader = new mOxie.Image();
+                            preloader.onload = function () {
+                                preloader.downsize(240, 240);
+                                var imgsrc = preloader.type == 'image/jpeg' ? preloader.getAsDataURL('image/jpeg', 80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
+                                document.getElementById("pickfiles").src = imgsrc;
+                                preloader.destroy();
+                                preloader = null;
+                            };
+                            preloader.load(file.getSource());
+
+                        });
+                    },
+                    'BeforeUpload': function (up, file) {
+                        console.log(file);
+                    },
+                    'UploadProgress': function (up, file) {
+                        document.querySelector("#itemAdEdit span.progress-mask").style.height = (100 - file.percent) * 80 / 100 + 'px';
+                        document.querySelector("#itemAdEdit span.progress-text").innerText = file.percent + '%';
+                    },
+                    'UploadComplete': function () {
+                        document.querySelector("#itemAdEdit span.progress-mask").style.height = '0px';
+                        document.querySelector("#itemAdEdit span.progress-text").innerText = '';
+                    },
+                    'FileUploaded': function (up, file, info) {
+                        var key = mui.parseJSON(info).key;
+                        document.querySelector("#ad_picture_url").value = api.qiniu.domain + key;
+                        document.getElementById("pickfiles").src = api.qiniu.domain + key + '?imageView2/1/w/120/h/120';
+                    },
+                    'Error': function (up, err, errTip) {
+                        console.log(err);
+                        mui.alert(errTip);
+                    },
+                    'Key': function (up, file) {
+                        var key = api.qiniu.type.article + '/' + Date.parse(new Date()) + '-' + file.name;
+                        return key;
+                    }
+                }
+            });
+            setTimeout(function () {
+                document.getElementById("pickfiles").style.zIndex = null; //解决微信上遮罩进度条无法显示的问题
+            }, 200);
+
+        }
+
+        /*
+         * 保存
+         */
+        document.querySelector(".tag-article-save").addEventListener('tap', function () {
+            submit_ariticle(function (id) {
+                location.href = "/SourceShow/articlenew/" + id;
+            }, function () {
+                mui.toast('保存失败');
+            })
+        });
+
+        /*
+         * 预览
+         */
+        document.querySelector(".tag-article-preview").addEventListener('tap', function () {
+            submit_ariticle(function (id) {
+                window.history.replaceState({}, 0, location.origin + location.pathname + '?id=' + id);
+                location.href = "/SourceShow/articlenew/" + id;
+            }, function () {
+                mui.toast('预览失败');
+            })
+        });
+
+        /*
+         * 提交编辑内容
+         */
+        function submit_ariticle(success, fail) {
+            mui.showWaiting();
+
+            if (!cover) {
+                //获取第一张图片
+                var img = document.querySelector("#article_content div img");
+                if (img) {
+                    cover = img.src.replace('http://qiniu.sxvt58.com/', '');
+                }
+            }
+
+            api.request('/articleget/save', {
+                'id': '@(article.ID)',
+                'title': document.getElementById("article_id").value,
+                'cover': cover,
+                'content': encodeURIComponent(document.querySelector(".tag-container").innerHTML)
+            }, function (result) {
+                mui.closeWaiting();
+                if (result.status == 1) {
+                    success('@(article.ID)');
+                } else {
+                    fail();
+                }
+            }, function () {
+                fail();
+            });
+
+
+
+
+
+
+
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>

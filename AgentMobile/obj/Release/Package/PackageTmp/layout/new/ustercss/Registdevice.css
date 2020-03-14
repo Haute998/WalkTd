@@ -1,0 +1,148 @@
+
+@media screen and (max-width: 500px) {
+	#logo{
+		margin-top:3%;
+	}	
+	
+	.tj_c ul li .name{
+		font-size:1.1em;
+	}
+	.tj_c ul li .price font{
+		font-size:1em;
+	}
+	.tj_c ul li .price span{
+		font-size:1.1em;
+	}
+	
+	.s_name h2{
+		height:25px; line-height:25px; overflow:hidden; font-size:1.3em; margin-top:5px; text-align:center;
+	}
+	.s_name span{
+		color:#ff4e00; font-size:1.1em; line-height:1.1em;
+	}
+	
+	.fresh_mid ul li .name{
+		font-size:1.1em;
+	}
+	.fresh_mid ul li .price{
+		font-size:1em;
+	}
+	
+	.l_tel{
+		font-size:.9em;
+	}
+	#tels{
+		width:40%;
+	}
+	
+	.backhome{
+		width:4%;
+	}
+	.pos{
+		font-size:1.3em;
+	}
+	
+	.t_img ul li{
+		font-size:1.1em;
+	}
+	.t_img ul li img{
+		width:93%;
+	}
+	
+	.user_t td{
+		font-size:1.1em;
+	}
+	.user_t td span{
+		font-size:1.1em;
+	}
+	
+	.o_td span.o_op{
+		font-size:1em;
+	}
+	
+	.o_name{
+		line-height:1.2em; font-size:1.2em;
+	}
+	.o_num{
+		font-size:1.1em;
+	}
+	.o_td{
+		font-size:1.1em;
+	}
+	.o_op{
+		font-size:.9em; padding:0 2%; margin-left:3%;
+	}
+	
+	.add_tab td{
+		font-size:1.3em;
+	}
+	
+	.jud_c{
+		font-size:1.2em;
+	}
+	.j_date{
+		font-size:1.2em;
+	}
+	
+	.m_img ul li{
+		font-size:1.2em; line-height:1.2em;
+	}
+	
+	.mem_tab td{
+		font-size:1.2em;
+	}
+	.mem_tab_r td{
+		font-size:1.2em;
+	}
+	.c_ipt{
+		font-size:1em;
+	}
+	.c_txt{
+		font-size:1em;
+	}
+	
+	.nav_con ul li{
+		font-size:1em; height:80px;
+	}
+	.nav_con ul li a{
+		height:80px;
+	}
+	
+	table.jud_list tr td{
+		font-size:1em;
+	}
+	
+	.p_sell ul li .times{
+		font-size:1.2em;
+	}
+	
+	ul.carList li{
+		font-size:1.2em;
+	}
+	ul.carList li td font{
+		font-size:1.3em;
+	}
+	
+}
+
+
+@media screen and (max-width: 350px) {
+	
+	.tj_c ul li .name{
+		font-size:1em;
+	}
+	.tj_c ul li .price font{
+		font-size:1em;
+	}
+	.tj_c ul li .price span{
+		font-size:1em;
+	}
+	
+	.add_tab td{
+		font-size:1.2em;
+	}
+	
+	.p_sell ul li .times{
+		font-size:1.1em;
+	}
+}

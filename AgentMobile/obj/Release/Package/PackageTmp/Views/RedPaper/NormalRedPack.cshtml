@@ -1,0 +1,293 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    LotteryActivitys act = ViewData["act"] as LotteryActivitys;
+    string ip = ViewData["ip"] as string;
+    C_WxUser user = ViewData["user"] as C_WxUser;
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>领红包</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/common.css" rel="stylesheet" />
+    <link href="~/StyleAndScript/NormalRedPack/css/zwhongbao.css" rel="stylesheet" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+        .dxyz {
+            color: #ff8901;
+            font-size: 15px;
+            position: relative;
+            top: 15px;
+        }
+
+        .layui-m-layercont {
+            padding: 50px 30px 40px 30px;
+        }
+
+        .layui-m-layerbtn span[yes] {
+            color: #fff;
+        }
+
+        .layui-m-layerchild h3 {
+            padding: 20px 10px 0;
+            line-height: 20px;
+            height: 20px;
+            position: relative;
+            top: 22px;
+        }
+
+        .layui-m-layerbtn {
+            border: 0;
+            background: #fff;
+            margin-bottom: 20px;
+            width: 75%;
+            margin: 0 auto;
+        }
+
+            .layui-m-layerbtn span {
+                width: 100%;
+                height: 35px;
+                border: 1px solid #e11d2b;
+                background: #e11d2b;
+                border-radius: 30px;
+                letter-spacing: 1px;
+                font-size: 14px;
+                color: #fff;
+                display: block;
+                line-height: 35px;
+            }
+    </style>
+</head>
+<body>
+    <div class="hongbao-bg " id="bgfj">
+        <div class="hongbao-all">
+            <div class="hongbao-fch-div">
+                <div class="hongbao-liaojie login-header" onclick="show()">
+                    <a href="javascript:void(0);">活动规则</a>
+                </div>
+                <div class="hongbao-paddingtop">
+                    <div class="hongbao-div">
+                        <div class="hongbao-pos">
+                            <input class="hongbao-input" id="IntegralCode" type="text" placeholder="输入十六位防伪码领取红包" />
+                            <input class="hongbao-smbtn1" type="button" value="" onclick="saoyisao()" />
+                        </div>
+                    </div>
+                    <div class="yihan-d4"><input class="yihan-btn" id="ClickMe" type="button" value="确认领取" /></div>
+                </div>
+            </div>
+            <div class="hongbao-jl"><a href="/RedPaper/AuthenticityList">扫码记录</a></div>
+        </div>
+
+        <div class="login" id="zhuce">
+            <div class="login-input-content">
+                <div class="fy_index_cd">
+                    <div class="zkm-zhuce-d1">注册即可领取红包</div>
+                    <div class="zkm-zhuce-d2">
+                        <div><input class="zkm-zhuce-input zkm-zhuce-sj" id="Text1" type="text" placeholder="手机号" /></div>
+                        <div class="zkm-zhuce-pos">
+                            <input class="zkm-zhuce-input zkm-zhuce-yzm" id="reg_mescode" type="text" placeholder="验证码" />
+                            <input class="zkm-zhuce-yzmbtn" id="Button1" type="button" value="获取验证码" onclick='sendsms()' />
+                        </div>
+                    </div>
+                    <div class="zkm-zhuce-d4"><input class="zkm-zhuce-btn" id="Button1" type="button" value="确认注册" onclick="javascript: turnoff('zhuce')" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="guize" id="guize">
+            <div class="login-input-content">
+                <div class="guize_index_cd">
+                    <div class="zkm-zhuce-d1">活动规则</div>
+                    <div class="zkm-guize-d1">1、参加此次查真伪、领红包活动，仅限使用兆客码防伪查询系统的商品。通过其它渠道获得的商品查询暂不列入此次活动；</div>
+                    <div class="zkm-guize-d1">2、该活动规定日期内，每个防伪查询码只限定领奖一次，重复查询无效；</div>
+                    <div class="zkm-guize-d1">4、活动最终解释权归深圳通程防伪科技有限公司所有。</div>
+                    <div class="zkm-zhuce-d4"><input class="zkm-zhuce-btn" id="Button1" type="button" value="已了解规则" onclick="javascript: turnoff1('guize')" /></div>
+                </div>
+            </div>
+        </div>
+        <div id="light" class="white_content">
+            <div class="white_a">
+                <div class="hb-d4">￥<span id="showprice">100.22</span></div>
+                <div class="hb-d5">恭喜您获得红包</div>
+                <div class="hb-d5">红包将在公众号对您发出</div>
+                <div id="share" class="hb-d5">红包将在公众号对您发出</div>
+                <a class="white_guanbi" href="javascript:void(0)" onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">
+                    <img src="~/StyleAndScript/NormalRedPack/img/hongbao-guanbi.png" />
+                </a>
+            </div>
+        </div>
+
+        <div class="khongbao">
+            <img src="~/StyleAndScript/NormalRedPack/img/hongbao.png" style="width:80%" onclick="lqhongbao()" />
+        </div>
+    </div>
+    @if (IsWx.ToLower() == "true")
+    {
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+        <script type="text/javascript">
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+                timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+                nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+                signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+                jsApiList: ['onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'updateTimelineShareData',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone',
+                'closeWindow',
+                'scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+            wx.ready(function () {
+                var meta = document.getElementsByTagName('meta'); var share_desc = ''; for (i in meta) { if (typeof meta[i].name != "undefined" && meta[i].name.toLowerCase() == "description") { share_desc = meta[i].content; } }
+                wx.onMenuShareAppMessage({
+                    title: document.title, // 分享标题
+                    desc: share_desc,   // 分享描述
+                    link: "@(ViewData["WXURL"])", // 分享链接
+                    imgUrl: document.getElementById("wx_pic").getAttribute("src"), // 分享图标
+                    type: '',           // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '',        // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        // alert("分享成功");
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+                //分享给朋友
+                wx.updateTimelineShareData({
+                    title: document.title, // 分享标题
+                    desc: share_desc, // 分享描述
+                    link: "@(ViewData["WXURL"])", // 分享链接  window.location.href
+                    imgUrl: document.getElementById("wx_pic").getAttribute("src"), // 分享图标
+                    success: function () {
+                        // alert("分享成功1");
+                    }
+                });
+
+                wx.onMenuShareAppMessage({
+                    title: document.title, // 分享标题
+                    desc: share_desc, // 分享描述
+                    link: "@(ViewData["WXURL"])", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: document.getElementById("wx_pic").getAttribute("src"), // 分享图标
+                    success: function () {
+                        //alert("分享成功");
+                    }
+                });
+
+            });
+
+        </script>
+    }
+
+    <script type="text/javascript">
+        function turnoff(obj) {
+            document.getElementById(obj).style.display = "none";
+        }
+        function turnoff1(obj) {
+            document.getElementById(obj).style.display = "none";
+        }
+
+        $(function () {
+
+            var Mobile = "@(user.Mobile)";
+            var IntegralCode = "@(ViewData["Code"])";
+            var id = 3;
+
+            var msg = "@(ViewData["msg"])";
+            if (msg != "") {
+                layer.open({
+                    content: msg,
+                    btn: ['确认'],
+                    yes: function (index, layero) {
+                        window.location.href = "/RedPaper/AuthenticityQuery";
+                    },
+                    cancel: function () {
+                        //右上角关闭回调
+                        window.location.href = "/RedPaper/AuthenticityQuery";
+                    }
+                });
+            }
+
+            $(".khongbao").show();
+        });
+
+        var yzm = "";
+        var Phone = $("[name='Phone']").val();
+
+        function lqhongbao() {
+
+            var loading = layer.open({
+                type: 2, content: '正在拼命的抢红包', shadeClose: false
+            });
+            var IntegralCode = "@(ViewData["Code"])";
+            var Phone = "";
+
+            //$.get("http://ck.fw-12365.com/ashx/SecurityQueryApi.ashx?Key=tc201805051108&" + "FWCode=" + IntegralCode + "&Lang=zh-en", function (d) {
+            //    var rtn = JSON.parse(d);
+            //    if (rtn.State == 1 || rtn.State == 2) {
+
+            var id = 3;
+
+            $.post("/RedPaper/getSharepack", { "id": 3, "IntegralCode": "@(ViewData["Code"])", "Phone": Phone }, function (rtn) {
+
+                layer.close(loading);
+                var rtnArray = rtn.split('|');
+                if (rtnArray[0] == "ok") {
+                    window.location.href = "/RedPaper/AuthenticityShow?money=" + rtnArray[1] + "&type=aa";
+                }
+                else {
+                    layer.open({
+                        content: rtnArray[1],
+                        btn: ['确认'],
+                        yes: function (index, layero) {
+                            window.location.href = "/RedPaper/AuthenticityQuery";
+
+                        },
+                        cancel: function () {
+                            //右上角关闭回调
+                        }
+                    });
+                }
+            });
+        }
+
+        var yzm = "";
+        var Phone = $("[name='Phone']").val();
+
+        ///发送验证码
+        function sendsms() {
+            Phone = $("[name='Phone']").val();
+            if (Phone == "") {
+                $("#tishi").html("请输入手机号");
+            }
+            else {
+
+                $.post("/sendmsg/sendUserVeriCode", { "mobile": Phone }, function (rtn) {
+                    // alert(rtn)
+                    if (rtn == "ok") {
+                        $("#tishi").html("验证码发送遇到问题，请稍候再试");
+                    }
+                    else {
+                        $("#tishi").html("验证码发送成功。");
+                        yzm = rtn;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

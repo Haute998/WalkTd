@@ -1,0 +1,110 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="height:100%">
+<head>
+    <meta charset="utf-8">
+    <title>会员分布图</title>
+
+</head>
+<body style="height:100%">
+
+    <div id="container" style="height:100%"></div>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/Echarts-4.4/echarts.min.js"></script>
+    <script src="~/js/Echarts-4.4/extension/dataTool.min.js"></script>
+    <script src="~/js/Echarts-4.4/map/js/china.js"></script>
+    <script src="~/js/Echarts-4.4/map/js/world.js"></script>
+    <script src="~/js/Echarts-4.4/extension/bmap.min.js"></script>
+
+    <script type="text/javascript">
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        function randomData() {
+            return Math.round(Math.random() * 1000);
+        }
+
+        $.post("/Main/getC_Consumermapfenbu", { "type": "消费者" }, function (data) {
+            var adata = data;
+            loadmap(adata);
+        })
+
+        function loadmap(adata) {
+
+            option = {
+                title: {
+                    text: '会员分布图',
+                    subtext: '全国会员分布图及各省会员数量',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['会员']
+                },
+                visualMap: {
+                    min: 0,
+                    max: 2500,
+                    left: 'left',
+                    top: 'bottom',
+                    text: ['多', '少'],
+                    calculable: true
+                },
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    left: 'right',
+                    top: 'center',
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                series: [
+                    {
+                        name: '会员',
+                        type: 'map',
+                        mapType: 'china',
+                        roam: false,
+                        label: {
+                            normal: {
+                                show: true
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        },
+                        data: adata
+                    }
+                ]
+            };;
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+        }
+
+        function getcnt(data, cityname) {
+            var cnt = 0;
+            $(data).each(function (i, o) {
+                if (o.province.indexOf(cityname) >= 0) {
+                    cnt = o.cnt;
+                    return;
+                }
+            })
+
+            return cnt;
+        }
+
+    </script>
+</body>
+
+</html>
+
+

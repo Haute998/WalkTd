@@ -1,0 +1,95 @@
+﻿@using WeModels;
+@{
+    Layout = null;
+    List<TrackCode> TrackList = ViewData["CodeTrack"] as List<TrackCode>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>条码追踪明细</title>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <style type="text/css">
+        .head {
+            width:90%;
+            line-height:30px;
+            margin:10px 5%;
+            text-align:center;
+            border:1px solid #ff6a00;
+        }
+        .list {
+            width:90%;
+            margin:5%;
+        }
+
+        .layui-text h3 {
+            font-size:14px;
+            font-weight:bold;
+        }
+
+        .layui-timeline-item:before, hr {
+            background-color:#ccc;
+        }
+
+        .product {
+            width:100%;
+            color:#ff6a00;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">
+        @if (@ViewData["BigCode"]!=null&&@ViewData["BigCode"].ToString()!="")
+        { 
+        <span>大标：@ViewData["BigCode"]</span>
+        }
+        @if (@ViewData["MiddleCode"] != null && @ViewData["MiddleCode"].ToString() != "")
+        {
+            if (PDAUserMsg.Param.MiddlePacking)
+            {
+                <span>中标：@ViewData["MiddleCode"]</span>
+            }
+            else
+            { 
+                <span>大标：@ViewData["MiddleCode"]</span>
+            }
+        }
+        <span>小标：@ViewData["SmallCode"]</span>
+        <div class="product">
+            @if (ViewData["ProductNo"] != "")
+            { 
+                <span>产品编号：@(ViewData["ProductNo"])&nbsp;&nbsp;</span><span>&nbsp;&nbsp;产品名称：@ViewData["ProductName"]</span>
+            }
+                
+        </div>
+    </div>
+
+    <div class="list">
+        <ul class="layui-timeline">
+            @foreach(TrackCode t in TrackList)
+            { 
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title">@CommonFunc.GetDateTimeFromTimestamp(t.ITime).ToString("yyyy-MM-dd HH:mm")  @t.STitle</h3>
+                    <p>
+                        @Html.Raw(t.SContent)
+                    </p>
+                </div>
+            </li>
+            }
+
+            @*<li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <div class="layui-timeline-title">过去</div>
+                </div>
+            </li>*@
+        </ul>
+    </div>
+</body>
+</html>

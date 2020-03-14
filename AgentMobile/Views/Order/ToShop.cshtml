@@ -1,0 +1,205 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_UserCartCalModel cartCal = ViewData["cartCal"] as C_UserCartCalModel;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>我要订货</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/animate.css" />
+    <link rel="stylesheet" href="/css/jd_cart.css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+
+
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <script src="~/js/Common/ArithmeticHelper.js"></script>
+
+
+    <style type="text/css">
+        .jlmx table {
+            margin-top: 15px;
+        }
+
+            .jlmx table tr td.td1 ul li {
+                text-align: left;
+                padding-left: 2%;
+            }
+
+        .jlmx table {
+            border-right: none;
+            border-left: none;
+        }
+
+            .jlmx table tr td {
+                border-right: none;
+            }
+        .code {
+            position: fixed;
+            right: 5%;
+            bottom: 6%;
+            width: 35px;
+            height: 35px;
+        }
+        .code img{
+            width:100%;
+        }
+    </style>
+
+</head>
+<body style="background: #fff;">
+    <form id="form1" data-ajax="false">
+        <div id="wrapper">
+            <div id="container">
+                <div id="mainMenuBarAnchor">
+                </div>
+                <div id="mainMenuBar">
+                    <table>
+                        <tr>
+                            <td>数量:<span class="js-totalcnt">@(cartCal.totalCnt)</span>
+                            </td>
+                            <td>
+                                <span>总金额:￥<span class="js-totalprice">@(cartCal.totalPrice)</span> </span>
+                            </td>
+                            <td>
+                                <button type="button" onclick="tocart()" style="background-color: #006DB8; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">确认</button>
+                            </td>
+                            <td onclick="tocart()">
+                                <span style="position: relative;">
+                                    <img src="/images/77.png" style="margin-top: 14px" />
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="page1" data-role="page">
+            <div data-role="content">
+                <div class="centent_total">
+                    <div class="ProductList">
+
+                        <button id="producthtml" onclick="LoadProducts(this)" data-pageindex="1" type="button" style="display: none; background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none;">更多</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="code"><a href="/agentback/Index"><img src="/layout/jfshop/images/TCfan.png" /></a></div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="producttmp">
+    {{each(i,ck) RtnList}}
+    <dl>
+        <dt onclick="location.href = '/ProductShow/ProductsDetail/${ck.ProductID}'">
+            <img src="@(WeConfig.b_domain)${ck.ProductImg}" />
+        </dt>
+        <dd class="dd1">${ck.ProductName}
+        </dd>
+        <dd class="dd2">价格 : <span>￥<span class="js-price">${ck.Price_agent}</span></span>
+        </dd>
+        <dd class="dd2">
+            <span style="float: left; color: #323232; font-size: 12px; line-height: 25px;">购买数量：</span>
+            <div class="p_opition" style="float: left;">
+                <div class="change_num f_left">
+                    <span onclick="reduce(this)">-</span>
+                    <input type="tel" name="buycnt" value="1" />
+                    <span onclick="add(this)">+</span>
+                </div>
+            </div>
+        </dd>
+        <dd class="dd3">
+            <button type="button" data-productid="${ck.ProductID}" onclick="addtocart(this)" style="background-color: #006DB8; color: white; padding: 6px 20px 6px 20px; border-radius: 2px; border: 0; border: none;">加入购物车</button>
+        </dd>
+    </dl>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        LoadProducts($("#producthtml"));
+    })
+    function LoadProducts(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        $.post("/Order/LoadProducts", { "pageIndex": gopage, "pageSize": 10 }, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#producttmp").tmpl(data).insertBefore('#producthtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+
+
+    //添加到购物车
+    function addtocart(obj) {
+        var productid = $(obj).attr("data-productid");
+        var buycnt = Number($(obj).parent().parent().find("[name='buycnt']").val());
+        if (buycnt < 1) {
+            layer.open({ content: '无效的数量', skin: 'msg', time: 2 });
+            return false;
+        }
+
+        var price = Number($(obj).parent().parent().find(".js-price").text());
+        var totalprice = accMul(buycnt, price);
+
+        var oldtotalcnt = Number($(".js-totalcnt").text());
+        var oldtotalprice = Number($(".js-totalprice").text());
+
+        loading = layer.open({ type: 2, content: '加载中' });
+        $.post("/C_UserCart/AddToCart", { "ProductID": productid, "GetCnt": buycnt }, function (rtn) {
+            layer.close(loading);
+            if (rtn == "ok") {
+                $(".js-totalcnt").text(accAdd(oldtotalcnt, buycnt));
+                $(".js-totalprice").text(accAdd(oldtotalprice, (accMul(buycnt, price))));
+                layer.open({ content: '已添加到购物车', skin: 'msg', time: 2 });
+            }
+            else {
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+    }
+
+    function add(obj) {
+        var oldcnt = $(obj).parent().find("[name='buycnt']").val();
+        $(obj).parent().find("[name='buycnt']").val(accAdd(oldcnt, 1));
+    }
+
+    function reduce(obj) {
+        var oldcnt = $(obj).parent().find("[name='buycnt']").val();
+        if (oldcnt <= 1) {
+            layer.open({ content: '不能再少啦', skin: 'msg', time: 2 });
+            return false;
+        }
+        $(obj).parent().find("[name='buycnt']").val(Subtr(oldcnt, 1));
+    }
+
+    function tocart() {
+        if ($(".js-totalcnt").text() <= 0) {
+            layer.open({ content: '您的购物车什么都没有', skin: 'msg', time: 2 });
+            return false;
+        }
+        window.location.href = "/C_UserCart/Index";
+    }
+</script>

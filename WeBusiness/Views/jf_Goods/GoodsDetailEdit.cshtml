@@ -1,0 +1,202 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model jf_Goods
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>礼品详情编写</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/wangEditor-2.1.22/dist/css/wangEditor.min.css" rel="stylesheet" />
+    <script src="~/js/wangEditor-2.1.22/dist/js/wangEditor.min.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>礼品详情编写</legend>
+    </fieldset>
+    <form class="layui-form">
+        <input type="hidden" name="ID" value="@(Model.ID)" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">礼品主图</label>
+            <div class="layui-input-block">
+                <span>
+                    <img height="78" width="80" id="addimg" src="@(Model.Main_img)" />
+                </span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-radius" type="button" onclick="baseedit()">基本信息修改</button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">礼品名称</label>
+            <div class="layui-input-block">
+                <label style="line-height: 36px">@(Model.GoodsName)</label>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上架状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="PublishStat" value="已上架" title="已上架" @(Model.PublishStat == "已上架" ? "checked=''" : "")><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon layui-anim-scaleSpring"></i><span>已上架</span></div>
+                <input type="radio" name="PublishStat" value="未上架" title="未上架" @(Model.PublishStat == "未上架" ? "checked=''" : "")><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>未上架</span></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">礼品详情</label>
+            <div style="width:90%">
+                <div class="layui-input-block">
+                    <div id="textedit" style="height:400px;max-height:500px;">
+                        @Html.Raw(HttpUtility.UrlDecode(Model.Detail))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="save" type="button" lay-submit lay-filter="save">保存</button>
+                <button class="layui-btn layui-btn-primary layui-btn-radius" id="fromtemp" type="button">从草稿箱</button>
+                <button class="layui-btn layui-btn-primary layui-btn-small" onclick="savetemp(false)" type="button">保存到草稿箱</button>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
+<script type="text/javascript">
+    var editor = new wangEditor('textedit');
+    editor.config.uploadImgUrl = "/jf_Goods/DetailImgsUp/@(Model.ID)";
+    editor.config.menus = [
+        '|',
+        'bold',
+        'underline',
+        'italic',
+        'strikethrough',
+        'eraser',
+        'forecolor',
+        'bgcolor',
+        '|',
+        'quote',
+        'fontfamily',
+        'fontsize',
+        'head',
+        'unorderlist',
+        'orderlist',
+        'alignleft',
+        'aligncenter',
+        'alignright',
+        '|',
+        'link',
+        'unlink',
+        'table',
+        'emotion',
+        '|',
+        'img',
+        '|',
+        'undo',
+        'redo',
+        'fullscreen'
+    ];
+    editor.create();
+</script>
+
+<script>
+    layui.use('form', function () {
+        var form = layui.form();
+
+        //监听提交
+        form.on('submit(save)', function (data) {
+
+            var html = editor.$txt.html();
+            var json = $("form").serializeArray();
+            json.push({ "name": "Detail", "value": window.encodeURI(html) });
+            $.post("/jf_Goods/GoodsDetailSave", json, function (rtn) {
+                if (rtn == "ok") {
+                    layer.alert("保存成功");
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
+<script>
+    $(function ()
+    {
+        $("#fromtemp").click(function ()
+        {
+            $.get("/jf_Goods/GetDetailTemp/@(Model.ID)", {}, function (rtn)
+            {
+                if (rtn!="") {
+                    editor.$txt.html(window.decodeURI(rtn));
+                }
+                else
+                {
+                    layer.msg("草稿箱什么都没有", { icon: 2 });
+                }
+            })
+        })
+
+        setTimeout(timeoutsavetemp, 30000);
+    })
+    function timeoutsavetemp()
+    {
+        setInterval(savetemp(true), 30000);
+    }
+    function moreimg()
+    {
+        layer.open({
+            type: 2,
+            title:"礼品图片",
+            area: ['900px', '800px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/jf_Goods/GoodsImgUp/@(Model.ID)'
+        });
+    }
+
+    function baseedit()
+    {
+        layer.open({
+            type: 2,
+            title: "礼品基本信息修改",
+            area: ['900px', '800px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/jf_Goods/EditGoods/@(Model.ID)'
+        });
+    }
+
+    function savetemp(isauto)
+    {
+        var html = editor.$txt.html();
+        if (html=="")
+        {
+            if (isauto == false)
+            {
+                layer.msg("什么都没有，保存个啥？", { icon: 2 });
+            }
+            return false;
+        }
+        $.post("/jf_Goods/DetailTempSave", { "id": '@(Model.ID)', "detail": window.encodeURI(html), "istemp": "1" }, function (rtn) {
+            if (rtn == "ok") {
+                layer.msg("已" + (isauto?"自动":"") + "为你保存到草稿箱", { icon: 1 });
+            }
+            else if (isauto)
+            {
+                layer.msg("保存到草稿箱失败", { icon: 2 });
+            }
+        })
+    }
+</script>

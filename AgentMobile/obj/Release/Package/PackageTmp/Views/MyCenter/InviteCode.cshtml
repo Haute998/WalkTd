@@ -1,0 +1,187 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+    InviteCode code= ViewData["code"] as InviteCode;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>授权链接</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .centent_total .sqdls_up table.t1 {
+            margin-bottom: 20px;
+        }
+
+        .centent_total .sqdls_up table.t22 tr td.td1 {
+            width: 30%;
+            height: 45px;
+            line-height: 40px;
+            float: left;
+            color: #323232;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .centent_total .sqdls_up table.t22 tr td.td2 {
+            width: 70%;
+            float: right;
+        }
+
+            .centent_total .sqdls_up table.t22 tr td.td2 input, .centent_total .sqdls_up table.t22 tr td select {
+                width: 100%;
+                text-indent: 5px;
+                float: left;
+                height: 35px;
+                color: #333;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                font-weight: normal;
+                background-color: #cdcdcd;
+                border-radius: 0;
+                -moz-border-radius: 0;
+                -webkit-border-radius: 0;
+                border: 1px solid #9d9d9d;
+            }
+
+        .centent_total .sqdls_up table.t22 tr td select {
+            width: 100%;
+            -webkit-appearance: none;
+            background-image: url(/images/88.png);
+            background-repeat: no-repeat;
+            background-size: 14% 104%;
+            background-position: right;
+            background-origin: content-box;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+                        <table class="t22">
+                            <tr>
+                                <td class="td1">
+                                    设置级别：
+                                </td>
+
+                                <td class="td2">
+                                    @Html.DropDownList("C_UserTypeID", SelectListHelper.GetC_UserTypeIDByPUserAtAll(null, user.ID, 0, true), new { })
+                                </td>
+                            </tr>
+                            @*<tr class="r1">
+                                <td style="text-align: center;">
+                                    <button onclick="createQRCode()" type="button" style="background-color: #000000; color: white; padding: 10px; width: 80%; border-radius: 5px; border: 0; border: none; ">生成二维码</button>
+                                </td>
+                            </tr>*@
+                        </table>
+
+                        </div>
+
+
+
+                        <div class="fy_fwcx_img">
+                            <p id="qcode" style="text-align:center;display:none"></p>
+                            <p style="text-align:center;"><img id="qcodeimg" /></p>
+                        </div>
+                    </div>
+            </div>
+
+            <p style="text-align: center;">
+    <button onclick="createQRCode()" type="button" style="background-color: #000000; color: white; padding: 10px; width: 80%; border-radius: 5px; border: 0; border: none; ">生成二维码</button>
+</p>
+
+            @*<div class="All_foot">
+                    <div class="foot">
+                        <table>
+                            <tr>
+                                <td>
+                                    <a href="/agentback/Index">
+                                        <div class="div1">
+                                            <img src="/images/25.png" alt="" />
+                                        </div>
+                                        <div class="div2">
+                                            返回首页
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>*@
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/jquery.qrcode.min.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/Common/desHelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    var InviteUrl = "@(WeConfig.wx_domain + "/agentApply/Index")" + "?id=" + "@(user.UserName)" + "&key=" + "@(code.ID)" + "&type=code";
+    var usertype = 0;
+    $(function () {
+        showcode();
+    })
+
+    function createQRCode()
+    {
+        debugger;
+        usertype = $("#C_UserTypeID").val();
+        showcode();
+        layer.open({
+            content: '已成功生成【' + $("#C_UserTypeID").find("option:selected").text() + '】二维码'
+  , skin: 'msg'
+  , time: 2 //2秒后自动关闭
+        });
+    }
+    function showcode() {
+        $("#qcode").empty();
+        var para = InviteUrl;
+
+        if (usertype != 0)
+        {
+            para += "&usertype=" + usertype;
+        }
+        var str = toUtf8(para);
+        $('#qcode').qrcode({
+            render: "canvas",
+            text: str
+        });
+        var canvas = $("#qcode").find("canvas")[0];
+        $("#qcodeimg").attr("src", canvas.toDataURL("image/png"));
+    }
+    function toUtf8(str) {
+        var out, i, len, c;
+        out = "";
+        len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charCodeAt(i);
+            if ((c >= 0x0001) && (c <= 0x007F)) {
+                out += str.charAt(i);
+            } else if (c > 0x07FF) {
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            } else {
+                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+            }
+        }
+        return out;
+    }
+</script>

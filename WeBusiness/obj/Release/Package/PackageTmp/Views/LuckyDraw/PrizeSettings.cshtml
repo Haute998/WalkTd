@@ -1,0 +1,553 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    LotteryActivitys activity = ViewData["activity"] as LotteryActivitys;
+
+    List<LotteryPrizes> Prizes = ViewData["Prizes"] as List<LotteryPrizes>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>活动奖项设置</title>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v0.2" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+
+    <script src="~/js/jquery.tmpl.min.js"></script>
+
+    <style type="text/css">
+        .js-addimg {
+            cursor: pointer;
+        }
+
+            .js-addimg:hover {
+                border: 1px solid #00ff90;
+                width: 78px;
+                height: 76px;
+            }
+    </style>
+</head>
+<body>
+    <div style="margin-left:20px">
+        <div class="site-demo-button">
+            <button class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" type="button" onclick="tabAdd()"><i class="layui-icon">&#xe654;</i>添加中奖项</button>
+            @if (!Convert.ToBoolean(ViewData["IsNot"]))
+            {
+                <button class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" type="button" onclick="tabAddNot()">添加不中奖项</button>
+            }
+            else
+            {
+                <button class="layui-btn layui-btn-radius layui-btn-sm layui-btn-normal" type="button" style="display:none;">添加不中奖项</button>
+            }
+            <button class="layui-btn layui-btn-radius" type="button" onclick="filish()" style="display:none;">完成</button>
+            <a>参与抽奖码数量：@(ViewData["BarCodeQty"])</a>
+        </div>
+        <div class="layui-tab layui-tab-brief" lay-filter="demo">
+            <ul class="layui-tab-title" id="TitleList">
+                @foreach (LotteryPrizes prize in Prizes)
+                {
+                    <li class="@(Prizes.IndexOf(prize)==0?"layui-this":"")" data-title-id="@(prize.ID)">@(prize.PrizeLevel)</li>
+                }
+            </ul>
+            <div class="layui-tab-content" id="Cent">
+                @foreach (LotteryPrizes prize in Prizes)
+                {
+                    <div class="layui-tab-item @(Prizes.IndexOf(prize) == 0?"layui-show":"") js-prize-tab" data-id="@(prize.ID)">
+                        <form class="layui-form js-form" action="" data-id="@(prize.ID)">
+                            <input type="hidden" name="ID" value="@(prize.ID)" />
+                            <input type="hidden" name="ActivityID" value="@(prize.ActivityID)" />
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width:100px">奖品图片</label>
+                                <div class="layui-input-inline" style="width:400px">
+                                    <span>
+                                        <img height="78" width="80" class="js-addimg" src="@(string.IsNullOrWhiteSpace(prize.PrizeImgUrl) ? "/images/system/addImg.png" : prize.PrizeImgUrl)" />
+                                        <input class="js-goodsimg" hidden="hidden" name="goodsimg" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" /><label style="color:#b91717">推荐尺寸(正方形)：1:1，(如：108pxX108px)</label>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width:100px">奖品等级</label>
+                                <div class="layui-input-inline" style="width:400px">
+                                    <input name="PrizeLevel" class="layui-input" data-id="@(prize.ID)" onchange="settitle(this)" data-input="ver" placeholder="请输入奖品等级" value="@(prize.PrizeLevel)" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width:100px">奖品名称</label>
+                                <div class="layui-input-inline" style="width:400px">
+                                    <input name="PrizeName" class="layui-input" data-input="ver" placeholder="请输入奖品名称" value="@(prize.PrizeName)" autocomplete="off" />
+                                </div>
+                            </div>
+
+                            @if (!prize.IsNot)
+                            {
+                                <div class="layui-form-item prizeQty">
+                                    <label class="layui-form-label" style="width:100px">奖品数量</label>
+                                    <div class="layui-input-inline" style="width:100px">
+                                        <input name="PrizeQty" class="layui-input PrizeQty" data-input="ver" placeholder="请输入数量" value="@(prize.PrizeQty)" autocomplete="off" onchange="newCalc(this)" />
+                                    </div>
+                                    <div class="layui-input-inline"><span class="layui-form-label" style="width:200px">中奖率：<a class="wpr">0%</a></span></div>
+                                </div>
+
+                                <div class="layui-form-item prizeQty">
+                                    <label class="layui-form-label" style="width:100px">已中奖数</label>
+                                    <div class="layui-input-inline" style="width:100px">
+                                        <span class="layui-form-label" style="text-align:left;font-weight:bold;">@(prize.WonTime)</span>
+                                    </div>
+                                </div>
+
+                            }
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 100px; "></label>
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-danger" onclick="del(this)" data-isnot="@(prize.IsNot)" data-id="@(prize.ID)">删除</button>
+                                    <button type="button" class="layui-btn" data-id="@(prize.ID)" onclick="save(this)">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+</body>
+</html>
+
+<script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+
+<script type="text/x-jquery-tmpl" id="configtmp">
+    <div class="content">
+
+        <div class="layui-tab-item js-prize-tab" data-id="${ID}">
+            <form class="layui-form js-form" action="" data-id="${ID}">
+                <input type="hidden" name="ID" value="${ID}" />
+                <input type="hidden" name="ActivityID" value="${ActivityID}" />
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:100px">奖品图片</label>
+                    <div class="layui-input-inline" style="width:400px">
+                        <span>
+                            <img height="78" width="80" class="js-addimg" src="/images/system/addImg.png" />
+                            <input class="js-goodsimg" hidden="hidden" name="goodsimg" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" />
+                            <label style="color:#b91717">推荐尺寸(正方形)：1:1，(如：108pxX108px)</label>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:100px">奖品等级</label>
+                    <div class="layui-input-inline" style="width:400px">
+                        <input name="PrizeLevel" class="layui-input" data-id="${ID}" onchange="settitle(this)" data-input="ver" placeholder="请输入奖品等级" value="${PrizeLevel}" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:100px">奖品名称</label>
+                    <div class="layui-input-inline" style="width:400px">
+                        <input name="PrizeName" class="layui-input" data-input="ver" placeholder="请输入奖品名称" autocomplete="off" />
+                    </div>
+                </div>
+
+                <div class="layui-form-item prizeQty">
+                    <label class="layui-form-label" style="width:100px">奖品数量</label>
+                    <div class="layui-input-inline" style="width:100px">
+                        <input name="PrizeQty" class="layui-input PrizeQty" data-input="ver" placeholder="请输入数量" autocomplete="off" onchange="newCalc(this)" />
+                    </div>
+                    <div class="layui-input-inline"><span class="layui-form-label" style="width:200px">中奖率：<a class="wpr">0%</a></span></div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100px; "></label>
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn layui-btn-danger del" onclick="del(this)" data-isnot="False" data-id="${ID}">删除</button>
+                        <button type="button" class="layui-btn" data-id="${ID}" onclick="save(this)">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script src="~/js/jquery.form.js"></script>
+<script>
+    var loading;
+    var thiselement;
+    var barcodeCount =@(ViewData["BarCodeQty"])
+
+
+    layui.use(['element'], function () {
+        //var $ = layui.jquery;
+        var element = layui.element(); //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+
+        //监听Tab切换，以改变地址hash值
+        element.on('tab(demo)', function (data) {
+            var qty = $(".layui-show").find('.PrizeQty').val();
+            CipherWPR(qty);
+
+        });
+
+        thiselement = element;
+
+        //触发事件
+        var active = {
+            tabAdd: function () {
+                //loading = layer.msg('加载中...', { icon: 16, shade: 0.3, time: 0 });
+                var data = { "PrizeLevel": "新奖项", "ActivityID": "@(activity.ID)" };
+                $.get("/AddNotPrize/AddPrize", data, function (rtn) {
+                    var array = new Array();
+                    array = rtn.split("|");
+                    if (array[0] == "ok") {
+
+                        data.ID = array[1];
+                        //新增一个Tab项
+                        var NewTableContent = $("#configtmp").tmpl(data).html();
+
+                        $("#Cent").append(NewTableContent);
+                        $("#TitleList").append("<li class= data-title-id='" + data.ID + "'>新奖项</li>");
+
+                        var thistab = $(".js-prize-tab[data-id='" + array[1] + "']");
+                        var index = $(".js-prize-tab").index(thistab);
+
+                        $(".js-prize-tab[data-id=" + data.ID + "]").find(".js-addimg").click(function () {
+                            $(this).parent().find(".js-goodsimg").click();
+                        });
+
+                        $(".js-prize-tab[data-id=" + data.ID + "]").change(function (e) {
+                            var obj = this;
+                            var file = e.target.files[0] || e.dataTransfer.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.readAsDataURL(file);
+                                reader.onload = function () {
+                                    var img = new Image();
+                                    img.src = this.result;
+                                    $(obj).find(".js-addimg").attr("src", this.result);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        layer.alert(array[1]);
+                    }
+                    layer.close(loading);
+                });
+            },
+
+            tabDelete: function () {
+                //删除指定Tab项
+                element.tabDelete('demo', 2); //删除第3项（注意序号是从0开始计算）
+            },
+            tabChange: function () {
+                //切换到指定Tab项
+                element.tabChange('demo', 1); //切换到第2项（注意序号是从0开始计算）
+            },
+            tabAddNot: function () {
+                var data = { "PrizeLevel": "未中奖项", "ActivityID": "@(activity.ID)" };
+                $.get("/LuckyDraw/AddNotPrize", data, function (rtn) {
+                    var array = new Array();
+                    array = rtn.split("|");
+                    if (array[0] == "ok") {
+
+                        $(".addnot").hide();
+
+                        data.ID = array[1];
+                        //新增一个Tab项
+                        var NewTableContent = $("#configtmp").tmpl(data).html();
+
+                        $("#Cent").append(NewTableContent);
+                        $("#TitleList").append("<li class= data-title-id='" + data.ID + "'>未中奖项</li>");
+
+                        var thistab = $(".js-prize-tab[data-id='" + data.ID + "']");
+                        var index = $(".js-prize-tab").index(thistab);
+
+                        $(thistab).find(".prizeQty").remove();
+                        $(thistab).find(".del").attr("data-IsNot", "True");
+
+                        // 绑定事件
+                        $(thistab).find(".js-addimg").click(function () {
+                            $(this).parent().find(".js-goodsimg").click();
+                        });
+
+                        $(thistab).change(function (e) {
+                            var obj = this;
+                            var file = e.target.files[0] || e.dataTransfer.files[0];
+                            if (file) {
+                                var reader = new FileReader();
+                                reader.readAsDataURL(file);
+                                reader.onload = function () {
+                                    var img = new Image();
+                                    img.src = this.result;
+                                    $(obj).find(".js-addimg").attr("src", this.result);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        layer.alert(array[1]);
+                    }
+                    layer.close(loading);
+                });
+
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+
+    function tabAdd() {
+        //loading = layer.msg('加载中...', { icon: 16, shade: 0.3, time: 0 });
+        var data = { "PrizeLevel": "新奖项", "ActivityID": "@(activity.ID)" };
+        $.get("/LuckyDraw/AddPrize", data, function (rtn) {
+            var array = new Array();
+            array = rtn.split("|");
+            if (array[0] == "ok") {
+
+                data.ID = array[1];
+                //新增一个Tab项
+                var NewTableContent = $("#configtmp").tmpl(data).html();
+
+                $("#Cent").append(NewTableContent);
+                $("#TitleList").append("<li class= data-title-id='" + data.ID + "'>新奖项</li>");
+
+                var thistab = $(".js-prize-tab[data-id='" + array[1] + "']");
+                var index = $(".js-prize-tab").index(thistab);
+
+                $(".js-prize-tab[data-id=" + data.ID + "]").find(".js-addimg").click(function () {
+                    $(this).parent().find(".js-goodsimg").click();
+                });
+
+                $(".js-prize-tab[data-id=" + data.ID + "]").change(function (e) {
+                    var obj = this;
+                    var file = e.target.files[0] || e.dataTransfer.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function () {
+                            var img = new Image();
+                            img.src = this.result;
+                            $(obj).find(".js-addimg").attr("src", this.result);
+                        }
+                    }
+                });
+            }
+            else {
+                layer.alert(array[1]);
+            }
+            layer.close(loading);
+        });
+    }
+
+    function tabAddNot() {
+        var data = { "PrizeLevel": "未中奖项", "ActivityID": "@(activity.ID)" };
+        $.get("/LuckyDraw/AddNotPrize", data, function (rtn) {
+            var array = new Array();
+            array = rtn.split("|");
+            if (array[0] == "ok") {
+
+                $(".addnot").hide();
+
+                data.ID = array[1];
+                //新增一个Tab项
+                var NewTableContent = $("#configtmp").tmpl(data).html();
+
+                $("#Cent").append(NewTableContent);
+                $("#TitleList").append("<li class= data-title-id='" + data.ID + "'>未中奖项</li>");
+
+                var thistab = $(".js-prize-tab[data-id='" + data.ID + "']");
+                var index = $(".js-prize-tab").index(thistab);
+
+                $(thistab).find(".prizeQty").remove();
+                $(thistab).find(".del").attr("data-IsNot", "True");
+
+                // 绑定事件
+                $(thistab).find(".js-addimg").click(function () {
+                    $(this).parent().find(".js-goodsimg").click();
+                });
+
+                $(thistab).change(function (e) {
+                    var obj = this;
+                    var file = e.target.files[0] || e.dataTransfer.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function () {
+                            var img = new Image();
+                            img.src = this.result;
+                            $(obj).find(".js-addimg").attr("src", this.result);
+                        }
+                    }
+                });
+            }
+            else {
+                layer.alert(array[1]);
+            }
+            layer.close(loading);
+        });
+
+    }
+
+    function CipherWPR(qty) {
+
+        var pr = (qty / parseFloat(barcodeCount)) * 100;
+        pr = pr < 0 ? 0 : pr;
+        pr = pr > 100 ? 100 : pr;
+        pr = pr.toFixed(8);
+
+        $(".layui-show").find(".wpr").html(parseFloat(pr) + "%");
+    }
+
+    function newCalc(obj) {
+        var qty = $(obj).val();
+        CipherWPR(qty);
+    }
+
+    function code() {
+        setimg();
+        $(".js-goodsimg").change(function (e) {
+            var obj = this;
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    $(obj).parent().find(".js-addimg").attr("src", this.result);
+                }
+            }
+        });
+    }
+
+    $(function () {
+        setimg();
+        $(".js-goodsimg").change(function (e) {
+            var obj = this;
+            var file = e.target.files[0] || e.dataTransfer.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    $(obj).parent().find(".js-addimg").attr("src", this.result);
+                }
+            }
+        });
+    })
+
+    function TemporaryMedia(id) {
+        var obj = $(".js-form[data-id='" + id + "']");
+        //判断上传控件中是否选择了图片
+        var imgsrc = $(obj).find(".js-addimg").attr("src");
+        if ($.trim(imgsrc) == "" || $.trim(imgsrc) == "/images/system/addImg.png") {
+            parent.layer.alert("请添加奖品图片！");
+            return;
+        }
+        loading = parent.layer.msg('提交中...', { icon: 16, shade: 0.3, time: 0 });
+
+        //提交请求处理的url
+        var actionUrl = "/LuckyDraw/SavePrizes";
+        //开始ajax操作
+        $(obj).ajaxSubmit({
+
+            type: "POST",//提交类型
+            url: actionUrl,//请求地址
+            data: {},//请求数据
+            success: function (rtn) {//请求成功后的函数
+                parent.layer.close(loading);
+                if (rtn == "ok") {
+                    
+                    parent.layer.alert("保存成功");
+                }
+                else {
+                    parent.layer.alert(rtn);
+                }
+            },
+            error: function (rtn) {
+                parent.layer.close(loading);
+                parent.layer.open({ content: JSON.stringify(rtn), btn: '我知道了' });
+            },//请求失败的函数
+            async: true
+        });
+    }
+
+    function settitle(obj) {
+        var id = $(obj).attr("data-id");
+        $("[data-title-id='" + id + "']").text($(obj).val());
+    }
+
+    //删除奖项
+    function del(obj) {
+
+        var id = $(obj).attr("data-id");
+        var thistab = $(".js-prize-tab[data-id='" + id + "']");
+        var index = $(".js-prize-tab").index(thistab);
+        var delcomfirm = parent.layer.confirm('确定要删除该奖项吗？', {
+            btn: ['删除', '取消'] //按钮
+        }, function () {
+            //loading = layer.msg('正在删除该奖项...', { icon: 16, shade: 0.3, time: 0 });
+            $.post("/LuckyDraw/delPrize", { "id": id }, function (rtn) {
+                if (rtn == "ok") {
+                    if ($(obj).attr("data-isnot") == "True") $(".addnot").show();
+
+                    var NewTitleShow = $(".layui-this").prev();
+                    $(".layui-this").remove();
+                    $(NewTitleShow).addClass("layui-this");
+
+                    var NewPrevShow = $(".layui-show").prev();
+                    $(".layui-show").remove();
+                    $(NewPrevShow).addClass("layui-show");
+                }
+                else {
+                    parent.layer.alert(rtn);
+                }
+                parent.layer.closeAll();
+                //layer.close(loading);
+            })
+        }, function () {
+            parent.layer.close(delcomfirm);
+        });
+    }
+
+    function filish() {
+        var index = parent.layer.getFrameIndex(window.name);    // 先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    }
+
+    function setimg() {
+        $(".js-addimg").click(function () {
+            $(this).parent().find(".js-goodsimg").click();
+        });
+    }
+
+    function verifyform(id) {
+        var ver = "";
+        $(".js-form[data-id='" + id + "']").find("[data-input='ver']").each(function () {
+            if ($(this).val() == "") {
+                ver = $(this).attr("placeholder");
+                return false;
+            }
+        });
+        return ver;
+    }
+
+    //保存
+    function save(obj) {
+        var id = $(obj).attr("data-id");
+        var ver = verifyform(id);
+        if (ver != "") {
+            parent.layer.alert(ver);
+            return false;
+        }
+        else {
+            TemporaryMedia(id);
+        }
+    }
+</script>

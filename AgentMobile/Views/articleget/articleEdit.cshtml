@@ -1,0 +1,144 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_UserArticle article = ViewData["article"] as C_UserArticle;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>文章修改</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <!-- 强制让文档的宽度与设备的宽度保持1:1，并且文档最大的宽度比例是1.0，且不允许用户点击屏幕放大浏览 -->
+    @*<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, minimal-ui">*@
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <!-- iphone设备中的safari私有meta标签，它表示：允许全屏模式浏览 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="~/js/artEditor-master/example/css/style.css" rel="stylesheet" />
+
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+<body style="height:100%">
+    <div style="width:100%;margin: 0 auto;">
+        <div class="publish-article-title">
+            <div class="title-tips">标题</div>
+            <input type="text" id="title" class="w100" style="width:100%" placeholder="文章标题" value="@(article.title)">
+        </div>
+        <div class="publish-article-content">
+            <div>
+                <div class="title-tips">正文</div>
+                <input type="hidden" id="target">
+                <div class="article-content" id="content">
+
+                    @Html.Raw(HttpUtility.UrlDecode(article.contents))
+
+                </div>
+
+            </div>
+            <div>
+                <div class="footer-btn g-image-upload-box">
+                    <div class="upload-button">
+                        <span class="upload"><i class="upload-img"></i>插入图片</span>
+                        <input class="input-file" id="imageUpload" type="file" name="fileInput" accept="image/*" style="position:absolute;left:0;opacity:0;width:100%;">
+                    </div>
+
+
+
+                </div>
+
+                <br />
+                <div class="footer-btn g-image-upload-box">
+                    <div class="upload-button" id="save">
+                        <span class="upload">保存</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/artEditor-master/dist/index.min.js"></script>
+
+</body>
+</html>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    $('#content').artEditor({
+        imgTar: '#imageUpload',
+        limitSize: 5,   // 兆
+        showServer: true,
+        uploadUrl: '@(WeConfig.wx_domain)/articleget/upimg/@(article.ID)',
+        data: {},
+        uploadField: 'image',
+        breaks: false,
+        placeholader: '请输入文章正文内容',
+        validHtml: ["<br/>"],
+        formInputId: 'target',
+        uploadSuccess: function (res) {
+            // 这里是处理返回数据业务逻辑的地方
+            // `res`为服务器返回`status==200`的`response`
+            // 如果这里`return <path>`将会以`<img src='path'>`的形式插入到页面
+            // 如果发现`res`不符合业务逻辑
+            // 比如后台告诉你这张图片不对劲
+            // 麻烦返回 `false`
+            // 当然如果`showServer==false`
+            // 无所谓咯
+            if (res.code == 'ok') {
+                return res.msg;
+            } else {
+                alert(res.msg);
+            }
+            return false;
+        },
+        uploadError: function (status, error) {
+            //这里做上传失败的操作
+            //也就是http返回码非200的时候
+            alert('网络异常' + status)
+        }
+    });
+</script>
+<script>
+    var loading;
+    $(function ()
+    {
+        $("img").attr("style", "max-width:" + screen.width + "px");
+        $("#content").height(screen.height*0.66);
+
+        $("#save").click(function ()
+        {
+          loading=  layer.open({
+                type: 2
+   , content: '正在保存',shadeClose:false
+            });
+
+            var id = "@(article.ID)";
+            var title = $("#title").val();
+            var content = window.encodeURI($('#content').getValue());
+             
+            $.post("/articleget/save", { "id": id, "title": title, "content": content }, function (rtn)
+            {
+                layer.close(loading);
+                if (rtn == "ok") {
+                    window.location.href = "/SourceShow/articlenew/" + id;
+                }
+                else
+                {
+                    alert(rtn);
+                }
+            })
+
+        });
+    })
+</script>
+

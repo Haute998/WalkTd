@@ -1,0 +1,82 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model List<C_UserType>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>各级代理下单最小价格设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>各级代理下单门槛设置</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+
+        @foreach (C_UserType userType in Model)
+        {
+            <div class="layui-form-item">
+
+                <label class="layui-form-label">@(userType.Name)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="MinOrderPrice" placeholder="输入价格" value="@(userType.MinOrderPrice)" autocomplete="off" class="layui-input" required>
+                </div>
+                <div class="layui-form-mid layui-word-aux"><button class="layui-btn" data-oldval="@(userType.MinOrderPrice)" onclick="save(this)" data-name="@(userType.Name)" type="button" data-id="@(userType.ID)">保存</button></div>
+
+            </div>
+        }
+
+    </form>
+
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form();
+            return false;
+        });
+    </script>
+</body>
+</html>
+<script>
+    var loading;
+    function save(obj)
+    {
+        var id = $(obj).attr("data-id");
+        var price = $(obj).parent().parent().find("[name='MinOrderPrice']").val();
+        var name = $(obj).attr("data-name");
+        var checkNum = /^(:?(:?\d+.\d+)|(:?\d+))$/;
+
+        //if (price == $(obj).attr("data-oldval"))
+        //{
+        //    return false;
+        //}
+
+        if (checkNum.test(price) == false) {
+            layer.alert("请输入有效的价格");
+            return false;
+        }
+        loading = layer.load("修改中");
+        $.post("/MinOrderPrice/edit", { "id": id, "price": price }, function (rtn)
+        {
+            layer.close(loading);
+            if (rtn == "ok") {
+                layer.msg(name + "修改价格成功");
+                $(obj).attr("data-oldval", price)
+            }
+            else
+            {
+                layer.alert(rtn);
+                $(obj).parent().parent().find("[name='MinOrderPrice']").val($(obj).attr("data-oldval"));
+            }
+        })
+    }
+</script>

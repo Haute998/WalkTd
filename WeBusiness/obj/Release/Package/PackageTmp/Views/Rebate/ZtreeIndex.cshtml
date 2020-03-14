@@ -1,0 +1,173 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/js/zTree/css/demo.css" rel="stylesheet" />
+    <link href="~/js/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>分销结构树</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+
+        body .layui-tree-skin-shihuang .layui-tree-branch {
+            color: #EDCA50;
+        }
+
+        .node_name img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .ztree, commentList {
+            float: right;
+        }
+
+        .comment-body {
+            text-align: left;
+        }
+    </style>
+    <script src="~/js/zTree/js/jquery-1.4.4.min.js"></script>
+    <script src="~/js/zTree/js/jquery.ztree.core.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/common/jquery.qrcode.min.js"></script>
+    <script language="JavaScript">
+        var zTreeObj;
+
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            view: {
+                dblClickExpand: false,
+                nameIsHTML: true,
+                showIcon: false,
+                showLine: true,
+                autoCancelSelected: false,
+                expandSpeed: ""
+
+            },
+            callback: {
+                onExpand: zTreeOnExpand,
+                onClick: zTreeOnClick
+
+            }
+        };
+        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+        $(document).ready(function () {
+            $.post("/Rebate/GetOptionTree", { ID: '' }, function (data) {
+                zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, eval(data));
+            });
+            showcode();
+        });
+        function zTreeOnExpand(event, treeId, treeNode) {
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var node = treeObj.getNodeByTId(treeNode.tId);
+            treeObj.removeChildNodes(node);
+            $.post("/Rebate/GetOptionTree", { ID: treeNode.id }, function (data) {
+                treeObj.addNodes(node, eval(data));
+            });
+        };
+        //function zTreeOnCollapse(event, treeId, treeNode) {
+        //    var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        //    var node = treeObj.getNodeByTId(treeNode.tId);
+        //    treeObj.removeChildNodes(node);
+        //}
+        function zTreeOnClick(event, treeId, treeNode) {
+            $.post("/Rebate/GetUserMsg", { ID: treeNode.id }, function (data) {
+                $("#Name").html(data.Name);
+                $("#Phone").html(data.Phone);
+                $("#Card").html(data.Card);
+                $("#LevelName").html(data.LevelName);
+                $("#DatCreate").html(ChangeDateFormat(data.DatCreate).Format("yyyy-MM-dd"));
+                $("#DatVerify").html(ChangeDateFormat(data.DatVerify).Format("yyyy-MM-dd"));
+                $("#PortraitUrl").attr("src", data.PortraitUrl);
+                $("#CardUrl").attr("src", "@WeConfig.wx_domain"+data.CardUrl);
+            });
+        }
+        function showcode() {
+            var str = toUtf8("@WeConfig.wx_domain/agentApply/Index?id=@ViewData["ParametersVal"]");
+            $('#qcode').qrcode({
+                render: "canvas",
+                text: str
+            });
+            var canvas = $("#qcode").find("canvas")[0];
+            $("#CardUrl").attr("src", canvas.toDataURL("image/png"));
+        }
+        function toUtf8(str) {
+            var out, i, len, c;
+            out = "";
+            len = str.length;
+            for (i = 0; i < len; i++) {
+                c = str.charCodeAt(i);
+                if ((c >= 0x0001) && (c <= 0x007F)) {
+                    out += str.charAt(i);
+                } else if (c > 0x07FF) {
+                    out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                    out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                } else {
+                    out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                    out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                }
+            }
+            return out;
+        }
+    </script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 返利管理 <span class="c-gray en">&gt;</span> 分销结构树<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="mt-20">
+                <ul id="treeDemo" class="ztree"></ul>
+                <ul class="commentList" style="width: 65%; margin-top: 20px;">
+                    <li class="item cl">
+                        <a href="#"><i class="avatar size-L radius"><img id="PortraitUrl" alt="" src="http://static.h-ui.net/h-ui/images/ucnter/avatar-default.jpg"></i></a>
+                        <div class="comment-main">
+                            <header class="comment-header">
+                                <div class="comment-meta">
+                                    <span id="Name">总部</span>
+                                </div>
+                            </header>
+                            <div class="comment-body">
+                                <p>电话：<span id="Phone">无</span></p>
+                                <p>身份证：<span id="Card">无</span></p>
+                                <p>级别：<span id="LevelName">无</span></p>
+                                <p>申请时间：<span id="DatCreate">无</span></p>
+                                <p>审核时间：<span id="DatVerify">无</span></p>
+                                <p id="qcode" style="text-align:center;display:none"></p>
+                                <img src="" id="CardUrl" style="width:200px;height:200px;">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </form>
+    </div>
+    <script src="~/js/layui-v1.0.3/layui/layui.js"></script>
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+

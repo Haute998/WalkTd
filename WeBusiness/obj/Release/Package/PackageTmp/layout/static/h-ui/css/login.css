@@ -1,0 +1,311 @@
+﻿/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */
+{
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei;
+}
+
+/** 设置默认字体 **/
+body, button, input, select, textarea /* for ie */
+{
+    font: 14px/1.5 tahoma, \5b8b\4f53, sans-serif;
+}
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 100%;
+    font-weight: normal;
+}
+address, cite, dfn, em, var
+{
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp
+{
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small
+{
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol
+{
+    list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a
+{
+    text-decoration: none;
+}
+a:hover
+{
+    text-decoration: none;
+}
+
+sup
+{
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub
+{
+    vertical-align: text-bottom;
+}
+
+/** 重置表单元素 **/
+legend
+{
+    color: #000;
+}
+/* for ie6 */
+fieldset, img
+{
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea
+{
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video
+{
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+input[type="button"], input[type="submit"], input[type="reset"]
+{
+    -webkit-appearance: none;
+}
+textarea
+{
+    -webkit-appearance: none;
+}
+/* 去掉高光样式 */
+input:focus, textarea:focus
+{
+    outline: none;
+}
+input:focus
+{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+}
+.button
+{
+    border-radius: 0;
+}
+.Tc_login
+{
+    width: 100%;
+    height: 100%;
+}
+.Tc_login .Tc_nr
+{
+    overflow: auto;
+    position: absolute;
+    top: 30%;
+    width:100%;
+    margin-top: -210px;
+}
+
+.Tc_login .Tc_nr .login1,
+.Tc_login .Tc_nr .login3
+{
+    width:1000px;
+    margin:0 auto;
+}
+.Tc_login .Tc_nr .login1 div,
+.Tc_login .Tc_nr .login3 div
+{
+    width:500px;
+    float:left;    
+    border-style: none;
+    text-align: left;
+    padding-left: 0px;
+    vertical-align: middle;
+}
+.Tc_login .Tc_nr .login1 .div1 img
+{
+    height: 90px;
+    float: left;
+    position:relative;
+    left:-37px;
+}
+.Tc_login .Tc_nr .login1 .div2
+{
+    text-align:right;
+    line-height:90px;
+}
+.Tc_login .Tc_nr .login1 .div2 a,
+.Tc_login .Tc_nr .login3 .div2 a
+{
+    font-family: "Microsoft YaHei";
+    font-size: 12px;
+    color: #666;
+    text-decoration:none;
+}
+.Tc_login .Tc_nr .login2 .ddsj 
+{
+    float:right;
+    width: 330px;
+    height: 400px;
+    margin: 0 auto;
+    left: 50%;
+    margin-left: 175px;
+    top: 110px;
+    position: absolute;
+    background: url(../login_v2.png) no-repeat;
+}
+.Tc_login .Tc_nr .login2 .ddsj ul
+{
+    width:100%;
+}
+.Tc_login .Tc_nr .login2 .ddsj ul a
+{
+    display:block;
+}
+.Tc_login .Tc_nr .login2 .ddsj ul a.this li
+{
+    background: url(../login_v9.png) no-repeat;   
+    background-size:100% 100%; 
+    overflow:hidden;
+    width:100%;
+    text-align:center;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_up ul li
+{
+    width:50%;
+    float:left;
+    text-align:center;
+    height:48px;
+    line-height:48px;
+    overflow: hidden;
+    position: relative;
+    font-size: 15px;
+    font-weight:bold;
+    color: #006633;
+    cursor: pointer;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total
+{
+    padding:30px 5px 0 3px;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table
+{
+    width:100%;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table tr td.td1
+{
+    width:30%;
+    line-height:30px;
+    float:left;
+    text-align:center;
+    font-family: 微软雅黑;
+    color: #666;
+    font-size: 13px;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table tr td.td2
+{
+    width:68%;
+    float:right;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table tr td.td2 input
+{
+    width:85%;
+    text-align:left;
+    text-indent:10px;
+    border: 1px solid rgb(204, 204, 204);
+    height: 28px;
+    line-height: 28px;
+    border-radius: 4px;
+    color: rgb(102, 102, 102);
+    background-color: white;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table tr td.login_ss input
+{
+    width:90%;
+    text-align:center;
+    font-family: 微软雅黑;
+    color: #fff;
+    height:35px;
+    letter-spacing:23px;
+    font-weight:bold;
+    font-size: 13px;
+    background: url(../login.png) no-repeat;   
+    background-size:100% 100%; 
+    cursor: pointer;    
+    padding-left: 20px;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table tr td.login_yhm input
+{    
+    width:7%;
+    position: relative;
+    top: 2px;
+    margin: 0px;
+    vertical-align: middle;
+    font-weight: normal;
+    background-color: transparent;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_total .ddsj_down table tr td.login_yhm span
+{
+    color: #747474;
+    padding-left: 5px;
+    font-size:12px;
+    position: relative;
+    top: 2px;
+}
+.Tc_login .Tc_nr .login2 .ddsj .ddsj_up
+{
+    overflow:hidden;    
+    padding: 1px 5px 0 3px;
+}
+.Tc_login .Tc_nr .login3 .div1
+{    
+    text-align: left;
+    font-size: 12px;
+    color: #999;
+    line-height:50px;
+}
+.Tc_login .Tc_nr .login3 .div2
+{
+    text-align:right;
+    line-height:50px;
+}
+@charset "utf-8";
+/* css 重置 */
+body,div,ul,li,dl,dt,dd,h2,p{padding:0;margin:0;font-family:"微软雅黑";}
+ul{list-style:none ;}
+img{border:none;}
+a{blr:expression(this.onFocus=this.blur());outline:none;}
+
+/* banner-box */
+.banner-box{min-width:1210px;height:450px;position:relative;overflow:hidden;}
+.banner-box .bd{ width:100% !important;}
+.banner-box .bd li .m-width {width:100%;margin:0 auto;overflow:hidden;}
+.banner-box .bd li{width:100% !important; height:450px;}
+.banner-box .bd li a{display:block;background-size:auto;}
+.banner-box .bd li .m-width img{width:1920px;position:absolute;left:50%;margin-left:-960px;height:450px;}
+.banner-btn{width:1210px;position:absolute;top:120px;left:50%;margin-left:-605px;}
+.banner-btn a{display:block;width:49px;height:104px;position:absolute;top:0;filter:alpha(opacity=40);-moz-opacity:0.4;-khtml-opacity:0.4;opacity:0.4;}
+
+.banner-box .hd ul{position:absolute;top:380px;left:20%; right:20%; text-align:center;}
+.banner-box .hd ul li{width:12px;height:12px;border-radius :50%;text-indent:-9999px;margin-right:12px;background:#fff;cursor:pointer; display:inline-block}
+.banner-box .hd ul li.on{background:#06c1ae;}

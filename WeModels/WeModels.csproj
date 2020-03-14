@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AFCA6A71-78D8-48BA-A305-7C19DEBDFCB7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WeModels</RootNamespace>
+    <AssemblyName>WeModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DAL">
+      <HintPath>..\Dll\DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\Dll\HtmlAgilityPack.1.4.6\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="LitJson">
+      <HintPath>..\Dll\LitJson.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\Dll\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="agentmodel\AgentIntention.cs" />
+    <Compile Include="BaseHelper\HttpService.cs" />
+    <Compile Include="Common\BaseSearch.cs" />
+    <Compile Include="Common\Code.cs" />
+    <Compile Include="Common\Common.cs" />
+    <Compile Include="Common\CommonFunc.cs" />
+    <Compile Include="Common\DESEncrypt.cs" />
+    <Compile Include="Common\exportHelper.cs" />
+    <Compile Include="Common\ExportWay.cs" />
+    <Compile Include="Common\IdWorker.cs" />
+    <Compile Include="Common\imghelper.cs" />
+    <Compile Include="Common\IPAddress.cs" />
+    <Compile Include="Common\JsonDataHelper.cs" />
+    <Compile Include="Common\JsonUntity.cs" />
+    <Compile Include="Common\LoadImage.cs" />
+    <Compile Include="Common\MobileUserMsg.cs" />
+    <Compile Include="Common\PDAUserMsg.cs" />
+    <Compile Include="Common\PageJsonModel.cs" />
+    <Compile Include="Common\RepeatHelper.cs" />
+    <Compile Include="Common\ReturnResult.cs" />
+    <Compile Include="Common\SelectListHelper.cs" />
+    <Compile Include="Common\StorageUnit.cs" />
+    <Compile Include="Common\ValidateCode.cs" />
+    <Compile Include="Common\Winning.cs" />
+    <Compile Include="Common\XmlHelper.cs" />
+    <Compile Include="Mapping\DBMapping.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBMapping.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Advice\FCStoke.cs" />
+    <Compile Include="Models\Advice\C_UserAdvice.cs" />
+    <Compile Include="Models\BaseModel\BaseParameters.cs" />
+    <Compile Include="Models\BaseModel\BasePostCode.cs" />
+    <Compile Include="Models\BaseModel\BaseWxConfig.cs" />
+    <Compile Include="Models\B_Menu\B_Menu.cs" />
+    <Compile Include="Models\B_Menu\B_MenuRights.cs" />
+    <Compile Include="Models\B_Menu\B_bd.cs" />
+    <Compile Include="Models\B_UserManager.cs" />
+    <Compile Include="Models\B_User\B_Role.cs" />
+    <Compile Include="Models\B_User\B_User.cs" />
+    <Compile Include="Models\B_User\B_UserRoles.cs" />
+    <Compile Include="Models\Census\AgentCensus.cs" />
+    <Compile Include="Models\Census\Census.cs" />
+    <Compile Include="Models\Census\GetTimeCommon.cs" />
+    <Compile Include="Models\Census\Sale.cs" />
+    <Compile Include="Models\Census\SaleCensus.cs" />
+    <Compile Include="Models\CK\CK.cs" />
+    <Compile Include="Models\ColorImg\ColorImg.cs" />
+    <Compile Include="Models\C_UserModel\C_User.cs" />
+    <Compile Include="Models\C_UserModel\C_UserCartVM.cs" />
+    <Compile Include="Models\C_UserModel\C_UserMail.cs" />
+    <Compile Include="Models\C_UserModel\C_UserUpGrade.cs" />
+    <Compile Include="Models\C_UserModel\C_UserUpGradeVM.cs" />
+    <Compile Include="Models\C_UserModel\C_UserVM.cs" />
+    <Compile Include="Models\C_UserModel\C_User_TypeVM.cs" />
+    <Compile Include="Models\C_UserModel\InviteCode.cs" />
+    <Compile Include="Models\C_UserType\C_UserType.cs" />
+    <Compile Include="Models\C_User\C_User.cs" />
+    <Compile Include="Models\C_User\C_WxUser.cs" />
+    <Compile Include="Models\C_User\C_UserArticle.cs" />
+    <Compile Include="Models\C_User\C_UserCart.cs" />
+    <Compile Include="Models\C_User\C_UserCartCalModel.cs" />
+    <Compile Include="Models\C_User\C_UserInduce.cs" />
+    <Compile Include="Models\C_User\C_UserPrize.cs" />
+    <Compile Include="Models\C_User\C_UserSearch.cs" />
+    <Compile Include="Models\C_User\C_UserShow.cs" />
+    <Compile Include="Models\C_User\C_UserWxInfo.cs" />
+    <Compile Include="Models\C_User\C_UserWxVM.cs" />
+    <Compile Include="Models\C_User\C_User_fb.cs" />
+    <Compile Include="Models\C_User\C_WxUserShowVM.cs" />
+    <Compile Include="Models\C_User\Ztree.cs" />
+    <Compile Include="Models\GetPrize\GetPrize.cs" />
+    <Compile Include="Models\j\C_Consumer.cs" />
+    <Compile Include="Models\j\C_ConsumerWxVM.cs" />
+    <Compile Include="Models\j\C_Consumer_fb.cs" />
+    <Compile Include="Models\j\jf_Goods.cs" />
+    <Compile Include="Models\j\jf_lpOrder.cs" />
+    <Compile Include="Models\j\jf_lpOrderLog.cs" />
+    <Compile Include="Models\j\jf_lpOrderShowVM.cs" />
+    <Compile Include="Models\j\jf_MGoodsVM.cs" />
+    <Compile Include="Models\j\jf_OrderCreateHelper.cs" />
+    <Compile Include="Models\j\jf_OrderVM.cs" />
+    <Compile Include="Models\j\jf_UserMail.cs" />
+    <Compile Include="Models\j\j_jflog.cs" />
+    <Compile Include="Models\j\j_OrderPost.cs" />
+    <Compile Include="Models\Lottery\LotteryActivitys.cs" />
+    <Compile Include="Models\Lottery\LotteryActivitysAreaRedPack.cs" />
+    <Compile Include="Models\Lottery\LotteryActivitysAreaRedPackPrice.cs" />
+    <Compile Include="Models\Lottery\LotteryActivitysRedPack.cs" />
+    <Compile Include="Models\Lottery\LotteryPrizes.cs" />
+    <Compile Include="Models\Lottery\LotteryRecord.cs" />
+    <Compile Include="Models\Lottery\LotteryRecordVM.cs" />
+    <Compile Include="Models\Main\BaseMain.cs" />
+    <Compile Include="Models\Main\B_UserDesktopAuth.cs" />
+    <Compile Include="Models\Main\MainShow.cs" />
+    <Compile Include="Models\ModelQueryParam.cs" />
+    <Compile Include="Models\OrderModel\MOrderCreateHelper.cs" />
+    <Compile Include="Models\OrderModel\Order.cs" />
+    <Compile Include="Models\OrderModel\OrderCensus.cs" />
+    <Compile Include="Models\OrderModel\OrderLog.cs" />
+    <Compile Include="Models\OrderModel\OrderPost.cs" />
+    <Compile Include="Models\OrderModel\OrderShowVM.cs" />
+    <Compile Include="Models\OrderModel\OrderVM.cs" />
+    <Compile Include="Models\PDAModel\PDA.cs" />
+    <Compile Include="Models\PDAModel\PDAAgentApp.cs" />
+    <Compile Include="Models\PDAModel\PDAApp.cs" />
+    <Compile Include="Models\PDAModel\PDAFuntion.cs" />
+    <Compile Include="Models\PDAModel\PDALog.cs" />
+    <Compile Include="Models\PDAModel\PDAParamEasy.cs" />
+    <Compile Include="Models\PDAModel\PDAUser.cs" />
+    <Compile Include="Models\PDAModel\PDAUserFunc.cs" />
+    <Compile Include="Models\PDAModel\PDAUserFuncEasy.cs" />
+    <Compile Include="Models\Prize\Prize.cs" />
+    <Compile Include="Models\problem\B_problem.cs" />
+    <Compile Include="Models\problem\problem.cs" />
+    <Compile Include="Models\ProductModel\LevelPriceVM.cs" />
+    <Compile Include="Models\ProductModel\Product.cs" />
+    <Compile Include="Models\ProductModel\ProductPriceVM.cs" />
+    <Compile Include="Models\ProductModel\ProductSimple.cs" />
+    <Compile Include="Models\ProductModel\Product_Lever.cs" />
+    <Compile Include="Models\Rebate\RebateSearch.cs" />
+    <Compile Include="Models\Redpackmodel\RedPackLottery.cs" />
+    <Compile Include="Models\Redpackmodel\RedPackOrder.cs" />
+    <Compile Include="Models\Redpackmodel\RedPackShare.cs" />
+    <Compile Include="Models\ScaleCensus\InStockCensus.cs" />
+    <Compile Include="Models\ScaleCensus\OutStockCensus.cs" />
+    <Compile Include="Models\ScaleCensus\RtnStockCensus.cs" />
+    <Compile Include="Models\ScaleInStoke\ScaleInStokeDetail.cs" />
+    <Compile Include="Models\ScaleOutStoke\ScaleOutStokeDetail.cs" />
+    <Compile Include="Models\ScaleRtnStoke\RtnStockRecord.cs" />
+    <Compile Include="Models\ScaleRtnStoke\ScaleRtnSeacher.cs" />
+    <Compile Include="Models\ScaleRtnStoke\ScaleRtnStokeDetail.cs" />
+    <Compile Include="Models\Scale\InStockScale.cs" />
+    <Compile Include="Models\Scale\InStockScaleShow.cs" />
+    <Compile Include="Models\Scale\RtnStockScale.cs" />
+    <Compile Include="Models\Scale\Scale.cs" />
+    <Compile Include="Models\Scale\ScaleOutStoke.cs" />
+    <Compile Include="Models\Scale\ScaleOutStokeShow.cs" />
+    <Compile Include="Models\Scale\ScaleOut_Anti.cs" />
+    <Compile Include="Models\Scale\ScaleRtnStoke.cs" />
+    <Compile Include="Models\Scale\Scale_Big.cs" />
+    <Compile Include="Models\Scale\Scale_Middle.cs" />
+    <Compile Include="Models\Scale\Scale_Small.cs" />
+    <Compile Include="Models\Scale\TB_BMCode.cs" />
+    <Compile Include="Models\Scale\TrackCode.cs" />
+    <Compile Include="Models\SelScale\SelScale.cs" />
+    <Compile Include="Models\Stoke\C_UserStock.cs" />
+    <Compile Include="Models\Stoke\Stock.cs" />
+    <Compile Include="Models\Stoke\StockSearch.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\SYSAgentKnow\SYSAgentKnow.cs" />
+    <Compile Include="Models\SYSModel\SYSAdv.cs" />
+    <Compile Include="Models\SYSModel\SYSCompanyProfile.cs" />
+    <Compile Include="Models\SYSModel\SYSICodeIntegralSet.cs" />
+    <Compile Include="Models\SYSModel\SYSIntegralCode.cs" />
+    <Compile Include="Models\SYSModel\SYSIntegralCodeArea.cs" />
+    <Compile Include="Models\SYSModel\SYSIntegralCodePrizesVM.cs" />
+    <Compile Include="Models\SYSModel\SYSLog.cs" />
+    <Compile Include="Models\SYSModel\SYSMArticle.cs" />
+    <Compile Include="Models\SYSModel\SYSMNotify.cs" />
+    <Compile Include="Models\SYSModel\SYSNotify.cs" />
+    <Compile Include="Models\SYSModel\SYSNotifyMsg.cs" />
+    <Compile Include="Models\SYSModel\SYSOpenPic.cs" />
+    <Compile Include="Models\SYSModel\SYSOpenVideo.cs" />
+    <Compile Include="Models\SYSPolicy\SYSPolicy.cs" />
+    <Compile Include="Models\SAntiFakeSel.cs" />
+    <Compile Include="Models\VConfig.cs" />
+    <Compile Include="Models\Worder.cs" />
+    <Compile Include="Models\YstSmsDemoBASE64.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SYSLogType.cs" />
+    <Compile Include="tabel\TableViewConfig.cs" />
+    <Compile Include="test.cs" />
+    <Compile Include="WeConfig.cs" />
+    <Compile Include="WeException.cs" />
+    <Compile Include="WxModel\JsApi.cs" />
+    <Compile Include="WxModel\WxData.cs" />
+    <Compile Include="WxModel\WxFuncDeal.cs" />
+    <Compile Include="WxModel\WXMaterial_Media.cs" />
+    <Compile Include="WxModel\WXMenu.cs" />
+    <Compile Include="WxModel\WxMenuJsonModel.cs" />
+    <Compile Include="WxModel\WxTempMsg.cs" />
+    <Compile Include="WxModel\WXUserInfo.cs" />
+    <Compile Include="WxModel\WXVariousApi.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mapping\DBSchema.ttinclude" />
+    <None Include="Mapping\DBMapping.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DBMapping.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

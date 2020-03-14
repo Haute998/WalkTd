@@ -1,0 +1,151 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+    List<C_UserType> userTypes = ViewData["userTypes"] as List<C_UserType>;
+
+    List<C_UserUpGrade> doings = ViewData["doings"] as List<C_UserUpGrade>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>升级申请 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <link href="/css/bellows.css" rel="stylesheet" type="text/css" />
+    <link href="/css/bellows-theme.css" rel="stylesheet" type="text/css" />
+    <link href="/css/lrtk.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .dlhtt dl dt img {
+            width: auto;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="dlhtt" id="dlhtt" style="background: url(/images/tcrjbg.png); background-size: 100% 100%;">
+                <dl>
+                    <dt>
+                        <img src="@(user.PortraitUrl)" alt="" />
+                    </dt>
+                    <dd style="padding: 28px 0 0 0;">
+                        <span>@(user.Name)</span>
+                    </dd>
+                    <dd>
+                        <span class="span1">级别：@(user.userTypeName)</span>
+                    </dd>
+                </dl>
+            </div>
+            <div class="bellows single">
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span1">姓名</span><span class="span3">@(user.Name)</span>
+                    </div>
+                </div>
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span1">电话</span><span class="span3">@(user.Phone)</span>
+                    </div>
+                </div>
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span1">现代理等级</span><span class="span3">@(user.userTypeName)</span>
+                    </div>
+                </div>
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span1">微信号</span><span class="span3">@(user.wxNo)</span>
+                    </div>
+                </div>
+
+                <div class="bellows__item">
+                    <div class="bellows__header1">
+                        <span class="span1">升级等级</span><span class="span3">
+                            @if (doings.Count > 0)
+                            {
+                                <label>@(doings[0].NewUserTypeName)（@(doings[0].AuditStat)）</label>
+                            }
+                            else
+                            {
+                                if (userTypes.Count > 0)
+                                {
+
+                                    @Html.DropDownList("C_UserTypeID", SelectListHelper.GetC_UserTypeIDs(null, userTypes), new { })
+                                }
+                                else
+                                {
+                                    <label>您已经是最高级别</label>
+                                }
+                            }
+
+                        </span>
+                    </div>
+                </div>
+                <a href="/MyAgentsInfo/UpgradeNoAuditAgent">
+                    <div class="bellows__item">
+                        <div class="bellows__header1">
+                            <span class="span1">下级代理跨级升级明细</span><span class="span3"><img class="img5" src="/images/jiantou.png" /></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @if (userTypes.Count > 0 && doings.Count <= 0)
+            {
+                <div class="db11">
+                    <button onclick="toApplyUpgrade()" type="button" style="background-color: #40B7AB; color: white; padding: 10px; width: 80%; border-radius: 5px; border: 0; border: none; ">提交</button>
+                </div>
+            }
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script>
+    var loading;
+    function toApplyUpgrade() {
+        loading = layer.open({ type: 2, content: '加载中' });
+        $.post("/MyCenter/toApplyUpgrade", $("#form1").serialize(), function (rtn) {
+            if (rtn == "ok") {
+                layer.open({
+                    content: "提交申请成功", btn: '我知道了', yes: function (index) {
+                        window.location.href = window.location.href;
+                    }
+                });
+
+            }
+            else {
+                layer.close(loading);
+                layer.open({ content: rtn, btn: '我知道了' });
+            }
+        })
+    }
+</script>

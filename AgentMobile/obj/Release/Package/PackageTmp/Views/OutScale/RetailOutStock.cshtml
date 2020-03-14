@@ -1,0 +1,475 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>零售发货扫描</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9,IE=edge,chrome=1" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/StyleAndScript/animatedModal/css/animate.min.css" rel="stylesheet" />
+    <link href="~/StyleAndScript/animatedModal/css/normalize.min.css" rel="stylesheet" />
+    <link href="~/css/dropload.css" rel="stylesheet" media="all" />
+    <link href="css/common.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/css/saoma.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <style>
+        #modal-02 {
+            position: absolute;
+            overflow-y: inherit;
+        }
+    </style>
+</head>
+<body style="background:#eee;">
+    <div id="AgentHead">
+        <dl>
+            <dd><a href="/agentback/Index"><img id="BtnClose" class="close-modal-02" src="/images/11111.png" /></a></dd>
+            <dd>零售发货扫码</dd>
+            <dd></dd>
+        </dl>
+    </div>
+    <div class="saoma-list saoma-b5">
+        <div class="saoma-tit">出货单号：</div>
+        <div class="saoma-content"><input class="saoma-txt" id="OrderNo" type="text" readonly="readonly" value="@ViewData["OrderNo"]" /><input class="saoma-xz" id="BtnOrderNo" type="button" value="选择" /></div>
+    </div>
+    <div class="saoma-list saoma-b1">
+        <div class="saoma-tit">经销商编号：</div>
+        <div class="saoma-content"><input class="saoma-txt" id="UserName" type="text" readonly="readonly" value="m2000" />@*<input class="saoma-xz" id="BtnCheckAgent" href="#modal-02" type="button" value="选择" />*@</div>
+    </div>
+    <div class="saoma-list">
+        <div class="saoma-tit">经销商名称：</div>
+        <div class="saoma-content"><input class="saoma-txt2" id="Name" type="text" readonly="readonly" value="零售" /></div>
+    </div>
+    <div class="saoma-sl">
+        <div>已扫描数量：<span id="TotalScale">0</span></div>
+        <div class="saoma-box">
+            <div>
+                <input class="saoma-sd" id="Writer" type="button" value="手动输入" />
+            </div>
+            <div>
+                <input type="checkbox" id="radioScan" class="yc" hidden="hidden" />
+                <input class="saoma-ls" type="button" value="连扫设置" onclick="changeImg(this);" />
+                <img src="/images/chkFilletBtn2.png" id="icon1" height="16px" />
+            </div>
+        </div>
+    </div>
+    <div class="Cont">
+        <ul id="CodeList">
+            <li class="scanTitle"><a>请扫描条码</a></li>
+        </ul>
+    </div>
+
+    <input class="saoma-btn" id="subbtn" type="button" value="完成并提交" />
+    <div class="saoma-sm">
+        <a id="Scan">
+            <img src="/images/Scan_2.png" />
+            <span>扫码</span>
+        </a>
+    </div>
+
+    <script src="~/StyleAndScript/animatedModal/js/jquery.min.js"></script>
+    <script src="~/StyleAndScript/animatedModal/js/animatedModal.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <script src="~/js/dropload.js"></script>
+
+    @if (IsWx == "1")
+    {
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+        <script>
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+                timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+                nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+                signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+                jsApiList: ['checkJsApi',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage',
+                        'onMenuShareQQ',
+                        'onMenuShareWeibo',
+                        'hideMenuItems',
+                        'showMenuItems',
+                        'hideAllNonBaseMenuItem',
+                        'showAllNonBaseMenuItem',
+                        'translateVoice',
+                        'startRecord',
+                        'stopRecord',
+                        'onRecordEnd',
+                        'playVoice',
+                        'pauseVoice',
+                        'stopVoice',
+                        'uploadVoice',
+                        'downloadVoice',
+                        'chooseImage',
+                        'previewImage',
+                        'uploadImage',
+                        'downloadImage',
+                        'getNetworkType',
+                        'openLocation',
+                        'getLocation',
+                        'hideOptionMenu',
+                        'showOptionMenu',
+                        'closeWindow',
+                        'scanQRCode',
+                        'chooseWXPay',
+                        'openProductSpecificView',
+                        'addCard',
+                        'chooseCard',
+                        'openCard'
+                ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+        </script>
+    }
+
+    <script type="text/javascript">
+        var IsShow = false;
+
+        $(document).ready(function () {
+
+            RenderingModal();
+
+            $(".queryImg").click(function () {
+                $(".khfxPane tr").remove();
+                $(".dropload-down").remove();
+                LoadAgentList();
+            });
+        });
+
+        function changeImg(oj) {
+            var obj = document.getElementById("icon1");
+            if (obj.getAttribute("src") == "/images/chkFilletBtn.png") {
+                // 不选中
+                obj.setAttribute("src", "/images/chkFilletBtn2.png");
+                oj.style.backgroundColor = "#999999";
+                oj.style["border-color"] = "#999999";
+
+                $("#radioScan").removeAttr("checked");
+                
+            } else {
+                // 选中
+                obj.setAttribute("src", "/images/chkFilletBtn.png");
+                oj.style.backgroundColor = "#1b4f9b";
+                oj.style["border-color"] = "#1b4f9b";
+                $("#radioScan").prop("checked", true);
+
+                SetInScanCode();
+            }
+        }
+
+        function RenderingModal() {
+            $("#BtnCheckAgent").animatedModal({         // 默认点击#demo02触发
+                modalTarget: 'modal-02',                // 弹窗的ID名
+                animatedIn: 'slideInRight',             // 弹出淡入效果
+                animatedOut: 'slideOutRight',           // 关闭时的淡出效果
+                color: '#fff',                          // 背景颜色
+                //animationDuration: '1s',              // 过渡时间
+                overflow: 'scroll',                     // 是否要滚动条
+                // Callbacks
+                beforeOpen: function () {               //弹出前的回调
+
+                },
+                afterOpen: function () {    //弹出后
+                    if (!IsShow) {
+                        LoadAgentList();
+                        IsShow = true;
+                    }
+                },
+                beforeClose: function () {  //关闭前
+                    console.log("The animation was called");
+                },
+                afterClose: function (obj) {    //关闭后
+
+                }
+            });
+        }
+
+        function LoadAgentList() {
+            var itemIndex = 0;
+            var tabLoadEndArray = [false, false, false];
+            var tabLenghtArray = [10, 10, 10];
+            var tabPageIndexArray = [1, 1, 1];
+            var tabPageSizeArray = [15, 15, 15];
+            var tabScroolTopArray = [0, 0, 0];
+            var dropload = $('.khfxWarp').dropload({
+                scrollArea: window,
+                threshold: 50,
+                domDown: {
+                    domClass: 'dropload-down',
+                    domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData: '<div class="dropload-noData">已无数据</div>'
+                },
+                loadDownFn: function (me) {
+
+                    setTimeout(function () {
+                        if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                        $.ajax({
+                            type: 'POST',
+                            url: '/OutScale/LoadOutScaleC_User',
+                            data: { "pageIndex": tabPageIndexArray[itemIndex], "pageSize": tabPageSizeArray[itemIndex], "keyword": $("#QueryAgent").val().trim() },
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var result = '';
+                                tabPageIndexArray[itemIndex]++;
+                                if (data.RtnList.length > 0) {
+                                    for (var index = 0; index < data.RtnList.length; index++) {
+                                        if (itemIndex == 0) {
+                                            result += ""
+                                            + "<tr onclick=\"chkAgent('" + data.RtnList[index].UserName + "','" + data.RtnList[index].Name + "')\" >"
+                                            + "<td>" + data.RtnList[index].UserName + "</td>"
+                                            + "<td>" + data.RtnList[index].Name + "</td>"
+                                            + "<td>" + data.RtnList[index].Province + data.RtnList[index].City + "</td>"
+                                            + "</tr>";
+                                        }
+                                    }
+                                }
+                                else {
+                                    tabLoadEndArray[itemIndex] = true;
+                                }
+
+                                if (data.RtnList.length < tabPageSizeArray[itemIndex]) tabLoadEndArray[itemIndex] = true;
+
+                                $('.khfxPane').eq(itemIndex).append(result);
+
+                                me.resetload();
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        }
+
+        function chkAgent(no, name) {
+            $("#BtnClose").click();
+            $("#UserName").val(no);
+            $("#Name").val(name);
+        }
+
+        $(".tab-all").on('touchmove', function (e) {
+            e.preventDefault();//禁止滚动
+            e.stopPropagation();//禁止事件冒泡
+        })
+
+        $("#modal-02").css({
+            "overflow-y": "hidden"
+        });
+    </script>
+
+    <script type='text/javascript'>
+    var sm = 1500;
+    var CodeArray = new Array();
+
+    function SetInScanCode()
+    {
+        layer.open({
+            title: ['默认隔离时间1500毫秒', 'background-color: #1b4f9b; color:#fff;height:40px;margin:0;border-radius: 4px 4px 0 0;font-size:14px;'],
+            anim: 'up',
+            content: '<input type="text" id="scanTime" value=\"' + sm + '\" placeholder=\"请输入连续条码间隔时间\">',
+            btn: ['确认', '取消'],
+            yes: function (index) {
+            sm = $("#scanTime").val();
+            layer.close(index)
+            }
+        });
+    }
+
+    $("#Writer").click(function () {
+        layer.open({
+            content: "<input type=\"text\" id='scanInput' onKeyUp=\"value=value.replace(/[\\W]/g,'')\" placeholder=\"请输入出货条码\" >",
+            btn: ['确认', '取消'],
+            yes: function (index) {
+                var scale = $("#scanInput").val();
+                Tm(scale);
+                layer.close(index)
+            }
+        });
+    })
+
+    $("#BtnOrderNo").click(function () {
+
+        layer.open({
+            title: ['编辑零售单号', 'background-color: #1b4f9b; color:#fff;height:40px;margin:0;border-radius: 4px 4px 0 0;font-size:14px;'],
+            content: "<input type=\"text\" id='TxtOrderNo' onKeyUp=\"value=value.replace(/[\\W]/g,'')\" placeholder=\"请输入出货单号\" maxlength='13' value='" + $("#OrderNo").val() + "'>",
+            btn: ['确认', '取消'],
+            yes: function (index) {
+
+                var orderno = $("#TxtOrderNo").val();
+
+                if (orderno.length < 8) {
+                    layer.open({
+                        content: "订单编号不能小于8位字符(数字和字母)", type: 1, skin: 'msg', time: 2
+                    });
+                }
+                else {
+                    $("#OrderNo").val(orderno);
+                    layer.close(index)
+                }
+            }
+        });
+    })
+
+    $("#Scan").click(function () {
+        wx.scanQRCode({
+            needResult: 1,                      // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"],    // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (data) {
+
+                if (data.resultStr != null && data.resultStr != "") {
+                    var arrayStr = data.resultStr.split(/[,=-\\/]/);
+                    if (arrayStr.length > 5) {
+                        var scale = arrayStr[arrayStr.length - 1];
+                        Tm(scale);
+                    }
+                    else {
+                        layer.open({ content: "此条码无效", btn: '我知道了' });
+                    }
+                }
+            },
+            fail: function (res) {
+                layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+            }
+        });
+    })
+
+    function Tm(scale) {
+
+        $.post("/OutScale/GetBoolOutScale", { 'ID': '' + scale + '' }, function (json) {
+
+            if (json.success) {
+                if (CodeArray.length == 0) $("#CodeList li").remove();
+
+                for (var i = 0; i < json.data.length; i++) {
+
+                    if (CodeArray.length > 999)
+                    {
+                        layer.open({content:"一次性上传不能超过1000个条码,请分批次出货。",btn:"知道了"});
+                        break;
+                    }
+
+                    if (CodeArray.indexOf(json.data[i].SmallCode) == -1)
+                    {
+                        $("#CodeList").append("<li><span class='prompt'><img src='/images/正确.png' /></span><span class='code'>" + json.data[i].SmallCode + "</span><span class='delbtn'><img src='/images/55.png' onclick='del(this,\"" + json.data[i].SmallCode + "\")'/></span></li>");
+                        CodeArray.push(json.data[i].SmallCode);
+                    }
+                }
+            }
+            else {
+                layer.open({
+                    content: json.message, skin: 'msg', time: 3
+                });
+            }
+
+            $("#TotalScale").html(CodeArray.length);
+
+            var checkbox = document.getElementById('radioScan');
+            if (checkbox.checked) {
+                setTimeout('agentclick()', sm);
+            }
+
+        });
+    }
+
+    $("#subbtn").click(function () {
+        var scale="";
+        var AgentUser = $("#UserName").val().trim();
+        var orderno = $("#OrderNo").val().trim();
+        for (var r = 0; r < CodeArray.length; r++)
+        {
+            if (scale != "") scale += ",";
+            scale += "'" + CodeArray[r] + "'";
+        }
+
+        if (scale == "") {
+            layer.open({
+                content: "上传条码不能为空！" , skin: 'msg' , time: 2
+            });
+            return;
+        }
+
+        if (orderno == "")
+        {
+            layer.open({
+                content: "单号不能为空！", skin: 'msg', time: 2
+            });
+            return;
+        }
+
+        if(AgentUser=="")
+        {
+            layer.open({
+                content: "请选代理客户！" , skin: 'msg' , time: 2
+            });
+            return;
+        }
+
+        layer.open({
+            type: 2, content: '正在上传', shadeClose: false
+        });
+
+        $.post("/OutScale/GetUpdateC_UserOutScale", { "Agent": AgentUser, "Scale": scale, "OutOrderNo": orderno }, function (json) {
+            layer.closeAll();
+            if (json.success) {
+                CodeArray = [];
+                $(".delbtn").find("img").remove();
+                $(".prompt").find("img").remove();
+                $(".prompt").html("失败");
+
+                $("#CodeList li").each(function (index) {
+                    var code = $(this).find(".code").html();
+
+                    for (var i = 0; i < json.data.length; i++)
+                    {
+                        if (json.data[i].SmallCode == code)
+                        {
+                            $(this).find(".prompt").html("<a style='color:#1AADa9'>成功</a>");
+                            break;
+                        }
+                    }
+                });
+
+                layer.open({content:"发货成功",btn:"我知道了"});
+            }
+            else {
+                layer.open({
+                    content: json.message, skin: 'msg', time: 2
+                });
+            }
+        })
+    })
+
+    function agentclick()
+    {
+        $("#Scan").click();
+    }
+
+    function del(obj, selval) {
+
+        layer.open({
+            content: '确定要删除吗？', btn: ['删除', '取消'],
+            yes: function (index) {
+
+                var i = CodeArray.indexOf(selval);
+                if (i>-1)
+                {
+                    CodeArray.splice(i);
+                }
+
+                $(obj).parent().parent().remove();
+                layer.close(index);
+
+            }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    //LotteryActivitys activity = ViewData["activity"] as LotteryActivitys;
+    //List<LotteryActivitysAreaRedPack> LAARPs = ViewData["LAARPs"] as List<LotteryActivitysAreaRedPack>;
+    List<SYSIntegralCodeArea> AreasList = ViewData["areas"] as List<SYSIntegralCodeArea>;
+    
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>奖励设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v0.2" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+    <style type="text/css">
+        .layui-container {
+            width:100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">红包区域设置</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-btn-group">
+                            <button class="layui-btn layui-btn-sm layui-btn-normal" onclick="AddAreaOpen(null,0)"><i class="layui-icon">&#xe654;</i>增加</button>
+                            <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="BatchDels()"><i class="layui-icon">&#xe640;</i>批量删除</button>
+                        </div>
+                        <table class="layui-table" lay-skin="line">
+                            <colgroup>
+                                <col width="150">
+                                <col width="200">
+                                <col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="checkall" onclick="tocheckall(this)" value="" /></th>
+                                    <th>区域</th>
+                                    <th>红包数量</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="AreaTB"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">红包参数设置</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <button class="layui-btn layui-btn-sm" onclick="AddRadParam(this)"><i class="layui-icon">&#xe640;</i>添加红包参数</button>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="150">
+                                <col width="200">
+                                <col>
+                            </colgroup>
+                            <thead>
+
+                                <tr>
+                                    <th>区域</th>
+                                    <th>最少金额</th>
+                                    <th>最大金额</th>
+                                    <th>概率</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="RadParamTB"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="AddAreaOpen" class="layui-tab-item">
+        <form class="layui-form" action="" style="margin:15px 20px 5px 20px;">
+            <input type="hidden" id="ActivityID" name="ActivityID" value="1" />
+            <input type="hidden" id="AreaId" name="ID" value="0" />
+            <div class="layui-form-item">
+                <label class="layui-form-label">区域名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="AreaName" id="AreaName" required lay-verify="required" placeholder="请输入区域名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">红包数量</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="cnt" id="cnt" required lay-verify="required" placeholder="请输入红包数量" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" onclick="AddArea()" class="layui-btn">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="AddRadParamOpen" class="layui-tab-item">
+        <form class="layui-form" action="" style="margin:15px 20px 5px 20px;">
+            <input type="hidden" id="ID" name="ID" value="0" />
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择区域</label>
+                <div class="layui-input-block">
+                    <select id="AreaID" name="AreaID" lay-verify="required">
+                        @foreach (SYSIntegralCodeArea area in AreasList)
+                        {
+                            <option value="@(area.ID)">@(area.AreaName)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">最少金额</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="MinPrice" id="MinPrice" required lay-verify="required" placeholder="请输入红包最少金额" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">最大金额</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="MaxPrice" id="MaxPrice" required lay-verify="required" placeholder="请输入红包最大金额" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">概率</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="Rate" id="Rate" required lay-verify="required" placeholder="请输入概率" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">%</div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="button" onclick="SaveRadParam()" class="layui-btn">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/x-jquery-tmpl" id="AreaDataTmpl">
+        {{each(i,ck) RtnList}}
+        <tr>
+            <td>
+                <input type="checkbox" value="${ck.ID}" onclick="cklst()" name="ids" />
+            </td>
+            <td>
+                ${ck.AreaName}
+            </td>
+
+            <td>
+                ${ck.cnt}
+            </td>
+            <td>
+                <a href="javascript:;" title="编辑" onclick="AddAreaOpen(this,'${ck.ID}')"><i class="layui-icon">&#xe642;</i></a>
+                <a href="javascript:;" title="删除" onclick="DelArea(this,'${ck.ID}')"><i class="layui-icon">&#xe640;</i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <script type="text/x-jquery-tmpl" id="ParamDataTmpl">
+        <tr>
+            <td>
+                ${AreaName}
+            </td>
+            <td>
+                ${MinPrice}
+            </td>
+            <td>
+                ${MaxPrice}
+            </td>
+            <td>${Rate}</td>
+            <td>
+                <a href="javascript:;" title="编辑" onclick="MedifyRadParam(this, '${ID}', '${AreaID}')"><i class="layui-icon">&#xe642;</i></a>
+                <a href="javascript:;" title="删除" onclick="DelRadParam(this, '${ID}')"><i class="layui-icon">&#xe640;</i></a>
+            </td>
+        </tr>
+    </script>
+    <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+    <script type="text/javascript">
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+
+        layui.use('layer', function () {
+            var layer = layui.layer;
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            LoadAreaData();
+            LoadRadParamData();
+        }); 
+
+        function LoadAreaData()
+        {
+            $.get("/SYSIntegralCodeArea/GetPage", { ActivityID: 1 }, function (data) {
+                $("#AreaTB").empty();
+                $("#AreaDataTmpl").tmpl(data).appendTo('#AreaTB');
+            });
+        }
+
+        function LoadRadParamData()
+        {
+            $.get("/RedEnvelope/GetRadParam", function (data) {
+                $("#RadParamTB").empty();
+                $("#ParamDataTmpl").tmpl(data).appendTo('#RadParamTB');
+            });
+        }
+
+        function AddAreaOpen(obj,id)
+        {
+            $("#AreaId").val(id);
+
+            if (parseInt(id) == 0) {
+                $("#AreaName").val("");
+                $("#cnt").val("");
+            }
+            else {
+                $("#AreaName").val($(obj).parent().parent().find("td").eq(1).html().trim());
+                $("#cnt").val($(obj).parent().parent().find("td").eq(2).html().trim());
+            }
+
+            layer.open({
+                type: 1,
+                title: "添加区域",
+                area: ['400px', '260px'],
+                content: $('#AddAreaOpen')
+            });
+        }
+
+        function AddArea()
+        {
+            var AreaId = $("#AreaId").val();
+
+            if (AreaId == 0) {
+                $.post("/SYSIntegralCodeArea/ToAdd", $("#AddAreaOpen form").serialize(), function (rtn) {
+                    if (rtn != "error") {
+                        $("#AreaID").append("<option value='" + rtn.ID + "'>" + rtn.AreaName + "</option>");
+                        layui.form.render('select');
+                        layer.closeAll();
+                        LoadAreaData();
+                    }
+                    else {
+                        layer.open({ content: rtn, rtn: "知道了" });
+                    }
+                });
+            }
+            else {
+                $.post("/SYSIntegralCodeArea/ToEdit", $("#AddAreaOpen form").serialize(), function (rtn) {
+                    if (rtn == "ok") {
+                        layer.closeAll();
+                        LoadAreaData();
+                    }
+                    else {
+                        layer.open({ content: rtn, rtn: "知道了" });
+                    }
+                });
+            }
+        }
+
+        function DelArea(obj,id)
+        {
+            layer.confirm('删除区域后对应的抽奖码也会取消区域设置，确认要删除吗？', function (index) {
+
+                $.post("/SYSIntegralCodeArea/ToDel", { "id": id }, function (rtn) {
+                    if (rtn == "ok") {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                })
+
+            });
+        }
+
+        function BatchDels() {
+            var json = $("input[name='ids']:checked").serializeArray();
+            layer.confirm('删除区域后对应的抽奖码也会取消区域设置，确定要删除所选区域吗？', function (index) {
+                $.post("/SYSIntegralCodeArea/ToDels", json, function (rtn) {
+                    if (rtn == "ok") {
+                        layer.closeAll();
+                        LoadAreaData();
+                    }
+                    else {
+                        layer.open({ content: rtn, rtn: "知道了" });
+                    }
+                })
+            })
+        };
+
+        function AddRadParam()
+        {
+            $("#ID").val(0);
+            $("#AreaID").val(1);
+            layui.form.render('select');
+            $("#MinPrice").val("");
+            $("#MaxPrice").val("");
+            $("#Rate").val("");
+
+            layer.open({
+                type: 1,
+                title: "添加红包参数",
+                area: ['500px', '350px'],
+                content: $('#AddRadParamOpen')
+            });
+        }
+
+        function MedifyRadParam(obj, id, areaId) {
+
+            var tr = $(obj).parent().parent();
+
+            $("#ID").val(id);
+            $("#AreaID").val(areaId);
+            layui.form.render('select');
+            $("#MinPrice").val(tr.find("td").eq(1).text().trim());
+            $("#MaxPrice").val(tr.find("td").eq(2).text().trim());
+            $("#Rate").val(tr.find("td").eq(3).text().trim());
+
+            layer.open({
+                type: 1,
+                title: "添加红包参数",
+                area: ['500px', '350px'],
+                content: $('#AddRadParamOpen')
+            });
+        }
+
+        function SaveRadParam()
+        {
+            $.post("/RedEnvelope/ToAddParam",$("#AddRadParamOpen form").serialize(), function (rtn) {
+                if (rtn == "ok") {
+                    layer.closeAll();
+                    LoadRadParamData();
+                }
+                else {
+                    layer.alert(rtn);
+                }
+
+            })
+        }
+
+        function DelRadParam(obj, id)
+        {
+
+            layer.confirm('确定要删除此红包参数吗？', function (index) {
+                $.post("/RedEnvelope/ToDelParam", { ID: id }, function (rtn) {
+                    if (rtn == "ok") {
+                        layer.closeAll();
+                        LoadRadParamData();
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                })
+
+            })
+
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    List<LotteryPrizes> prizes = ViewData["prizes"] as List<LotteryPrizes>;
+}
+@model LotteryActivitys
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @*<script src="~/js/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui/css/layui.css" rel="stylesheet" />*@
+    <script src="~/js/layui-v1.0.3/layui/layui.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/layer-v3.0.1/layer/layer.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>修改抽奖活动</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        @Html.HiddenFor(m => m.ID)
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">活动名称</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBoxFor(m => m.Title, new { @class = "layui-input", @lay_verify = "required", @placeholder = "请输入活动名称", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">限时</label>
+            <div class="layui-input-inline" style="width:400px">
+                <input type="checkbox" name="IsTimeLimit" lay-filter="limit" value="@(Model.IsTimeLimit.ToString().ToLower())" lay-skin="switch" @(Model.IsTimeLimit ? "checked" : "")>
+            </div>
+        </div>
+        <div class="layui-form-item js-limitdiv" style="@(Model.IsTimeLimit ? "" : "display:none")">
+            <div class="layui-inline">
+                <label class="layui-form-label" style="width:200px">期限</label>
+                <div class="layui-input-inline" style="width:150px">
+                    @Html.TextBox("DatB", Model.DatB.ToString("yyyy-MM-dd"), new { @class = "layui-input", @onfocus = "WdatePicker({lang:'zh-cn'})", @dateFmt = "yyyy-MM-dd", @placeholder = "请输入开始时间", @autocomplete = "off" })
+                </div>
+                <div class="layui-form-mid">至</div>
+                <div class="layui-input-inline" style="width:150px">
+                    @Html.TextBox("DatE", Model.DatE.ToString("yyyy-MM-dd"), new { @class = "layui-input", @onfocus = "WdatePicker({lang:'zh-cn'})", @dateFmt = "yyyy-MM-dd", @placeholder = "请输入结束时间", @autocomplete = "off" })
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">开关</label>
+            <div class="layui-input-inline" style="width:400px">
+                <input type="checkbox" name="IsActive" lay-filter="swich" value="@(Model.IsActive.ToString().ToLower())" lay-skin="switch" @(Model.IsActive ? "checked" : "")>
+            </div>
+        </div>
+        @*<div class="layui-form-item layui-form-text">
+                <label class="layui-form-label" style="width:200px">规则说明</label>
+                <div class="layui-input-inline" style="width:400px">
+                    <textarea name="Explain" placeholder="请输入规则说明，分号（；）进行换行" class="layui-textarea">@(Model.Explain)</textarea>
+                </div>
+                <div class="layui-form-mid layui-word-aux">分号（；）进行换行</div>
+            </div>*@
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">未抽到时</label>
+
+
+            @if (prizes.Count > 0)
+            {
+
+                <div class="layui-input-inline" style="width:400px">
+                    <input type="radio" name="FailType" @(Model.FailType == "msg" ? "checked" : "") value="msg" lay-filter="FailType" title="提示消息">
+                    <br />
+                    <div id="FailMsg_div" style="display:@(Model.FailType == "msg" ? "block" : "none")">
+                        @Html.TextBox("FailMsg", (string.IsNullOrWhiteSpace(Model.FailMsg) ? "很遗憾，您没有中奖！" : Model.FailMsg), new { @class = "layui-input", @placeholder = "请输入提示消息", @lay_verify = ((Model.FailType == "msg") ? ("required") : ("")), @autocomplete = "off" })
+
+
+
+                    </div>
+
+                    @*<input type="radio" name="FailType" @(Model.FailType == "prize" ? "checked" : "") value="prize" lay-filter="FailType" title="设定奖品">*@
+                    @*<br />
+                        <div id="FailPrizeID_div" style="display: @(Model.FailType == "prize" ? "block" : "none")">
+
+                            <select name="FailPrizeID" @(Model.FailType == "prize" ? "lay-verify='required' required" : "")>
+                                <option value=""></option>
+                                @foreach (var item in prizes)
+                                {
+                                    <option value="@(item.ID)" @((item.ID == Model.FailPrizeID) ? "selected='selected'" : "")>@(item.PrizeLevel)</option>
+                                }
+                            </select>
+
+                        </div>*@
+
+
+                </div>
+            }
+            else
+            {
+                <div class="layui-input-inline" style="width:400px">
+                    <input type="radio" name="FailType" checked="checked" value="msg" lay-filter="FailType" title="提示消息">
+                    <br />
+                    <div id="FailMsg_div" style="display:block">
+                        @Html.TextBox("FailMsg", (string.IsNullOrWhiteSpace(Model.FailMsg) ? "很遗憾，您没有中奖！" : Model.FailMsg), new { @class = "layui-input", @placeholder = "请输入提示消息", @lay_verify = "required", @autocomplete = "off" })
+
+
+
+                    </div>
+                    @*<input type="radio" name="FailType" value="prize" lay-filter="FailType" disabled title="设定奖品">*@
+
+                </div>
+            }
+
+
+
+
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; "></label>
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="go">保存</button>
+            </div>
+        </div>
+    </form>
+
+    
+    <script>
+
+        layui.use('form', function () {
+            var form = layui.form();
+            form.on('radio(FailType)', function (data) {
+                if (data.value == "msg") {
+                    $("[name='FailPrizeID']").removeAttr("lay-verify");
+                    $("#FailPrizeID_div").hide();
+
+                    $("[name='FailMsg']").attr("lay-verify", "required");
+                    $("#FailMsg_div").show();
+
+                }
+                else if (data.value == "prize") {
+                    $("[name='FailMsg']").removeAttr("lay-verify");
+                    $("#FailMsg_div").hide();
+
+                    $("[name='FailPrizeID']").attr("lay-verify", "required");
+                    $("#FailPrizeID_div").show();
+                }
+            });
+
+            form.on('switch(limit)', function (data) {
+                console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //是否被选中，true或者false
+                console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+                if (data.elem.checked) {
+                    $("[name='IsTimeLimit']").val("true");
+                    $(".js-limitdiv").show();
+                }
+                else {
+                    $("[name='IsTimeLimit']").val("false");
+                    $(".js-limitdiv").hide();
+                }
+
+            });
+            form.on('switch(swich)', function (data) {
+                console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //是否被选中，true或者false
+                console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+                if (data.elem.checked) {
+                    $("[name='IsActive']").val("true");
+                }
+                else {
+                    $("[name='IsActive']").val("false");
+                }
+
+            });
+
+            //监听提交
+            form.on('submit(go)', function (data) {
+                debugger;
+                $.post("/LotteryActivitysManage/ToEdit", $("form").serialize(), function (rtn) {
+                    if (rtn == "ok") {
+                        parent.window.location.href = parent.window.location.href;
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                });
+                return false;
+            });
+
+
+
+        });
+    </script>
+</body>
+</html>

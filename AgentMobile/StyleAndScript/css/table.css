@@ -1,0 +1,32 @@
+﻿body {
+}
+
+.fw_table {
+    font-size:14px;
+    width:100%;
+    border:0;
+    border-spacing:0; 
+}
+
+    .fw_table tr {
+        height:30px;
+        line-height:36px;
+    }
+
+    .fw_table tr th {
+        border-bottom:1px solid #ddd;
+        padding:0; 
+        background-color:#eee;
+        color:#555;
+    }
+
+    .fw_table tr td {
+        border-bottom:1px solid #ddd;
+        padding:0;
+        text-align:center;
+    }
+
+    .fw_table tr:nth-child(even)
+    {
+        background:#f1f1f1;
+    }

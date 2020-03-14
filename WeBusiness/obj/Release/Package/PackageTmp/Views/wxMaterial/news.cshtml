@@ -1,0 +1,254 @@
+﻿@using WeModels
+@{
+
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>素材列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+
+
+    @*<link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/mpres/htmledition/style/base/base318f29.css">
+    <link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/mpres/htmledition/style/base/lib318f29.css">
+    <link rel="stylesheet" href="https://res.wx.qq.com/mpres/htmledition/style/page/media/media_list2f12f7.css">
+    <link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/c/=/mpres/htmledition/style/biz_web/widget/dropdown2f12f7.css,/mpres/htmledition/style/widget/tooltip218878.css,/mpres/htmledition/style/widget/pagination218878.css,/mpres/htmledition/style/widget/media2f624f.css">*@
+    
+    <link href="~/css/wxmp/base318f29.css" rel="stylesheet" />
+    <link href="~/css/wxmp/lib318f29.css" rel="stylesheet" />
+    <link href="~/css/wxmp/media_list2f12f7.css" rel="stylesheet" />
+    <link href="~/css/wxmp/media2f624f.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="main_bd" id="js_main">
+
+        <div class="main_bd" id="js_main">
+            <div class="sub_title_bar">
+                <div class="info">
+                    <h3 id="page_title">
+                        <span id="query_tips">图文消息</span>(共<span id="js_count">0</span>条)
+                    </h3>
+                    <div class="rank_style">
+                    </div>
+                </div>
+                <a target="_blank" class="btn btn_add btn_primary r btn_new" href="javascript:buliding()">
+                    <i class="icon14_common add_white"></i>新建图文消息
+                </a>
+            </div>
+
+
+            <div class="appmsg_list" id="datahtml" style="">
+            </div>
+            <div class="appmsg_list_v" id="js_list" style="display:none;"></div>
+
+            <div class="empty_tips dn" id="js_empty"><p>暂无素材</p></div>    <div class="empty_tips dn" id="js_search_empty">没有更多了</div>  
+            
+            
+        </div>
+        </div>
+    <p style="text-align:center" id="moresucai" onclick="loadmore()" class="dn"><button class="layui-btn">更多</button></p>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    {{each(i,ck) item}}
+    <div class="appmsg_col tj_item">
+        <div class="inner">
+            <div class="js_appmsgitem">
+                <div class="appmsg has_first_cover ${ck.content.news_item.length>1?"multi":"single"}" data-id="100000020" data-fileid="100000012" data-completed="1">
+                    <div class="appmsg_content">
+                        <div class="appmsg_info">
+                            <em class="appmsg_date">${convertTenTime(ck.update_time).Format("yyyy-MM-dd hh:mm:ss")}</em>
+
+                        </div>
+                        {{each(j,newsitem) ck.content.news_item}}
+
+
+
+
+                        {{if ck.content.news_item.length>1}}
+
+                        {{if j==0}}
+                        <div class="cover_appmsg_item">
+                            <h4 class="appmsg_title js_title">
+
+                                <a href="" target="_blank" data-msgid="100000020" data-idx="0">${newsitem.title}</a>
+
+                            </h4>
+
+                            <div class="appmsg_thumb_wrp" style="background-image: url('${newsitem.bo_url}')">
+                                <!--
+
+                    -->
+                            </div>
+                            <a href="javascript:void(0)" onclick="newshow('${newsitem.url}')" class="edit_mask preview_mask js_preview" data-msgid="100000020" data-idx="0">
+                                <div class="edit_mask_content">
+                                    <p class="">
+                                        预览文章
+                                    </p>
+                                </div>
+                                <span class="vm_box"></span>
+                            </a>
+
+                        </div>
+                        {{else}}
+                        <div class="appmsg_item ${ck.content.news_item.length==1?" has_cover":""}">
+
+
+
+                            <div class="appmsg_thumb_wrp" style="background-image: url('${newsitem.bo_url}');">
+                                <!--
+
+                    -->
+                            </div>
+                            <h4 class="appmsg_title js_title">
+
+                                <a href="" target="_blank" data-msgid="100000020" data-idx="1">${newsitem.title}</a>
+
+                            </h4>
+
+                            <a href="javascript:void(0)" onclick="newshow('${newsitem.url}')" class="edit_mask preview_mask js_preview" data-msgid="100000020" data-idx="1">
+                                <div class="edit_mask_content">
+                                    <p class="">
+                                        预览文章
+                                    </p>
+                                </div>
+                                <span class="vm_box"></span>
+                            </a>
+
+                        </div>
+
+                        {{/if}}
+
+
+
+
+                        {{else}}
+
+                        <div class="appmsg_item">
+                            <h4 class="appmsg_title js_title">
+
+                                <a href="" target="_blank" data-msgid="100000018" data-idx="0">${newsitem.title}</a>
+
+                            </h4>
+                            <div class="appmsg_thumb_wrp" style="background-image: url('${newsitem.bo_url}')">
+                            </div>
+                            <p class="appmsg_desc"> ${newsitem.digest}</p>
+
+                            <a href="javascript:void(0)" onclick="newshow('${newsitem.url}')" class="edit_mask preview_mask js_preview" data-msgid="100000018" data-idx="0">
+                                <div class="edit_mask_content">
+                                    <p class="">
+                                        预览文章
+                                    </p>
+                                </div>
+                                <span class="vm_box"></span>
+                            </a>
+
+                        </div>
+
+                        {{/if}}
+
+
+
+
+                        {{/each}}
+
+                    </div>
+
+
+                    <div class="appmsg_opr">
+                        <ul>
+                            <li class="appmsg_opr_item grid_item size1of2">
+                                <a target="_blank" class="js_tooltip" href="javascript:buliding()" data-tooltip="编辑">&nbsp;<i class="icon18_common edit_gray">编辑</i></a>
+                            </li>
+                            <li class="appmsg_opr_item grid_item size1of2 no_extra">
+                                <a class="js_del no_extra js_tooltip" data-id="100000020" data-mediaid="${ck.media_id}" href="javascript:void(0);" onclick="del(this)" data-tooltip="删除">&nbsp;<i class="icon18_common del_gray">删除</i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script>
+    var offset = 0;
+    $(function ()
+    {
+        getnewsdata();
+    })
+
+
+    function getnewsdata()
+    {
+        $.getJSON("/wxMaterial/getnews", { "offset": offset, "count": 10 }, function (data) {
+            $("#datajs").tmpl(data).appendTo('#datahtml');
+            $("#js_count").text(data.total_count);
+            if (data.total_count == 0) {
+                $("#js_empty").removeClass("dn");
+            }
+            else if (data.total_count > data.item_count) {
+                $("#moresucai").removeClass("dn");
+            }
+            else if (data.item_count==0) {
+                $("#js_search_empty").removeClass("dn");
+            }
+        })
+    }
+
+
+    function loadmore()
+    {
+        offset++;
+        getnewsdata();
+    }
+
+    function del(obj)
+    {
+        var media_id=$(obj).attr("data-mediaid");
+        layer.confirm('删除该素材后，公众平台也会被删除，确定要删除该素材吗?', { icon: 3, title: '提示' }, function (index) {
+            //do something
+            $.post("/wxMaterial/del", { "media_id": media_id }, function (rtn)
+            {
+                layer.close(index);
+                if (rtn == 1) {
+                    window.location.href = window.location.href;
+                }
+                else
+                {
+                    layer.alert("删除失败");
+                }
+            })
+        });
+    }
+
+    function newshow(url)
+    {
+        layer.open({
+            type: 2,
+            title: "公众号图文素材预览",
+            area: ['500px', '700px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: url
+        });
+    }
+
+    function buliding()
+    {
+        layer.alert("敬请期待");
+    }
+</script>

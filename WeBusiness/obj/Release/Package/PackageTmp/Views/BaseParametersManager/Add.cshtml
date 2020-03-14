@@ -1,0 +1,101 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>添加系统参数</legend>
+    </fieldset>
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">类别</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("Type", "", new { @class = "layui-input", @lay_verify = "required", @placeholder = "请输入类别", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">唯一标识</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("ParametersKey", "", new { @class = "layui-input", @lay_verify = "required", @placeholder = "必须唯一", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; ">参数名</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("NickName", "", new { @class = "layui-input", @lay_verify = "required", @placeholder = "请输入参数名", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width:200px">值类型</label>
+            <div class="layui-input-inline" style="width:400px">
+                <select name="valType" lay-filter="valType" lay-verify="required">
+                    <option value=""></option>
+                    <option value="text">文字</option>
+                    <option value="image">图片</option>
+                    <option value="password">密码</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; ">备注</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("Remark", "", new { @class = "layui-input", @lay_verify = "required", @placeholder = "请输入备注", @autocomplete = "off", @required = "" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; ">排序</label>
+            <div class="layui-input-inline" style="width:400px">
+                @Html.TextBox("Sort", "", new { @class = "layui-input", @placeholder = "请输入排序序号", @autocomplete = "off" })
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; ">是否显示</label>
+            <div class="layui-input-inline" style="width:400px">
+                <input type="radio" name="IsShow" value="true" title="显示" checked>
+                <input type="radio" name="IsShow" value="false" title="隐藏">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 200px; "></label>
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="go">保存</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form();
+
+            //监听提交
+            form.on('submit(go)', function (data) {
+                $.post("/BaseParametersManager/ToAdd", $("form").serialize(), function (rtn) {
+                    if (rtn == "ok") {
+                        parent.window.location.href = parent.window.location.href;
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

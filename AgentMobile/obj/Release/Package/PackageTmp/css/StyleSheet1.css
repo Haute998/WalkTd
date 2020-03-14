@@ -1,0 +1,375 @@
+﻿/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small {
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol {
+    list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+sup {
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub {
+    vertical-align: text-bottom;
+}
+
+/** 重置表单元素 **/
+legend {
+    color: #000;
+}
+/* for ie6 */
+fieldset, img {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea {
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"], input[type="text"] {
+    -webkit-appearance: none;
+    font-size: 14px;
+}
+
+textarea {
+    -webkit-appearance: none;
+    font-size: 14px;
+    color: #000;
+}
+    /* 去掉高光样式 */
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+input:focus, img:focus {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    display: block;
+}
+
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: #555;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #555;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #555;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #555;
+}
+
+#page1 {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+.zl-p1 {
+    margin: 20px 0;
+}
+
+    .zl-p1 a {
+        margin: 0 auto;
+        width: 85%;
+        height: 40px;
+        line-height: 40px;
+        display: block;
+        color: #fff;
+        font-size: 16px;
+        letter-spacing: 1px;
+        border-radius: 3px;
+        text-align: center;
+    }
+
+.abg1 {
+    background: #000000;
+}
+
+.abg2 {
+    background: #f39801;
+}
+
+.abg3 {
+    background: #999;
+}
+
+.abg4 {
+    background: #CCC;
+}
+
+.zl-p2 {
+    padding: 40px 0 10px 0;
+}
+
+
+    .zl-p2 img {
+        width: 30%;
+        margin: 0 auto;
+    }
+
+.zl-p3 {
+    color: #000;
+    font-size: 16px;
+}
+
+.text-align {
+    text-align: center;
+}
+
+.zl-txt1 {
+    width: 85%;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    height: 36px;
+    text-indent: 10px;
+    color: #000;
+    box-sizing: border-box;
+}
+
+.zl-txt2 {
+    width: 85%;
+    border: 0;
+    border-bottom: 1px solid #000000;
+    border-radius: 0;
+    height: 36px;
+    text-indent: 44px;
+    color: #000;
+    box-sizing: border-box;
+}
+
+.zh {
+    background: url(../images/icon_b.png) no-repeat scroll top 3px left 5px transparent;
+    background-size: 26px;
+}
+
+.pwd {
+    background: url(../images/icon-a.png) no-repeat scroll top 3px left 5px transparent;
+    background-size: 26px;
+}
+
+.zl-sel1 {
+    width: 85%;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    height: 36px;
+    text-indent: 10px;
+    color: #000;
+    box-sizing: border-box;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /*在选择框的最右侧中间显示小箭头图片*/
+    background: url(../images/xiala.png) no-repeat scroll right 10px center transparent;
+}
+
+.zl-textarea {
+    width: 85%;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    color: #000;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.sm {
+    position: relative;
+}
+
+.saoma {
+    position: absolute;
+    height: 24px;
+    top: 7px;
+    right: 9.5%;
+}
+
+.zl-p4 {
+    padding: 0 0 5px 0;
+}
+
+
+.zl-p5 {
+    color: #999;
+    font-size: 14px;
+    width: 80%;
+    margin: 0 auto 16px;
+}
+
+.zl-p6 {
+    color: #666;
+    width: 85%;
+    margin: 10px auto 0;
+}
+
+    .zl-p6 .wjmima {
+        color: #666;
+        float: right;
+    }
+
+.zl-p7 {
+    background: #ebebeb;
+    padding: 5px;
+    width: 97%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.zl-p8 {
+    color: #676767;
+    font-size: 14px;
+    padding-left: 30px;
+    padding-bottom: 3px;
+    background: url(../images/icon_c.png) no-repeat scroll top left 5px transparent;
+    background-size: 22px;
+}
+
+.zl-p9 {
+    color: #676767;
+    font-size: 10px;
+    padding-left: 30px;
+}
+
+.zl-p10 {
+    color: #000;
+    font-size: 16px;
+    padding: 20px 0 10px;
+}
+
+.zl-p11 {
+    color: #676767;
+    font-size: 14px;
+}
+
+.zl-p12 img {
+    width: 26%;
+    margin: 90px auto 0;
+}
+
+
+.hx-btn {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1PX solid #ccc;
+    background: #000000;
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 1px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.padding-top-40 {
+    padding-top: 40px;
+}
+
+.padding-top-60 {
+    padding-top: 60px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
+.zl-p13 {
+    width: 94%;
+    margin: 0 auto 3px;
+    color: #000;
+    font-size: 12px;
+}
+
+.zl-p14 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.zl-xyb {
+    border: 1px solid #ccc;
+    background: #ccc;
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    border-radius: 0;
+}
+
+
+.zl-p15 {
+    width: 94%;
+    margin: 30px auto 50px;
+    color: #000;
+    font-size: 16px;
+}

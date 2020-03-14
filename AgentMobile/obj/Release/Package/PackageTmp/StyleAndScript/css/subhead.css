@@ -1,0 +1,79 @@
+﻿html, body {
+    margin:0;
+}
+#AgentHead {
+    width: 100%;
+    height: 40px;
+    background-color: #1b4f9b;
+}
+
+    #AgentHead dl {
+        height: 40px;
+        width: 100%;
+    }
+
+    #AgentHead dl, dd {
+        margin: 0;
+        padding: 0;
+        padding-top: 5px;
+        color: #fff;
+        text-align: center;
+        font-size:15px;
+        /*font-weight:bold;*/
+        font-family:'Microsoft YaHei';
+    }
+
+        #AgentHead dl dd:first-child {
+            padding: 0;
+            width: 10%;
+        }
+
+        #AgentHead dl dd:nth-child(2) {
+            width: 80%;
+        }
+
+        #AgentHead dl dd:last-child {
+            width: 10%;
+        }
+
+    #AgentHead dd {
+        float: left;
+    }
+
+        #AgentHead dd a {
+            display:block;
+            padding-top:3px;
+        }
+
+        #AgentHead dd img {
+            width: 24px;
+        }
+
+/*搜索框样式*/
+.QueryDiv {
+    width: 94%;
+    height: 36px;
+    margin: 0 auto;
+    padding: 8px 3% 2px 3%;
+    background-color: #ededed;
+    position: relative;
+    border-bottom:1px solid #ddd;
+}
+
+#QueryAgent {
+    width: 94%;
+    height: 26px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 0 3%;
+    font-size: 14px;
+}
+
+.queryImg {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+    width: 20px;
+    z-index: 999;
+}

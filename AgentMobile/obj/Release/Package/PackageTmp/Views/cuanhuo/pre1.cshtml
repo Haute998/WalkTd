@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+    string IsWx = ViewData["IsWx"].ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Anti-skid cargo query</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/StyleSheet1.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <script type="text/javascript">
+        window.onload = function () {
+            var oImg = document.getElementById('page');
+            oImg.style.width = '100%';
+            oImg.style.height = document.documentElement.clientHeight / 1 + 'px';
+            //高度为可视区的1/3
+        }
+    </script>
+</head>
+<body>
+    <div id="page" class="banner">
+        <img src="/images/banner.png" width="100%" />
+
+        <p class="hx-p2 hx-padding-top55">Please enter the SN code on the product label</p>
+        <p class="hx-p2"><input id="Sel" type="text" class="hx-txt" placeholder="Please enter a 12-digit barcode number" onkeydown="return subData();" maxlength="12" /></p>
+
+        <p class="hx-p2 hx-padding-top55"><input id="btn_search" class="hx-btn" type="button" value="Check" /></p>
+
+    </div>
+
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Besiness_js_jsconfig.js"></script>
+@if (IsWx == "1")
+{
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script>
+    $(function () {
+        $("#btn_search").click(function () {
+            var TextVal = $("#Sel").val();
+            if (TextVal=="") {
+                layer.open({
+                    content: 'S/N yards cannot be empty！！'
+   , btn: 'I see'
+                });
+                return;
+            }
+
+            window.location.href = '/cuanhuo/Index1?ID=' + TextVal;
+        })
+
+    })
+
+</script>

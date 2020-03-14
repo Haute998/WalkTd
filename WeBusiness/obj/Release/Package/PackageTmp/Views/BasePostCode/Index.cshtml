@@ -1,0 +1,132 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model List<BasePostCode>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>快递公司收录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <blockquote class="layui-elem-quote">更新按钮可更新最新的快递公司和代号，您可操作启用</blockquote>
+    <fieldset class="layui-elem-field site-demo-button">
+        <div>
+            <button class="layui-btn layui-btn-radius" onclick="add(this)">添加</button>
+            <button class="layui-btn layui-btn-radius" onclick="update(this)">更新</button>
+        </div>
+    </fieldset>
+    <table class="layui-table" style="margin: 20px; text-align: center">
+        <thead>
+            <tr>
+                <td>快递公司名</td>
+                <td>快递公司代号</td>
+                <td>是否使用</td>
+                <td>排序</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (BasePostCode codeModel in Model)
+            {
+                <tr>
+                    <td>@(codeModel.PostName)</td>
+                    <td>@(codeModel.PostCode)</td>
+                    <td>@Html.Raw(codeModel.IsHave ? "<label style='color:blue'>使用</label>" : "禁用")</td>
+                    <td>@(codeModel.Sort)</td>
+                    <td>
+                        @if (codeModel.IsHave)
+                        {
+                            <a href="javascript:void(0)" title="禁用" data-id="@(codeModel.ID)" data-ishave="false" onclick="tohave(this)"> <i class="layui-icon" title="禁用">&#x1006;</i></a>
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0)" title="启用" data-id="@(codeModel.ID)" data-ishave="true" onclick="tohave(this)"> <i class="layui-icon" title="启用">&#xe618;</i></a>
+                        }
+                        <a href="javascript:void(0)" title="修改" onclick="edit(this)" data-id="@(codeModel.ID)"> <i class="layui-icon" title="修改">&#xe642;</i></a>
+                        <a href="javascript:void(0)" title="删除" onclick="del(this)" data-id="@(codeModel.ID)"> <i class="layui-icon" title="删除">&#xe640;</i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+<script>
+
+    function del(obj) {
+        layer.confirm('确定要删除吗?', { icon: 3, title: '提示' }, function (index) {
+            //do something
+            $.post("/BasePostCode/ToDel", { "id": $(obj).attr("data-id") }, function (rtn) {
+                layer.close(index);
+                if (rtn == "ok") {
+                    layer.msg("删除成功");
+                    $(obj).parent().parent().remove();
+                }
+                else {
+                    layer.alert(rtn);
+                }
+            })
+        });
+    }
+
+    function edit(obj) {
+        var id = $(obj).attr("data-id");
+        layer.open({
+            type: 2,
+            title: "快递公司修改",
+            area: ['900px', '500px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/BasePostCode/Edit/' + id
+        });
+    }
+
+    function add(obj) {
+        layer.open({
+            type: 2,
+            title: "快递公司添加",
+            area: ['900px', '500px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/BasePostCode/Add/'
+        });
+    }
+    function update(obj) {
+        var loadingobj = layer.load("正在更新中");
+        $.post("/BasePostCode/UpdateDown", {}, function (rtn) {
+            layer.close(loadingobj);
+            if (rtn == "ok") {
+                layer.alert("更新成功");
+                window.location.href = window.location.href;
+            }
+            else {
+                layer.alert(rtn);
+            }
+        })
+    }
+
+    function tohave(obj) {
+        var id = $(obj).attr("data-id");
+        var ishave = $(obj).attr("data-ishave");
+        $.post("/BasePostCode/ToHave", { "id": id, "ishave": ishave }, function (rtn) {
+            if (rtn == "ok") {
+                window.location.href = window.location.href;
+            }
+            else {
+                layer.alert(rtn);
+            }
+
+        })
+    }
+</script>

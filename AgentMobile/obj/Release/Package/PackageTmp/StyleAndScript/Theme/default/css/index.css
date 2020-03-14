@@ -1,0 +1,236 @@
+﻿/* CSS Document */
+
+/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+    font: 14px/1.5 tahoma, Microsoft YaHei, sans-serif;
+}
+/** 设置默认字体 **/
+body, button, input, select, textarea /* for ie */ {
+    font: 14px/1.5 tahoma, Microsoft YaHei, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small {
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol {
+    list-style: none;
+}
+/** 重置文本格式元素 **/
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+sup {
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub {
+    vertical-align: text-bottom;
+}
+/** 重置表单元素 **/
+legend {
+    color: #000;
+}
+/* for ie6 */
+fieldset, img {
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea {
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+    /* 去掉高光样式 */
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+input:focus {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+.button {
+    border-radius: 0;
+}
+
+#page1 {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.bodybg {
+    background: #fff;
+    min-height: 100vh;
+}
+
+/*-----------------------------轮换图片--------------------------*/
+.scroll {
+    margin: 0px auto;
+    max-width: 640px;
+    position: relative;
+}
+
+.scroll_box {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+}
+
+.scroll_wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+    .scroll_wrap li {
+        position: relative;
+        display: block;
+        width: 100%;
+        float: left;
+    }
+
+        .scroll_wrap li a {
+            display: block;
+            margin: 0 auto;
+            position: relative;
+        }
+
+.scroll_position {
+    position: absolute;
+    left: 43%;
+    z-index: 10;
+    bottom: 10px;
+    margin-left: 10px;
+}
+
+    .scroll_position li {
+        display: inline-block;
+        z-index: -9;
+    }
+
+        .scroll_position li a {
+            width: 9px;
+            height: 9px;
+            box-sizing: border-box;
+            text-decoration: none;
+            outline: none;
+            float: left;
+            background: #999;
+            z-index: -9;
+            font-size: 0px;
+            border-radius: 50%;
+            opacity: 0.85;
+        }
+
+            .scroll_position li a.on {
+                background: #4098a5;
+            }
+
+.scroll_position_bg {
+    position: absolute;
+    bottom: 10px;
+    left: 43%;
+    padding: 0 15px;
+    z-index: 380;
+    height: 20px;
+    border-radius: 26px;
+}
+
+.zkm-w5-index {
+    width: 100%;
+    overflow: hidden;
+    background: #1b4f9e;
+}
+
+.zkm-w5-xx {
+    color: #fff;
+    font-size: 0.8rem;
+    margin-bottom: 30px;
+}
+
+    .zkm-w5-xx > div {
+        border-bottom: 1px solid #fff;
+        width: 85%;
+        margin: 0 auto;
+        overflow: hidden;
+        line-height: 22px;
+        padding-top: 15px;
+    }
+
+        .zkm-w5-xx > div em {
+            font-style: normal;
+            float: right;
+        }
+
+.zkm-w5-lb {
+    width: 96%;
+    margin: 0 auto;
+}
+
+    .zkm-w5-lb dl {
+        width: 25%;
+        float: left;
+        text-align: center;
+        font-size: 0.7rem;
+    }
+
+        .zkm-w5-lb dl a {
+            color: #fff;
+            display: block;
+        }
+
+        .zkm-w5-lb dl dt {
+            height: 36px;
+            padding-bottom: 5px;
+        }
+
+        .zkm-w5-lb dl img {
+            height: 36px;
+        }
+#scroll_img {
+    min-height:350px;
+}

@@ -1,0 +1,88 @@
+﻿@using WeModels
+@{
+
+    Layout = null;
+}
+@model B_User
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>我的信息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>我的信息</legend>
+    </fieldset>
+    <table class="layui-table" style="margin:20px;text-align:center">
+        <tr>
+            <td style="background-color: #e2e2e2">用户名</td>
+            <td>@(Model.UserName)</td>
+        </tr>
+        <tr>
+            <td style="background-color: #e2e2e2">姓名</td>
+            <td>@(Model.Name)</td>
+        </tr>
+        <tr>
+            <td style="background-color: #e2e2e2">手机号</td>
+            <td>@(Model.Mobile)</td>
+        </tr>
+        <tr>
+
+            <td style="background-color: #e2e2e2">登陆次数</td>
+            <td>@(Model.LoginTimes)</td>
+        </tr>
+        <tr>
+
+            <td style="background-color: #e2e2e2">角色</td>
+            <td>
+                @{
+                    List<B_Role> roles = B_Role.GetUserRoles(Model.UserName);
+                    if (roles != null && roles.Count > 0)
+                    {
+                        foreach (B_Role role in roles)
+                        {
+                            <label>@(role.RoleName)</label>
+                        }
+                    }
+                }
+            </td>
+        </tr>
+
+        <tr>
+
+            <td style="background-color: #e2e2e2">最后登陆时间</td>
+            <td>@(Model.LoginLastDat)</td>
+        </tr>
+
+
+    </table>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>绑定的微信可在微信收到后台待发货订单提醒</legend>
+    </fieldset>
+    <table class="layui-table" style="margin:20px;text-align:center">
+        <tr>
+
+            <td style="background-color: #e2e2e2">绑定的微信</td>
+            @if (string.IsNullOrWhiteSpace(Model.C_UserName))
+            {
+                <td>未绑定</td>
+            }
+            else
+            {
+                <td>@(Model.C_UserName)</td>
+            }
+        </tr>
+
+    </table>
+</body>
+</html>

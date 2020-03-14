@@ -1,0 +1,133 @@
+﻿@using WeModels;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>退货记录详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/css/dropload.css" rel="stylesheet" media="all" />
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <link href="~/StyleAndScript/css/table.css?@(WeConfig.css_version)" rel="stylesheet" />
+</head>
+<body>
+    <header class="tabHead">
+        <div id="AgentHead">
+            <dl>
+                <dd><a href="/RtnScale/RtnScaleDetail"><img id="BtnClose" src="/images/11111.png" /></a></dd>
+                <dd>退货记录详情</dd>
+                <dd></dd>
+            </dl>
+        </div>
+        <div class="QueryDiv">
+            <input type="text" id="QueryAgent" placeholder="请输入产品条码" />
+            <img class="queryImg" onclick="QueryData()" src="~/images/001_38.png?@(WeConfig.img_version)" />
+        </div>
+    </header>
+    <article class="khfxWarp">
+        <table class="fw_table">
+            <thead>
+                <tr>
+                    <th>大箱码</th>
+                    @if (PDAUserMsg.Param.MiddlePacking)
+                    {
+                        <th>中箱码</th>
+                    }
+                    <th>产品码</th>
+                </tr>
+            </thead>
+            <tbody class="khfxPane"></tbody>
+        </table>
+    </article>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/dropload.js"></script>
+
+    <script type="text/javascript">
+        var OrderNo = '@ViewData["OrderNo"]';
+        var ProductNo = '@ViewData["ProductNo"]';
+        var Consignee = '@ViewData["Consignee"]';
+        var IDateTime = '@ViewData["IDateTime"]';
+
+        $(function () {
+            LoadAgentList();
+            $(".queryImg").click(function () {
+                $(".khfxPane tr").remove();
+                $(".dropload-down").remove();
+                LoadAgentList();
+            });
+        });
+
+        function LoadAgentList() {
+            var itemIndex = 0;
+            var tabLoadEndArray = [false, false, false];
+            var tabLenghtArray = [10, 10, 10];
+            var tabPageIndexArray = [1, 1, 1];
+            var tabPageSizeArray = [10, 10, 10];
+            var tabScroolTopArray = [0, 0, 0];
+
+            var dropload = $('.khfxWarp').dropload({
+                scrollArea: window,
+                threshold: 123,
+                domDown: {
+                    domClass: 'dropload-down',
+                    domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData: '<div class="dropload-noData">已无数据</div>'
+                },
+                loadDownFn: function (me) {
+
+                    setTimeout(function () {
+
+                        if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                        $.ajax({
+                            type: 'POST',
+                            url: '/RtnScale/GetC_UserScaleDetail',
+                            data: { "pageIndex": tabPageIndexArray[itemIndex], "pageSize": tabPageSizeArray[itemIndex], "OrderNo": OrderNo, "ProducctNo": ProductNo, "ReturnTime": IDateTime, "Consignee": Consignee, "keyword": $("#QueryAgent").val().trim() },
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var result = "";
+                                tabPageIndexArray[itemIndex]++;
+                                if (data.RtnList.length > 0) {
+                                    for (var index = 0; index < data.RtnList.length; index++) {
+                                        if (itemIndex == 0) {
+
+
+                                            var IsBig = "@PDAUserMsg.Param.MiddlePacking";
+
+                                            result += "<tr>";
+                                            if (IsBig == "True") {
+                                                result += "<td>" + data.RtnList[index].BigCode + "</td>";
+                                            }
+                                            result += "<td>" + data.RtnList[index].MiddleCode + "</td>";
+                                            result += "<td>" + data.RtnList[index].SmallCode + "</td>";
+                                            result += "</tr>";
+
+                                        }
+                                    }
+                                }
+                                else {
+                                    tabLoadEndArray[itemIndex] = true;
+                                }
+
+                                if (data.RtnList.length < tabPageSizeArray[itemIndex]) tabLoadEndArray[itemIndex] = true;
+
+                                $('.khfxPane').eq(itemIndex).append(result);
+                                me.resetload();
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

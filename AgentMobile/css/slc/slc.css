@@ -1,0 +1,301 @@
+﻿
+a {
+    -webkit-tap-highlight-color: rgba(255,0,0,0);
+}
+
+.slc-bgfj {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    background: url(/images/zq-bg.png) center top no-repeat;
+    background-size: 100% 100%;
+}
+
+.slc-bg {
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.slc-fch {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 30px;
+    box-sizing: border-box;
+}
+
+.slc-fch-div {
+    min-height: 90vh;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.slc-logo {
+    text-align: center;
+    padding: 70px 0 20px;
+}
+
+.slc-w1 {
+    width: 80%;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.slc-w2 {
+    width: 80%;
+    margin: 5px auto 0;
+    color: #909399;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.slc-w3 {
+    width: 85%;
+    margin: 0 auto;
+}
+
+
+.slc-padding8 {
+    padding: 80px 0 0;
+}
+
+.slc-margin8 {
+    margin: 80px auto 0;
+}
+
+.slc-padding5 {
+    padding: 50px 0 0;
+}
+
+.slc-w3 input, textarea {
+    box-sizing: border-box;
+}
+
+.slc-pos {
+    position: relative;
+}
+
+.slc-inputs {
+    width: 100%;
+    margin: 0 auto;
+    height: 43px;
+    border: 1px solid #7e8189;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    background: transparent;
+    text-indent: 10px;
+    letter-spacing: 1px;
+    -webkit-appearance: none;
+}
+
+.slc-smbtn {
+    position: absolute;
+    right: -1px;
+    top: 0;
+    width: 64px;
+    height: 43px;
+    border: 1px solid #fff;
+    background: #fff url(/images/scanning.png) no-repeat;
+    background-position: top 6px right 17px;
+    background-size: 28px;
+    border-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.slc-btn {
+    width: 75%;
+    height: 38px;
+    border: 1px solid #fff;
+    background: #fff;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+    margin: 0 auto;
+    display: block;
+}
+
+.slc-foot {
+    width: 100%;
+    text-align: center;
+    color: #646568;
+    font-size: 0.75rem;
+    height: 20px;
+    line-height: 20px;
+}
+
+.slc-foot1 {
+    width: 100%;
+    text-align: center;
+    color: #dadada;
+    font-size: 0.75rem;
+    height: 20px;
+    line-height: 20px;
+}
+
+.slc-jgimg {
+    text-align: center;
+    padding: 10vh 0 0;
+}
+
+.slc-product img {
+    display: block;
+}
+
+.slc-d6 {
+    text-align: center;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.slc-d7 {
+    width: 85%;
+    margin: 40px auto 10px;
+}
+
+    .slc-d7 > div {
+        margin-top: 20px;
+    }
+
+.slc-d8 {
+    color: #333;
+    padding: 15px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    background: #fff;
+    margin-bottom: 5px;
+    line-height: 22px;
+}
+
+    .slc-d8 span {
+        float: right;
+        color: #999;
+    }
+
+.slc-d9 {
+    color: #333;
+    width: 80%;
+    margin: 20px auto 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.slc-d10 {
+    text-align: center;
+    color: #000;
+    margin: 10px 0;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+}
+
+.slc-d11 {
+    text-align: center;
+    color: #000;
+    padding: 0 10%;
+    line-height: 27px;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.slc-d12 {
+    width: 85%;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #fff;
+    line-height: 17px;
+    letter-spacing: 0.5px;
+}
+
+    .slc-d12 input {
+        position: relative;
+        top: 1px;
+    }
+
+    .slc-d12 span {
+        margin-left: 5px;
+        line-height: 15px;
+    }
+
+.slc-d13 {
+    text-align: center;
+    color: #fff;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    padding: 50px 0 0;
+    font-weight: bold;
+}
+
+.slc-d14 {
+    width: 85%;
+    margin: 0 auto;
+}
+
+    .slc-d14 > div {
+        margin-top: 20px;
+    }
+
+.slc-add-select {
+    width: 100%;
+    height: 43px;
+    border: 0;
+    border: 1px solid #7e8189;
+    border-radius: 5px;
+    text-indent: 10px;
+    font-size: 16px;
+    color: #fff;
+    background: url(/images/next.png) no-repeat transparent;
+    background-position: right 10px center;
+    background-size: 8px;
+    letter-spacing: 1px;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+.slc-add-input {
+    width: 100%;
+    height: 43px;
+    border: 0;
+    border: 1px solid #7e8189;
+    border-radius: 5px;
+    text-indent: 10px;
+    font-size: 16px;
+    color: #fff;
+    background: transparent;
+    letter-spacing: 1px;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+.slc-login-inputs {
+    width: 100%;
+    height: 40px;
+    border: 0;
+    border-bottom: 1px solid #83878f;
+    border-radius: 0;
+    text-indent: 40px;
+    font-size: 16px;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.slc-login-zh {
+    background: url(/images/user.png) no-repeat;
+    background-position: left 8px top 9px;
+    background-size: 20px;
+}
+
+.slc-login-pwd {
+    background: url(/images/password.png) no-repeat;
+    background-position: left 8px top 9px;
+    background-size: 20px;
+}

@@ -1,0 +1,110 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    C_Consumer user = ViewData["user"] as C_Consumer;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="~/css/StyleSheet1.css" rel="stylesheet" />
+    <title>促销员积分商城</title>
+</head>
+<body style="background:#fff;">
+    <div class="home_box">
+        <div class="div1">
+            <img src="~/images/9.png" class="qq" />
+        </div>
+        <div class="div2">
+            <table>
+                <tr>
+                    <td><dl><a href="/j_shop/Index1"><dt><img src="~/images/ph.png" /></dt><dd>积分排行</dd></a></dl></td>
+                    <td><dl><a href="/j_shop/jifengo"><dt><img src="~/images/wyjf.png" /></dt><dd>我要积分</dd></a></dl></td>
+                    <td><dl><a href="/j_shop/ren"><dt><img src="~/images/grzx.png" /></dt><dd>个人信息</dd></a></dl></td>
+                </tr>
+            </table>
+        </div>
+        <div class="HH_div3">
+            <p class="p1">积分兑换</p>
+            <div id="goodslst"> 
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="goodsjs">
+    {{each(i,ck) RtnList}}
+
+    <div class="HH_div4">
+        <dl>
+            <dt>
+                <img src="@(WeConfig.b_domain)${ck.Main_img}" alt="" />
+            </dt>
+            <dd>
+                <div class="left">
+                    <p>${ck.GoodsName}</p>
+                    <p>
+                        <span><img src="/layout/jfshop/images/TCjf.png" /></span><em>${ck.SaleIntegral}</em>
+                        @*<span>已兑换<em> 2</em>件</span>*@
+                    </p>
+                </div>
+                <div class="right"><input id="Button1" data-goodsid="${ck.ID}" type="button" value="立即兑换" onclick="tobuy(this)" /></div>
+            </dd>
+        </dl>
+    </div>
+    {{/each}}
+</script>
+<script>
+
+    var pageIndex = 1;
+    var isloading = false;
+    var isok = false;
+    $(function () {
+        loaddata();
+        $(document).scroll(function () {
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                if (isok = true) {
+                    return false;
+                }
+                loaddata();
+            }
+        })
+    })
+
+    function loaddata() {
+        if (isloading == true) { return false; }
+        isloading = true;
+        $("#nomore").remove();
+        if ($("#loading").length <= 0) {
+            $("#goodslst").append("<p id='loading' style='text-align:center'><img src='/Images/system/waitLoad.gif'/></p>");
+        }
+        $.post("/j_shop/GoodsList", { "pageIndex": pageIndex }, function (data) {
+            $("#loading").remove();
+            $("#nomore").remove();
+            if (data != "") {
+                $("#goodsjs").tmpl(data).appendTo("#goodslst");
+                pageIndex++;
+            }
+            else {
+                if ($("#nomore").length <= 0) {
+                    $("#goodslst").append("<p id='nomore' style='text-align:center'>没有更多了哦</p>");
+                    isok = true;
+                }
+            }
+            isloading = false;
+
+        })
+    }
+
+    function tobuy(obj) {
+        var id = $(obj).attr("data-goodsid");
+        window.location.href = "/j_buy/order?mpk=" + id + "&cartids=0&type=mail&cnt=" + 1;
+    }
+</script>

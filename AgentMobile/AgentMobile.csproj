@@ -1,0 +1,1618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FF827BEF-7570-4F87-ADD7-D1EE75011F59}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AgentMobile</RootNamespace>
+    <AssemblyName>AgentMobile</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DAL">
+      <HintPath>..\Dll\DAL.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\Dll\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\StartEvent.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityMsgController.cs" />
+    <Compile Include="Controllers\AdviceController.cs" />
+    <Compile Include="Controllers\agentApplyController.cs" />
+    <Compile Include="Controllers\agentbackController.cs" />
+    <Compile Include="Controllers\AgentKnowController.cs" />
+    <Compile Include="Controllers\anti-fakeController.cs" />
+    <Compile Include="Controllers\articlegetController.cs" />
+    <Compile Include="Controllers\BlackCustomerController.cs" />
+    <Compile Include="Controllers\CensusController.cs" />
+    <Compile Include="Controllers\controlController.cs" />
+    <Compile Include="Controllers\C_UserCartController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\jifenshop\cuanhuoController.cs" />
+    <Compile Include="Controllers\jifenshop\jfGoodsController.cs" />
+    <Compile Include="Controllers\jifenshop\j_baseController.cs" />
+    <Compile Include="Controllers\jifenshop\j_buyController.cs" />
+    <Compile Include="Controllers\jifenshop\j_homeController.cs" />
+    <Compile Include="Controllers\jifenshop\j_mainController.cs" />
+    <Compile Include="Controllers\jifenshop\j_mymailController.cs" />
+    <Compile Include="Controllers\jifenshop\j_OrderShowController.cs" />
+    <Compile Include="Controllers\jifenshop\j_Order_xfzShowController.cs" />
+    <Compile Include="Controllers\jifenshop\j_shopController.cs" />
+    <Compile Include="Controllers\jifenshop\j_xfzbuyController.cs" />
+    <Compile Include="Controllers\jifenshop\j_xfzmymailController.cs" />
+    <Compile Include="Controllers\jifenshop\xfzbaseController.cs" />
+    <Compile Include="Controllers\jifenshop\xfzController.cs" />
+    <Compile Include="Controllers\jifenshop\xfz_homeController.cs" />
+    <Compile Include="Controllers\MyAddressController.cs" />
+    <Compile Include="Controllers\MyAgentsInfoController.cs" />
+    <Compile Include="Controllers\myarticleController.cs" />
+    <Compile Include="Controllers\MyCenterController.cs" />
+    <Compile Include="Controllers\MyCodeController.cs" />
+    <Compile Include="Controllers\MyInfoController.cs" />
+    <Compile Include="Controllers\MyRebateController.cs" />
+    <Compile Include="Controllers\OpenSourceController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OutScaleController.cs" />
+    <Compile Include="Controllers\PrizeDrawController.cs" />
+    <Compile Include="Controllers\ProblemController.cs" />
+    <Compile Include="Controllers\ProductShowController.cs" />
+    <Compile Include="Controllers\PublicShowController.cs" />
+    <Compile Include="Controllers\RedPaperController.cs" />
+    <Compile Include="Controllers\RtnScaleController.cs" />
+    <Compile Include="Controllers\SaleCensusController.cs" />
+    <Compile Include="Controllers\sendmsgController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Controllers\SourceShowController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\SYSMNotifyController.cs" />
+    <Compile Include="Controllers\testController.cs" />
+    <Compile Include="Controllers\WarrantAuthorityController.cs" />
+    <Compile Include="Controllers\WarrantController.cs" />
+    <Compile Include="Controllers\WeChatController.cs" />
+    <Compile Include="Controllers\wx_authController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseController.cs" />
+    <Compile Include="Models\HBBaseController.cs" />
+    <Compile Include="Models\ShardBaseController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarrantImg\MyCode.ashx.cs">
+      <DependentUpon>MyCode.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WarrantImg\MyWarrantImg.ashx.cs">
+      <DependentUpon>MyWarrantImg.ashx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="css\animate.css" />
+    <Content Include="css\article\000.css" />
+    <Content Include="css\article\iconfont.css" />
+    <Content Include="css\bellows-theme.css" />
+    <Content Include="css\bellows.css" />
+    <Content Include="css\common.css" />
+    <Content Include="css\common2.css" />
+    <Content Include="css\dropload.css" />
+    <Content Include="css\fwcx.css" />
+    <Content Include="css\H-ui.reset.css" />
+    <Content Include="css\hx\StyleSheet.css" />
+    <Content Include="css\hx\StyleSheet1.css" />
+    <Content Include="css\index.css" />
+    <Content Include="css\index1.css" />
+    <Content Include="css\jd_cart.css" />
+    <Content Include="css\jlpmain.css" />
+    <Content Include="css\jlpmain2.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\lrtk.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\main2.css" />
+    <Content Include="css\PageMobile\endpic.css" />
+    <Content Include="css\PageMobile\gdt-style.css" />
+    <Content Include="css\PageMobile\main.css" />
+    <Content Include="css\pricedraw\myrec.css" />
+    <Content Include="css\pricedraw\StyleSheet1.css" />
+    <Content Include="css\pricedraw\TCCstyle.css" />
+    <Content Include="css\qian.css" />
+    <Content Include="css\reset.css" />
+    <Content Include="css\saoma.css" />
+    <Content Include="css\screen.css" />
+    <Content Include="css\slc\common.css" />
+    <Content Include="css\slc\screen.css" />
+    <Content Include="css\slc\slc.css" />
+    <Content Include="css\SourceShow\css\common.css" />
+    <Content Include="css\SourceShow\css\XWshangping.css" />
+    <Content Include="css\SourceShow\css\XWtp.css" />
+    <Content Include="css\SourceShow\js\jquery-1.9.1.js" />
+    <Content Include="css\ProductStyle.css" />
+    <Content Include="css\styleSheet.css" />
+    <Content Include="css\StyleSheet1.css" />
+    <Content Include="css\TCCstyle.css" />
+    <Content Include="css\zhzl\base318f29.css" />
+    <Content Include="css\zhzl\common.css" />
+    <Content Include="css\zhzl\ylindex.css" />
+    <Content Include="css\zunge.css" />
+    <Content Include="Echarts\echarts.js" />
+    <Content Include="Echarts\HtmlPage1.html" />
+    <Content Include="Global.asax" />
+    <Content Include="Highcharts\js\exporting.js" />
+    <Content Include="Highcharts\js\highcharts.js" />
+    <Content Include="images\001_38.png" />
+    <Content Include="images\1.png" />
+    <Content Include="images\111.png" />
+    <Content Include="images\11111.png" />
+    <Content Include="images\1482737607.png" />
+    <Content Include="images\2.png" />
+    <Content Include="images\20.png" />
+    <Content Include="images\21.png" />
+    <Content Include="images\22.png" />
+    <Content Include="images\24.png" />
+    <Content Include="images\2412.png" />
+    <Content Include="images\25.png" />
+    <Content Include="images\26.png" />
+    <Content Include="images\27.png" />
+    <Content Include="images\29.png" />
+    <Content Include="images\3.png" />
+    <Content Include="images\30.png" />
+    <Content Include="images\31.png" />
+    <Content Include="images\32.png" />
+    <Content Include="images\33.png" />
+    <Content Include="images\34.png" />
+    <Content Include="images\35.png" />
+    <Content Include="images\36.png" />
+    <Content Include="images\37.png" />
+    <Content Include="images\38.png" />
+    <Content Include="images\39.png" />
+    <Content Include="images\4.png" />
+    <Content Include="images\40.png" />
+    <Content Include="images\41.png" />
+    <Content Include="images\42.png" />
+    <Content Include="images\43.png" />
+    <Content Include="images\44.png" />
+    <Content Include="images\45.png" />
+    <Content Include="images\46.png" />
+    <Content Include="images\47.png" />
+    <Content Include="images\48.png" />
+    <Content Include="images\49.png" />
+    <Content Include="images\5.png" />
+    <Content Include="images\50.png" />
+    <Content Include="images\51.png" />
+    <Content Include="images\52.png" />
+    <Content Include="images\53.png" />
+    <Content Include="images\54.png" />
+    <Content Include="images\55.png" />
+    <Content Include="images\56.png" />
+    <Content Include="images\57.png" />
+    <Content Include="images\58.png" />
+    <Content Include="images\59.png" />
+    <Content Include="images\6.png" />
+    <Content Include="images\61.png" />
+    <Content Include="images\63.png" />
+    <Content Include="images\64.png" />
+    <Content Include="images\66.png" />
+    <Content Include="images\69.png" />
+    <Content Include="images\7.png" />
+    <Content Include="images\71.png" />
+    <Content Include="images\72.png" />
+    <Content Include="images\73.png" />
+    <Content Include="images\74.png" />
+    <Content Include="images\77.png" />
+    <Content Include="images\79.png" />
+    <Content Include="images\8.png" />
+    <Content Include="images\88.png" />
+    <Content Include="images\89.png" />
+    <Content Include="images\9.png" />
+    <Content Include="images\90.png" />
+    <Content Include="images\91.png" />
+    <Content Include="images\92.png" />
+    <Content Include="images\93.png" />
+    <Content Include="images\94.png" />
+    <Content Include="images\95.png" />
+    <Content Include="images\96.png" />
+    <Content Include="images\99.png" />
+    <Content Include="images\addImg.png" />
+    <Content Include="images\agentapply.png" />
+    <Content Include="images\angda_a%402x.png" />
+    <Content Include="images\angda_a.png" />
+    <Content Include="images\angda_b%402x.png" />
+    <Content Include="images\angda_c%402x.png" />
+    <Content Include="images\angda_d%402x.png" />
+    <Content Include="images\angda_d.png" />
+    <Content Include="images\angda_e%402x.png" />
+    <Content Include="images\angda_e.png" />
+    <Content Include="images\angda_f%402x.png" />
+    <Content Include="images\angda_f.png" />
+    <Content Include="images\angda_g%402x.png" />
+    <Content Include="images\angda_g.png" />
+    <Content Include="images\anniu.png" />
+    <Content Include="images\anniu1.png" />
+    <Content Include="images\article.png" />
+    <Content Include="images\articleget.png" />
+    <Content Include="images\audio_widget_01%402x.png" />
+    <Content Include="images\awtywtcw.png" />
+    <Content Include="images\awtywtwh.png" />
+    <Content Include="images\awtywtzq.png" />
+    <Content Include="images\banner5.jpg" />
+    <Content Include="images\bg.png" />
+    <Content Include="images\bgimage.png" />
+    <Content Include="images\bj.png" />
+    <Content Include="images\brh.png" />
+    <Content Include="images\calendar.png" />
+    <Content Include="images\caveat.png" />
+    <Content Include="images\cgimg.png" />
+    <Content Include="images\chkFilletBtn.png" />
+    <Content Include="images\chkFilletBtn2.png" />
+    <Content Include="images\code.png" />
+    <Content Include="images\couwu.png" />
+    <Content Include="images\css_sprite01.png" />
+    <Content Include="images\ddfh.png" />
+    <Content Include="images\Dealer.png" />
+    <Content Include="images\delect.png" />
+    <Content Include="images\delete_down.png" />
+    <Content Include="images\delete_up.png" />
+    <Content Include="images\error.png" />
+    <Content Include="images\fanhui.png" />
+    <Content Include="images\fanxiu.png" />
+    <Content Include="images\fhtj.png" />
+    <Content Include="images\furxbg.png" />
+    <Content Include="images\fuwurexian.png" />
+    <Content Include="images\fwcxbq.png" />
+    <Content Include="images\fwcxcx.png" />
+    <Content Include="images\fwdiandian.png" />
+    <Content Include="images\fwdiandianthis.png" />
+    <Content Include="images\gcw.png" />
+    <Content Include="images\grzx.png" />
+    <Content Include="images\gwc.png" />
+    <Content Include="images\HHbg.jpg" />
+    <Content Include="images\HHbq.png" />
+    <Content Include="images\HHcx.png" />
+    <Content Include="images\HHcx1.png" />
+    <Content Include="images\hhjl.png" />
+    <Content Include="images\HHlogo.png" />
+    <Content Include="images\hhtj.png" />
+    <Content Include="images\HHweixin.png" />
+    <Content Include="images\icon-a.png" />
+    <Content Include="images\icon1.png" />
+    <Content Include="images\icon10.png" />
+    <Content Include="images\icon2.png" />
+    <Content Include="images\icon3.png" />
+    <Content Include="images\icon4.png" />
+    <Content Include="images\icon5.png" />
+    <Content Include="images\icon6.png" />
+    <Content Include="images\icon7.png" />
+    <Content Include="images\icon8.png" />
+    <Content Include="images\icon9.png" />
+    <Content Include="images\icon_b.png" />
+    <Content Include="images\icon_c.png" />
+    <Content Include="images\information.png" />
+    <Content Include="images\instock.png" />
+    <Content Include="images\Introducer.png" />
+    <Content Include="images\jiantou.png" />
+    <Content Include="images\jilu.png" />
+    <Content Include="images\jxs.png" />
+    <Content Include="images\label.png" />
+    <Content Include="images\liaojie.png" />
+    <Content Include="images\lm.png" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\logo2.svg" />
+    <Content Include="images\logosy.png" />
+    <Content Include="images\logo\wxchatlogo.png" />
+    <Content Include="images\lottery\activity.png" />
+    <Content Include="images\lottery\bg.png" />
+    <Content Include="images\lottery\Draw.jpg" />
+    <Content Include="images\lottery\mine.png" />
+    <Content Include="images\lottery\pointer.png" />
+    <Content Include="images\lottery\RedPack.jpg" />
+    <Content Include="images\lottery\scanning.png" />
+    <Content Include="images\lottery\sm.png" />
+    <Content Include="images\lottery\Turntable.png" />
+    <Content Include="images\lottery\抽奖转盘.jpg" />
+    <Content Include="images\lpdh.png" />
+    <Content Include="images\lsfh.png" />
+    <Content Include="images\lsj.png" />
+    <Content Include="images\mdxx.png" />
+    <Content Include="images\MLSbgt1.png" />
+    <Content Include="images\MLSbq.png" />
+    <Content Include="images\MLScx.png" />
+    <Content Include="images\MLSlogo.png" />
+    <Content Include="images\MyCode.jpg" />
+    <Content Include="images\myimg041710636247594302091046.jpg" />
+    <Content Include="images\MyWxQRCode\031638636286437987892647.png" />
+    <Content Include="images\next.png" />
+    <Content Include="images\password.png" />
+    <Content Include="images\ph.png" />
+    <Content Include="images\saoma.png" />
+    <Content Include="images\Scancode.png" />
+    <Content Include="images\scanning.png" />
+    <Content Include="images\Scan_2.png" />
+    <Content Include="images\shangping_banner.png" />
+    <Content Include="images\sjbb.png" />
+    <Content Include="images\slcadd.png" />
+    <Content Include="images\slclsj.png" />
+    <Content Include="images\slcsmtuihuo.png" />
+    <Content Include="images\slctongji.png" />
+    <Content Include="images\slctuihuo.png" />
+    <Content Include="images\smbg.png" />
+    <Content Include="images\success.png" />
+    <Content Include="images\sys_item_selected.gif" />
+    <Content Include="images\syws.png" />
+    <Content Include="images\tcrjbg.png" />
+    <Content Include="images\tcrjlh.png" />
+    <Content Include="images\tm_addJs.png" />
+    <Content Include="images\tm_fhjl.png" />
+    <Content Include="images\tm_jilu.png" />
+    <Content Include="images\tm_jxs.png" />
+    <Content Include="images\tm_ls.png" />
+    <Content Include="images\tm_MLSdlsdl.png" />
+    <Content Include="images\tm_MLSfchcx.png" />
+    <Content Include="images\tm_MLSfwcx.png" />
+    <Content Include="images\tm_MLSwxgz.png" />
+    <Content Include="images\tm_saomiao.png" />
+    <Content Include="images\tm_thtongji.png" />
+    <Content Include="images\tm_tongji.png" />
+    <Content Include="images\tm_tuihuo.png" />
+    <Content Include="images\tm_wdcc.png" />
+    <Content Include="js\comm.js" />
+    <Content Include="StyleAndScript\animatedModal\css\animate.min.css" />
+    <Content Include="StyleAndScript\animatedModal\css\normalize.min.css" />
+    <Content Include="js\dropload.js" />
+    <Content Include="js\page\pricedraw\awardRotate.js" />
+    <Content Include="js\page\pricedraw\ScrollText.js" />
+    <Content Include="StyleAndScript\animatedModal\js\animatedModal.js" />
+    <Content Include="StyleAndScript\animatedModal\js\animatedModal.min.js" />
+    <Content Include="StyleAndScript\animatedModal\js\jquery.min.js" />
+    <Content Include="StyleAndScript\css\subhead.css" />
+    <Content Include="StyleAndScript\css\table.css" />
+    <Content Include="StyleAndScript\ImgUpload\1.chunk.js" />
+    <Content Include="StyleAndScript\ImgUpload\2.chunk.js" />
+    <Content Include="StyleAndScript\ImgUpload\jquery.min.js" />
+    <Content Include="StyleAndScript\ImgUpload\lrz.all.bundle.js" />
+    <Content Include="StyleAndScript\ImgUpload\lrz.bundle.js" />
+    <Content Include="StyleAndScript\mobiscroll\jquery.min.js" />
+    <Content Include="StyleAndScript\mobiscroll\mobiscroll.custom.min.css" />
+    <Content Include="StyleAndScript\mobiscroll\mobiscroll.custom.min.js" />
+    <Content Include="StyleAndScript\NormalRedPack\css\hongbao.css" />
+    <Content Include="StyleAndScript\NormalRedPack\css\zwhongbao.css" />
+    <Content Include="StyleAndScript\NormalRedPack\img\fenxiang.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbao-anniu.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbao-beijing.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbao-guanbi.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbao-hongbao.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbao-saomao.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbao.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\hongbaofx.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\jifen-img1.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\jifen-img2.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\jifen-img3.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\jifen-img4.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\jifen-img5.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\jifen-img6.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\saoma.png" />
+    <Content Include="StyleAndScript\NormalRedPack\img\yaoqing1.png" />
+    <Content Include="StyleAndScript\Theme\default\css\index.css" />
+    <Content Include="images\thgl.png" />
+    <Content Include="images\thjl.png" />
+    <Content Include="images\thsm.png" />
+    <Content Include="images\thtj.png" />
+    <Content Include="images\tianjia.png" />
+    <Content Include="images\tj.jpg" />
+    <Content Include="images\tjagent.png" />
+    <Content Include="images\txbj.jpg" />
+    <Content Include="images\user.png" />
+    <Content Include="images\us\about.png" />
+    <Content Include="images\us\contact.png" />
+    <Content Include="images\us\uslogo.png" />
+    <Content Include="images\warrant.jpg" />
+    <Content Include="images\wddd.png" />
+    <Content Include="images\wydh.png" />
+    <Content Include="images\wyjf.png" />
+    <Content Include="images\xiala.png" />
+    <Content Include="images\XLTbg5.png" />
+    <Content Include="images\xuanze_d.png" />
+    <Content Include="images\yunshidong-icon1.png" />
+    <Content Include="images\zge-beijing.png" />
+    <Content Include="images\zge-icon1.png" />
+    <Content Include="images\zge-icon2.png" />
+    <Content Include="images\zge-icon3.png" />
+    <Content Include="images\zge-sao.png" />
+    <Content Include="images\zge-sao1.png" />
+    <Content Include="images\zhengc.png" />
+    <Content Include="images\zq-logo.png" />
+    <Content Include="images\zzz.png" />
+    <Content Include="images\正确.png" />
+    <Content Include="images\错误.png" />
+    <Content Include="js2\cartjs.js" />
+    <Content Include="js2\jquery.js" />
+    <Content Include="js\artEditor-master\dist\index.js" />
+    <Content Include="js\artEditor-master\dist\index.min.js" />
+    <Content Include="js\artEditor-master\example\css\style.css" />
+    <Content Include="js\artEditor-master\example\img\img.png" />
+    <Content Include="js\artEditor-master\example\js\index.js" />
+    <Content Include="js\artEditor-master\example\js\jquery-1.11.2.js" />
+    <Content Include="js\artEditor-master\gulpfile.js" />
+    <Content Include="js\artEditor-master\index.html" />
+    <Content Include="js\artEditor-master\service\21.png" />
+    <Content Include="js\artEditor-master\service\test.js" />
+    <Content Include="js\artEditor-master\src\index.js" />
+    <Content Include="js\Common\addr\city-picker.js" />
+    <Content Include="js\Common\addr\jquery.min.js" />
+    <Content Include="js\Common\addr\mobile\picker.js" />
+    <Content Include="js\Common\addr\mobile\sm.css" />
+    <Content Include="js\Common\addr\mobile\sm.js" />
+    <Content Include="js\Common\addr\mobile\zepto.js" />
+    <Content Include="js\Common\addr\sm-city-picker.js" />
+    <Content Include="js\Common\ArithmeticHelper.js" />
+    <Content Include="js\Common\CookieHelper.js" />
+    <Content Include="js\Common\danmu\css\normalize.css" />
+    <Content Include="js\Common\danmu\css\zzsc-demo.css" />
+    <Content Include="js\Common\danmu\dist\css\barrager.css" />
+    <Content Include="js\Common\danmu\dist\css\close.png" />
+    <Content Include="js\Common\danmu\dist\js\jquery.barrager.js" />
+    <Content Include="js\Common\danmu\dist\js\jquery.barrager.min.js" />
+    <Content Include="js\Common\danmu\index.html" />
+    <Content Include="js\Common\danmu\js\jquery-1.11.0.min.js" />
+    <Content Include="js\Common\danmu\js\jquery-2.1.1.min.js" />
+    <Content Include="js\Common\danmu\static\css\bootstrap-theme.min.css" />
+    <Content Include="js\Common\danmu\static\css\bootstrap.min.css" />
+    <Content Include="js\Common\danmu\static\css\style.css" />
+    <Content Include="js\Common\danmu\static\img\barrager.png" />
+    <Content Include="js\Common\danmu\static\img\cute.png" />
+    <Content Include="js\Common\danmu\static\img\haha.gif" />
+    <Content Include="js\Common\danmu\static\img\heisenberg.png" />
+    <Content Include="js\Common\danmu\static\img\ie.png" />
+    <Content Include="js\Common\danmu\static\img\mj.gif" />
+    <Content Include="js\Common\danmu\static\img\yaseng.png" />
+    <Content Include="js\Common\danmu\static\js\bootstrap.js" />
+    <Content Include="js\Common\danmu\static\js\bootstrap.min.js" />
+    <Content Include="js\Common\danmu\static\js\jquery-1.9.1.min.js" />
+    <Content Include="js\Common\danmu\static\js\tinycolor-0.9.15.min.js" />
+    <Content Include="js\Common\danmu\static\pick-a-color\css\pick-a-color-1.2.3.min.css" />
+    <Content Include="js\Common\danmu\static\pick-a-color\js\pick-a-color-1.2.3.min.js" />
+    <Content Include="js\Common\danmu\static\syntaxhighlighter\scripts\shAutoloader.js" />
+    <Content Include="js\Common\danmu\static\syntaxhighlighter\scripts\shBrushJScript.js" />
+    <Content Include="js\Common\danmu\static\syntaxhighlighter\scripts\shBrushPhp.js" />
+    <Content Include="js\Common\danmu\static\syntaxhighlighter\scripts\shCore.js" />
+    <Content Include="js\Common\danmu\static\syntaxhighlighter\scripts\shLegacy.js" />
+    <Content Include="js\Common\danmu\static\syntaxhighlighter\styles\shCoreDefault.css" />
+    <Content Include="js\Common\Datehelper.js" />
+    <Content Include="js\Common\desHelper.js" />
+    <Content Include="js\Common\jquery.form.js" />
+    <Content Include="js\Common\jquery.qrcode.min.js" />
+    <Content Include="js\Common\layer.mobile-v2.0\layer_mobile\layer.js" />
+    <Content Include="js\Common\layer.mobile-v2.0\layer_mobile\need\layer.css" />
+    <Content Include="js\Common\layer.mobile-v2.0\更新日志.txt" />
+    <Content Include="js\DateTime\css\common.css" />
+    <Content Include="js\DateTime\css\dateTimeCSS\mobiscroll.animation.css" />
+    <Content Include="js\DateTime\css\dateTimeCSS\mobiscroll.scroller.css" />
+    <Content Include="js\DateTime\css\dateTimeCSS\mobiscroll.scroller.ios.css" />
+    <Content Include="js\DateTime\css\dateTimeCSS\mobiscroll.widget.css" />
+    <Content Include="js\DateTime\css\dateTimeCSS\mobiscroll.widget.ios.css" />
+    <Content Include="js\DateTime\css\main.css" />
+    <Content Include="js\DateTime\js\comm.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\jquery-2.0.0.min.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.core.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.datetimebase.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.i18n.zh.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.scroller.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.util.datetime.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.widget.ios.js" />
+    <Content Include="js\DateTime\js\dateTimeJS\mobiscroll.widget.js" />
+    <Content Include="js\DateTime\js\jquery-2.0.0.min.js" />
+    <Content Include="js\hhSwipe.js" />
+    <Content Include="js\index.js" />
+    <Content Include="js\jquery-1.10.2.min.js" />
+    <Content Include="js\jquery-1.11.2.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\jquery.tmpl.min.js" />
+    <Content Include="js\JScript.js" />
+    <Content Include="js\mui-master\dist\css\mui.css" />
+    <Content Include="js\mui-master\dist\css\mui.min.css" />
+    <Content Include="js\mui-master\dist\js\mui.js" />
+    <Content Include="js\mui-master\dist\js\mui.min.js" />
+    <Content Include="js\mui-master\examples\hello-mui\css\app.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\feedback.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\icons-extra.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.dtpicker.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.imageviewer.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.indexedlist.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.listpicker.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.min.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.picker.all.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.picker.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.picker.min.css" />
+    <Content Include="js\mui-master\examples\hello-mui\css\mui.poppicker.css" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\accordion.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\actionsheet-plus.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\actionsheet.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\ad.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\ajax.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\badges.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\beecloud.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\buttons-with-badges.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\buttons-with-block.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\buttons-with-icons.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\buttons-with-loading.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\buttons.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\card.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\checkbox.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\clouddb_wilddog.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\date.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\dialog.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\dtpicker.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\echarts.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\feedback.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\grid-default.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\grid-pagination.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\guide.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\icons-extra.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\icons.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\im-chat.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\imageviewer.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\indexed-list-select.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\indexed-list.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\info.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\input.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\lazyload-image.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\list-triplex-row.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\list-with-input.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\locker-dom.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\login.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\media-list.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\modals.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\nav.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\nav_transparent.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\numbox.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-down.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-left-plus-main.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-left-plus-menu.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-left.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-right-plus-main.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-right-plus-menu.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\offcanvas-drag-right.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\pagination.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\picker.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\popovers.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\progressbar.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\pullrefresh_main.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\pullrefresh_sub.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\pullrefresh_with_tab.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\radio.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\range.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\setting.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\slider-default.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\slider-table-default.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\slider-table-pagination.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\slider-with-title.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\switches.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-vertical-scroll.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-webview-main.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-webview-subpage-about.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-webview-subpage-chat.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-webview-subpage-contact.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-webview-subpage-setting.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-with-segmented-control-vertical.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-with-segmented-control.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tab-with-viewpagerindicator.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tabbar-labels-only.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tabbar-with-submenus.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tabbar.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tableviews-with-badges.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tableviews-with-collapses.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tableviews-with-swipe.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\tableviews.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\template.html" />
+    <Content Include="js\mui-master\examples\hello-mui\examples\typography.html" />
+    <Content Include="js\mui-master\examples\hello-mui\images\60x60.gif" />
+    <Content Include="js\mui-master\examples\hello-mui\images\cbd.jpg" />
+    <Content Include="js\mui-master\examples\hello-mui\images\login-1.png" />
+    <Content Include="js\mui-master\examples\hello-mui\images\logo.png" />
+    <Content Include="js\mui-master\examples\hello-mui\images\muwu.jpg" />
+    <Content Include="js\mui-master\examples\hello-mui\images\qrcode.png" />
+    <Content Include="js\mui-master\examples\hello-mui\images\shuijiao.jpg" />
+    <Content Include="js\mui-master\examples\hello-mui\images\yuantiao.jpg" />
+    <Content Include="js\mui-master\examples\hello-mui\index-menu.html" />
+    <Content Include="js\mui-master\examples\hello-mui\index.html" />
+    <Content Include="js\mui-master\examples\hello-mui\js\95516.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\ad.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\arttmpl.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\beecloud.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\city.data-3.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\city.data.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\feedback.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.dtpicker.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.imageViewer.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.indexedlist.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.lazyload.img.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.lazyload.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.listpicker.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.locker.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.min.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.picker.all.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.picker.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.picker.min.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.poppicker.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.previewimage.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.pullToRefresh.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.pullToRefresh.material.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.view.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\mui.zoom.js" />
+    <Content Include="js\mui-master\examples\hello-mui\js\update.js" />
+    <Content Include="js\mui-master\examples\hello-mui\libs\echarts-all.js" />
+    <Content Include="js\mui-master\examples\hello-mui\list.html" />
+    <Content Include="js\mui-master\examples\login\css\feedback-page.css" />
+    <Content Include="js\mui-master\examples\login\css\mui.min.css" />
+    <Content Include="js\mui-master\examples\login\css\style.css" />
+    <Content Include="js\mui-master\examples\login\forget_password.html" />
+    <Content Include="js\mui-master\examples\login\images\iconfont-tianjia.png" />
+    <Content Include="js\mui-master\examples\login\images\qihoo.png" />
+    <Content Include="js\mui-master\examples\login\images\qq.png" />
+    <Content Include="js\mui-master\examples\login\images\sinaweibo.png" />
+    <Content Include="js\mui-master\examples\login\images\user-photo.png" />
+    <Content Include="js\mui-master\examples\login\images\weixin.png" />
+    <Content Include="js\mui-master\examples\login\js\app.js" />
+    <Content Include="js\mui-master\examples\login\js\feedback-page.js" />
+    <Content Include="js\mui-master\examples\login\js\feedback.js" />
+    <Content Include="js\mui-master\examples\login\js\mui.enterfocus.js" />
+    <Content Include="js\mui-master\examples\login\js\mui.locker.js" />
+    <Content Include="js\mui-master\examples\login\js\mui.min.js" />
+    <Content Include="js\mui-master\examples\login\js\mui.view.js" />
+    <Content Include="js\mui-master\examples\login\libs\easymob-webim-sdk\easemob.im-1.0.5.js" />
+    <Content Include="js\mui-master\examples\login\libs\easymob-webim-sdk\jquery-1.11.1.js" />
+    <Content Include="js\mui-master\examples\login\libs\easymob-webim-sdk\json2.js" />
+    <Content Include="js\mui-master\examples\login\libs\easymob-webim-sdk\strophe-custom-2.0.0.js" />
+    <Content Include="js\mui-master\examples\login\login.html" />
+    <Content Include="js\mui-master\examples\login\main.html" />
+    <Content Include="js\mui-master\examples\login\reg.html" />
+    <Content Include="js\mui-master\examples\login\setting.html" />
+    <Content Include="js\mui-master\examples\login\unlock.html" />
+    <Content Include="js\mui-master\Gruntfile.js" />
+    <Content Include="js\mui-master\grunt\mui-namespace-generator.js" />
+    <Content Include="js\mui-master\js\actions.js" />
+    <Content Include="js\mui-master\js\ajax.plugin.js" />
+    <Content Include="js\mui-master\js\input.plugin.js" />
+    <Content Include="js\mui-master\js\modals.js" />
+    <Content Include="js\mui-master\js\mui.active.js" />
+    <Content Include="js\mui-master\js\mui.ajax.5+.js" />
+    <Content Include="js\mui-master\js\mui.ajax.js" />
+    <Content Include="js\mui-master\js\mui.animation.js" />
+    <Content Include="js\mui-master\js\mui.animationframe.js" />
+    <Content Include="js\mui-master\js\mui.back.5+.js" />
+    <Content Include="js\mui-master\js\mui.back.js" />
+    <Content Include="js\mui-master\js\mui.button.js" />
+    <Content Include="js\mui-master\js\mui.class.js" />
+    <Content Include="js\mui-master\js\mui.class.scroll.js" />
+    <Content Include="js\mui-master\js\mui.class.scroll.pullrefresh.js" />
+    <Content Include="js\mui-master\js\mui.class.scroll.slider.js" />
+    <Content Include="js\mui-master\js\mui.detect.5+.js" />
+    <Content Include="js\mui-master\js\mui.detect.js" />
+    <Content Include="js\mui-master\js\mui.dialog.alert.js" />
+    <Content Include="js\mui-master\js\mui.dialog.confirm.js" />
+    <Content Include="js\mui-master\js\mui.dialog.prompt.js" />
+    <Content Include="js\mui-master\js\mui.dialog.toast.js" />
+    <Content Include="js\mui-master\js\mui.event.js" />
+    <Content Include="js\mui-master\js\mui.fixed.animation.js" />
+    <Content Include="js\mui-master\js\mui.fixed.bind.js" />
+    <Content Include="js\mui-master\js\mui.fixed.classlist.js" />
+    <Content Include="js\mui-master\js\mui.fixed.fastclick.js" />
+    <Content Include="js\mui-master\js\mui.fixed.js" />
+    <Content Include="js\mui-master\js\mui.fixed.keyboard.js" />
+    <Content Include="js\mui-master\js\mui.gestures.drag.js" />
+    <Content Include="js\mui-master\js\mui.gestures.flick.js" />
+    <Content Include="js\mui-master\js\mui.gestures.hold.js" />
+    <Content Include="js\mui-master\js\mui.gestures.js" />
+    <Content Include="js\mui-master\js\mui.gestures.longtap.js" />
+    <Content Include="js\mui-master\js\mui.gestures.pinch.js" />
+    <Content Include="js\mui-master\js\mui.gestures.swipe.js" />
+    <Content Include="js\mui-master\js\mui.gestures.tap.js" />
+    <Content Include="js\mui-master\js\mui.init.5+.js" />
+    <Content Include="js\mui-master\js\mui.init.js" />
+    <Content Include="js\mui-master\js\mui.init.pullrefresh.js" />
+    <Content Include="js\mui-master\js\mui.js" />
+    <Content Include="js\mui-master\js\mui.jsonp.js" />
+    <Content Include="js\mui-master\js\mui.layout.js" />
+    <Content Include="js\mui-master\js\mui.namespace.js" />
+    <Content Include="js\mui-master\js\mui.number.js" />
+    <Content Include="js\mui-master\js\mui.offcanvas.js" />
+    <Content Include="js\mui-master\js\mui.popup.js" />
+    <Content Include="js\mui-master\js\mui.progressbar.js" />
+    <Content Include="js\mui-master\js\mui.pullrefresh.js" />
+    <Content Include="js\mui-master\js\mui.target.js" />
+    <Content Include="js\mui-master\js\mui.transparent.js" />
+    <Content Include="js\mui-master\js\popovers.js" />
+    <Content Include="js\mui-master\js\pullrefresh.5+.js" />
+    <Content Include="js\mui-master\js\segmented-controllers.js" />
+    <Content Include="js\mui-master\js\sliders.js" />
+    <Content Include="js\mui-master\js\switches.js" />
+    <Content Include="js\mui-master\js\tableviews.js" />
+    <Content Include="js\mui-master\plugin\picker\css\mui.dtpicker.css" />
+    <Content Include="js\mui-master\plugin\picker\css\mui.picker.css" />
+    <Content Include="js\mui-master\plugin\picker\css\mui.poppicker.css" />
+    <Content Include="js\mui-master\plugin\picker\dist\css\mui.picker.all.css" />
+    <Content Include="js\mui-master\plugin\picker\dist\css\mui.picker.min.css" />
+    <Content Include="js\mui-master\plugin\picker\dist\js\mui.picker.all.js" />
+    <Content Include="js\mui-master\plugin\picker\dist\js\mui.picker.min.js" />
+    <Content Include="js\mui-master\plugin\picker\gulpfile.js" />
+    <Content Include="js\mui-master\plugin\picker\js\mui.dtpicker.js" />
+    <Content Include="js\mui-master\plugin\picker\js\mui.picker.js" />
+    <Content Include="js\mui-master\plugin\picker\js\mui.poppicker.js" />
+    <Content Include="js\mui-master\template\feedback\css\feedback.css" />
+    <Content Include="js\mui-master\template\feedback\feedback.html" />
+    <Content Include="js\mui-master\template\feedback\js\feedback.js" />
+    <Content Include="js\My97DatePicker\calendar.js" />
+    <Content Include="js\My97DatePicker\lang\en.js" />
+    <Content Include="js\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="js\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="js\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="js\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="js\My97DatePicker\skin\default\img.gif" />
+    <Content Include="js\My97DatePicker\skin\twoer\datepicker-dev.css" />
+    <Content Include="js\My97DatePicker\skin\twoer\datepicker.css" />
+    <Content Include="js\My97DatePicker\skin\twoer\img.gif" />
+    <Content Include="js\My97DatePicker\skin\twoer\img.png" />
+    <Content Include="js\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="js\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="js\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="js\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="js\My97DatePicker\WdatePicker.js" />
+    <Content Include="js\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="js\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="js\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="js\My97DatePicker\开发包\readme.txt" />
+    <Content Include="js\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="js\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="js\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="js\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="js\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="js\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="js\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="js\PageMobile\99_main.js" />
+    <Content Include="js\PageMobile\coffee.js" />
+    <Content Include="js\PageMobile\init.mix.js" />
+    <Content Include="js\PageMobile\offline.js" />
+    <Content Include="js\setcity2\css\LArea.css" />
+    <Content Include="js\setcity2\js\LArea.js" />
+    <Content Include="js\setcity2\js\LAreaData1.js" />
+    <Content Include="js\setcity2\js\LAreaData2.js" />
+    <Content Include="js\setcity\css\LArea.css" />
+    <Content Include="js\setcity\js\LArea.js" />
+    <Content Include="js\setcity\js\LAreaData1.js" />
+    <Content Include="js\setcity\js\LAreaData2.js" />
+    <Content Include="layout\artui\api.js" />
+    <Content Include="layout\artui\mui.css" />
+    <Content Include="layout\artui\qiniu.js" />
+    <Content Include="layout\artui\wx.css" />
+    <Content Include="layout\jfshop\css\common.css" />
+    <Content Include="layout\jfshop\css\main.css" />
+    <Content Include="layout\jfshop\images\TCbg1.png" />
+    <Content Include="layout\jfshop\images\TCbg2.png" />
+    <Content Include="layout\jfshop\images\TCcxyjf.png" />
+    <Content Include="layout\jfshop\images\TCfan.png" />
+    <Content Include="layout\jfshop\images\TCfchcx.png" />
+    <Content Include="layout\jfshop\images\TCgfwz.png" />
+    <Content Include="layout\jfshop\images\TCjf.png" />
+    <Content Include="layout\jfshop\images\TCjifen.png" />
+    <Content Include="layout\jfshop\images\TCjxsdl.png" />
+    <Content Include="layout\jfshop\images\TClogo.png" />
+    <Content Include="layout\jfshop\images\TCname.png" />
+    <Content Include="layout\jfshop\images\TCpwd.png" />
+    <Content Include="layout\jfshop\images\TCtuihuan.png" />
+    <Content Include="layout\jfshop\images\TCtx.png" />
+    <Content Include="layout\jfshop\images\TCxfzjf.png" />
+    <Content Include="layout\new\404\404-.png" />
+    <Content Include="layout\new\404\404.png" />
+    <Content Include="layout\new\404\404bg.png" />
+    <Content Include="layout\new\css\classify.1.1.css" />
+    <Content Include="layout\new\css\com1-3.css" />
+    <Content Include="layout\new\css\com1-4.css" />
+    <Content Include="layout\new\css\download.css" />
+    <Content Include="layout\new\css\ectouch.css" />
+    <Content Include="layout\new\css\iconfont.css" />
+    <Content Include="layout\new\css\index.1.1.css" />
+    <Content Include="layout\new\css\ListStyle - 副本.css" />
+    <Content Include="layout\new\css\ListStyle.css" />
+    <Content Include="layout\new\css\public-adaptation1-1.css" />
+    <Content Include="layout\new\css\style.css" />
+    <Content Include="layout\new\css\user.css" />
+    <Content Include="layout\new\css\zip.touch.cart2_0._all_.v39013.css" />
+    <Content Include="layout\new\css\zip.touch.home.search.v39031.css" />
+    <Content Include="layout\new\css\zip.touch.home._all_.v390312.css" />
+    <Content Include="layout\new\images\142949852080447f.jpg" />
+    <Content Include="layout\new\images\1442295378229c54.jpg" />
+    <Content Include="layout\new\images\3.jpg" />
+    <Content Include="layout\new\images\a-icon01.png" />
+    <Content Include="layout\new\images\ad04.jpg" />
+    <Content Include="layout\new\images\ad_1.jpg" />
+    <Content Include="layout\new\images\AD_10.png" />
+    <Content Include="layout\new\images\ad_2.jpg" />
+    <Content Include="layout\new\images\bank.png" />
+    <Content Include="layout\new\images\bg.png" />
+    <Content Include="layout\new\images\btn_07.png" />
+    <Content Include="layout\new\images\BuynBtn.png" />
+    <Content Include="layout\new\images\check.png" />
+    <Content Include="layout\new\images\delect.png" />
+    <Content Include="layout\new\images\dfh.png" />
+    <Content Include="layout\new\images\dsh.png" />
+    <Content Include="layout\new\images\dzf.png" />
+    <Content Include="layout\new\images\dzgl.png" />
+    <Content Include="layout\new\images\fl.png" />
+    <Content Include="layout\new\images\fl1.png" />
+    <Content Include="layout\new\images\friendsorder.png" />
+    <Content Include="layout\new\images\fxzx.png" />
+    <Content Include="layout\new\images\getjf.png" />
+    <Content Include="layout\new\images\gonggao.png" />
+    <Content Include="layout\new\images\gqhb.png" />
+    <Content Include="layout\new\images\grzx.png" />
+    <Content Include="layout\new\images\grzx1.png" />
+    <Content Include="layout\new\images\gsyh.png" />
+    <Content Include="layout\new\images\guoqi.png" />
+    <Content Include="layout\new\images\gwc.png" />
+    <Content Include="layout\new\images\gwc1.png" />
+    <Content Include="layout\new\images\hot.png" />
+    <Content Include="layout\new\images\i_1.png" />
+    <Content Include="layout\new\images\i_2.png" />
+    <Content Include="layout\new\images\i_3.png" />
+    <Content Include="layout\new\images\i_4.png" />
+    <Content Include="layout\new\images\i_5.png" />
+    <Content Include="layout\new\images\i_6.png" />
+    <Content Include="layout\new\images\i_7.png" />
+    <Content Include="layout\new\images\i_8.png" />
+    <Content Include="layout\new\images\jd-sprites.png" />
+    <Content Include="layout\new\images\jtyh.png" />
+    <Content Include="layout\new\images\kuaidi_new.png" />
+    <Content Include="layout\new\images\label_icon.png" />
+    <Content Include="layout\new\images\left.png" />
+    <Content Include="layout\new\images\logo.png" />
+    <Content Include="layout\new\images\mima.png" />
+    <Content Include="layout\new\images\myInvite.png" />
+    <Content Include="layout\new\images\name.png" />
+    <Content Include="layout\new\images\no-brand-logo.png" />
+    <Content Include="layout\new\images\p-3.jpg" />
+    <Content Include="layout\new\images\pay_type.png" />
+    <Content Include="layout\new\images\p_12.jpg" />
+    <Content Include="layout\new\images\p_4.jpg" />
+    <Content Include="layout\new\images\qbdd - 副本.png" />
+    <Content Include="layout\new\images\qbdd.png" />
+    <Content Include="layout\new\images\s2.jpg" />
+    <Content Include="layout\new\images\shiyong.png" />
+    <Content Include="layout\new\images\shouji.png" />
+    <Content Include="layout\new\images\sy.png" />
+    <Content Include="layout\new\images\sy1.png" />
+    <Content Include="layout\new\images\usterjiantou2.png" />
+    <Content Include="layout\new\images\usterjiaotou.png" />
+    <Content Include="layout\new\images\usterjiaotou2.png" />
+    <Content Include="layout\new\images\ustertouxiang.png" />
+    <Content Include="layout\new\images\vip.png" />
+    <Content Include="layout\new\images\wdgwc.png" />
+    <Content Include="layout\new\images\wdqb.png" />
+    <Content Include="layout\new\images\wdsc.png" />
+    <Content Include="layout\new\images\wdxyk.png" />
+    <Content Include="layout\new\images\wdyhq.png" />
+    <Content Include="layout\new\images\wei.png" />
+    <Content Include="layout\new\images\welcome.png" />
+    <Content Include="layout\new\images\wx.jpg" />
+    <Content Include="layout\new\images\xgmm.png" />
+    <Content Include="layout\new\images\xgmmlogo.png" />
+    <Content Include="layout\new\images\yanzhengma.png" />
+    <Content Include="layout\new\images\ye.png" />
+    <Content Include="layout\new\images\yhq.png" />
+    <Content Include="layout\new\images\yl.png" />
+    <Content Include="layout\new\images\youxiang.png" />
+    <Content Include="layout\new\images\yqx.png" />
+    <Content Include="layout\new\images\ywc.png" />
+    <Content Include="layout\new\images\zfb.jpg" />
+    <Content Include="layout\new\images\zgyh.png" />
+    <Content Include="layout\new\images\zhanghao.png" />
+    <Content Include="layout\new\images\zhi.png" />
+    <Content Include="layout\new\images\更多.png" />
+    <Content Include="layout\new\js\amazeui.min.js" />
+    <Content Include="layout\new\js\classify.1.1.js" />
+    <Content Include="layout\new\js\com.js" />
+    <Content Include="layout\new\js\common_js.js" />
+    <Content Include="layout\new\js\jquery-1.10.2.min.js" />
+    <Content Include="layout\new\js\jquery-1.7.2.min.js" />
+    <Content Include="layout\new\js\jquery-1.8.2.min.js" />
+    <Content Include="layout\new\js\jquery.bxslider.min.js" />
+    <Content Include="layout\new\js\jquery.js" />
+    <Content Include="layout\new\js\jquery.min.js" />
+    <Content Include="layout\new\js\jquery.reveal.js" />
+    <Content Include="layout\new\js\jquery.Spinner.js" />
+    <Content Include="layout\new\js\jweixin-1.0.0.js" />
+    <Content Include="layout\new\js\px-verify.js" />
+    <Content Include="layout\new\js\swipe2.js" />
+    <Content Include="layout\new\js\template.js" />
+    <Content Include="layout\new\js\TouchSlide.1.1.source.js" />
+    <Content Include="layout\new\js\zepto.min.js" />
+    <Content Include="layout\new\js\zip.touch.cart2_0._all_.v3624.js" />
+    <Content Include="layout\new\js\zip.touch.home.search.v36111.js" />
+    <Content Include="layout\new\js\zip.touch.home._all_.v36912.js" />
+    <Content Include="layout\new\my_collectionJs\carts.js" />
+    <Content Include="layout\new\my_collectionJs\fontsize.js" />
+    <Content Include="layout\new\my_collectionJs\jquery.js" />
+    <Content Include="layout\new\my_collectionJs\public.js" />
+    <Content Include="layout\new\ordercss\ectouch.css" />
+    <Content Include="layout\new\ordercss\iconfont.css" />
+    <Content Include="layout\new\ordercss\style.css" />
+    <Content Include="layout\new\orderjs\common_js.js" />
+    <Content Include="layout\new\orderjs\jquery-1.8.2.min.js" />
+    <Content Include="layout\new\orderjs\jquery.reveal.js" />
+    <Content Include="layout\new\orderjs\TouchSlide.1.1.source.js" />
+    <Content Include="layout\new\ustercss\amazeui.min.css" />
+    <Content Include="layout\new\ustercss\base.css" />
+    <Content Include="layout\new\ustercss\iconfont.css" />
+    <Content Include="layout\new\ustercss\loaders.min.css" />
+    <Content Include="layout\new\ustercss\loading.css" />
+    <Content Include="layout\new\ustercss\main_style.css" />
+    <Content Include="layout\new\ustercss\mall.css" />
+    <Content Include="layout\new\ustercss\moneystyle.css" />
+    <Content Include="layout\new\ustercss\paystyle.css" />
+    <Content Include="layout\new\ustercss\public.css" />
+    <Content Include="layout\new\ustercss\Registcommon.css" />
+    <Content Include="layout\new\ustercss\Registdevice.css" />
+    <Content Include="layout\new\ustercss\Registjquery.bxslider.css" />
+    <Content Include="layout\new\ustercss\reset.css" />
+    <Content Include="layout\new\ustercss\style.css" />
+    <Content Include="layout\new\ustercss\Yhqamazeui.min.css" />
+    <Content Include="layout\new\ustercss\yhqstyle.css" />
+    <Content Include="layout\weui-master\dist\example\example.css" />
+    <Content Include="layout\weui-master\dist\example\example.js" />
+    <Content Include="layout\weui-master\dist\example\images\icon_footer.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_footer_link.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_intro.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_actionSheet.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_article.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_button.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_cell.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_dialog.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_feedback.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_flow.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_form.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_icons.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_layout.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_msg.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_nav.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_panel.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_progress.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_search.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_search_bar.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_special.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_tab.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_toast.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_z-index.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_nav_zindex.png" />
+    <Content Include="layout\weui-master\dist\example\images\icon_tabbar.png" />
+    <Content Include="layout\weui-master\dist\example\images\layers\content.png" />
+    <Content Include="layout\weui-master\dist\example\images\layers\navigation.png" />
+    <Content Include="layout\weui-master\dist\example\images\layers\popout.png" />
+    <Content Include="layout\weui-master\dist\example\images\layers\transparent.gif" />
+    <Content Include="layout\weui-master\dist\example\images\logo.png" />
+    <Content Include="layout\weui-master\dist\example\images\pic_160.png" />
+    <Content Include="layout\weui-master\dist\example\images\pic_article.png" />
+    <Content Include="layout\weui-master\dist\example\images\vcode.jpg" />
+    <Content Include="layout\weui-master\dist\example\index.html" />
+    <Content Include="layout\weui-master\dist\example\snapshot\actionSheet.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\button.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\cell.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\dialog1.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\dialog2.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\grid.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\icons.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\progress.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\qrcode.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\result.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\text.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\toast1.png" />
+    <Content Include="layout\weui-master\dist\example\snapshot\toast2.png" />
+    <Content Include="layout\weui-master\dist\example\zepto.min.js" />
+    <Content Include="layout\weui-master\dist\style\weui.css" />
+    <Content Include="layout\weui-master\dist\style\weui.min.css" />
+    <Content Include="layout\weui-master\gulpfile.js" />
+    <Content Include="layout\weui-master\src\example\example.js" />
+    <Content Include="layout\weui-master\src\example\fragment\actionsheet.html" />
+    <Content Include="layout\weui-master\src\example\fragment\article.html" />
+    <Content Include="layout\weui-master\src\example\fragment\badge.html" />
+    <Content Include="layout\weui-master\src\example\fragment\button.html" />
+    <Content Include="layout\weui-master\src\example\fragment\dialog.html" />
+    <Content Include="layout\weui-master\src\example\fragment\flex.html" />
+    <Content Include="layout\weui-master\src\example\fragment\footer.html" />
+    <Content Include="layout\weui-master\src\example\fragment\gallery.html" />
+    <Content Include="layout\weui-master\src\example\fragment\grid.html" />
+    <Content Include="layout\weui-master\src\example\fragment\home.html" />
+    <Content Include="layout\weui-master\src\example\fragment\icons.html" />
+    <Content Include="layout\weui-master\src\example\fragment\input.html" />
+    <Content Include="layout\weui-master\src\example\fragment\layers.html" />
+    <Content Include="layout\weui-master\src\example\fragment\list.html" />
+    <Content Include="layout\weui-master\src\example\fragment\loadmore.html" />
+    <Content Include="layout\weui-master\src\example\fragment\msg.html" />
+    <Content Include="layout\weui-master\src\example\fragment\msg_success.html" />
+    <Content Include="layout\weui-master\src\example\fragment\msg_warn.html" />
+    <Content Include="layout\weui-master\src\example\fragment\navbar.html" />
+    <Content Include="layout\weui-master\src\example\fragment\panel.html" />
+    <Content Include="layout\weui-master\src\example\fragment\picker.html" />
+    <Content Include="layout\weui-master\src\example\fragment\preview.html" />
+    <Content Include="layout\weui-master\src\example\fragment\progress.html" />
+    <Content Include="layout\weui-master\src\example\fragment\searchbar.html" />
+    <Content Include="layout\weui-master\src\example\fragment\slider.html" />
+    <Content Include="layout\weui-master\src\example\fragment\tabbar.html" />
+    <Content Include="layout\weui-master\src\example\fragment\toast.html" />
+    <Content Include="layout\weui-master\src\example\fragment\uploader.html" />
+    <Content Include="layout\weui-master\src\example\images\icon_footer.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_footer_link.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_intro.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_feedback.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_form.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_layout.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_nav.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_search.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_special.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_nav_z-index.png" />
+    <Content Include="layout\weui-master\src\example\images\icon_tabbar.png" />
+    <Content Include="layout\weui-master\src\example\images\layers\content.png" />
+    <Content Include="layout\weui-master\src\example\images\layers\navigation.png" />
+    <Content Include="layout\weui-master\src\example\images\layers\popout.png" />
+    <Content Include="layout\weui-master\src\example\images\layers\transparent.gif" />
+    <Content Include="layout\weui-master\src\example\images\logo.png" />
+    <Content Include="layout\weui-master\src\example\images\pic_160.png" />
+    <Content Include="layout\weui-master\src\example\images\pic_article.png" />
+    <Content Include="layout\weui-master\src\example\images\vcode.jpg" />
+    <Content Include="layout\weui-master\src\example\index.html" />
+    <Content Include="layout\weui-master\src\example\snapshot\button.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\cell.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\dialog1.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\dialog2.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\grid.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\icons.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\progress.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\qrcode.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\result.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\text.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\toast1.png" />
+    <Content Include="layout\weui-master\src\example\snapshot\toast2.png" />
+    <Content Include="layout\weui-master\src\example\zepto.min.js" />
+    <Content Include="StyleAndScript\Theme\default\css\login.css" />
+    <Content Include="StyleAndScript\Theme\default\images\banner.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon1.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon2.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon3.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon4.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon5.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon6.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon7.png" />
+    <Content Include="StyleAndScript\Theme\default\images\icon8.png" />
+    <Content Include="StyleAndScript\Theme\default\images\login-icon1.png" />
+    <Content Include="StyleAndScript\Theme\default\images\login-ixon2.png" />
+    <Content Include="StyleAndScript\Theme\default\js\hhSwipe.js" />
+    <Content Include="StyleAndScript\Theme\default\js\jquery-1.10.2.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Xml\XMLTeam.xml" />
+    <Content Include="ZHYL\iaoda-logo.png" />
+    <Content Include="ZHYL\iooda-bg.png" />
+    <Content Include="ZHYL\iooda-icon.png" />
+    <Content Include="ZHYL\iooda-icon2.png" />
+    <Content Include="ZHYL\iooda-icon3.png" />
+    <Content Include="ZHYL\iooda-icon4.png" />
+    <Content Include="ZHYL\iooda-icon5.png" />
+    <Content Include="ZHYL\iooda-touxiang.png" />
+    <Content Include="ZHYL\中和亿联-鲁蛋-效果图.png" />
+    <Content Include="ZHYL\喇叭.png" />
+    <Content Include="zk\icon2.png" />
+    <Content Include="zk\icon3.png" />
+    <Content Include="zk\icon4.png" />
+    <Content Include="zk\img_banner .png" />
+    <Content Include="zk\iooda-icon3.png" />
+    <Content Include="zk\iooda-icon4.png" />
+    <Content Include="zk\iooda-icon5.png" />
+    <Content Include="zk\Pop-ups-Security.png" />
+    <Content Include="zk\Pop-ups-SN.png" />
+    <Content Include="zk\Security.png" />
+    <Content Include="zk\zk.png" />
+    <Content Include="zk\iaoda-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="css\wxcss\article\" />
+    <Folder Include="File\User\AuthData\" />
+    <Folder Include="images\code\" />
+    <Folder Include="images\myimg\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeModels\WeModels.csproj">
+      <Project>{afca6a71-78d8-48ba-a305-7c19debdfcb7}</Project>
+      <Name>WeModels</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index_back.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\anti_fake\query.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\agentback\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MyAgentsInfo\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MyInfo\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MyInfo\AuthCert.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MyAddress\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MyAddress\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MyCenter\EditPwd.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\Common\layer.mobile-v2.0\demo.url" />
+    <Content Include="js\Common\layer.mobile-v2.0\doc\官网.url" />
+    <Content Include="js\Common\layer.mobile-v2.0\doc\有问必答.url" />
+    <Content Include="js\Common\layer.mobile-v2.0\layim.url" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Order\Manage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\agentApply\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\Common\danmu\static\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="js\Common\danmu\static\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="js\Common\danmu\static\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="js\Common\danmu\static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="js\Common\danmu\static\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="layout\weui-master\.gitignore" />
+    <Content Include="layout\weui-master\.travis.yml" />
+    <Content Include="layout\weui-master\bower.json" />
+    <Content Include="layout\weui-master\CHANGELOG.md" />
+    <Content Include="layout\weui-master\CONTRIBUTING.md" />
+    <Content Include="layout\weui-master\package.json" />
+    <Content Include="layout\weui-master\README.md" />
+    <Content Include="layout\weui-master\README_cn.md" />
+    <Content Include="layout\weui-master\src\example\example.less" />
+    <Content Include="layout\weui-master\src\style\base\fn.less" />
+    <Content Include="layout\weui-master\src\style\base\mixin\mobile.less" />
+    <Content Include="layout\weui-master\src\style\base\mixin\setArrow.less" />
+    <Content Include="layout\weui-master\src\style\base\mixin\setOnepx.less" />
+    <Content Include="layout\weui-master\src\style\base\mixin\text.less" />
+    <Content Include="layout\weui-master\src\style\base\reset.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\color.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\global.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\weui-button.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\weui-cell.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\weui-dialog.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\weui-grid.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\weui-msg.less" />
+    <Content Include="layout\weui-master\src\style\base\variable\weui-progress.less" />
+    <Content Include="layout\weui-master\src\style\icon\weui-font.less" />
+    <Content Include="layout\weui-master\src\style\icon\weui-icon_font.less" />
+    <Content Include="layout\weui-master\src\style\weui.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-agree\weui-agree.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-animate\weui-animate.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_default.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_disabled.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_global.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_loading.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_plain.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_primary.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-btn_warn.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-button\weui-button.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-access.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-cell_global.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-cell_swiped.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-check.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-check\weui-checkbox.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-check\weui-check_common.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-check\weui-radio.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-form.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-form\weui-form-preview.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-form\weui-form_common.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-form\weui-select.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-form\weui-vcode.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-gallery.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-switch.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-cell\weui-uploader.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-flex\weui-flex.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-footer\weui-footer.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-grid\weui-grid.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-loading\weui-loading.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-media-box\weui-media-box.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-page\weui-article.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-page\weui-msg.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-panel\weui-panel.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-picker\weui-picker.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-progress\weui-progress.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-searchbar\weui-searchbar.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-slider\weui-slider.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tab\weui-navbar.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tab\weui-tab.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tab\weui-tabbar.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tips\weui-actionsheet.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tips\weui-badge.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tips\weui-dialog.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tips\weui-loadmore.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tips\weui-mask.less" />
+    <Content Include="layout\weui-master\src\style\widget\weui-tips\weui-toast.less" />
+    <Content Include="js\artEditor-master\.gitignore" />
+    <Content Include="js\artEditor-master\artEditor.iml" />
+    <Content Include="js\artEditor-master\LICENSE" />
+    <Content Include="js\artEditor-master\package.json" />
+    <Content Include="js\artEditor-master\README.md" />
+    <Content Include="js\artEditor-master\service\service.php" />
+    <Content Include="js\artEditor-master\_config.yml" />
+    <Content Include="layout\artui\mui.min.js" />
+    <Content Include="layout\artui\plupload.full.min.js" />
+    <Content Include="layout\fonts\mui-icons-extra.ttf" />
+    <Content Include="layout\fonts\mui.ttf" />
+    <Content Include="js\mui-master\.gitignore" />
+    <Content Include="js\mui-master\dist\fonts\mui.ttf" />
+    <Content Include="js\mui-master\examples\hello-mui\.project" />
+    <Content Include="js\mui-master\examples\hello-mui\fonts\mui-icons-extra.ttf" />
+    <Content Include="js\mui-master\examples\hello-mui\fonts\mui.ttf" />
+    <Content Include="js\mui-master\examples\hello-mui\manifest.json" />
+    <Content Include="js\mui-master\examples\login\.project" />
+    <Content Include="js\mui-master\examples\login\fonts\mui.ttf" />
+    <Content Include="js\mui-master\examples\login\libs\easymob-webim-sdk\quickstart.md" />
+    <Content Include="js\mui-master\examples\login\manifest.json" />
+    <Content Include="js\mui-master\examples\login\README.md" />
+    <Content Include="js\mui-master\fonts\mui.ttf" />
+    <Content Include="js\mui-master\LICENSE" />
+    <Content Include="js\mui-master\mui_snippets.rb" />
+    <Content Include="js\mui-master\package.json" />
+    <Content Include="js\mui-master\plugin\picker\package.json" />
+    <Content Include="js\mui-master\README.md" />
+    <Content Include="js\mui-master\sass\badges.scss" />
+    <Content Include="js\mui-master\sass\bars.scss" />
+    <Content Include="js\mui-master\sass\base.scss" />
+    <Content Include="js\mui-master\sass\buttons.scss" />
+    <Content Include="js\mui-master\sass\cards.scss" />
+    <Content Include="js\mui-master\sass\forms.scss" />
+    <Content Include="js\mui-master\sass\fullscreen.scss" />
+    <Content Include="js\mui-master\sass\grid.scss" />
+    <Content Include="js\mui-master\sass\hack.scss" />
+    <Content Include="js\mui-master\sass\icon.scss" />
+    <Content Include="js\mui-master\sass\iframe.scss" />
+    <Content Include="js\mui-master\sass\iscroll.scss" />
+    <Content Include="js\mui-master\sass\loadings.scss" />
+    <Content Include="js\mui-master\sass\mixins.scss" />
+    <Content Include="js\mui-master\sass\modals.scss" />
+    <Content Include="js\mui-master\sass\mui.scss" />
+    <Content Include="js\mui-master\sass\normalize.scss" />
+    <Content Include="js\mui-master\sass\number.scss" />
+    <Content Include="js\mui-master\sass\off-canvas.scss" />
+    <Content Include="js\mui-master\sass\os.scss" />
+    <Content Include="js\mui-master\sass\pagination.scss" />
+    <Content Include="js\mui-master\sass\popovers.scss" />
+    <Content Include="js\mui-master\sass\popup.scss" />
+    <Content Include="js\mui-master\sass\progressbar.scss" />
+    <Content Include="js\mui-master\sass\pullrefreshs.scss" />
+    <Content Include="js\mui-master\sass\push.scss" />
+    <Content Include="js\mui-master\sass\scroll.scss" />
+    <Content Include="js\mui-master\sass\segmented-controls.scss" />
+    <Content Include="js\mui-master\sass\slider-cell.scss" />
+    <Content Include="js\mui-master\sass\sliders.scss" />
+    <Content Include="js\mui-master\sass\switches.scss" />
+    <Content Include="js\mui-master\sass\table-views.scss" />
+    <Content Include="js\mui-master\sass\toast.scss" />
+    <Content Include="js\mui-master\sass\type.scss" />
+    <Content Include="js\mui-master\sass\variables.scss" />
+    <Content Include="js\mui-master\template\feedback\readme.md" />
+    <Content Include="ashx\Handler.ashx" />
+    <None Include="Properties\PublishProfiles\AgentMobile.pubxml" />
+    <Content Include="Views\test\Index.cshtml" />
+    <Content Include="Views\test\damoo.cshtml" />
+    <Content Include="Views\agentback\agentNoAudit.cshtml" />
+    <Content Include="Views\Order\ToShop.cshtml" />
+    <Content Include="Views\C_UserCart\Index.cshtml" />
+    <Content Include="Views\Order\MyOrders.cshtml" />
+    <Content Include="Views\Order\MyJuniorOrders.cshtml" />
+    <Content Include="Views\MyAgentsInfo\AgentsNoAudit.cshtml" />
+    <Content Include="Views\agentback\ScaleIndex.cshtml" />
+    <Content Include="Views\OutScale\AgentIndex.cshtml" />
+    <Content Include="Views\OutScale\GetAgentIndex.cshtml" />
+    <Content Include="Views\OutScale\GetOrderIDIndex.cshtml" />
+    <Content Include="Views\OutScale\GetOutDetailIndex.cshtml" />
+    <Content Include="Views\OutScale\GetOutScaleDetailIndex.cshtml" />
+    <Content Include="Views\OutScale\Index.cshtml" />
+    <Content Include="Views\Stock\Index1.cshtml" />
+    <Content Include="Views\MyAgentsInfo\agentDetail.cshtml" />
+    <Content Include="Views\MyAgentsInfo\UpgradeNoAudit.cshtml" />
+    <Content Include="Views\MyCenter\ApplyUpgrade.cshtml" />
+    <Content Include="Views\agentApply\query.cshtml" />
+    <Content Include="Views\MyCenter\InviteCode.cshtml" />
+    <Content Include="Views\Census\Index.cshtml" />
+    <Content Include="Views\ProductShow\Index.cshtml" />
+    <Content Include="Views\WarrantAuthority\AgentIndex.cshtml" />
+    <Content Include="Views\WarrantAuthority\Index.cshtml" />
+    <Content Include="Views\Warrant\AgentIndex.cshtml" />
+    <Content Include="Views\Warrant\MyIndex.cshtml" />
+    <Content Include="Views\Stock\AgentStockIndex.cshtml" />
+    <Content Include="WarrantImg\MyWarrantImg.ashx" />
+    <Content Include="Views\MyAgentsInfo\UpgradeDetail.cshtml" />
+    <Content Include="Views\Order\ProductsDetail.cshtml" />
+    <Content Include="Views\PublicShow\CompanyProfile.cshtml" />
+    <Content Include="Views\BlackCustomer\Index.cshtml" />
+    <Content Include="Views\RtnScale\GetOutDetailIndex.cshtml" />
+    <Content Include="Views\RtnScale\Index.cshtml" />
+    <Content Include="Views\RtnScale\RtnScaleDetail.cshtml" />
+    <Content Include="Views\WeChat\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\AgentMobile_sanye.pubxml" />
+    <Content Include="Views\MyCenter\IntroducerCode.cshtml" />
+    <Content Include="Views\agentApply\Index_Recommended.cshtml" />
+    <Content Include="Views\SaleCensus\AgentUserNameIndex.cshtml" />
+    <Content Include="Views\Stock\AgentStockByUserNameIndex.cshtml" />
+    <Content Include="Views\Order\OrderDetail.cshtml" />
+    <Content Include="Views\Order\JuniorOrderDetail.cshtml" />
+    <Content Include="Views\MyRebate\Index.cshtml" />
+    <Content Include="Views\ProductShow\ProductsDetail.cshtml" />
+    <Content Include="Views\MyRebate\RebateDetail_tj.cshtml" />
+    <Content Include="Views\MyRebate\RebateDetail_nh.cshtml" />
+    <Content Include="Views\AgentKnow\Index.cshtml" />
+    <Content Include="Views\AgentKnow\ProfityIndex.cshtml" />
+    <Content Include="Views\MyRebate\OutRebate.cshtml" />
+    <Content Include="Views\MyRebate\OutRebateDetail_tj.cshtml" />
+    <Content Include="Views\MyRebate\OutRebateList_tj.cshtml" />
+    <Content Include="Views\MyRebate\My_tjs.cshtml" />
+    <None Include="Properties\PublishProfiles\AgentMobile_test.pubxml" />
+    <Content Include="Views\MyCode\Index.cshtml" />
+    <Content Include="WarrantImg\MyCode.ashx" />
+    <Content Include="Views\MyAgentsInfo\AgentsInfoIndex.cshtml" />
+    <Content Include="Views\MyAgentsInfo\UpgradeNoAuditAgent.cshtml" />
+    <Content Include="Views\SaleCensus\AgentUserNameIndexSale.cshtml" />
+    <Content Include="Views\PublicShow\support.cshtml" />
+    <Content Include="Views\SourceShow\SourceLst.cshtml" />
+    <Content Include="Views\SourceShow\Detail.cshtml" />
+    <Content Include="Views\Shared\ShardPage.cshtml" />
+    <Content Include="Views\MyInfo\MyWxQRCode.cshtml" />
+    <Content Include="Views\articleget\Index.cshtml" />
+    <Content Include="Views\articleget\articleEdit.cshtml" />
+    <Content Include="Views\SourceShow\article.cshtml" />
+    <Content Include="Views\SourceShow\articlenew.cshtml" />
+    <None Include="Properties\PublishProfiles\发布专用.pubxml" />
+    <None Include="Properties\PublishProfiles\微商测试版mobile.pubxml" />
+    <Content Include="Views\myarticle\myart.cshtml" />
+    <Content Include="Views\myarticle\Detail.cshtml" />
+    <Content Include="Views\OpenSource\Index.cshtml" />
+    <Content Include="Views\OpenSource\openImg.cshtml" />
+    <Content Include="Views\OpenSource\openvideo.cshtml" />
+    <Content Include="Views\articleget\articleEdit2.cshtml" />
+    <Content Include="Views\agentback\agentyixiang.cshtml" />
+    <Content Include="Views\agentApply\liaojie.cshtml" />
+    <Content Include="Views\MyAgentsInfo\MyAgentHome.cshtml" />
+    <Content Include="Views\MyAgentsInfo\My_yixiang.cshtml" />
+    <Content Include="Views\PublicShow\agentyixiang.cshtml" />
+    <Content Include="Views\j_home\login.cshtml" />
+    <Content Include="Views\j_home\reg.cshtml" />
+    <Content Include="Views\j_main\Index.cshtml" />
+    <Content Include="Views\j_shop\Index.cshtml" />
+    <Content Include="Views\j_buy\order.cshtml" />
+    <Content Include="Views\j_shop\jifengo.cshtml" />
+    <Content Include="Views\j_shop\orderDetail.cshtml" />
+    <Content Include="Views\j_shop\MyOrders.cshtml" />
+    <Content Include="Views\cuanhuo\Index.cshtml" />
+    <Content Include="Views\cuanhuo\pre.cshtml" />
+    <Content Include="Views\xfz_home\Index.cshtml" />
+    <Content Include="Views\xfz\Index.cshtml" />
+    <Content Include="Views\xfz\MyOrders.cshtml" />
+    <Content Include="Views\xfz\orderDetail.cshtml" />
+    <Content Include="Views\xfz\jifengo.cshtml" />
+    <Content Include="Views\j_xfzbuy\order.cshtml" />
+    <Content Include="Views\j_shop\noaudit.cshtml" />
+    <Content Include="Views\xfz\Index1.cshtml" />
+    <Content Include="Views\xfz\Index6.cshtml" />
+    <Content Include="Views\xfz\ren.cshtml" />
+    <Content Include="Views\j_mymail\jMyAddress.cshtml" />
+    <Content Include="Views\j_xfzmymail\MyAddress.cshtml" />
+    <Content Include="Views\j_shop\Index6.cshtml" />
+    <Content Include="Views\j_shop\Index1.cshtml" />
+    <Content Include="Views\j_shop\ren.cshtml" />
+    <Content Include="Views\xfz\datashow.cshtml" />
+    <Content Include="Views\j_shop\datashow.cshtml" />
+    <Content Include="Views\xfz\lingqurecord.cshtml" />
+    <Content Include="Views\j_shop\lingqurecord.cshtml" />
+    <Content Include="Views\j_xfzmymail\EditAddress.cshtml" />
+    <Content Include="Views\j_xfzmymail\AddAddress.cshtml" />
+    <Content Include="Views\j_mymail\MyAddress.cshtml" />
+    <Content Include="Views\j_mymail\AddAddress.cshtml" />
+    <Content Include="Views\j_mymail\EditAddress.cshtml" />
+    <Content Include="Views\Stock\MyScaleDetail.cshtml" />
+    <Content Include="Views\cuanhuo\mima.cshtml" />
+    <Content Include="Views\anti_fake\querypc.cshtml" />
+    <Content Include="Views\Problem\Index.cshtml" />
+    <Content Include="Views\Problem\Logs.cshtml" />
+    <Content Include="Views\cuanhuo\pre1.cshtml" />
+    <Content Include="Views\cuanhuo\Index1.cshtml" />
+    <Content Include="Views\Problem\Index1.cshtml" />
+    <Content Include="Views\Problem\Logs1.cshtml" />
+    <Content Include="Views\Problem\Index2.cshtml" />
+    <Content Include="Views\Problem\Index3.cshtml" />
+    <Content Include="Views\cuanhuo\bx.cshtml" />
+    <Content Include="Views\cuanhuo\yesbx.cshtml" />
+    <Content Include="Views\cuanhuo\nobx.cshtml" />
+    <Content Include="Views\OutScale\GetOuttjIndex.cshtml" />
+    <Content Include="Views\RtnScale\GetOuttjIndex.cshtml" />
+    <Content Include="Views\MyAgentsInfo\AgentstjIndex.cshtml" />
+    <Content Include="Views\MyAgentsInfo\AgentstuiIndex.cshtml" />
+    <Content Include="Views\agentApply\shangchuan.cshtml" />
+    <Content Include="Views\anti_fake\queryenpc.cshtml" />
+    <Content Include="Views\RedPaper\NormalRedPack.cshtml" />
+    <Content Include="Views\RedPaper\ShareRedPack.cshtml" />
+    <Content Include="Views\RedPaper\AuthenticityQuery.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Advice\Index.cshtml" />
+    <Content Include="Views\RedPaper\AuthenticityList.cshtml" />
+    <Content Include="Views\RedPaper\AuthenticityShow.cshtml" />
+    <Content Include="StyleAndScript\ImgUpload\1.chunk.js.map" />
+    <Content Include="StyleAndScript\ImgUpload\2.chunk.js.map" />
+    <Content Include="StyleAndScript\ImgUpload\lrz.all.bundle.js.map" />
+    <Content Include="StyleAndScript\ImgUpload\lrz.bundle.js.map" />
+    <Content Include="Views\PrizeDraw\Prize.cshtml" />
+    <Content Include="Views\PrizeDraw\PrizeRec.cshtml" />
+    <Content Include="Views\ActivityMsg\Index.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\OutScale\ScanOutStock.cshtml" />
+    <Content Include="Views\RtnScale\ScanRtnStock.cshtml" />
+    <Content Include="Views\OutScale\RetailOutStock.cshtml" />
+    <Content Include="Views\Warrant\EditCustomer.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>44865</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9888/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,185 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+    C_UserVM ChiefUser = C_UserVM.GetVMByID(user.Chief);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>资料详情</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <link href="/css/common2.css" rel="stylesheet" />
+    <link href="/css/main2.css?20170822" rel="stylesheet" />
+    <style type="text/css">
+        .centent_total .sqdls_up table.t1 {
+            margin-bottom: 20px;
+        }
+
+        .centent_total .sqdls_up table.t22 tr td.td1 {
+            width: 30%;
+            height: 45px;
+            line-height: 40px;
+            float: left;
+            color: #323232;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .centent_total .sqdls_up table.t22 tr td.td2 {
+            width: 70%;
+            float: right;
+        }
+
+            .centent_total .sqdls_up table.t22 tr td.td2 input, .centent_total .sqdls_up table.t22 tr td select {
+                width: 100%;
+                text-indent: 5px;
+                float: left;
+                height: 35px;
+                color: #333;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                font-weight: normal;
+                background-color: #cdcdcd;
+                border-radius: 0;
+                -moz-border-radius: 0;
+                -webkit-border-radius: 0;
+                border: 1px solid #9d9d9d;
+            }
+
+        .centent_total .sqdls_up table.t22 tr td select {
+            width: 100%;
+            -webkit-appearance: none;
+            background-image: url(/images/88.png);
+            background-repeat: no-repeat;
+            background-size: 14% 104%;
+            background-position: right;
+            background-origin: content-box;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div data-role="content" id="content">
+                <div class="centent_total">
+                    <div class="sqdls_up">
+
+                        @if (ChiefUser != null)
+                        {
+
+                            <table class="t1">
+                                <tr>
+                                    <td class="d1">
+                                        <span>授权编号：</span>
+                                    </td>
+                                    <td class="d2">
+                                        <input name="Identifier" readonly="readonly" value="@(ChiefUser.Identifier)" />
+                                        <input type="hidden" name="ChiefUserName" readonly="readonly" value="@(ChiefUser.UserName)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="d1">
+                                        <span>上级名称：</span>
+                                    </td>
+                                    <td class="d2">
+                                        <input name="ChiefName" readonly="readonly" value="@(ChiefUser.Name)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="d1">
+                                        <span>上级级别：</span>
+                                    </td>
+                                    <td class="d2">
+                                        <input name="ChiefType" readonly="readonly" value="@(ChiefUser.userTypeName)" />
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+                        <table class="t22">
+                            <tr>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    申请级别：
+                                </td>
+                                <td class="td2">
+
+                                    <input name="ChiefUserName" readonly="readonly" value="@(user.userTypeName)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    姓名：
+                                </td>
+                                <td class="td2">
+                                    <input name="Name" id="Text3" readonly="readonly" type="text" value="@(user.Name)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    微信号：
+                                </td>
+                                <td class="td2">
+                                    <input id="Text4" name="wxNo" readonly="readonly" type="text" value="@(user.wxNo)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    手机号：
+                                </td>
+                                <td class="td2">
+                                    <input id="Text6" name="Phone" readonly="readonly" type="text" value="@(user.Phone)" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">
+                                    身份证：
+                                </td>
+                                <td class="td2">
+                                    <input id="Text5" name="Card" readonly="readonly" type="text" value="@(user.Card)" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td style="height: 10px;"></td>
+                            </tr>
+                            <tr>
+                                <td class="rsx111">
+                                    <input id="file_temporaryImage" hidden="hidden" type="file" name="file_temporaryImage" />
+                                    <div id="setimg">
+
+                                        <img id="idcardshow" src="@(user.CardUrl)" alt="" />
+                                        <span></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="QLRcode"><a href="/MyAgentsInfo/AgentsNoAudit"><img src="/layout/jfshop/images/TCfan.png" /></a></div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,116 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model B_User
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/js/layui-v2.4.5/layui/css/layui.css?v=2.0" rel="stylesheet" />
+    <script src="~/js/layui-v2.4.5/layui/layui.all.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery.form.js"></script>
+
+    <title>用户修改</title>
+</head>
+<body>
+
+    <form class="layui-form" action="" style="margin:15px 20px 5px 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名：</label>
+            <div class="layui-input-inline">
+                @Html.HiddenFor(m => m.ID)
+                <div class="layui-form-mid layui-word-aux">@(Model.UserName)</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名：</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Name" required lay-verify="required" placeholder="请输入真实姓名" autocomplete="off" class="layui-input" value="@(Model.Name)">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-inline">
+                <input type="password" name="PassWord" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" value="@(Model.PassWord)">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门：</label>
+            <div class="layui-input-inline">
+                <select id="Supplier" name="DeptID" lay-verify="required">
+                    <option value="0" @(Model.DeptID == 0 ? "selected" : "")>总部</option>
+                    @foreach (Supplier sup in Supplier.GetEntitysAll())
+                    {
+                        <option value="@sup.ID" @(Model.DeptID == sup.ID ? "selected" : "")>@sup.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色：</label>
+            <div class="layui-input-inline">
+                @Html.DropDownList("RoleID", SelectListHelper.GetRoles(Model.RoleID.ToString()), new { @class = "select" })
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Mobile" required lay-verify="required" placeholder="请输入手机号码" maxlength="11" autocomplete="off" class="layui-input" value="@(Model.Mobile)">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱：</label>
+            <div class="layui-input-block">
+                <input type="text" name="Email" required lay-verify="required" placeholder="请输入有效邮箱地址" autocomplete="off" class="layui-input" value="@(Model.Email)">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否启用：</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="IsValid" lay-skin="switch" lay-text="启用|禁用" @(Model.IsValid ? "checked" : "")>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="button" onclick="tosave()" lay-filter="formDemo">保存修改</button>
+            </div>
+        </div>
+
+        <script src="~/js/layui-v2.4.5/layui/layui.js"></script>
+        <script type="text/javascript">
+
+            layui.use('form', function () {
+                var form = layui.form;
+            });
+
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+
+        </script>
+ 
+        <script type="text/javascript">
+
+            function tosave() {
+                $.post("/B_User/B_UserToEdit", $("form").serialize(), function (rtn) {
+                    if (rtn == "ok") {
+                        parent.location.href = parent.location.href;
+                    }
+                    else {
+                        layer.alert(rtn);
+                    }
+                })
+            }
+        </script>
+</body>
+</html>

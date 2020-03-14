@@ -1,0 +1,770 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model List<WXMenu>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>公众号自定义菜单</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="~/js/layui-v1.0.3/layui/lay/dest/layui.all.js"></script>
+    <link href="~/js/layui-v1.0.3/layui/css/layui.css" rel="stylesheet" media="all" />
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <link href="~/css/wxmp/base318f29.css" rel="stylesheet" />
+    <link href="~/css/wxmp/index31aed1.css" rel="stylesheet" />
+    <script src="~/js/jquery.tmpl.min.js"></script>
+
+    <link href="~/css/wxmp/base318f29.css" rel="stylesheet" />
+    <link href="~/css/wxmp/lib318f29.css" rel="stylesheet" />
+    <link href="~/css/wxmp/media_list2f12f7.css" rel="stylesheet" />
+    <link href="~/css/wxmp/media2f624f.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div>
+        <div class="menu_setting_area js_editBox">
+            <div class="menu_preview_area">
+                <div class="mobile_menu_preview">
+                    <div class="mobile_hd tc">通程服务平台</div>                    
+                    <div class="mobile_bd">
+                        <ul class="pre_menu_list grid_line ui-sortable ui-sortable-disabled" id="menuList">
+
+                            @foreach (WXMenu button in Model.FindAll(m => m.ParentID == 0))
+                            {
+                                <li class="jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3" data-menu-id="@(button.ID)">
+                                    <a href="javascript:void(0);" data-hrefid="@(button.ID)" class="pre_menu_link" data-menuid="@(button.ID)" onclick="showlevel2(this)" draggable="false">
+
+                                        @if (Model.Count(m => m.ParentID == button.ID) > 0)
+                                        {
+                                            <i class="icon_menu_dot js_icon_menu_dot dn"></i>
+                                        }
+                                        else
+                                        { <i class="js_icon_menu_dot dn"></i>}
+                                        <i class="icon20_common sort_gray"></i>
+                                        <span class="js_l1Title" data-menutext="@(button.ID)">@(button.MenuName)</span>
+                                    </a>
+                                    <div class="sub_pre_menu_box js_l2TitleBox" style="display:none;">
+                                        <ul class="sub_pre_menu_list">
+
+                                            @foreach (WXMenu sub_button in Model.FindAll(m => m.ParentID == button.ID))
+                                            {
+
+                                                <li id="1479375207645_subMenu_1479375203490_menu_2_0" class="jslevel2">
+                                                    <a href="javascript:void(0);" data-hrefid="@(sub_button.ID)" class="jsSubView" draggable="false" data-menuid="@(sub_button.ID)" onclick="current(this)">
+                                                        <span class="sub_pre_menu_inner js_sub_pre_menu_inner">
+                                                            <i class="icon20_common sort_gray"></i>
+                                                            <span class="js_l2Title" data-menutext="@(sub_button.ID)">@(sub_button.MenuName)</span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            }
+
+                                            @if (Model.Count(m => m.ParentID == button.ID) < 5)
+                                            {
+                                                <li class="js_addMenuBox" data-parentid="@(button.ID)" onclick="addMenuBox(this)"><a href="javascript:void(0);" class="jsSubView js_addL2Btn" title="最多添加5个子菜单" draggable="false"><span class="sub_pre_menu_inner js_sub_pre_menu_inner"><i class="icon14_menu_add"></i></span></a></li>
+                                            }
+                                        </ul>
+                                        <i class="arrow arrow_out"></i>
+                                        <i class="arrow arrow_in"></i>
+                                    </div>
+                                </li>
+
+
+                            }
+                            @if (Model.Count(m => m.ParentID == 0) < 3)
+                            {
+
+                                <li class="js_addMenuBox pre_menu_item grid_item no_extra" data-parentid="0" onclick="addMenuBox(this)">
+                                    <a href="javascript:void(0);" class="pre_menu_link js_addL1Btn" title="最多添加3个一级菜单" draggable="false">
+                                        <i class="icon14_menu_add"></i>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+
+                @*<div class="sort_btn_wrp">
+                        <a id="orderBt" class="btn btn_default" href="javascript:void(0);" style="display: inline-block;">菜单排序</a>
+                        <span id="orderDis" class="dn btn btn_disabled" style="display: none;">菜单排序</span>
+                        <a id="finishBt" href="javascript:void(0);" class="dn btn btn_default" style="display: none;">完成</a>
+                    </div>*@
+            </div>
+
+
+
+            <div class="menu_form_area">
+                <div id="js_none" class="menu_initial_tips tips_global" style="display:block;height:360px">
+                    点击左侧菜单进行编辑操作
+                </div>
+                <div id="js_rightBox" class="portable_editor to_left" style="display: none;">
+
+
+
+
+
+
+                </div>
+
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;"></fieldset>
+                <div>
+                    <button class="layui-btn" onclick="topublish()">发布</button>
+                    @*<button class="layui-btn layui-btn-primary">预览</button>*@
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="mobile_preview" id="mobileDiv" style="display: none;">
+        <div class="mobile_preview_hd">        <strong class="nickname">惟惟工作室</strong>    </div>    <div class="mobile_preview_bd">        <ul id="viewShow" class="show_list">                    </ul>    </div>    <div class="mobile_preview_ft">
+            <ul class="pre_menu_list grid_line" id="viewList">
+                <li class="pre_menu_item grid_item size1of3 jsViewLi " id="menu_0">
+                    <a href="javascript:void(0);" class="jsView pre_menu_link" title="软件开发" draggable="false">
+                        软件开发
+                    </a>
+
+                </li>
+
+                <li class="pre_menu_item grid_item size1of3 jsViewLi " id="menu_1">
+                    <a href="javascript:void(0);" class="jsView pre_menu_link" title="功能中心" draggable="false">
+
+                        <i class="icon_menu_dot"></i>
+                        功能中心
+                    </a>
+
+                    <div class="sub_pre_menu_box jsSubViewDiv" style="display:none">
+                        <ul class="sub_pre_menu_list">
+
+                            <li id="subMenu_menu_1_0"><a href="javascript:void(0);" class="jsSubView" title="敬请期待..." draggable="false">敬请期待...</a></li>
+
+                            <li id="1479434443022_subMenu_menu_1_1"><a href="javascript:void(0);" class="jsSubView" title="子菜单名称" draggable="false">子菜单名称</a></li>
+
+                            <li id="1479434446168_subMenu_menu_1_2"><a href="javascript:void(0);" class="jsSubView" title="子菜单名称" draggable="false">子菜单名称</a></li>
+
+                            <li id="1479434447432_subMenu_menu_1_3"><a href="javascript:void(0);" class="jsSubView" title="子菜单名称" draggable="false">子菜单名称</a></li>
+
+                        </ul>
+                        <i class="arrow arrow_out"></i>
+                        <i class="arrow arrow_in"></i>
+                    </div>
+
+                </li>
+
+                <li class="pre_menu_item grid_item size1of3 jsViewLi no_extra_flex" id="menu_2">
+                    <a href="javascript:void(0);" class="jsView pre_menu_link" title="联系我们" draggable="false">
+
+                        <i class="icon_menu_dot"></i>
+                        联系我们
+                    </a>
+
+                    <div class="sub_pre_menu_box jsSubViewDiv" style="display:none">
+                        <ul class="sub_pre_menu_list">
+
+                            <li id="subMenu_menu_2_0"><a href="javascript:void(0);" class="jsSubView" title="新浪微博" draggable="false">新浪微博</a></li>
+
+                            <li id="subMenu_menu_2_1"><a href="javascript:void(0);" class="jsSubView" title="优酷频道" draggable="false">优酷频道</a></li>
+
+                            <li id="subMenu_menu_2_2"><a href="javascript:void(0);" class="jsSubView" title="K歌空间" draggable="false">K歌空间</a></li>
+
+                            <li id="subMenu_menu_2_3"><a href="javascript:void(0);" class="jsSubView" title="关于我们" draggable="false">关于我们</a></li>
+
+                        </ul>
+                        <i class="arrow arrow_out"></i>
+                        <i class="arrow arrow_in"></i>
+                    </div>
+
+                </li>
+            </ul>
+        </div>    <a href="javascript:void(0);" class="mobile_preview_closed btn btn_default" id="viewClose">退出预览</a>
+    </div>
+
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="subMenutmp">
+    <li id="1479375497502_subMenu_1479375174298_menu_1_0" class="jslevel2 current">
+        <a href="javascript:void(0);" data-hrefid="${ID}" data-menuid="${ID}" class="jsSubView" draggable="false" onclick="current(this)">
+            <span class="sub_pre_menu_inner js_sub_pre_menu_inner">
+                <i class="icon20_common sort_gray"></i>
+                <span class="js_l2Title" data-menutext="${ID}">${MenuName}</span>
+            </span>
+        </a>
+    </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="Menutmp">
+    <li class="jsMenu pre_menu_item grid_item jslevel1 ui-sortable ui-sortable-disabled size1of3" data-menu-id="${ID}">
+        <a href="javascript:void(0);" data-hrefid="${ID}" class="pre_menu_link" data-menuid="${ID}" onclick="showlevel2(this)" draggable="false">
+
+            <i class="js_icon_menu_dot dn"></i>
+            <i class="icon20_common sort_gray"></i>
+            <span class="js_l1Title" data-menutext="${ID}">${MenuName}</span>
+        </a>
+        <div class="sub_pre_menu_box js_l2TitleBox" style="display:none;">
+            <ul class="sub_pre_menu_list">
+                <li class="js_addMenuBox" data-parentid="${ID}" onclick="addMenuBox(this)"><a href="javascript:void(0);" class="jsSubView js_addL2Btn" title="最多添加5个子菜单" draggable="false"><span class="sub_pre_menu_inner js_sub_pre_menu_inner"><i class="icon14_menu_add"></i></span></a></li>
+
+            </ul>
+            <i class="arrow arrow_out"></i>
+            <i class="arrow arrow_in"></i>
+        </div>
+    </li>
+
+</script>
+
+<script type="text/x-jquery-tmpl" id="rightBoxtmp">
+    <div class="editor_inner">
+        <div class="global_mod float_layout menu_form_hd js_second_title_bar">
+            <h4 class="global_info">${MenuName}</h4>
+            <div class="global_extra">
+                <a href="javascript:void(0);" data-id="${ID}" onclick="delmenu(this)">${ParentID=="0"?"删除菜单":"删除子菜单"}</a>
+            </div>
+        </div>
+        <div class="menu_form_bd" id="view">
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;"></fieldset>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">${ParentID=="0"?"菜单名称":"子菜单名称"}</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="MenuName" value="${MenuName}" lay-verify="title" data-id="${ID}" data-name="MenuName" onblur="edit(this,1)" autocomplete="off" placeholder="请输入菜单名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">${ParentID=="0"?"菜单内容":"子菜单内容"}</label>
+
+                    <div class="layui-input-block">
+                        {{if MenuType=="view"}}
+
+                        <input type="radio" name="MenuType" data-name="MenuType" data-id="${ID}" lay-filter="MenuType" value="media_id" title="发送消息">
+                        <input type="radio" name="MenuType" data-name="MenuType" data-id="${ID}" lay-filter="MenuType" value="view" title="跳转网页" checked>
+                        {{else}}
+                        <input type="radio" name="MenuType" data-name="MenuType" data-id="${ID}" lay-filter="MenuType" value="media_id" title="发送消息" checked>
+                        <input type="radio" name="MenuType" data-name="MenuType" data-id="${ID}" lay-filter="MenuType" value="view" title="跳转网页">
+
+                        {{/if}}
+                    </div>
+
+
+
+                </div>
+                {{if MenuType=="view"}}
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" id="send" style="display:none">
+                    {{else}}
+                    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" id="send">
+                        {{/if}}
+                        <ul class="layui-tab-title">
+                            {{if MenuType=="media_id"}}
+                            <li class="layui-this" data-id="${ID}" data-menutype="media_id" data-name="MenuType" onclick="menutypeshow(this)">素材</li>
+                            <li data-menutype="click" data-id="${ID}" data-name="MenuType" onclick="menutypeshow(this)">文字</li>
+                            {{else MenuType=="click"}}
+                            <li data-menutype="media_id" data-id="${ID}" data-name="MenuType" onclick="menutypeshow(this)">素材</li>
+                            <li data-menutype="click" data-id="${ID}" data-name="MenuType" class="layui-this" onclick="menutypeshow(this)">文字</li>
+                            {{else}}
+                            <li class="layui-this" data-id="${ID}" data-name="MenuType" data-menutype="media_id" onclick="menutypeshow(this)">素材</li>
+                            <li data-menutype="click" data-id="${ID}" data-name="MenuType" onclick="menutypeshow(this)">文字</li>
+                            {{/if}}
+                        </ul>
+                        <div class="layui-tab-content" style="height: 100px;">
+
+                            {{if MenuType=="media_id"}}
+                            <div class="layui-tab-item layui-show">
+
+                                <div class="media_cover" id="media_cover" data-id="${ID}" onclick="openMaterial(this)">
+                                    <span class="create_access_primary">
+                                        <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;" data-type="2" data-index="1">
+                                            <i class="icon36_common add_gray"></i>
+                                            <strong>从素材库中选择</strong>
+                                        </a>
+                                    </span>
+                                </div>
+
+
+
+
+
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item layui-form-text">
+                                    <div class="layui-input-inline" style="width:100%">
+                                        <textarea placeholder="请输入内容" data-name="Text" data-id="${ID}" onblur="edit(this,0)" class="layui-textarea">${Text}</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {{else MenuType=="click"}}
+                            <div class="layui-tab-item">
+                                <div class="media_cover" id="media_cover" data-id="${ID}" onclick="openMaterial(this)">
+                                    <span class="create_access_primary">
+                                        <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;" data-type="2" data-index="1">
+                                            <i class="icon36_common add_gray"></i>
+                                            <strong>从素材库中选择</strong>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-form-item layui-form-text">
+                                    <div class="layui-input-inline" style="width:100%">
+                                        <textarea placeholder="请输入内容" data-name="Text" data-id="${ID}" onblur="edit(this,0)" class="layui-textarea">${Text}</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            {{else}}
+                            <div class="layui-tab-item layui-show">
+                                <div class="media_cover" id="media_cover" data-id="${ID}" onclick="openMaterial(this)">
+                                    <span class="create_access_primary">
+                                        <a class="add_gray_wrp jsMsgSenderPopBt" href="javascript:;" data-type="2" data-index="1">
+                                            <i class="icon36_common add_gray"></i>
+                                            <strong>从素材库中选择</strong>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item layui-form-text">
+                                    <div class="layui-input-inline" style="width:100%">
+                                        <textarea placeholder="请输入内容" data-name="Text" data-id="${ID}" onblur="edit(this,0)" class="layui-textarea">${Text}</textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{/if}}
+
+
+
+                        </div>
+                    </div>
+
+                    {{if MenuType=="view"}}
+                    <fieldset class="layui-elem-field" id="url">
+                        {{else}}
+                        <fieldset class="layui-elem-field" id="url" style="display:none">
+                            {{/if}}
+                            <legend>订阅者点击该子菜单会跳到以下链接</legend>
+                            <div class="layui-field-box">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">页面地址</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="MenuUrl" data-id="${ID}" data-name="MenuUrl" onblur="edit(this,0)" autocomplete="off" value="${MenuUrl}" placeholder="请输入页面地址" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+            </form>
+
+
+        </div>
+    </div>
+    <span class="editor_arrow_wrp"> <i class="editor_arrow editor_arrow_out"></i> <i class="editor_arrow editor_arrow_in"></i> </span>
+</script>
+
+
+<script type="text/x-jquery-tmpl" id="newstmp">
+    <div class="appmsg_col tj_item newstmpshow">
+        <div class="inner">
+            <div class="js_appmsgitem">
+                <div class="appmsg has_first_cover ${news_item.length>1?" multi":"single"}" data-id="100000020" data-fileid="100000012" data-completed="1">
+                    <div class="appmsg_content">
+                        <div class="appmsg_info">
+                            <em class="appmsg_date">${convertTenTime(ck.update_time).Format("yyyy-MM-dd hh:mm:ss")}</em>
+
+                        </div>
+                        {{each(j,newsitem) news_item}}
+
+
+
+
+                        {{if news_item.length>1}}
+
+                        {{if j==0}}
+                        <div class="cover_appmsg_item">
+                            <h4 class="appmsg_title js_title">
+
+                                <a href="" target="_blank" data-msgid="100000020" data-idx="0">${newsitem.title}</a>
+
+                            </h4>
+
+                            <div class="appmsg_thumb_wrp" style="background-image: url('${newsitem.bo_url}')">
+                                <!--
+
+                                -->
+                            </div>
+                            <a href="javascript:void(0)" onclick="newshow('${newsitem.url}')" class="edit_mask preview_mask js_preview" data-msgid="100000020" data-idx="0">
+                                <div class="edit_mask_content">
+                                    <p class="">
+                                        预览文章
+                                    </p>
+                                </div>
+                                <span class="vm_box"></span>
+                            </a>
+
+                        </div>
+                        {{else}}
+                        <div class="appmsg_item ${news_item.length==1?" has_cover":""}">
+
+
+
+                            <div class="appmsg_thumb_wrp" style="background-image: url('${newsitem.bo_url}');">
+                                <!--
+
+                                -->
+                            </div>
+                            <h4 class="appmsg_title js_title">
+
+                                <a href="" target="_blank" data-msgid="100000020" data-idx="1">${newsitem.title}</a>
+
+                            </h4>
+
+                            <a href="javascript:void(0)" onclick="newshow('${newsitem.url}')" class="edit_mask preview_mask js_preview" data-msgid="100000020" data-idx="1">
+                                <div class="edit_mask_content">
+                                    <p class="">
+                                        预览文章
+                                    </p>
+                                </div>
+                                <span class="vm_box"></span>
+                            </a>
+
+                        </div>
+
+                        {{/if}}
+
+
+
+
+                        {{else}}
+
+                        <div class="appmsg_item">
+                            <h4 class="appmsg_title js_title">
+
+                                <a href="" target="_blank" data-msgid="100000018" data-idx="0">${newsitem.title}</a>
+
+                            </h4>
+                            <div class="appmsg_thumb_wrp" style="background-image: url('${newsitem.bo_url}')">
+                            </div>
+                            <p class="appmsg_desc"> ${newsitem.digest}</p>
+
+                            <a href="javascript:void(0)" onclick="newshow('${newsitem.url}')" class="edit_mask preview_mask js_preview" data-msgid="100000018" data-idx="0">
+                                <div class="edit_mask_content">
+                                    <p class="">
+                                        预览文章
+                                    </p>
+                                </div>
+                                <span class="vm_box"></span>
+                            </a>
+
+                        </div>
+
+                        {{/if}}
+
+
+
+
+                        {{/each}}
+
+                    </div>
+
+
+                    <div class="appmsg_opr">
+                        <ul>
+                            <li class="appmsg_opr_item grid_item size1of2" data-id="${menuid}" onclick="openMaterial(this)">
+                                <a target="_blank" class="js_tooltip" href="javascript:buliding()" data-tooltip="重新选择">&nbsp;<i class="icon18_common edit_gray">重新选择</i></a>
+                            </li>
+                            <li class="appmsg_opr_item grid_item size1of2 no_extra">
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+
+<script>
+    var form;
+
+    layui.use('form', function () {
+        form = layui.form();
+
+        //监听提交
+        form.on('submit(go)', function (data) {
+
+            return false;
+
+        });
+
+
+
+        form.on('radio(MenuType)', function (data) {
+            var obj = data.elem;
+            if (data.value == "media_id") {
+                $("#url").hide();
+                $("#send").show();
+            }
+            else {
+                $("#send").hide();
+                $("#url").show();
+            }
+            var id = $(obj).attr("data-id");
+            var name = $(obj).attr("data-name");
+            var value = data.value;
+            toedit(id, name, value, null);
+
+        });
+    });
+
+
+    layui.use('element', function () {
+        var $ = layui.jquery
+        , element = layui.element(); //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        //var active = {
+        //    tabAdd: function () {
+        //        //新增一个Tab项
+        //        element.tabAdd('demo', {
+        //            title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+        //          , content: '内容' + (Math.random() * 1000 | 0)
+        //        })
+        //    }
+        //  , tabDelete: function () {
+        //      //删除指定Tab项
+        //      element.tabDelete('demo', 2); //删除第3项（注意序号是从0开始计算）
+        //  }
+        //  , tabChange: function () {
+        //      //切换到指定Tab项
+        //      element.tabChange('demo', 1); //切换到第2项（注意序号是从0开始计算）
+        //  }
+        //};
+
+        //$('.site-demo-active').on('click', function () {
+        //    var type = $(this).data('type');
+        //    active[type] ? active[type].call(this) : '';
+        //});
+    });
+
+    function loadform() {
+        form.render(); //更新全部
+    }
+
+    function getmenu(id) {
+        $.get("/WxMenu/GetMenuByMenuID", { "id": id }, function (menudata) {
+            $("#js_rightBox").empty();
+            $("#rightBoxtmp").tmpl(menudata).appendTo("#js_rightBox");
+            loadform();
+            if (menudata.Media_id != "") {
+                getmedia(menudata.MediaType, menudata.Media_id, id);
+            }
+
+        })
+    }
+    //获取素材
+    function getmedia(mediatype, media_id, menuid) {
+        if (mediatype == "news") {
+            $.getJSON("/wxMaterial/getonemedia", { "media_id": media_id, "mediatype": mediatype }, function (data) {
+                data.menuid = menuid;
+                $(".newstmpshow").remove();
+                $("#newstmp").tmpl(data).insertBefore('#media_cover');
+                $("#media_cover").hide();
+
+            })
+        }
+    }
+
+    function showlevel2(he) {
+        $("#js_none").hide();
+        $("#js_rightBox").show();
+
+        getmenu($(he).attr("data-menuid"));
+
+
+        $(".jslevel1").removeClass("current");
+        $(".jslevel2").removeClass("current");
+        $(he).parent().addClass("current");
+        var obj = $(he).parent().find(".sub_pre_menu_box");
+        $(obj).show();
+        $(".sub_pre_menu_box").not(obj).hide();
+    }
+
+    function current(ha) {
+        $("#js_none").hide();
+        $("#js_rightBox").show();
+
+        getmenu($(ha).attr("data-menuid"));
+
+        $(".jslevel1").removeClass("current");
+        $(".jslevel2").removeClass("current");
+        $(ha).parent().addClass("current");
+    }
+
+    function addMenuBox(ha) {
+        var data = { MenuName: "子菜单名称", ParentID: $(ha).attr("data-parentid") };
+        //一级菜单
+        if (data.ParentID == "0") {
+            if ($(ha).parent().find(".jsMenu").length > 3) {
+                return false;
+            }
+            data.MenuName = "菜单名称";
+        }
+        else {
+            //二级菜单
+            if ($(ha).parent().parent().find(".jsSubView").length > 5) {
+                return false;
+            }
+        }
+
+
+        $.post("/WxMenu/AddMenu", data, function (rtn) {
+            var rtnArray = new Array;
+            rtnArray = rtn.split("|");
+
+            if (rtnArray[0] == "ok") {
+                data.ID = rtnArray[1];
+
+                if (data.ParentID == "0") {
+                    if ($(ha).parent().find(".jsMenu").length > 3) {
+                        $(ha).hide();
+                    }
+                    $("#Menutmp").tmpl(data).insertBefore(ha);
+                }
+                else {
+                    if ($(ha).parent().parent().find(".jsSubView").length == 5) {
+                        $(ha).hide();
+                    }
+                    $("#subMenutmp").tmpl(data).insertBefore(ha);
+                    $("[data-menu-id='" + data.ParentID + "']").find(".js_icon_menu_dot").addClass("icon_menu_dot");
+                }
+
+
+
+                $("[data-hrefid='" + rtnArray[1] + "']").click();
+            }
+            else {
+                layer.alert(rtnArray[1]);
+            }
+        })
+
+
+    }
+
+    function delmenu(obj) {
+        layer.confirm('确认要删除吗？', function (index) {
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url: "/WxMenu/DelMenuByID",
+                data: { id: $(obj).attr("data-id") },
+                type: "post",
+                success: function (data) {
+                    if (data == "ok") {
+                        layer.msg('已删除!', { icon: 1, time: 1000 });
+                        window.location.href = window.location.href;
+                    }
+                }
+            });
+        });
+    }
+    ///修改,type为1时修改标题
+    function edit(obj, type) {
+        var id = $(obj).attr("data-id");
+        var name = $(obj).attr("data-name");
+        var value = $(obj).val();
+        var menuobj = null;
+        if (type == 1) {
+            menuobj = $("[data-menutext='" + id + "']");
+        }
+        toedit(id, name, value, menuobj);
+
+    }
+
+    function menutypeshow(obj) {
+        var id = $(obj).attr("data-id");
+        var name = $(obj).attr("data-name");
+        var value = $(obj).attr("data-menutype");
+        toedit(id, name, value, null);
+    }
+
+    //提交修改
+    function toedit(id, name, value, menuobj) {
+        $.post("/WxMenu/Edit", { "id": id, "name": name, "value": value }, function (rtn) {
+            if (rtn == "ok") {
+                layer.msg('已修改!', { icon: 1, time: 1000 });
+
+                if (menuobj != null) {
+                    $(menuobj).text(value);
+                }
+            }
+        })
+    }
+
+    function topublish() {
+        layer.confirm('发布后将更新到公众号菜单，确认要发布吗？', function (index) {
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                url: "/WxMenu/ToPublish",
+                type: "post",
+                success: function (data) {
+                    if (data == "ok") {
+                        layer.msg('已发布!', { icon: 1, time: 1000 });
+                    }
+                    else {
+                        layer.alert(data);
+                    }
+                }
+            });
+        });
+    }
+    //打开素材窗口
+    function openMaterial(obj) {
+        layer.open({
+            type: 2,
+            title: "素材列表",
+            area: ['1000px', '800px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '/wxMaterial/CheckLst?menuid=' + $(obj).attr("data-id")
+        });
+    }
+    function newshow(url) {
+        layer.open({
+            type: 2,
+            title: "公众号图文素材预览",
+            area: ['500px', '700px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: url
+        });
+    }
+
+
+    function showMaterial() {
+
+    }
+</script>

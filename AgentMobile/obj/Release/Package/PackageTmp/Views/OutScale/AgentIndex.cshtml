@@ -1,0 +1,237 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>选择经销商</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+
+        #mainMenuBar thead tr {
+            background-color: #393939;
+        }
+
+
+        #mainMenuBar table tr td {
+            width:auto;
+            text-align:left;
+        }
+            #mainMenuBar thead tr td {
+                color: #fff;
+                padding:0 10px;
+            }
+
+            #mainMenuBar tbody tr td {
+                border-bottom:1px solid #ddd;
+                padding:0 10px;
+            }
+
+                #mainMenuBar table tr td input {
+                    background: none;
+                    width: 17px;
+                    height: 17px;
+                    background-color: #7a5053;
+                    border: 1px solid #fff;
+                    color: #fff;
+                    position: relative;
+                    top: 12px;
+                    left: 1.5rem;
+                }
+        .centent_total li {
+            height:24px;
+            line-height:24px;
+            padding:10px;
+            font-size:14px;
+            border-bottom:1px solid #ddd;
+        }
+
+        .left {
+            float:left;
+        }
+
+        .right {
+            float:right;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <div id="container">
+            <div id="mainMenuBarAnchor">
+            </div>
+            <div id="mainMenuBar">
+                <div class="shoushu" id="show2">
+                    <div class="div2 jiantou11111">
+                        <a title="返回" href="javascript:history.go(-1)">
+                            <img src="/images/11111.png" />返回
+                        </a>
+                    </div>
+                    <form data-ajax="false" id="condition">
+                        <div class="div1">
+                            <input type="text" name="keyword" class="TextBox1" placeholder="请输入经销商/所在地区"
+                                   style="-webkit-appearance: none;" />
+                        </div>
+                        <div class="div2">
+                            <img src="/images/57.png" onclick="tosearch(this)" />
+                        </div>
+                    </form>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>编号</td>
+                            <td class="zt">
+                                经销商
+                            </td>
+                            <td>
+                                地区
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody id="UserList">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="page1" data-role="page">
+        <div data-role="content" id="content">
+            <ul class="centent_total" id="222">
+                <button id="ordermore" onclick="LoadOrder(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+            </ul>
+        </div>
+    </div>
+
+    <script src="~/js/Common/ArithmeticHelper.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script type="text/x-jquery-tmpl" id="orderDetailtmp">
+        {{each(i,ck) RtnList}}
+        <tr onclick="javascript: window.location.href = '/OutScale/GetAgentIndex/${ck.UserName}'">
+            <td>${ck.UserName}</td>
+            <td>${ck.Name}</td>
+            <td>${ck.Province}${ck.City}</td>
+        </tr>
+        {{/each}}
+    </script>
+    <script>
+        var loading;
+        $(function () {
+            LoadOrder($("#ordermore"));
+        })
+
+        function LoadOrder(obj) {
+            loading = layer.open({ type: 2, content: '加载中' });
+            var gopage = $(obj).attr("data-pageindex");
+            var json = $("form").serializeArray();
+            json.push({ "name": "pageIndex", "value": gopage });
+            json.push({ "name": "pageSize", "value": 10 });
+            $.post("/OutScale/LoadOutScaleC_User", json, function (data) {
+                layer.close(loading);
+                if (data.thisCnt > 0) {
+                    if (data.rowEnd < data.totalCnt) {
+                        $(obj).show();
+                    }
+                    $("#orderDetailtmp").tmpl(data).appendTo('#UserList');
+                    $(obj).attr("data-pageindex", accAdd(gopage, 1))
+                }
+                else {
+                    $(obj).hide();
+                }
+            })
+        }
+
+        function tosearch(obj)
+        {
+            $("#ordermore").attr("data-pageindex", 1);
+            $(".js-agentdiv").remove();
+            LoadOrder("#ordermore");
+        }
+    </script>
+    <script type='text/javascript'>
+
+        $(document).ready(function () {
+
+            var sch = $(window).height(), wah = (sch - 80)
+            $('#top_intro').css('height', wah);
+
+            $(window).resize(function () {
+                var sch = $(window).height();
+                wah = (sch - 80)
+                $('#top_intro').css('height', wah);
+
+            });
+
+            im = 'http://wizardwiz.co.uk/ww/one.jpg';
+            $('.le-background').css('background-image', 'url(' + im + ')');
+
+            $(window).scroll(function (e) {
+                var s = $(window).scrollTop(),
+                d = $(document).height(),
+                c = $(window).height(),
+                f = 100,
+                a = 40,
+                imblur = 'http://wizardwiz.co.uk/ww/two.jpg';
+                opacityVal = (s / 300);
+                titleopac = (s / 450);
+
+                $('.blurred').css('opacity', opacityVal);
+                $('.blurred').css('background-image', 'url(' + imblur + ')');
+
+                if (s > f) {
+                    $('#project-list').css('opacity', titleopac);
+                }
+                else {
+                    $('#project-list').css('opacity', 0);
+                }
+
+                if (s > a) {
+                    $('.icon-arrow-down ').css('opacity', 0);
+                    $('.icon-arrow-down ').css('bottom', 20);
+                }
+                else {
+                    $('.icon-arrow-down ').css('opacity', 1);
+                    $('.icon-arrow-down ').css('bottom', 0);
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            // Cache selectors for faster performance.
+            var $window = $(window),
+              $mainMenuBar = $('#mainMenuBar'),
+              $mainMenuBarAnchor = $('#mainMenuBarAnchor');
+
+            // Run this on scroll events.
+            $window.scroll(function () {
+                var window_top = $window.scrollTop();
+                var div_top = $mainMenuBarAnchor.offset().top;
+                if (window_top > div_top) {
+                    // Make the div sticky.
+                    $mainMenuBar.addClass('stick');
+                    $mainMenuBarAnchor.height($mainMenuBar.height());
+                }
+                else {
+                    // Unstick the div.
+                    $mainMenuBar.removeClass('stick');
+                    $mainMenuBarAnchor.height(0);
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

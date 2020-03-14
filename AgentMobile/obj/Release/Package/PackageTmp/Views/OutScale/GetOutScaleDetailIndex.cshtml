@@ -1,0 +1,282 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>发货记录</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/StyleAndScript/mobiscroll/mobiscroll.custom.min.css" rel="stylesheet" />
+    <link href="~/css/ProductStyle.css" rel="stylesheet" />
+    <link href="~/css/dropload.css" rel="stylesheet" media="all" />
+    <script src="~/js/Common/Datehelper.js?@(WeConfig.js_version)"></script>
+    <link href="~/StyleAndScript/css/subhead.css?@(WeConfig.css_version)" rel="stylesheet" />
+    <style type="text/css">
+        body, input {
+            font-size: 13px;
+            font-family: 'Microsoft YaHei';
+        }
+
+        #demo_select_dummy {
+            width: 60px;
+            background-image: url("../images/icon5.png");
+            background-position: right;
+            background-size: 20px 20px;
+            background-repeat: no-repeat;
+        }
+
+        .tabHead {
+            min-height: 125px;
+        }
+
+        .khfxWarp {
+            padding-top: 125px;
+        }
+
+        #HeadTB {
+            width: 100%;
+            height: 85px;
+        }
+
+        .tabHead table {
+            width: 100%;
+        }
+
+            .tabHead table tr td {
+                padding: 3px 6px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                line-height:22px;
+            }
+
+        .tabHead input {
+            width: 100%;
+            height:22px;
+            line-height:22px;
+            font-size:12px;
+        }
+
+        #BtnQuery {
+            background-color: #1b4f9b;
+            border: none;
+        }
+
+            #BtnQuery input {
+                color: #fff;
+            }
+
+        #TextTime, #TextTime2 {
+            background-image: url("../images/calendar.png");
+            background-position: right;
+            background-size: 18px 18px;
+            background-repeat: no-repeat;
+        }
+
+        .khfxPane {
+            font-size: 12px;
+        }
+
+        .khfxRow .photo {
+            width: 0.65rem;
+            height: 0.65rem;
+            top: .1rem;
+        }
+
+        .khfxRow .mid {
+            position: relative;
+            padding: 0.1rem 0;
+            padding-left: 0.8rem;
+            overflow: hidden;
+            min-height: 55px;
+        }
+
+        .midhead {
+            width: 100%;
+            height: 28px;
+            line-height: 28px;
+        }
+
+            .midhead .mhl {
+                color: #1b4f9b;
+                font-weight: bold;
+            }
+
+            .midhead .mhr {
+                float: right;
+                color: #999;
+            }
+
+        .khfxRow .mid em {
+            font-size: 14px;
+            color: #ff6a00;
+        }
+
+        .mr {
+            float: right;
+        }
+    </style>
+</head>
+<body id="container" style="">
+    <header class="tabHead" id="page1">
+        <div id="AgentHead">
+            <dl>
+                <dd><a href="/agentback/Index"><img id="BtnClose" src="/images/11111.png" /></a></dd>
+                <dd>发货记录</dd>
+                <dd></dd>
+            </dl>
+        </div>
+        <div id="HeadTB">
+            <table cellspacing="8" cellpadding="0">
+                <tr>
+                    <td>
+                        <input type="text" id="demo_select_dummy" class="mbsc-control mbsc-control-ev" readonly="" placeholder="" value="选项二">
+                        <select id="demo_select" class="mbsc-comp dw-hsel" name="DatKey" tabindex="-1">
+                            <option>全部</option>
+                            <option>今日</option>
+                            <option>本周</option>
+                            <option>本月</option>
+                            <option>上周</option>
+                            <option>上月</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" name="DatCreateB" id="TextTime" placeholder="选择时间" class="input-text " />
+                    </td>
+                    <td colspan="3"><input type="text" name="DatCreateE" id="TextTime2" placeholder="选择时间" class="input-text " /></td>
+                </tr>
+                <tr>
+                    <td id="KeyWord" colspan="4">
+                        <input id="Text1" name="keyword" type="text" placeholder="请输入查询关键词" />
+                    </td>
+                    <td id="BtnQuery">
+                        <input type="button" onclick="QueryData()" value="查询" />
+                    </td>
+                </tr>
+                <tr style="visibility:hidden;">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </header>
+
+    <article class="khfxWarp">
+        <section class="khfxPane" style="display:block"></section>
+    </article>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/dropload.js"></script>
+    <script src="~/StyleAndScript/mobiscroll/mobiscroll.custom.min.js"></script>
+
+    <script type="text/javascript">
+        var theme = "ios";
+        var mode = "scroller";
+        var display = "bottom";
+        var lang = "zh";
+
+        $('#demo_select').mobiscroll().select({
+            theme: theme,
+            mode: mode,
+            display: display,
+            lang: lang,
+            onSelect: function (textVale, inst) { //选中时触发事件
+                ViewToDate(textVale, '-', $("#TextTime"), $("#TextTime2"));
+            },
+        });
+
+        $('#TextTime').mobiscroll().date({
+            theme: theme,
+            mode: mode,
+            display: display,
+            lang: lang,
+            dateFormat: "yyyy-mm-dd"
+        });
+
+        $('#TextTime2').mobiscroll().date({
+            theme: theme,
+            mode: mode,
+            display: display,
+            lang: lang,
+            dateFormat: "yyyy-mm-dd"
+        });
+
+        $(function () {
+            LoadDate();
+        });
+
+        function QueryData() {
+            $('.khfxPane').empty();
+            $(".dropload-down").remove();
+            LoadDate();
+        }
+
+        function LoadDate() {
+            var itemIndex = 0;
+            var tabLoadEndArray = [false, false, false];
+            var tabLenghtArray = [10, 10, 10];
+            var tabPageIndexArray = [1, 1, 1];
+            var tabPageSizeArray = [10, 10, 10];
+            var tabScroolTopArray = [0, 0, 0];
+            var dropload = $('.khfxWarp').dropload({
+                scrollArea: window,
+                domDown: {
+                    domClass: 'dropload-down',
+                    domRefresh: '<div class="dropload-refresh">上拉加载更多</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData: '<div class="dropload-noData">已无数据</div>'
+                },
+                loadDownFn: function (me) {
+
+                    setTimeout(function () {
+                        if (tabLoadEndArray[itemIndex]) { me.resetload(); me.lock(); me.noData(); me.resetload(); return; }
+                        $.ajax({
+                            type: 'POST',
+                            url: '/OutScale/GetC_UserOutScaleDetail',
+                            data: { "pageIndex": tabPageIndexArray[itemIndex], "pageSize": tabPageSizeArray[itemIndex], "keyword": $("input[name=keyword]").val().trim(), "DatCreateB": $("input[name=DatCreateB]").val().trim(), "DatCreateE": $("input[name=DatCreateE]").val().trim() },
+                            dataType: 'json',
+                            success: function (data) {
+
+                                var result = '';
+                                tabPageIndexArray[itemIndex]++;
+                                if (data.RtnList.length > 0) {
+                                    for (var index = 0; index < data.RtnList.length; index++) {
+                                        if (itemIndex == 0) {
+                                            result += ''
+                                            + '    <hgroup class="khfxRow" onclick="window.location.href = \'/OutScale/GetOutDetailIndex?OutOrderNo=' + data.RtnList[index].OutOrderNo + '&ProductNo=' + data.RtnList[index].ProductNumber + '&Consignee=' + data.RtnList[index].Consignee + '&IDateTime=' + data.RtnList[index].CreateTime + '\'">'
+                                            + '     <div class="midhead"><span class="mhl">No.' + data.RtnList[index].OutOrderNo + '</span><span class="mhr">' + formatDateTime_Two(data.RtnList[index].CreateTime, 3) + '</span></div>'
+                                            + '      <div class="mid">'
+                                            + '        <img class="photo" src="@(WeModels.WeConfig.b_domain)' + data.RtnList[index].ProductImg + '" >'
+                                            + '        <span><label>产品名称：</label>' + data.RtnList[index].ProductName + '</span> '
+                                            + '        <span><label>收货人：</label>' + data.RtnList[index].Name + '<label class="mr">发货数量：<em>' + data.RtnList[index].Qty + '</em></label></span> '
+                                            + '      </div>'
+                                            + '    </hgroup>';
+                                        }
+                                    }
+                                }
+                                else {
+                                    tabLoadEndArray[itemIndex] = true;
+                                }
+
+                                if (data.RtnList.length < tabPageSizeArray[itemIndex]) tabLoadEndArray[itemIndex] = true;
+
+                                $('.khfxPane').eq(itemIndex).append(result);
+                                me.resetload();
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

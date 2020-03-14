@@ -1,0 +1,286 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#"  #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="System"#>
+<#@ import namespace="System.Collections.Generic"#>
+<#@ include file="DBSchema.ttinclude"#>
+using System;
+using System.Collections.Generic;
+
+namespace WeModels
+{
+<#
+var dbSchema=DBSchemaFactory.GetDBSchema();
+List<string> tableList=dbSchema.GetTablesList();
+foreach(string tableName in tableList)
+{
+    Table table=dbSchema.GetTableMetadata(tableName);
+#>
+
+    public partial class <#=tableName#> 
+    {
+        #region Fields
+        //public string str = "<#=table.StringColumns #>";
+<#
+        foreach(Column c in table.Columns)
+        {
+#>
+        private <#=Helper.GenPrivateField(c.TypeName,c.LowerColumnName)#>
+<#
+        }
+#>
+        #endregion
+
+        #region Attributes
+<#
+        foreach(Column c in table.Columns)
+        {
+#>
+        /// <summary>
+        /// <#=c.Desc#>
+        /// </summary>
+        public <#=Helper.GetCSharpType(c.TypeName)#> <#=c.ColumnName#>
+        {
+            get { return <#=c.LowerColumnName#>; }
+            set { <#=c.LowerColumnName#> = <#=Helper.GenSetter(c.TypeName,c.MaxLength)#>; }
+        }
+
+<#
+        }
+#>
+        #endregion
+
+        #region Methods
+		/// <summary>
+        /// 插入一条数据
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+        public int InsertAndReturnIdentity()
+        {
+            string strSql = "INSERT INTO [<#=tableName #>] (<#=table.ColumnNamesWithoutAutoIncrement #>) values (<#=table.ColumnNamesWithATWithoutAutoIncrement #>);SELECT CAST(scope_identity() AS int);";
+            strSql = strSql.Replace("@Sort", "CASE WHEN @Sort IS NULL OR @Sort='' OR @Sort=0 THEN (SELECT ISNULL(MAX(Sort),0)+10 FROM [<#=tableName #>]) ELSE @Sort END");
+			System.Data.SqlClient.SqlParameter[] paramters ={
+<#
+            foreach(Column c in table.Columns)
+            {
+#>
+                new System.Data.SqlClient.SqlParameter("@<#=c.ColumnName #>",<#=c.LowerColumnName #>),
+<#
+            }
+#>
+            };
+            object obj = DAL.SqlHelper.ExecuteScalar(strSql, paramters);
+            if (string.IsNullOrWhiteSpace(obj.ToString()))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(obj);
+            }
+        }
+
+		/// <summary>
+        /// 插入一条数据,带事务
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+        public int InsertAndReturnIdentity(System.Data.SqlClient.SqlTransaction tran)
+        {
+            string strSql = "INSERT INTO [<#=tableName #>] (<#=table.ColumnNamesWithoutAutoIncrement #>) values (<#=table.ColumnNamesWithATWithoutAutoIncrement #>);SELECT CAST(scope_identity() AS int);";
+            strSql = strSql.Replace("@Sort", "CASE WHEN @Sort IS NULL OR @Sort='' OR @Sort=0 THEN (SELECT ISNULL(MAX(Sort),0)+10 FROM [<#=tableName #>]) ELSE @Sort END");
+			System.Data.SqlClient.SqlParameter[] paramters ={
+<#
+            foreach(Column c in table.Columns)
+            {
+#>
+                new System.Data.SqlClient.SqlParameter("@<#=c.ColumnName #>",<#=c.LowerColumnName #>),
+<#
+            }
+#>
+            };
+            object obj = DAL.SqlHelper.ExecuteScalar(tran, System.Data.CommandType.Text, strSql, paramters);
+            if (string.IsNullOrWhiteSpace(obj.ToString()))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(obj);
+            }
+        }
+
+
+<#  if(table.PKs.Count>0){ #>
+        /// <summary>
+        /// 根据主键更新行
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+        public int UpdateByID()
+        {
+            string strSql = "UPDATE [<#=tableName #>] SET <#=table.column4update.TrimEnd(',') #> WHERE <#=table.PKs[0].ColumnName #>=@<#=table.PKs[0].ColumnName #>;";
+            System.Data.SqlClient.SqlParameter[] paramters ={
+<#
+            foreach(Column c in table.Columns)
+            {
+#>
+                new System.Data.SqlClient.SqlParameter("@<#=c.ColumnName #>",<#=c.LowerColumnName #>),
+<#
+            }
+#>
+            };
+    		int cnt = DAL.SqlHelper.ExecuteNonQuery(strSql, paramters);
+    		return cnt;
+        }
+
+		/// <summary>
+        /// 根据主键更新行,带事务
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+        public int UpdateByID(System.Data.SqlClient.SqlTransaction tran)
+        {
+            string strSql = "UPDATE [<#=tableName #>] SET <#=table.column4update.TrimEnd(',') #> WHERE <#=table.PKs[0].ColumnName #>=@<#=table.PKs[0].ColumnName #>;";
+            System.Data.SqlClient.SqlParameter[] paramters ={
+<#
+            foreach(Column c in table.Columns)
+            {
+#>
+                new System.Data.SqlClient.SqlParameter("@<#=c.ColumnName #>",<#=c.LowerColumnName #>),
+<#
+            }
+#>
+            };
+    		int cnt = DAL.SqlHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, strSql, paramters);
+    		return cnt;
+        }
+
+
+        /// <summary>
+        /// 根据主键获取对象
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+    	public static <#=tableName #> GetEntityByID(int id)
+    	{
+    		string strSql = "SELECT <#=table.ColumnNames #> FROM [<#=tableName #>] WHERE <#=table.PKs[0].ColumnName #>=@<#=table.PKs[0].ColumnName #>";
+    		System.Data.SqlClient.SqlParameter[] paramters = { new System.Data.SqlClient.SqlParameter("@<#=table.PKs[0].ColumnName #>", id) };
+    
+    		return DAL.EntityDataHelper.LoadData2Entity<<#=tableName #>>(strSql, paramters);
+    	}
+
+
+        /// <summary>
+        /// 根据主键获取数据并填充到已经实例化的对象中,参数pk如果为0则取实例本身的ID值
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+    	public void LoadData2InstanceByID(int pk)
+    	{
+    		string strSql = "SELECT <#=table.ColumnNames #> FROM [<#=tableName #>] WHERE <#=table.PKs[0].ColumnName #>=@<#=table.PKs[0].ColumnName #>";
+    		System.Data.SqlClient.SqlParameter[] paramters = { new System.Data.SqlClient.SqlParameter("@<#=table.PKs[0].ColumnName #>", pk > 0 ? pk : <#=table.PKs[0].LowerColumnName #>) };
+    
+    		DAL.EntityDataHelper.LoadData2Instance(this, strSql, paramters);
+    	}
+
+		/// <summary>
+        /// 根据主键删除一条数据
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+    	public static int DeleteByID(int id)
+    	{
+    		string strSql = "DELETE FROM [<#=tableName #>] WHERE <#=table.PKs[0].ColumnName #>=@<#=table.PKs[0].ColumnName #>";
+    		System.Data.SqlClient.SqlParameter[] paramters = { new System.Data.SqlClient.SqlParameter("@<#=table.PKs[0].ColumnName #>",id) };
+    
+    		int cnt = DAL.SqlHelper.ExecuteNonQuery(strSql, paramters);
+    		return cnt;
+    	}
+		
+		/// <summary>
+        /// 根据主键删除一条数据,带事务
+        /// （当数据库表第一行是int自增主键时生成此方法）
+        /// </summary>
+    	public static int DeleteByID(System.Data.SqlClient.SqlTransaction tran, int id)
+    	{
+    		string strSql = "DELETE FROM [<#=tableName #>] WHERE <#=table.PKs[0].ColumnName #>=@<#=table.PKs[0].ColumnName #>";
+    		System.Data.SqlClient.SqlParameter[] paramters = { new System.Data.SqlClient.SqlParameter("@<#=table.PKs[0].ColumnName #>",id) };
+    
+    		int cnt = DAL.SqlHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, strSql, paramters);
+    		return cnt;
+    	}
+
+		/// <summary>
+    	/// 分页实例集合行数
+    	/// </summary>
+    	public int TotalRowsInTable { get; set; }
+    
+    	/// <summary>
+    	/// 读取分页的实例集合 同时返回表中的行数，适用于表中行数比较少的情况。
+    	/// （当数据库表第一行是int自增主键时生成此方法）
+    	/// </summary>
+    	public static List<<#=tableName #>> GetEntitysAllPaged(int pageIndex, int pageSize)
+    	{
+    		string strSql = "SELECT <#=table.ColumnNames #>,COUNT(1) OVER(PARTITION BY '') AS TotalRowsInTable FROM [<#=tableName #>] ORDER BY ID DESC OFFSET (@pageIndex -1) * @pageSize ROWS FETCH NEXT @pageSize ROWS ONLY";
+    		System.Data.SqlClient.SqlParameter[] paramters = { 
+    			new System.Data.SqlClient.SqlParameter("@pageIndex",pageIndex),
+    			new System.Data.SqlClient.SqlParameter("@pageSize",pageSize)
+    		};
+    
+    		return DAL.EntityDataHelper.FillData2Entities<<#=tableName #>>(strSql, paramters);
+    	}
+
+
+    	/// <summary>
+    	/// 读取分页的实例集合 考虑到性能原因不返回行数，适用于表中行数非常多的情况。
+    	/// （当数据库表第一行是int自增主键时生成此方法）
+    	/// </summary>
+    	public static List<<#=tableName #>> GetEntitysAllPagedWithoutRowsCnt(int pageIndex, int pageSize)
+    	{
+    		string strSql = "SELECT <#=table.ColumnNames #> FROM [<#=tableName #>] ORDER BY ID DESC OFFSET (@pageIndex -1) * @pageSize ROWS FETCH NEXT @pageSize ROWS ONLY";
+    		System.Data.SqlClient.SqlParameter[] paramters = { 
+    			new System.Data.SqlClient.SqlParameter("@pageIndex",pageIndex),
+    			new System.Data.SqlClient.SqlParameter("@pageSize",pageSize)
+    		};
+    
+    		return DAL.EntityDataHelper.FillData2Entities<<#=tableName #>>(strSql, paramters);
+    	}
+
+<#  }   #>
+
+    	/// <summary>
+    	/// 读取所有实例，限制10万条。
+    	/// </summary>
+    	public static List<<#=tableName #>> GetEntitysAll()
+    	{
+    		string strSql = "SELECT TOP 100000 <#=table.ColumnNames #> FROM [<#=tableName #>]";
+    		System.Data.SqlClient.SqlParameter[] paramters = null;
+    
+    		return DAL.EntityDataHelper.FillData2Entities<<#=tableName #>>(strSql, paramters);
+    	}
+
+<# if(table.FKs.Count>0){ #>
+
+<#
+            foreach(Column fk in table.FKs)
+            {
+#>
+
+    	/// <summary>
+    	/// 读取所有实例，以“外键”为条件。
+    	/// （当表的第2 3 4列以ID或PK结尾时自动生成此方法）
+    	/// </summary>
+    	public static List<<#=tableName #>> GetEntitysBy<#=fk.ColumnName #>(int <#=fk.ColumnName.ToLower() #>)
+    	{
+    		string strSql = "SELECT <#=table.ColumnNames #> FROM [<#=tableName #>] WHERE <#=fk.ColumnName #>=@<#=fk.ColumnName #>";
+    		System.Data.SqlClient.SqlParameter[] paramters = { new System.Data.SqlClient.SqlParameter("@<#=fk.ColumnName #>",<#=fk.ColumnName.ToLower() #>) };
+    
+    		return DAL.EntityDataHelper.FillData2Entities<<#=tableName #>>(strSql, paramters);
+    	}
+
+<#          } #>
+<# } #>
+        #endregion
+        
+    }
+
+<#
+    }
+    dbSchema.Dispose();
+#>
+}

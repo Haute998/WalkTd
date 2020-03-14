@@ -1,0 +1,125 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>待发货订单</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 待发货订单 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                订单编号：
+                <input type="text" name="OrderNo" id="" placeholder=" 请输入订单编号" style="width: 250px"
+                       class="input-text" />
+                关键字：
+                <input type="text" name="keyword" placeholder=" 请输入关键字" style="width: 250px"
+                       class="input-text" value="" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                订单编号
+            </th>
+            <th>
+                订单名称
+            </th>
+            <th>
+                订单金额
+            </th>
+            <th>
+                代理姓名
+            </th>
+            <th>
+                收货人
+            </th>
+            <th>
+                收货电话
+            </th>
+            <th>
+                收货地址
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                <a href="javascript:void(0)" style="color:blue" data-title="查看订单详情" title="查看订单详情" data-href="/OrderManage/OrderDetail?orderNo=${ck.OrderNo}" onclick="Hui_admin_tab(this)"> ${ck.OrderNo}</a>
+            </td>
+            <td>
+                ${ck.OrderName}
+            </td>
+            <td>
+                ${ck.SumPrice}
+            </td>
+            <td>
+                ${ck.C_User_Name}
+            </td>
+            <td>
+                ${ck.OrderMan}
+            </td>
+            <td>
+                ${ck.OrderMobile}
+            </td>
+            <td>
+                ${ck.Address}
+            </td>
+            <td class="f-14 td-manage">
+                <a style="text-decoration: none" class="btn btn-primary radius size-S" onclick="toSendOrder(this)" data-orderno="${ck.OrderNo}" data-title="订单发货" href="javascript:;"
+                   title="订单发货">发货</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/OrderManage/GetNoSendOrders";
+    function toSendOrder(obj) {
+        var url = "/OrderManage/SendOrder?orderNo=" + $(obj).attr("data-orderno");
+        layer_show("订单发货", url);
+    }
+</script>

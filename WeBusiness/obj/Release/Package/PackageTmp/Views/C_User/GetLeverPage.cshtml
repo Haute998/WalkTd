@@ -1,0 +1,72 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+@model C_User
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>修改级别</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+
+        .sel {
+            width: 40%;
+            height: 37px;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+</head>
+<body>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                <input type="hidden" value="@Model.ID" name="ID" />
+                修改级别：
+                @Html.DropDownListFor(m => m.C_UserTypeID, SelectListHelper.GetC_UserType(Model.C_UserTypeID.ToString()), new { @class = "select sel" })
+                <button name="" id="edit" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe692;</i> 修改
+                </button>
+
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script>
+
+    $("#edit").click(function () {
+        $.post("/C_User/GetUpdateLever", $("#condition").serialize(), function (rtn) {
+            if (rtn == "ok") {
+                parent.window.location.href = parent.window.location.href;
+            }
+            else {
+                layer.alert(rtn);
+            }
+        });
+    })
+
+</script>
+
+

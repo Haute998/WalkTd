@@ -1,0 +1,209 @@
+﻿@using WeModels
+@using WeModels.Models.C_UserModel
+@{
+    Layout = null;
+    C_UserVM user = ViewData["user"] as C_UserVM;
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>门店库存</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+        .centent_total {
+            padding-bottom: 0;
+        }
+
+        .accordion {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .link {
+            background: url(/images/51.png);
+            background-size: 100% 100%;
+        }
+
+        .accordion .link {
+            border-bottom: none;
+            border-top: none;
+            margin-bottom: 0;
+            padding: 5px 15px 10px 1em;
+            color: #fff;
+        }
+
+        .accordion li:last-child .link {
+            border-bottom: none;
+            padding: 5px 15px 10px 1em;
+            color: #fff;
+        }
+
+        .submenu a {
+            padding: 0;
+        }
+
+        .submenu li {
+            border-bottom: none;
+        }
+
+            .submenu li div a {
+                width: 49.4%;
+                border-bottom: 1px solid #757575;
+                border-right: 1px solid #757575;
+                border-left: 1px solid #757575;
+            }
+
+                .submenu li div a.xykc {
+                    border-left: none;
+                }
+
+                .submenu li div a.fdd span {
+                    color: #737373;
+                }
+
+                .submenu li div a span {
+                    width: 100%;
+                    margin-left: 0;
+                }
+
+                    .submenu li div a span.span11 {
+                        background: none;
+                        color: #332c2b;
+                        text-align: left;
+                        text-indent: 10px;
+                    }
+
+                    .submenu li div a span.span22 {
+                        background: none;
+                        color: #332c2b;
+                        font-size: 13px;
+                        text-align: center;
+                    }
+
+                    .submenu li div a span.fff {
+                        color: #737373;
+                    }
+
+        .img77 {
+            width: 15px;
+            height: 10px;
+        }
+    </style>
+</head>
+<body style="background: #fff;">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="centent_total">
+                <input type="hidden" value="@(user.UserName)" name="keyword" />
+                <div class="dlhtt" id="dlhtt" style="background: url(/images/tcrjbg.png); background-size: 100% 100%;">
+                    <dl>
+                        <dt>
+                            <img src="~/images/27.png" alt="" />
+                        </dt>
+                        <dd style="padding: 28px 0 0 0;">
+                            <span>@(user.Name)</span>
+                        </dd>
+                        <dd>
+                            <span class="span1">级别：@(user.userTypeName)</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <ul id="accordion" class="accordion"></ul>
+            <button id="more" onclick="LoadOrder(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+            @*<div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/MyAgentsInfo/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>*@
+        </div>
+        <script src='/js/jquery.js'></script>
+        <script src="/js/index.js"></script>
+    </form>
+</body>
+</html>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/Common/Datehelper.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="Detailtmp">
+    {{each(i,ck) RtnList}}
+    <li class="lii">
+        <div class="link">
+           库存统计<i class="fa fa-chevron-down">
+                @*<img src="/images/89.png" class="img77" alt="" />*@
+            </i>
+        </div>
+        <ul class="submenu" style="display:block">
+            <li>
+                <div>
+                    <a><span class="span11">产品名称</span></a><a class="xykc"><span class="span22">现有库存</span></a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a class="fdd"><span class="span11 fff">${ck.ProductName}</span></a><a class="xykc fdd">
+                        <span class="span22 fff">${ck.count}</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li style="height: 15px; overflow: hidden; width: 100%;"></li>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        LoadOrder($("#more"));
+    })
+    function LoadOrder(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        var json = $("form").serializeArray();
+        json.push({ "name": "pageIndex", "value": gopage });
+        json.push({ "name": "pageSize", "value": 10 });
+        $.post("/Stock/GetAgentStockByUserNamePage", json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#Detailtmp").tmpl(data).appendTo('#accordion');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1));
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+
+    function search(obj) {
+        $("#more").attr("data-pageindex", 1);
+        $("#accordion").empty();
+        LoadOrder("#more");
+    }
+
+</script>

@@ -1,0 +1,379 @@
+﻿@charset "utf-8";
+
+input, button, select, textarea {
+    outline: none;
+}
+
+.saoma-b1 {
+    margin-bottom: 1px;
+}
+
+.saoma-b5 {
+    margin-bottom: 5px;
+}
+
+.saoma-list {
+    padding: 10px 15px;
+    overflow: hidden;
+    background: #fff;
+    height: auto;
+    display: flex;
+}
+
+.saoma-tit {
+    flex: 0 0 80px;
+    overflow: hidden;
+    color: #000;
+    font-size: 0.8rem;
+    line-height: 24px;
+    text-align: justify;
+    text-align-last: justify;
+}
+
+.saoma-content {
+    flex: 1;
+}
+
+    .saoma-content input {
+        float: left;
+        box-sizing: border-box;
+    }
+
+.saoma-txt {
+    width: 75%;
+    height: 24px;
+    color: #000;
+    font-size: 0.8rem;
+    border: 1px solid #fff;
+    border-radius: 0;
+    background: #fff;
+}
+
+.saoma-txt2 {
+    width: 100%;
+    height: 24px;
+    color: #000;
+    font-size: 0.8rem;
+    border: 1px solid #fff;
+    border-radius: 0;
+    background: #fff;
+}
+
+.saoma-xz {
+    width: 25%;
+    height: 24px;
+    color: #fff;
+    font-size: 0.75rem;
+    border: 1px solid #1b4f9b;
+    border-radius: 25px;
+    background: #1b4f9b;
+}
+
+.saoma-sd {
+    width: 70px;
+    height: 24px;
+    color: #fff;
+    font-size: 0.75rem;
+    border: 1px solid #1b4f9b;
+    border-radius: 25px;
+    background: #1b4f9b;
+}
+
+
+.saoma-ls {
+    width: 85px;
+    height: 24px;
+    color: #fff;
+    font-size: 0.75rem;
+    text-indent: 14px;
+    border: 1px solid #999999;
+    border-radius: 25px;
+    background: #999999 url(/images/chkFilletBtn2.png) no-repeat;
+    background-size: 16px;
+    background-position: left 5px top 3px;
+}
+
+
+.saoma-sl {
+    color: #000;
+    font-size: 0.8rem;
+    padding: 15px;
+    height: auto;
+    display: flex;
+    line-height: 25px;
+}
+
+    .saoma-sl > div:nth-child(1) {
+        flex: 1;
+    }
+
+    .saoma-sl > div:nth-child(2) {
+        flex: 0 0 165px;
+    }
+
+.saoma-box > div {
+    float: left;
+}
+
+    .saoma-box > div:nth-child(1) {
+        width: 80px;
+    }
+
+    .saoma-box > div:nth-child(2) {
+        width: 85px;
+        position: relative;
+    }
+
+        .saoma-box > div:nth-child(2) img {
+            position: absolute;
+            left: 6px;
+            top: 5px;
+        }
+
+.saoma-btn {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 45px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid #1b4f9b;
+    border-radius: 0;
+    background: #1b4f9b;
+    letter-spacing: 1px;
+}
+
+#TotalScale {
+    font-weight: bold;
+    color: #1b4f9b;
+    font-size: 16px;
+}
+
+#OrderNo {
+    font-weight: bold;
+    color: #1b4f9b;
+}
+
+#UserName, #Name {
+    font-weight: bold;
+    color: #666;
+}
+
+.saoma-sm {
+    position: fixed;
+    top: 60%;
+    right: 10%;
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    border-radius: 100%;
+    padding: 10px;
+    box-shadow: 2px 2px 5px #999;
+}
+
+    .saoma-sm a {
+        display: block;
+        color: #1b4f9b;
+        font-size: 0.7rem;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    .saoma-sm img {
+        display: block;
+        height: 20px;
+        margin: 0 auto;
+    }
+
+#AgentHead {
+    width: 100%;
+    height: 40px;
+    background-color: #1b4f9b;
+}
+
+    #AgentHead dl {
+        height: 40px;
+        width: 100%;
+    }
+
+    #AgentHead dl, dd {
+        margin: 0;
+        padding: 0;
+        padding-top: 5px;
+        color: #fff;
+        text-align: center;
+    }
+
+        #AgentHead dl dd:first-child {
+            padding: 0;
+            width: 10%;
+        }
+
+        #AgentHead dl dd:nth-child(2) {
+            width: 80%;
+        }
+
+        #AgentHead dl dd:last-child {
+            width: 10%;
+        }
+
+    #AgentHead dd {
+        float: left;
+    }
+
+        #AgentHead dd img {
+            width: 26px;
+        }
+
+.QueryDiv {
+    width: 94%;
+    height: 36px;
+    margin: 0 auto;
+    padding: 8px 3% 2px 3%;
+    background-color: #ededed;
+    position: relative;
+}
+
+.queryImg {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+    width: 20px;
+    z-index: 999;
+}
+
+#QueryAgent {
+    width: 94%;
+    height: 26px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 0 3%;
+    font-size: 14px;
+}
+
+.khfxWarp table {
+    width: 100%;
+    font-size: 14px;
+}
+
+.khfxWarp thead tr {
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+    .khfxWarp thead tr th {
+        text-align: left;
+        padding: 10px;
+    }
+
+.khfxWarp tbody tr {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    border-bottom: 1px solid #ddd;
+}
+
+    .khfxWarp tbody tr:active {
+        background-color: #c4e0f8;
+    }
+
+    .khfxWarp tbody tr td {
+        text-align: left;
+        padding: 5px 10px;
+    }
+
+.tab-all {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.tab-dd {
+    margin-top: 122px;
+    overflow-y: scroll;
+    height: 83%;
+}
+
+.tab-box {
+    width: 100%;
+    position: fixed;
+    top: 85px;
+    left: 0;
+    right: 0;
+}
+
+    .tab-box thead tr {
+        height: 36px;
+        background-color: #eee;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .tab-box thead tr th {
+            text-align: left;
+            padding: 5px 10px;
+        }
+
+#scanInput,#scanTime,#TxtOrderNo {
+    border: 1px solid #1b4f9b;
+    width: 94%;
+    height: 30px;
+    text-indent: 10px;
+    color: #333;
+    font-size: 13px;
+    font-weight:bold;
+    font-family: Microsoft YaHei;
+    -moz-box-shadow: 3px 3px 3px #ccc inset; /* For Firefox3.6+ */
+    -webkit-box-shadow: 3px 3px 3px #ccc inset; /* For Chrome5+, Safari5+ */
+    box-shadow: 3px 3px 3px #ccc inset; /* For Latest Opera */
+}
+
+.Cont {
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    min-height: 30px;
+}
+
+    .Cont ul, li {
+        padding: 0;
+        margin: 0;
+    }
+
+        .Cont ul li {
+            list-style: none;
+            padding: 10px 8px;
+            border-bottom: 1px solid #ddd;
+            line-height: 20px;
+        }
+
+            .Cont ul li img {
+                width: 20px;
+                /*position:absolute;
+                bottom:0;*/
+                vertical-align: bottom;
+            }
+
+            .Cont ul li span {
+                padding: 0 10px;
+                height: 20px;
+                /*position:relative;*/
+            }
+
+                .Cont ul li span:last-child {
+                    float: right;
+                }
+
+.scanTitle {
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+}

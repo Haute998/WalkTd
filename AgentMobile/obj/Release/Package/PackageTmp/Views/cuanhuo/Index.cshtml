@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>防窜货查询</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/layout/jfshop/css/common.css" rel="stylesheet" />
+    <link href="/layout/jfshop/css/main.css" rel="stylesheet" />
+    <link href="/css/slc/common.css" rel="stylesheet" />
+    <link href="/css/slc/slc.css" rel="stylesheet" />
+    <style>
+        #page1 {
+            height: 50vh;
+        }
+
+        .QLRcode {
+            position: fixed;
+            right: 5%;
+            bottom: 6%;
+            width: 35px;
+            height: 35px;
+        }
+
+            .QLRcode img {
+                width: 100%;
+            }
+
+        .top {
+            margin: 0;
+            text-align: center;
+            padding: 80px 0 15px;
+        }
+
+
+        .top2 {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body style="background: #f4f4f4;">
+    <div class="slc-bg">
+        <div class="slc-fch">
+            <div class="slc-fch-div">
+                
+                <div class="slc-product">
+                    <img src="@(WeModels.WeConfig.b_domain  + ViewData["ProductImg"])" width="100%" alt="" onerror="javascript: this.src = '/WEIK/gimme-bg2.png'; this.onerror = null" />
+
+
+                </div>
+                @*<div class="slc-d8">产品编号：<span>@ViewData["ProductNumber"]</span></div>*@
+                <div class="slc-d8">产品名称：<span>@ViewData["ProductName"]</span></div>
+                <div class="slc-d8">零售价：<span>@ViewData["kw"]</span></div>
+                <div class="slc-d8">原产地：<span>中国</span></div>
+                <div class="slc-d8">制造商：<span>SNAP</span></div>
+                <div class="slc-d8">代理商：<span>@ViewData["Name"]</span></div>
+                <div class="slc-d8">销售区域：<span>@ViewData["Province"]</span></div>
+                <div class="slc-d8">出库单号：<span>@ViewData["O_ID"]</span></div>
+                @*<div class="slc-d9">注意事项：请放置阴凉干燥处，避光保存，请勿暴晒！</div>*@
+            </div>
+            <div class="slc-foot1">&copy;&nbsp;技术支持：&nbsp;&nbsp;深圳通程</div>
+        </div>
+    </div>
+</body>
+
+</html>

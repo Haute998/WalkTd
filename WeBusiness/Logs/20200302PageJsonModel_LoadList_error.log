@@ -1,0 +1,54 @@
+16:41:26.243 cntSql：select count(1) from (select c.*,t.Name LevelName,I.Name IName from C_User as  c left join C_UserType as t on t.Lever=c.C_UserTypeID left join C_User I on c.Introducer=I.UserName) as C_UserShow where 1=1  and state='已审核'  and Chief=0 and type <>'消费者' ，strSql：。System.Data.SqlClient.SqlException (0x80131904): 列名 'type' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 DAL.SqlHelper.ExecuteScalar(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   在 DAL.SqlHelper.ExecuteScalar(String commandText, SqlParameter[] commandParameters)
+   在 WeModels.PageJsonModel`1.LoadList() 位置 e:\A尊客\WeModels\Common\PageJsonModel.cs:行号 78
+ClientConnectionId:4a3ff728-d142-4ee4-a6fd-4a341b6d7ecf
+Error Number:207,State:1,Class:16
+
+16:44:34.017 cntSql：select count(1) from (select c.*,t.Name LevelName,I.Name IName from C_User as  c left join C_UserType as t on t.Lever=c.C_UserTypeID left join C_User I on c.Introducer=I.UserName) as C_UserShow where 1=1  and state='已审核'  and Chief=0 and type <>'消费者' ，strSql：。System.Data.SqlClient.SqlException (0x80131904): 列名 'type' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 DAL.SqlHelper.ExecuteScalar(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   在 DAL.SqlHelper.ExecuteScalar(String commandText, SqlParameter[] commandParameters)
+   在 WeModels.PageJsonModel`1.LoadList() 位置 e:\A尊客\WeModels\Common\PageJsonModel.cs:行号 78
+ClientConnectionId:1d2d0eb8-0ac5-4966-94e7-08a6c334ac72
+Error Number:207,State:1,Class:16
+
+16:45:45.062 cntSql：select count(1) from (select c.*,t.Name LevelName,I.Name IName from C_User as  c left join C_UserType as t on t.Lever=c.C_UserTypeID left join C_User I on c.Introducer=I.UserName) as C_UserShow where 1=1  and state='已审核'  and Chief=0 and type <>'消费者' ，strSql：。System.Data.SqlClient.SqlException (0x80131904): 列名 'type' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   在 System.Data.SqlClient.SqlDataReader.get_MetaData()
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   在 System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   在 DAL.SqlHelper.ExecuteScalar(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters)
+   在 DAL.SqlHelper.ExecuteScalar(String commandText, SqlParameter[] commandParameters)
+   在 WeModels.PageJsonModel`1.LoadList() 位置 e:\A尊客\WeModels\Common\PageJsonModel.cs:行号 78
+ClientConnectionId:ecad8eb7-a2dc-4798-9232-38b943c5e0fd
+Error Number:207,State:1,Class:16
+

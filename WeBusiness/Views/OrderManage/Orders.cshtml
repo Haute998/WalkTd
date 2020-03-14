@@ -1,0 +1,176 @@
+﻿@using WeModels
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>订单查询</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 订单管理 <span class="c-gray en">&gt;</span> 订单查询<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <input name="orderby" type="hidden" value=""/>
+            <div class="text-c">
+                订单编号：
+                <input type="text" name="OrderNo" id="" placeholder=" 请输入订单编号" style="width: 250px"
+                       class="input-text" />
+                订单状态：<span class="select-box" style="width: 150px">
+                    <select class="select" name="OrderState" size="1">
+                        <option value="" selected>全部</option>
+                        <option value="待审核">待审核</option>
+                        <option value="待发货">待发货</option>
+                        <option value="已发货">已发货</option>
+                        <option value="已取消">已取消</option>
+                    </select>
+                </span>
+                关键字：
+                <input type="text" name="keyword" placeholder="订单编号/订单状态/订单名称/下单人" style="width: 250px"
+                       class="input-text" value="" />
+                <button onclick="morecondition(this)" class="btn btn-default size-MINI radius" type="button">
+                    更多
+                </button>
+                <br /><br />
+                <span style="display:none" class="js-nospan">
+                    创建时间：
+                    <input type="text" name="DatCreateB" id="" placeholder=" 请输入时间" style="width: 150px"
+                           class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                    至
+                    <input type="text" name="DatCreateE" id="" placeholder=" 请输入时间" style="width: 150px"
+                           class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+
+                </span>
+
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <button name="" id="Export" onclick="Exports()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th class="js-sortfleld sorting" data-fleld="[Order].OrderNo" onclick="tosort(this)">
+                订单编号
+            </th>
+            <th>
+                订单名称
+            </th>
+            <th class="js-sortfleld sorting" data-fleld="[Order].SumPrice" onclick="tosort(this)">
+                订单金额
+            </th>
+            @*<th>
+                下单时间
+            </th>*@
+            <th class="js-sortfleld sorting" data-fleld="[Order].DatCreate" onclick="tosort(this)">下单时间</th>
+            <th>
+                代理姓名
+            </th>
+            <th>
+                代理级别
+            </th>
+            <th>
+                订单状态
+            </th>
+            <th>
+                发货状态
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                <a href="javascript:void(0)" style="color:blue" data-title="查看订单详情" title="查看订单详情" data-href="/OrderManage/OrderDetail?orderNo=${ck.OrderNo}" onclick="Hui_admin_tab(this)"> ${ck.OrderNo}</a>
+            </td>
+            <td>
+                ${ck.OrderName}
+            </td>
+            <td>
+                ${ck.SumPrice}
+            </td>
+            <td>
+                ${ChangeDateFormat(ck.DatCreate).Format("yyyy-MM-dd hh:mm:ss")}
+            </td>
+            <td>
+                ${ck.C_User_Name}
+            </td>
+            <td>
+                ${ck.C_UserTypeName}
+            </td>
+            <td>
+                ${ck.OrderState}
+            </td>
+            <td>
+                ${ck.SendState}
+            </td>
+
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/OrderManage/GetOrders";
+ 
+
+    function Exports() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/OrderManage/ExportExcel");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+    function toSendOrder(obj) {
+        var url = "/OrderManage/SendOrder?orderNo=" + $(obj).attr("data-orderno");
+        layer_show("订单发货", url);
+    }
+    function morecondition(obj) {
+        if ($(".js-nospan").is(':visible')) {
+            $(".js-nospan").hide();
+            $(obj).text("更多");
+        }
+        else {
+            $(".js-nospan").show();
+            $(obj).text("隐藏");
+        }
+    }
+
+</script>

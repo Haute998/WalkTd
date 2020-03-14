@@ -1,0 +1,136 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>下级代理跨级升级明细 - 微商系统演示版</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .centent_total {
+            padding-bottom: 0;
+        }
+
+        .fy_dlxxxq .fy_xq .div2 ul li {
+            padding-left: 4.5em;
+        }
+    </style>
+
+</head>
+<body style="background: #E1E1E1">
+    <form id="form1" data-ajax="false">
+        <div id="page1" data-role="page">
+            <div class="centent_total" style="background-color: #fff;">
+                <div class="sqdls_up">
+                    <table class="tt2">
+                        <tr>
+                            <td>
+                                关键词：
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="tt3">
+                        <tr>
+                            <td class="td2">
+                                <input id="Text1" type="text" placeholder="请输入姓名、手机、微信号、级别" style="background: url(/images/66.png)center 0px no-repeat;
+                                background-size: 100% 100%;" />
+                            </td>
+                            <td class="td3" onclick="tosearch()">
+                                <img src="/images/99.png" alt="" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="fy_dlxxxq">
+                <button id="agentshtml" onclick="Loadagents(this)" data-pageindex="1" type="button" style="display:none;background-color: white; text-align: center; color: #3e3c3c; padding: 6px 20px 6px 20px; border-radius: 5px; border: 0; border: none; ">更多</button>
+
+            </div>
+
+            <br />
+            <div class="All_foot">
+                <div class="foot">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="/agentback/Index">
+                                    <div class="div1">
+                                        <img src="/images/25.png" alt="" />
+                                    </div>
+                                    <div class="div2">
+                                        返回首页
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/js/jquery-1.11.2.min.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/jquery.tmpl.min.js"></script>
+<script type="text/x-jquery-tmpl" id="agentstmp">
+    {{each(i,ck) RtnList}}
+    <div class="fy_xq js-agentsdiv">
+        <div class="div1">
+            申请级别:${ck.NewUserTypeName}
+        </div>
+        <div class="div2">
+            <ul>
+                <li>现代理级别:${ck.OldUserTypeName}  </li>
+                <li>姓名:${ck.Name}</li>
+                <li>
+                    微信:${ck.wxNo}
+                </li>
+                <li>手机号:${ck.Phone}</li>
+            </ul>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script>
+    var loading;
+    $(function () {
+        Loadagents($("#agentshtml"));
+    })
+    function Loadagents(obj) {
+        loading = layer.open({ type: 2, content: '加载中' });
+        var gopage = $(obj).attr("data-pageindex");
+        var json = $("#form1").serializeArray();
+        json.push({ "name": "pageIndex", "value": gopage });
+        json.push({ "name": "pageSize", "value": 10 });
+        $.post("/MyAgentsInfo/LoadUpgradeNoAuditAgent", json, function (data) {
+            layer.close(loading);
+            if (data.thisCnt > 0) {
+
+                if (data.rowEnd < data.totalCnt) {
+                    $(obj).show();
+                }
+                $("#agentstmp").tmpl(data).insertBefore('#agentshtml');
+                $(obj).attr("data-pageindex", accAdd(gopage, 1))
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    }
+
+
+    function tosearch() {
+        $(".js-agentsdiv").remove();
+        $("#agentshtml").attr("data-pageindex", 1)
+        Loadagents($("#agentshtml"));
+    }
+</script>

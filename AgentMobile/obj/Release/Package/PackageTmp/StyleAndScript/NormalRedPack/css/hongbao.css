@@ -1,0 +1,250 @@
+﻿/** 清除内外边距 **/
+body, h1, h2, h3, h4, h5, h6, hr, blockquote, /* structural elements 结构元素 */ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */ pre, /* text formatting elements 文本格式元素 */ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */ th, td /* table elements 表格元素 */ {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+/* 将斜体扶正 */
+code, kbd, pre, samp {
+    font-family: courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small {
+    font-size: 12px;
+}
+/* 小于 12px 的中文很难阅读, 让 small 正常化 */
+
+/** 重置列表元素 **/
+ul, ol {
+    list-style: none;
+}
+
+/** 重置文本格式元素 **/
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+sup {
+    vertical-align: text-top;
+}
+/* 重置, 减少对行高的影响 */
+sub {
+    vertical-align: text-bottom;
+}
+
+/** 重置表单元素 **/
+legend {
+    color: #000;
+}
+/* for ie6 */
+fieldset, img {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+/* img 搭车：让链接里的 img 无边框 */
+button, input, select, textarea {
+    font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+
+/** 重置表格元素 **/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="button"], input[type="submit"], input[type="reset"] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    -webkit-appearance: none;
+}
+    /* 去掉高光样式 */
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+input:focus, img:focus {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-modify: read-write-plaintext-only;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    display: block;
+}
+
+.hb-bg {
+    background-position: center top;
+    position: relative;
+}
+
+.hb-cj {
+    position: absolute;
+    width: 100%;
+    top: 64%;
+}
+
+.hb-d1 {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #e10000;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+    .hb-d1 input {
+        float: left;
+        box-sizing: border-box;
+        height: 42px;
+    }
+
+.hb-txt {
+    width: 83%;
+    background: #ffcd97;
+    font-size: 14px;
+    color: #e10000;
+    text-indent: 10px;
+    border: 0;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+/* 通用 */
+::-webkit-input-placeholder {
+    color: #e10000;
+}
+
+::-moz-placeholder {
+    color: #e10000;
+}
+/* firefox 19+ */
+:-ms-input-placeholder {
+    color: #e10000;
+}
+/* ie */
+input:-moz-placeholder {
+    color: #e10000;
+}
+
+.hb-btn {
+    width: 17%;
+    background: #b70807 url(../img/hongbao-saomao.png) center 7px no-repeat;
+    background-size: 28px;
+    border: 0;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.hb-d2 {
+    width: 78%;
+    margin: 5px auto;
+    color: #fff;
+    font-size: 10px;
+}
+
+.hb-d3 {
+    text-align: center;
+    margin: 30px 0 0 0;
+}
+
+.hb-d4 {
+    text-align: center;
+    padding: 64% 0 20px;
+    color: #fff;
+    font-size: 12px;
+}
+
+    .hb-d4 span {
+        font-size: 2.4rem;
+        font-weight: bold;
+    }
+
+.hb-d5 {
+    text-align: center;
+    padding: 2px 0;
+    color: #fff;
+    font-size: 10px;
+}
+
+.hb-dj {
+    width: 48%;
+    height: 62px;
+    background: url(../img/hongbao-anniu.png) center 0 no-repeat;
+    background-size: 100%;
+    border: 0;
+}
+
+.black_overlay {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1001;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=55);
+}
+
+.white_content {
+    display: none;
+    position: absolute;
+    top: 26%;
+    left: 15%;
+    width: 70%;
+    height: 300px;
+    z-index: 1002;
+    overflow: auto;
+}
+
+.white_a {
+    width: 66%;
+    margin: 30px auto 0;
+    height: 260px;
+    background: url(../img/hongbao-hongbao.png) center 0 no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+
+.white_guanbi {
+    position: absolute;
+    right: -40px;
+    top: -30px;
+}
+
+    .white_guanbi img {
+        height: 32px;
+    }

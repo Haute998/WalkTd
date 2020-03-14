@@ -1,0 +1,449 @@
+﻿@using WeModels
+@{
+    Layout = null;
+    string IsWx = ViewData["IsWx"].ToString();
+}
+@model Order
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>退货扫描</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9" />
+    <meta name='viewport' content='width=640px, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no,target-densitydpi=device-dpi' />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="/css/jlpmain.css?20161222" rel="stylesheet" type="text/css" />
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-1.11.2.min.js"></script>
+    <script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+    <style type="text/css">
+        #mainMenuBar table {
+            background-color: #393939;
+        }
+
+            #mainMenuBar table tr td {
+                width: 28.3%;
+                color: #fff;
+            }
+
+                #mainMenuBar table tr td input {
+                    background: none;
+                    width: 17px;
+                    height: 17px;
+                    background-color: #7a5053;
+                    border: 1px solid #fff;
+                    color: #fff;
+                    position: relative;
+                    top: 12px;
+                    left: 1.5rem;
+                }
+
+                #mainMenuBar table tr td.zt {
+                    width: 15%;
+                }
+
+        .border a {
+            display: block;
+        }
+
+        .border .fhtj_ul1 {
+            padding: 5px 0;
+        }
+
+        #OrderNo {
+            color: white;
+        }
+
+        #Writer {
+            color: white;
+        }
+
+        #CodeList li {
+            line-height:40px;
+            width:100%;
+            border-bottom:1px solid #ddd;
+        }
+
+        #CodeList li span{
+            padding:0 10px;
+            
+        }
+            .delbtn {
+                margin-top:8px;
+                float:right;
+            }
+            #CodeList li img {
+                width:20px;
+                vertical-align:middle
+            }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <div id="container">
+            <div id="mainMenuBarAnchor">
+            </div>
+            <div id="mainMenuBar">
+                <div class="shoushu" id="show2">
+                    <div class="div2 jiantou11111">
+                        <a title="返回" href="javascript:history.go(-1)">
+                            <img src="/images/11111.png" />返回
+                        </a>
+                    </div>
+                    <form data-ajax="false">
+                        <div class="div1">
+                            <span id="OrderNo">退换货扫描</span>
+                        </div>
+                        <div class="div2">
+                            <span id="Writer">手动输入</span>
+                        </div>
+                    </form>
+                </div>
+                <table>
+                    <tr>
+                        <td class="zt">
+                            状态
+                        </td>
+                        <td>
+                            Y/N : <span id="yesScale">0</span>/<span id="noScale">0</span>
+                        </td>
+                        <td>
+                            Total : <span id="TotalScale">0</span>
+                        </td>
+                        <td>
+                            <input type="checkbox" id="radioScan" style="background-color:white" class="yc" />
+                            连扫
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="ScaleHid" value="" />
+    <input type="hidden" id="ScaleErro" value="" />
+    <div id="page1" data-role="page">
+        <div data-role="content" id="content">
+            <div class="centent_total" id="scaleline">
+                <ul id="CodeList"></ul>
+            </div>
+        </div>
+        <div class="dibu">
+            <div class="fd">
+                <input type="button" value="完成" id="subbtn" /><input type="button" id="Scan" value="扫描" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/js/Common/ArithmeticHelper.js"></script>
+<script src="~/js/Common/layer.mobile-v2.0/layer_mobile/layer.js"></script>
+<script src="~/js/Besiness_js_jsconfig.js"></script>
+@if (IsWx == "1")
+{
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '@(ViewData["AppID"])', // 必填，公众号的唯一标识
+            timestamp: "@(ViewData["timestamp"])", // 必填，生成签名的时间戳
+            nonceStr: '@(ViewData["nonceStr"])', // 必填，生成签名的随机串
+            signature: '@(ViewData["signature"])',// 必填，签名，见附录1
+            jsApiList: ['checkJsApi',
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage',
+                    'onMenuShareQQ',
+                    'onMenuShareWeibo',
+                    'hideMenuItems',
+                    'showMenuItems',
+                    'hideAllNonBaseMenuItem',
+                    'showAllNonBaseMenuItem',
+                    'translateVoice',
+                    'startRecord',
+                    'stopRecord',
+                    'onRecordEnd',
+                    'playVoice',
+                    'pauseVoice',
+                    'stopVoice',
+                    'uploadVoice',
+                    'downloadVoice',
+                    'chooseImage',
+                    'previewImage',
+                    'uploadImage',
+                    'downloadImage',
+                    'getNetworkType',
+                    'openLocation',
+                    'getLocation',
+                    'hideOptionMenu',
+                    'showOptionMenu',
+                    'closeWindow',
+                    'scanQRCode',
+                    'chooseWXPay',
+                    'openProductSpecificView',
+                    'addCard',
+                    'chooseCard',
+                    'openCard'
+            ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+    </script>
+}
+<script type='text/javascript'>
+    var sm = 1500;
+    var CodeArray = new Array();
+    $("#radioScan").change(function () {
+        if ($("#radioScan").is(":checked")) {
+            $("#radioScan").css("background-color", "black");
+            layer.open({
+                title: [
+                  '默认隔离时间1500毫秒',
+                  'background-color: #000000; color:#fff;height:50px;'
+                ]
+    , anim: 'up'
+    , content: '<input type="text" id="scanTime" style="width: 94%;;text-indent: 10px;color: #333;border: 0;border: none;font-size: 13px;background: url(/images/63.png)center 0 no-repeat;background-size: 100% 100%;background-color: #dfd7cc;font-family: Microsoft YaHei;height: 40px;" value="' + sm + '">'
+    , btn: ['确认', '取消']
+              , yes: function (index) {
+                  sm = $("#scanTime").val();
+                  layer.close(index)
+              }
+            });
+        }
+        else {
+            $("#radioScan").css("background-color", "white");
+        }
+    })
+
+    $("#Writer").click(function () {
+        layer.open({
+            title: [
+              '请输入条码',
+              'background-color: #000000; color:#fff;height:50px;'
+            ]
+   , anim: 'up'
+   , content: '<input type="text" id="scanInput" style="width: 94%;;text-indent: 10px;color: #333;border: 0;border: none;font-size: 13px;background: url(/images/63.png)center 0 no-repeat;background-size: 100% 100%;background-color: #dfd7cc;font-family: Microsoft YaHei;height: 40px;">'
+   , btn: ['确认', '取消']
+             , yes: function (index) {
+                 var scale = $("#scanInput").val();
+                 Tm(scale); layer.close(index);
+
+             }
+        });
+    })
+    $("#Scan").click(function () {
+
+        wx.scanQRCode({
+            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: function (data) {
+
+                if (data.resultStr != null && data.resultStr != "") {
+                    var arrayStr = data.resultStr.split(/[,=-\\/]/);
+                    if (arrayStr.length > 1) {
+                        var scale = arrayStr[arrayStr.length - 1];
+                        Tm(scale);
+                    }
+                    else {
+                        layer.open({ content: "此条码无效", btn: '我知道了' });
+                    }
+                }
+            },
+            fail: function (res) {
+                layer.open({ content: JSON.stringify(res), btn: '我知道了' });
+            }
+        });
+
+    })
+    $("#subbtn").click(function () {
+        var scale = "";
+        for (var r = 0; r < CodeArray.length; r++) {
+            if (scale != "") scale += ",";
+            scale += "'" + CodeArray[r] + "'";
+        }
+
+        if (scale == "") {
+            layer.open({
+                content: "上传条码不能为空！", skin: 'msg', time: 2
+            });
+        }
+
+        layer.open({
+            type: 2, content: '正在上传', shadeClose: false
+        });
+
+        $.post("/RtnScale/GetUpdateRtnScale", { "Scale": scale }, function (json) {
+            layer.closeAll();
+            if (json.success) {
+                CodeArray = [];
+                $(".delbtn").remove();
+                $(".prompt").find("img").remove();
+                $(".prompt").html("失败");
+
+                $("#CodeList li").each(function (index) {
+                    var code = $(this).find(".code").html();
+
+                    for (var i = 0; i < json.data.length; i++) {
+                        if (json.data[i].SmallCode == code) {
+                            $(this).find(".prompt").html("<a style='color:#1AADa9'>退货成功</a>");
+                            break;
+                        }
+                    }
+                });
+
+                layer.open({ content: "退货成功", btn: "我知道了" });
+            }
+            else {
+                layer.open({
+                    content: json.message, skin: 'msg', time: 2
+                });
+            }
+        })
+    })
+
+    function agentclick()
+    { $("#Scan").click(); }
+
+    function del(obj, selval) {
+        //layer.open({
+        //    content: '确定要删除吗？', btn: ['删除', '取消'],
+        //    yes: function (index) {
+        //      var noScaleCount = $("#noScale").html();
+        //      var yesScaleCount = $("#yesScale").html();
+        //      var TotalScaleCount = $("#TotalScale").html();
+        //      $("#" + obj).parents(".border").remove();
+        //      $("#TotalScale").html(Subtr(TotalScaleCount, 1));
+        //      if (selval == 0) {
+        //          $("#noScale").html(Subtr(noScaleCount, 1));
+        //          $("#ScaleErro").val($("#ScaleErro").val().replace(obj + ",", ""));
+        //      }
+        //      else {
+        //          $("#yesScale").html(Subtr(yesScaleCount, 1));
+        //          $("#ScaleHid").val($("#ScaleHid").val().replace(obj + ",", ""));
+        //      }
+        //      layer.close(index);
+        //    }
+        //});
+
+        layer.open({
+            content: '确定要删除吗？', btn: ['删除', '取消'],
+            yes: function (index) {
+
+                var i = CodeArray.indexOf(selval);
+                if (i > -1) {
+                    CodeArray.splice(i);
+                }
+
+                $(obj).parent().parent().remove();
+                layer.close(index);
+
+            }
+        });
+    }
+
+    function Tm(scale) {
+        if (CodeArray.length == 0) $("#CodeList li").remove();
+
+        $.post("/RtnScale/GetBoolRtnScale", { 'ID': '' + scale + '' }, function (json) {
+            if (json.success) {
+                for (var i = 0; i < json.data.length; i++) {
+
+                    if (CodeArray.length > 999) {
+                        layer.open({ content: "一次性上传不能超过1000个条码,请分批次出货。", btn: "知道了" });
+                        break;
+                    }
+
+                    if (CodeArray.indexOf(json.data[i].SmallCode) == -1) {
+                        $("#CodeList").append("<li><span class='prompt'><img src='/images/正确.png' /></span><span class='code'>" + json.data[i].SmallCode + "</span><span class='delbtn'><img src='/images/55.png' onclick='del(this,\"" + json.data[i].SmallCode + "\")'/></span></li>");
+                        CodeArray.push(json.data[i].SmallCode);
+                    }
+                }
+            }
+            else {
+                layer.open({
+                    content: json.message, skin: 'msg', time: 3
+                });
+            }
+
+            $("#TotalScale").html(CodeArray.length);
+
+            var checkbox = document.getElementById('radioScan');
+            if (checkbox.checked) {
+                setTimeout('agentclick()', sm);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var sch = $(window).height(),
+      wah = (sch - 80)
+        $('#top_intro').css('height', wah);
+        $(window).resize(function () {
+            var sch = $(window).height();
+            wah = (sch - 80)
+            $('#top_intro').css('height', wah);
+
+        });
+        im = 'http://wizardwiz.co.uk/ww/one.jpg';
+        $('.le-background').css('background-image', 'url(' + im + ')');
+
+        $(window).scroll(function (e) {
+            var s = $(window).scrollTop(),
+                d = $(document).height(),
+                c = $(window).height(),
+                f = 100,
+                a = 40,
+                imblur = 'http://wizardwiz.co.uk/ww/two.jpg';
+                opacityVal = (s / 300);
+                titleopac = (s / 450);
+
+                $('.blurred').css('opacity', opacityVal);
+                $('.blurred').css('background-image', 'url(' + imblur + ')');
+
+
+                if (s > f) {
+                    $('#project-list').css('opacity', titleopac);
+                }
+
+                else {
+                    $('#project-list').css('opacity', 0);
+                }
+
+
+                if (s > a) {
+                    $('.icon-arrow-down ').css('opacity', 0);
+                    $('.icon-arrow-down ').css('bottom', 20);
+                }
+
+                else {
+                    $('.icon-arrow-down ').css('opacity', 1);
+                    $('.icon-arrow-down ').css('bottom', 0);
+                }
+        });
+    });
+
+    $(document).ready(function () {
+        // Cache selectors for faster performance.
+        var $window = $(window),
+          $mainMenuBar = $('#mainMenuBar'),
+          $mainMenuBarAnchor = $('#mainMenuBarAnchor');
+
+        // Run this on scroll events.
+        $window.scroll(function () {
+            var window_top = $window.scrollTop();
+            var div_top = $mainMenuBarAnchor.offset().top;
+            if (window_top > div_top) {
+                // Make the div sticky.
+                $mainMenuBar.addClass('stick');
+                $mainMenuBarAnchor.height($mainMenuBar.height());
+            }
+            else {
+                // Unstick the div.
+                $mainMenuBar.removeClass('stick');
+                $mainMenuBarAnchor.height(0);
+            }
+        });
+    });
+
+</script>

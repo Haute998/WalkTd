@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Statistics";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css"
+          id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>抽奖统计</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+    <div class="page-container">
+        <form class="text-c" id="condition">
+            <div class="text-c">
+                防伪码：
+                <input type="text" name="IntegralCode" id="" placeholder=" 请输入防伪码" style="width: 250px" class="input-text" />
+
+                关键字：
+                <input type="text" name="keyword" placeholder="流水号/活动/奖品" style="width: 250px" class="input-text" value="" />
+                <button onclick="morecondition(this)" class="btn btn-default size-MINI radius" type="button">
+                    更多
+                </button>
+                <br /><br />
+                <span style="display:none" class="js-nospan">
+                    中奖时间：
+                    <input type="text" name="DatB" id="" placeholder=" 请输入时间" style="width: 150px" class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+                    至
+                    <input type="text" name="DatE" id="" placeholder=" 请输入时间" style="width: 150px" class="input-text " onfocus="WdatePicker({lang:'zh-cn'})" />
+
+                    奖品名称：
+                    <input type="text" name="PrizeName" id="" placeholder=" 请输入奖品名称" style="width: 250px" class="input-text" />
+                </span>
+
+                <input type="text" name="States" placeholder="状态" style="width: 250px;display:none;" class="input-text" value="未发放" />
+
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+                <button name="" id="Export" onclick="Exports()" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe644;</i> 导出
+                </button>
+
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+
+<script src="~/js/common/ArithmeticHelper.js"></script>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>
+                活动标题
+            </th>
+            <th>
+                奖品图片
+            </th>
+            <th>
+                奖品等级
+            </th>
+            <th>
+                奖品名称
+            </th>
+            <th>
+                中奖总数量
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>
+                ${ck.ActivityTitle}
+            </td>
+            <td>
+                <img src="${ck.PrizeImgUrl}" width="50" height="50" />
+            </td>
+            <td>
+                ${ck.PrizeLevel}
+            </td>
+            <td>
+                ${ck.PrizeName}
+            </td>
+            <td>
+                ${ck.num}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/LuckyDraw/GetStatistics";
+    function Exports() {
+        var loading = layer.load(1, {
+            shade: [0.1, '#fff'] //0.1透明度的白色背景
+        });
+        $("#condition").attr("action", "/LuckyDraw/ExportStatistics");
+        $("#condition").submit();
+        layer.close(loading);
+    }
+
+    function morecondition(obj) {
+        if ($(".js-nospan").is(':visible')) {
+            $(".js-nospan").hide();
+            $(obj).text("更多");
+        }
+        else {
+            $(".js-nospan").show();
+            $(obj).text("隐藏");
+        }
+    }
+</script>

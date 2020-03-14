@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/Hui-iconfont/1.0.7/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/lib/icheck/icheck.css" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/layout/static/h-ui.admin/css/style.css" />
+    <title>退货</title>
+    <style type="text/css">
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <script src="~/js/common/Datehelper.js"></script>
+    <script src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="~/js/jquery.tmpl.min.js"></script>
+    
+</head>
+<body>
+
+    <div class="page-container">
+        <form class="text-c" method="post" id="condition">
+            <input type="hidden" value="@ViewData["Time"]" name="ReturnTime" />
+            <input type="hidden" value="@ViewData["OrderNo"]" name="OrderNo" />
+            <input type="hidden" value="@ViewData["BigCode"]" name="BigCode" />
+            <input type="hidden" value="@ViewData["Middlecode"]" name="MiddleCode" />
+            <input type="hidden" value="@ViewData["PNo"]" name="ProductNo" />
+            <div class="text-c">
+                关键字：
+                <input type="text" name="keyword" id="" placeholder=" 请输入搜索关键字" style="width: 250px"
+                       class="input-text" />
+                <button name="" id="search" class="btn btn-success" type="button">
+                    <i class="Hui-iconfont">&#xe665;</i> 搜索
+                </button>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg dataTable" id="datahtml"></table>
+                @Html.Partial("_Paging")
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="/layout/lib/layer/2.1/layer.js"></script>
+
+    <script type="text/javascript" src="/layout/static/h-ui.admin/js/H-ui.admin.js"></script>
+</body>
+</html>
+<script type="text/x-jquery-tmpl" id="datajs">
+    <thead>
+        <tr class="text-c">
+            <th>退货时间</th>
+            <th>
+                退货单号
+            </th>
+            <th>
+                产品条码
+            </th>
+            <th>出货单号</th>
+            <th>
+                出货时间
+            </th>
+            <th>收货人</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(i,ck) RtnList}}
+        <tr class="text-c">
+            <td>${formatDateTime_Two(ck.ReturnTime,3)}</td>
+            <td>
+                ${ck.OrderNo}
+            </td>
+            <td>
+                ${ck.SmallCode}
+            </td>
+            <td>
+                ${ck.OutOrderNo}
+            </td>
+            <td>
+                ${formatDateTime_Two(ck.OutTime,3)}
+            </td>
+            <td>${ck.Name}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</script>
+<script>
+    var dataUrl = "/RtnStock/GetSmallCodePage";
+</script>
+
